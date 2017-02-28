@@ -1,0 +1,15 @@
+* Footnotes
+
+[fn:7] https://docs.python.org/3/library/logging.html
+
+[fn:6] https://www.python.org/dev/peps/pep-0318/
+
+[fn:5] http://doc.qt.io/Qt-5/qapplication.html#exec
+
+[fn:4] http://doc.qt.io/Qt-5/qapplication.html
+
+[fn:3] https://github.com/yyuu/pyenv-virtualenv
+
+[fn:2] https://github.com/yyuu/pyenv
+
+[fn:1] https://www.python.org
