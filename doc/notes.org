@@ -1,0 +1,16 @@
+* Notes / TODO
+
+** Notes
+
+*** Architecture
+**** Editor
+**** Player
+**** Namespaces
+
+*** Procedure
+**** Literate programming
+**** Test-driven
+***** py.test
+***** Hypothesis
+**** Languages
+***** Python

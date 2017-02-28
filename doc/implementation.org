@@ -1,0 +1,101 @@
+#+BIBLIOGRAPHY: bibliography ieee
+
+* Umsetzung
+
+Die Umsetzung des Projektes findet mittels Literate Programming statt.[[#sec:procedure_literate][Foo]]
+Der Programmcode wird von Grund auf direkt aus dieser Dokumentation erzeugt.
+
+Die gesamte Entwicklung soll test-getrieben sein, was bedeutet, dass für alle
+Funktionalitäten erst (Unit-) Tests und dann der eigentlche Programmcode erfasst
+werden.
+
+Den Aufbau betreffend wird erst die Funktionalität erklärt, dann werden die
+(Unit-) Testfälle dafür verfasst und schliesslich wird die Funktionalität
+implementiert.
+
+Voraussetzungen, um den Programmcode direkt aus dieser Dokumentation zu
+erstellen, sind zum aktuellen Zeitpunkt die folgenden:
+
+- Ein Unix-Derivat als Betriebssystem (Linux, macOS)
+- Python in der Version 3.5.x oder höher[fn:1]
+- Pyenv[fn:2]
+- Pyenv-virtualenv[fn:3]
+
+Als erster Schritt wird eine passende Version von Python für virtualenv
+installiert. Die verfügbaren Versionen lassen sich wie folgt anzeigen.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Anzeige der verfügbaren Python-Versionen für Pyenv.
+#+NAME:       fig:impl-pyenv-list
+#+BEGIN_SRC bash :results output silent
+pyenv install --list
+#+END_SRC
+
+Die gewünschte Version wird wie folgt installiert. In diesem Beispiel handelt es
+sich um Version 3.6.0.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Installation von Python in der Version 3.6.0 für Pyenv.
+#+NAME:       fig:impl-pyenv-install
+#+BEGIN_SRC bash :dir ../.
+install 3.6.0
+#+END_SRC
+
+Es empfiehlt sich für das Projekt eine eigene, virtuelle Umgebung für Python zu
+erstellen. Darin werden alle Abhängigkeiten installiert und somit werden
+die Python-Pakete des Betriebsystem nicht kompromitiert. Es wird zuerst die
+gewünschte (und zuvor installierte) Version, dann der gewünschte Name der
+virtuellen Umgebung angegeben.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung einer virtuellen Python-Umgebung mit Python Version 3.6.0.
+#+NAME:       fig:impl-pyenv-venv
+#+BEGIN_SRC bash :dir ../.
+pyenv virtualenv 3.6.0 qde
+#+END_SRC
+
+Nun können die benötigten Abhängigkeiten für das Projekt problemlos installiert
+werden. Diese befinden sich in der Datei /python_requirements.txt/ und werden mittels
+/pip/ installiert.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Installation der benötigten Abhängigkeiten des Projektes.
+#+NAME:       fig:impl-pip-install
+#+BEGIN_SRC bash :dir ../. :results output silent
+pip install -r python_requirements.txt
+#+END_SRC
+
+Somit sind nun alle Voraussetzungen erfüllt und die eigentliche Umsetzung kann
+beginnen.
+
+Der gesamte Programmcode soll im Verzeichnis /src/ unterhalb des
+Hauptverzeichnisses liegen:
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des /src/-Unterverzeichnisses.
+#+NAME:       fig:impl-mkdir-src
+#+BEGIN_SRC bash :dir ../.
+  mkdir -p src
+#+END_SRC
+
+Um zu verhindern, dass mehrere Module denselben Namen verwenden, werden
+Namespaces verwendet. Der Haupt-Namespace des Projektes soll /qde/ lauten:
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des /qde/-Namespaces.
+#+NAME:       fig:impl-mkdir-qde
+#+BEGIN_SRC bash :dir ../.
+mkdir -p src/qde
+#+END_SRC
+
+In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
+
+#+INCLUDE: "~/projects/mte7103-qde/doc/implementation/editor.org"
+
+* Footnotes
+
+[fn:3] https://github.com/yyuu/pyenv-virtualenv
+
+[fn:2] https://github.com/yyuu/pyenv
+
+[fn:1] https://www.python.org

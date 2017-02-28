@@ -1,0 +1,822 @@
+#+BIBLIOGRAPHY: bibliography ieee
+
+#+LATEX_CLASS: scrreprt
+#+LATEX_CLASS_OPTIONS: [10pt, openright, notitlepage]
+#+LATEX_HEADER: \usepackage[a4paper, left=25mm, right=25mm, top=27mm, headheight=20mm, headsep=10mm, textheight=242mm, footskip=15mm]{geometry}
+#+LATEX_HEADER: \usepackage[backend=biber, style=ieee]{biblatex}
+#+LATEX_HEADER: \usepackage[dvipsnames]{xcolor}
+#+LATEX_HEADER: % Definition of colors
+#+LATEX_HEADER: %---------------------------------------------------------------------------
+#+LATEX_HEADER: \RequirePackage{color}
+#+LATEX_HEADER: \definecolor{linkblue}{rgb}{0,0,0.8}       % Standard
+#+LATEX_HEADER: \definecolor{darkblue}{rgb}{0,0.08,0.45}   % Dark blue
+#+LATEX_HEADER: \definecolor{bfhgrey}{rgb}{0.41,0.49,0.57} % BFH grey
+#+LATEX_HEADER: \definecolor{linkcolor}{rgb}{0,0,0}
+#+LATEX_HEADER: \colorlet{Black}{black}
+#+LATEX_HEADER: \definecolor{keywords}{rgb}{255,0,0}
+#+LATEX_HEADER: \definecolor{red}{rgb}{0.6,0,0}
+#+LATEX_HEADER: \definecolor{green}{rgb}{0,0.5,0}
+#+LATEX_HEADER: \definecolor{blue}{rgb}{0,0,0.5}
+#+LATEX_HEADER: % Syntax colors
+#+LATEX_HEADER: \definecolor{syntaxRed}{rgb}{0.6,0,0}
+#+LATEX_HEADER: \definecolor{syntaxBlue}{rgb}{0,0,0.5}
+#+LATEX_HEADER: \definecolor{syntaxComment}{rgb}{0,0.5,0}
+#+LATEX_HEADER: % Background colors
+#+LATEX_HEADER: \definecolor{syntaxBackground}{rgb}{0.95, 0.95, 0.95}
+#+LATEX_HEADER: %---------------------------------------------------------------------------
+#+LATEX_HEADER: \usepackage{tcolorbox}
+#+LATEX_HEADER: \usepackage{pgfgantt}
+#+LATEX_HEADER: \usepackage{float}
+#+LATEX_HEADER: \restylefloat{listing}
+#+LATEX_HEADER: \tcbuselibrary{minted,skins}
+#+LATEX_HEADER: \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
+#+LATEX_HEADER: \addbibresource{bibliography.bib}
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_HEADER_EXTRA:
+#+LATEX_COMPILER: pdflatex
+
+#+TITLE: QDE --- A visual animation system.
+#+SUBTITLE: MTE-7103: Master-Thesis
+#+AUTHOR: Sven Osterwalder
+#+EMAIL: sven.osterwalder@students.bfh.ch
+#+DATE: February 20, 2017
+#+OPTIONS: author:t date:t email:t ^:nil
+
+* TODO Introduction
+
+[Introduction here].
+
+* TODO Administrative aspects
+
+[Administrative aspects].
+
+* TODO Scope
+
+[Scope]
+
+* TODO Procedure
+
+- Literate programming
+- Agile
+
+** Project schedule
+\begin{figure}[H]
+    \begin{ganttchart}[
+        vgrid,
+        x unit=0.4cm,
+        bar/.append style={fill=bfhgrey!50},
+    ]{1}{25}
+        \gantttitle{2017}{25} \ganttnewline{}
+        \gantttitlelist{8,...,32}{1} \ganttnewline{} % chktex 11: Disable "you should use \ldots to achieve.."
+        \ganttbar{Projektstart}{1}{1} \ganttnewline{}
+        \ganttlinkedbar{Anforderungen}{2}{3} \ganttnewline{}
+        \ganttlinkedbar{Erstellung Prototyp}{4}{10} \ganttnewline{}
+        \ganttlinkedbar{Dokumentation}{14}{23} \ganttnewline{}
+        \ganttlinkedbar{Korrekturen}{23}{24} \ganttnewline{}
+        \ganttlinkedmilestone{Abgabe Dokumentation}{24} \ganttnewline{}
+        \ganttbar{Erstellung Prototyp}{23}{23} \ganttnewline{}
+        \ganttbar{Vorbereitung Präsentation/Verteidigung}{24}{25} \ganttnewline{}
+        \ganttmilestone{Präsentation/Verteidigung}{25}
+    \end{ganttchart}
+    \caption{Zeitplan; Der Titel stellt Jahreszahlen, der Untertitel
+    Kalenderwochen dar}\label{fig:timeschedule}
+\end{figure}
+
+* TODO Implementation
+
+Die Umsetzung des Projektes findet mittels Literate Programming statt.
+Der Programmcode wird von Grund auf direkt aus dieser Dokumentation erzeugt.
+
+Den Aufbau betreffend, wird erst die Funktionalität erklärt, dann wird die
+Funktionalität implementiert. (Unit-) Testfälle werden getrennt von dieser
+Dokumentation verfasst und befinden sich im Anhang unter 
+*************** TODO Insert reference/link to test cases here.
+*************** END
+.
+
+Voraussetzungen, um den Programmcode direkt aus dieser Dokumentation zu
+erstellen, sind zum aktuellen Zeitpunkt die folgenden:
+
+- Ein Unix-Derivat als Betriebssystem (Linux, macOS)
+- Python in der Version 3.5.x oder höher[fn:1]
+- Pyenv[fn:2]
+- Pyenv-virtualenv[fn:3]
+
+Als erster Schritt wird eine passende Version von Python für virtualenv
+installiert. Die verfügbaren Versionen lassen sich wie folgt anzeigen.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Anzeige der verfügbaren Python-Versionen für Pyenv.
+#+NAME:       fig:impl-pyenv-list
+#+BEGIN_SRC bash :results output silent
+pyenv install --list
+#+END_SRC
+
+Die gewünschte Version wird wie folgt installiert. In diesem Beispiel handelt es
+sich um Version 3.6.0.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Installation von Python in der Version 3.6.0 für Pyenv.
+#+NAME:       fig:impl-pyenv-install
+#+BEGIN_SRC bash :dir ../.
+install 3.6.0
+#+END_SRC
+
+Es empfiehlt sich für das Projekt eine eigene, virtuelle Umgebung für Python zu
+erstellen. Darin werden alle Abhängigkeiten installiert und somit werden
+die Python-Pakete des Betriebsystem nicht kompromitiert. Es wird zuerst die
+gewünschte (und zuvor installierte) Version, dann der gewünschte Name der
+virtuellen Umgebung angegeben.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung einer virtuellen Python-Umgebung mit Python Version 3.6.0.
+#+NAME:       fig:impl-pyenv-venv
+#+BEGIN_SRC bash :dir ../.
+pyenv virtualenv 3.6.0 qde
+#+END_SRC
+
+Nun können die benötigten Abhängigkeiten für das Projekt problemlos installiert
+werden. Diese befinden sich in der Datei =python_requirements.txt= und werden
+mittels =pip= installiert.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Installation der benötigten Abhängigkeiten des Projektes.
+#+NAME:       fig:impl-pip-install
+#+BEGIN_SRC bash :dir ../.
+pip install -r python_requirements.txt
+#+END_SRC
+
+Somit sind nun alle Voraussetzungen erfüllt und die eigentliche Umsetzung kann
+beginnen.
+
+Der gesamte Programmcode soll im Verzeichnis =src= unterhalb des
+Hauptverzeichnisses liegen.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des /src/-Unterverzeichnisses.
+#+NAME:       fig:impl-mkdir-src
+#+BEGIN_SRC bash :dir ../.
+  mkdir -p src
+#+END_SRC
+
+Um zu verhindern, dass mehrere Module denselben Namen verwenden, werden
+Namespaces verwendet.[fn:8] Der Haupt-Namespace des Projektes soll =qde= lauten.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des =qde=-Namespaces.
+#+NAME:       fig:impl-mkdir-qde
+#+BEGIN_SRC bash :dir ../.
+mkdir -p src/qde
+#+END_SRC
+
+In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
+der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
+
+** Editor
+
+Der Editor soll sich im Verzeichnis =editor= unterhalb des =src/qde=-Verzeichnisses
+befinden.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des =editor=-Namespaces.
+#+NAME:       fig:impl-mkdir-editor
+#+BEGIN_SRC bash :dir ../.
+mkdir -p src/qde/editor
+#+END_SRC
+
+#+RESULTS:
+
+Um sicherzustellen, dass Module als solche verwendet werden können, muss pro
+Modul und Namespace eine Datei zur Initialisierung vorhanden sein. Es handelt sich
+dabei um Dateien namens =__init__.py=, welche im minimalen Fall leer sind. Diese
+können aber auch regulären Programmcode, wie zum Beispiel Klassen oder Methoden
+enthalten.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des =qde=-Namespaces und des =editor=-Namespaces.
+#+NAME:       fig:impl-namespaces
+#+BEGIN_SRC bash :dir ../.
+touch src/qde/__init__.py
+touch src/qde/editor/__init__.py
+#+END_SRC
+
+Im weiteren Verlauf des Dokumentes wird darauf verzichtet diese Dateien explizit
+zu erwähnen, sie werden direkt in den entsprechenden Codeblöcken erstellt und
+als gegeben angesehen.
+
+Nun kann mit der eigentlichen Erstellung des Editors begonnen werden. Wie unter
+<<Implementation>> beschrieben, werden für alle Funktionalitäten erst (Unit-) Tests
+verfasst und erst dann die eigentliche Funktionalität umgesetzt.
+
+Der Einstiegspunkt einer Qt-Applikation mit grafischer Oberfläche ist die Klasse
+=QtApplication=. Gemäss [fn:4] kann die Klasse direkt instanziert und benutzt
+werden, es ist unter Umständen jedoch sinnvoller die Klasse zu kapseln, was
+schlussendlich eine höhere Flexibilität bei der Umsetzung bietet. Es soll daher
+die Klasse =Application= erstellt werden, welche diese Abstraktion bietet.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung des =application=-Namespaces.
+#+NAME:       fig:impl-application-namespace
+#+BEGIN_SRC bash :dir ../.
+mkdir -p src/qde/editor/application
+touch src/qde/editor/application/__init__.py
+#+END_SRC
+
+#+RESULTS:
+
+Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
+die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
+
+Als erster Schritt wird der Header des Test-Modules definiert.
+
+#+NAME: test-app-header
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Header des Test-Modules, =<<test-app-header>>=.
+#+BEGIN_SRC python
+# -*- coding: utf-8 -*-
+
+"""Module for testing QDE class."""
+#+END_SRC
+
+#+RESULTS: fig:test-app-header
+: None
+
+Dann werden die benötigen Module importiert. Es sind dies das System-Modul
+/sys/ und das Modul /application/, bei welchem es sich um die Applikation
+selbst handelt. Das System-Modul /sys/ wird benötigt um der Applikation ggf.
+Start-Argumente mitzugeben, also zum Beispiel:
+
+#+NAME: fig:impl-python-call-arguments
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Aufruf des Main-Modules mit zwei Argumenten, =argument1= und =argument2=.
+#+BEGIN_SRC bash
+python main.py argument1 argument2
+#+END_SRC
+
+#+RESULTS:
+
+Der Einfachheit halber werden die Importe in zwei Kategorien unterteilt: Importe
+von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
+
+#+NAME: test-app-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition der Importe für das Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+<<test-app-system-imports>>
+
+<<test-app-project-imports>>
+#+END_SRC
+
+#+RESULTS: test-app-imports
+
+#+NAME: test-app-system-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+# System imports
+import sys
+#+END_SRC
+
+#+NAME: test-app-project-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von selbst verfassten Modulen im Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+# Project imports
+from qde.editor.application import application
+#+END_SRC
+
+#+RESULTS: test-app-project-imports
+
+Somit kann schliesslich getestet werden, ob die Applikation startet, indem diese
+instanziert wird und die gesetzten Namen geprüft werden.
+
+#+NAME: test-app-test-constructor
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Methode zum Testen des Konstruktors der Applikation.
+#+BEGIN_SRC python
+def test_constructor():
+    """Test if the QDE application is starting up properly."""
+    app = application.QDE(sys.argv)
+    assert app.applicationName() == "QDE"
+    assert app.applicationDisplayName() == "QDE"
+#+END_SRC
+
+#+RESULTS: test-app-test-constructor
+: None
+
+Finally, one can merge the above defined elements to an executable test-module,
+containing the header, the imports and the test cases (which is in this case
+only a test case for testing the constructor).
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Modul zum Testen der Applikation.
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/test_application.py :noweb tangle :comments link
+<<test-app-header>>
+
+<<test-app-imports>>
+
+<<test-app-test-constructor>>
+#+END_SRC
+
+#+RESULTS: test-app-test-cases
+
+Führt man die Testfälle nun aus, schlagen diese erwartungsgemäss fehl, da die
+Klasse, und somit die Applikation, als solche noch nicht existiert. Zum jetzigen
+Zeitpunkt kann noch nicht einmal das Modul importiert werden, da diese noch
+nicht existiert.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Aufruf zum Testen des Applkations-Modules.
+#+BEGIN_SRC bash :dir ../src
+python -m pytest qde/editor/application/test_application.py
+#+END_SRC
+
+#+RESULTS:
+
+An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
+Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
+implementieren, da ein solcher bereits durch Qt vorhanden ist.[fn:5]
+
+Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
+initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
+verschiedenen Ebenen der Architektur, indem es diese mittels Signalen
+verbindet.\cite[S. 37 bis 38]{osterwalder_qde_2016}
+
+Weiter soll es nützliche Schnittstellen, wie zum Beispiel das Protokollieren
+von Meldungen, bereitstellen. Und schliesslich soll das Modul eine Möglichkeit
+bieten beim Verlassen der Applikation zusätzliche Aufgaben, wie etwa das
+Entfernen von temporären Dateien, zu bieten.
+
+Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
+gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
+Schritt ein Modul zur Protokollierung zu implementieren.
+Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
+Namespace =foundation= erstellt.
+
+Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
+Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
+#+NAME:       fig:editor-foundation-namespace
+#+BEGIN_SRC bash :dir ../.
+mkdir -p src/qde/editor/foundation
+touch src/qde/editor/foundation/__init__.py
+#+END_SRC
+
+Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
+Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
+=logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
+werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
+hierfür das Decorator-Pattern von Python an[fn:6].
+
+Die Klasse zur Protokollierung soll also Folgendes tun:
+
+- Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
+  #+NAME: logger-name
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
+  #+BEGIN_SRC python
+  logger_name = "%s.%s" % (cls.__module__, cls.__name__)
+  #+END_SRC
+
+  #+RESULTS: logger-name
+
+- Einen Stream-Handler nutzen
+  #+NAME: logger-stream-handler
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Initialisieren eines Stream-Handlers.
+  #+BEGIN_SRC python
+    stream_handler = logging.StreamHandler()
+  #+END_SRC
+
+    #+RESULTS: logger-stream-handler
+
+- Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
+  #+NAME: logger-set-level
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Setzen des =DEBUG= Log-Levels.
+  #+BEGIN_SRC python
+    # TODO: Do this according to config.
+    stream_handler.setLevel(logging.DEBUG)
+  #+END_SRC
+
+    #+RESULTS: logger-set-level
+
+- Protokoll-Einträge ansprechend formatieren
+  #+NAME: logger-set-formatter
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
+  #+BEGIN_SRC python
+    # TODO: Set up formatter in debug mode only
+    formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
+    stream_handler.setFormatter(formatter)
+  #+END_SRC
+
+    #+RESULTS: logger-set-formatter
+
+- Eine einfache Schnittstelle zur Protokollierung bieten
+  #+NAME: logger-return-logger
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
+  #+BEGIN_SRC python
+    cls.logger = logging.getLogger(logger_name)
+    cls.logger.propagate = False
+    cls.logger.addHandler(stream_handler)
+
+    return cls
+  #+END_SRC
+
+    #+RESULTS: logger-return-logger
+
+Auch hierfür werden wiederum zuerst die Testfälle verfasst.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Testfälle der Hilfsmethode zur Protokollierung.
+#+NAME:       fig:editor-common-logging-test
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/test_common.py :noweb tangle :comments link
+  # -*- coding: utf-8 -*-
+
+  """Module for testing common methods class."""
+
+  # System imports
+  import logging
+
+  # Project imports
+  from qde.editor.foundation import common
+
+
+  @common.with_logger
+  class FooClass(object):
+      """Dummy class for testing the logging decorator."""
+
+      def __init__(self):
+          """Constructor."""
+          pass
+
+  def test_with_logger():
+      """Test if the @with_logger decorator works correctly."""
+
+      foo_instance = FooClass()
+      logger = foo_instance.logger
+      name = "qde.editor.foundation.test_common.FooClass"
+      assert logger is not None
+      assert len(logger.handlers) == 1
+      handler = logger.handlers[0]
+      assert type(handler) == logging.StreamHandler
+      assert logger.propagate == False
+      assert logger.name == name
+#+END_SRC
+
+#+RESULTS: fig:editor-common-logging-test
+
+#+BEGIN_SRC bash :dir ../src
+  python -m pytest qde/editor/foundation/test_common.py
+#+END_SRC
+
+#+RESULTS:
+
+Nun kann die eigentliche Funktionalität implementiert werden.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
+#+NAME:       fig:editor-common-logging
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+import logging
+
+
+def with_logger(cls):
+    """Add a logger instance (using a steam handler) to the given class
+    instance.
+
+    :param cls: the class which the logger shall be added to
+    :type  cls: a class of type cls
+
+    :return: the class type with the logger instance added
+    :rtype:  a class of type cls
+    """
+
+    <<logger-name>>
+    <<logger-stream-handler>>
+    <<logger-set-level>>
+    <<logger-set-formatter>>
+    <<logger-return-logger>>
+#+END_SRC
+
+#+RESULTS: fig:editor-common-logging
+
+Führt man nun die Testfälle erneut aus, so schlagen diese nicht mehr fehl.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Ausführen der Testfälle für das =common=-Modul.
+#+BEGIN_SRC bash :dir ../src
+python -m pytest qde/editor/foundation/test_common.py
+#+END_SRC
+
+#+RESULTS:
+
+Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
+werden.
+
+#+NAME: app-class-definition
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition der Klasse =Application= mit dem =with_logger=-Dekorator des =common=-Modules.
+#+BEGIN_SRC python
+@common.with_logger
+class QDE(QApplication):
+  """Main application for QDE."""
+
+  <<app-class-body>>
+#+END_SRC
+
+#+RESULTS: app-class-definition
+
+Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
+findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
+Python bietet hierzu vielfältige Möglichkeiten.[fn:7] So kann die
+Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
+bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
+Beispiel sehr einfach aus einer JSON-Datei generiert werden.
+
+Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
+- Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
+  Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
+  wird.
+- Als Name für die JSON-Datei wird =logging.json= angenommen.
+- Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
+  gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
+  angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
+- Existiert die JSON-Konfigurationsdatei nicht, wird auf die
+  Standardkonfiguration zurückgegeriffen.
+- Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
+  zum Filtern der verschiedenen Protokollnachrichten.
+
+Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
+sowie =Umgebungsvariable= entgegen.
+
+Um sicherzustellen, dass die Protokollierung wie gewünscht funktioniert, wird
+diese durch die entsprechenden Testfälle abgedeckt.
+
+Der einfachste Testfall ist die Standardkonfiguration, also ein Aufruf ohne
+Parameter.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.
+#+NAME:       test-app-test-logging-default
+#+BEGIN_SRC   python
+def test_setup_logging_without_arguments():
+    """Test logging of QDE application without arguments."""
+    app = application.QDE(sys.argv)
+    root_logger = logging.root
+    handlers = root_logger.handlers
+    assert len(handlers) == 1
+    handler = handlers[0]
+#+END_SRC
+
+#+RESULTS: test-app-test-logging-default
+
+Da obige Testfälle das /logging/-Module benötigen, muss das Importieren der Module
+entsprechend erweitert werden.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.
+#+NAME: test-app-system-imports
+#+HEADER: :prologue <<test-app-system-imports>>
+#+BEGIN_SRC python
+import logging
+#+END_SRC
+
+Und der Testfall muss den Testfällen hinzugefügt werden.
+
+#+NAME: test-app-test-cases
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.
+#+HEADER: :prologue <<test-app-test-cases>>
+#+BEGIN_SRC python
+
+<<test-app-test-logging-default>>
+#+END_SRC
+
+Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
+umgesetzt und der Klasse hinzugefügt werden.
+
+#+NAME: app-setup-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
+#+BEGIN_SRC python
+def setup_logging(self,
+    default_path='logging.json',
+    default_level=logging.INFO,
+    env_key='LOG_CFG'
+):
+    """Setup logging configuration"""
+
+    path = default_path
+    value = os.getenv(env_key, None)
+
+    if value:
+        path = value
+
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+
+            config = json.load(f)
+            logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
+#+END_SRC
+
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Haupt-Modul und Einstiegspunkt der Applikation.
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :comments link
+  # -*- coding: utf-8 -*-
+
+  """Main application module for QDE."""
+
+  <<app-imports>>
+
+  <<app-class-definition>>
+#+END_SRC
+
+#+RESULTS:
+
+#+NAME: app-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition der Importe des Haupt-Modules.
+#+BEGIN_SRC python
+<<app-system-imports>>
+
+<<app-project-imports>>
+#+END_SRC
+
+#+NAME: app-system-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von Python-eigenen Modulen im Haupt-Modul.
+#+BEGIN_SRC python
+# System imports
+from   PyQt5.Qt import QApplication
+from   PyQt5.Qt import QIcon
+import logging
+import os
+#+END_SRC
+
+#+NAME: app-project-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von selbst verfassten Modulen im Haupt-Modul.
+#+BEGIN_SRC python
+# Project imports
+from qde.editor.foundation import common
+#+END_SRC
+
+#+NAME: app-constructor
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Konstruktor des Haupt-Modules.
+#+BEGIN_SRC python
+def __init__(self, arguments):
+    """Constructor.
+
+    :param arguments: a (variable) list of arguments, that are
+                      passed when calling this class.
+    :type  argv:      list
+    """
+
+    super(QDE, self).__init__(arguments)
+    self.setWindowIcon(QIcon("assets/icons/im.png"))
+    self.setApplicationName("QDE")
+    self.setApplicationDisplayName("QDE")
+
+    self.setup_logging()
+#+END_SRC
+
+Der Konstruktor und die Methode zum Einrichten der Protokollierung werden
+schliesslich der Klasse hinzugefügt.
+
+#+NAME: app-class-body
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.
+#+HEADER: :prologue <<app-class-body>>
+#+BEGIN_SRC python
+<<app-constructor>>
+
+<<app-setup-logging>>
+#+END_SRC
+
+Somit ist es nun möglich die Testfälle der Applikation auszuführen.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Ausführen der Testfälle für das Haupt-Modul.
+#+BEGIN_SRC bash :dir ../src :results output silent
+python -m pytest qde/editor/application/test_application.py
+#+END_SRC
+
+* Footnotes
+
+[fn:8] https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces 
+
+[fn:7] https://docs.python.org/3/library/logging.html
+
+[fn:6] https://www.python.org/dev/peps/pep-0318/
+
+[fn:5] http://doc.qt.io/Qt-5/qapplication.html#exec
+
+[fn:4] http://doc.qt.io/Qt-5/qapplication.html
+
+[fn:3] https://github.com/yyuu/pyenv-virtualenv
+
+[fn:2] https://github.com/yyuu/pyenv
+
+[fn:1] https://www.python.org
+
+* Worklog
+
+<2017-02-20 Mon> Initiale Struktur des Dokumentes
+
+* Bibliography
+
+\printbibliography{}
+
+* Appendix
+
+** Meeting minutes
+
+*** Meeting mintutes 2017-02-23
+
+| No.:              | 01                                                                   |
+| Date:             | 2017-02-23 13:00 - 13:30                                             |
+| Place:            | Cafeteria, Main building, Berne University of applied sciences, Biel |
+| Involved persons: | Prof. Claude Fuhrer (CF)                                             |
+|                   | Sven Osterwalder (SO)                                                |
+
+Kick-off meeting for the thesis.
+
+**** Presentation and discussion of the current state of work
+
+- Presentation of the workflow. Emacs and Org-Mode is used to write the
+  documentation as well as the actual code. (SO)
+  - This is a very interesting approach. The question remains if the effort of
+    this method does not prevail the method of developing the application and
+    the documentation in parallel. It is important to reach a certain state of
+    the application. Also the report should not exceed around 80 pages. (CF)
+    - A decision about the used method is made until the end of this week. (SO)
+- The code will unit-tested using py.test and / or hypothesis. (SO)
+- Presentation of the structure of the documentation. It follows the schematics
+  of the preceding documentations. (SO)
+
+**** Further steps / proceedings
+
+- The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
+  documentation. The code of the thesis is respected too, but is clearly not the
+  main aspect. (CF)
+- Mr. Dubuis also puts emphasis on code metrics. Therefore the code needs to be
+  (automatically) tested and a coverage of at least 60 to 70 percent must be
+  reached. (CF)
+- A meeting with Mr. Dubuis shall be scheduled at the end of March or beginning
+  of April 2017. (CF)
+- The administrative aspects as well as the scope should be written until end of
+  March 2017 for being able to present them to Mr. Dubuis. (CF)
+- Mr. Dubuis should be asked if the publicly available access to the whole
+  thesis is enough or if he wishes to receive the particular status right before
+  the meetings. (CF)
+- Regularly meetings will be held, but the frequency is to be defined yet.
+  Further information follows per e-mail. (CF)
+- At the beginning of the studies, a workplace at the Berne University of
+  applied sciences in Biel was offered. Is this possibility still available?
+  (SO)
+  - Yes, that possibility is still available and details will be clarified and
+    follow per e-mail. (CF)
+
+**** To do for the next meeting
+
+***** TODO Create GitHub repository for the thesis. (SO)
+
+****** TODO Inform Mr. Fuhrer about the creation of the repository. (SO)
+
+***** TODO Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO) 
+
+***** TODO Set up appointments with Mr. Dubuis (CF)
+
+***** DONE Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
+      CLOSED: [2017-02-24 Fri 07:49]
+
+****** A workplace was found at the RISIS laboratory and may be used instantly. (CF)
+
+***** DONE Decide about the method used for developing this thesis. (SO)
+      CLOSED: [2017-02-24 Fri 16:29]
+
+****** After discussions with a colleague the method of literate programming is
+       kept. The documentation containing the literate program will although be
+       attached as appendix as it most likely will exceed 80 pages. Instead the
+       method will be introduced in the report and the report will be endowed
+       with examples from the literate program.
+
+**** Scheduling of the next meeting
+
+- To be defined

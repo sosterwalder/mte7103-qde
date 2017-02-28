@@ -1,0 +1,4 @@
+* Journal
+
+<2017-02-20 Mon> Initiale Struktur des Dokumentes
+[[#sec:procedure_literate][Foo]]
