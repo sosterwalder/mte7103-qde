@@ -1,4 +1,4 @@
-% Created 2017-03-02 Thu 22:37
+% Created 2017-03-02 Thu 22:55
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -62,12 +62,12 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:orgeccb199}
+\label{sec:orgfe27747}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org2ed9020}
+\label{sec:orga79b7b5}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -76,17 +76,17 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:org886fbb7}
+\label{sec:org47842a1}
 
 \begin{center}
 \begin{tabular}{lll}
 Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{orgcf0e761}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{orge05a87b}claude.fuhrer@bfh.ch}
+\end{center}\footnotetext[1]{\label{orgfb069a2}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org4d7c76a}claude.fuhrer@bfh.ch}
 
 \section{Structure of the documentation}
-\label{sec:orgcd70a95}
+\label{sec:orgba7c0f3}
 
 This thesis is structured as follows:
 
@@ -99,7 +99,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:orga937497}
+\label{sec:orga4d6a54}
 
 \begin{itemize}
 \item Report
@@ -107,43 +107,43 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:org47e46bc}
+\label{sec:orgec5be4d}
 
 \section{Motivation}
-\label{sec:org2e473f6}
+\label{sec:org6f79b69}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:org64e5095}
+\label{sec:org18504e0}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org5d56d0d}
+\label{sec:orgc590963}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:orgd2882be}
+\label{sec:org1e7e825}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:orgbef0d60}
+\label{sec:org7a55ea2}
 \section{Organization of work}
-\label{sec:orgc11a324}
+\label{sec:orge3b6515}
 \subsection{Meetings}
-\label{sec:org4a38f3a}
+\label{sec:orgeb53bc6}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
 The supervisor supported the author of this thesis by providing suggestions
 throughout the held meetings. The minutes of the meetings may be found under
-\label{org3846b6e}.
+\label{org5ea72a4}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:orga4ad2cc}
+\label{sec:org83e5910}
 
 
 \begin{center}
@@ -170,7 +170,7 @@ Defense of the thesis &  & 32\\
 \end{center}
 
 \subsection{Literate programming}
-\label{sec:org761ae29}
+\label{sec:orgd0b865b}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -209,27 +209,27 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:orge461548}
+\label{sec:orga96e158}
 \subsection{Code}
-\label{sec:org029fcec}
+\label{sec:org7381509}
 
 [Code.]
 
 \subsection{Diagrams}
-\label{sec:orgf500ace}
+\label{sec:orgabc6487}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:org360f7d3}
+\label{sec:orgd94cb31}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:orgcfeb7e6}
+\label{sec:orgd2de195}
 
 \section{Requirements}
-\label{sec:org7d9cee3}
+\label{sec:orgc325c28}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -250,7 +250,7 @@ the virtual environment. The available Python versions may be listed as follows.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv install --list
 \end{minted}
-\caption{\label{org579cab3}
+\caption{\label{org0db936b}
 Listing all available versions of Python for use in Pyenv.}
 \end{listing}
 
@@ -261,7 +261,7 @@ installation of version 3.6.0.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 install 3.6.0
 \end{minted}
-\caption{\label{org71b3761}
+\caption{\label{orge7367a0}
 Installation of Python version 3.6.0 for the usage with Pyenv.}
 \end{listing}
 
@@ -276,7 +276,7 @@ of the virtual environment.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv virtualenv 3.6.0 qde
 \end{minted}
-\caption{\label{org645be09}
+\caption{\label{org4e3f2a3}
 Creation of the virtual environment \texttt{qde} for Python using version 3.6.0 of Python.}
 \end{listing}
 
@@ -287,7 +287,7 @@ listed in the file \texttt{python\_requirements.txt} and are installed using \te
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pip install -r python_requirements.txt
 \end{minted}
-\caption{\label{org7e6f3c8}
+\caption{\label{org9a3c9e7}
 Installation of the projects' required dependencies.}
 \end{listing}
 
@@ -295,7 +295,7 @@ All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
 \section{Project structure}
-\label{sec:org06c4f56}
+\label{sec:orgdf6e0d0}
 
 This chapter describes the planned directory structure as well as an instruction
 on how to set up that structure.
@@ -311,7 +311,7 @@ In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
 der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:orgc5a3405}
+\label{sec:orgd87394d}
 
 Der Editor soll sich im Verzeichnis \texttt{editor} unterhalb des \texttt{src/qde}-Verzeichnisses
 befinden.
@@ -374,7 +374,7 @@ Die Klasse zur Protokollierung soll also Folgendes tun:
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 logger_name = "%s.%s" % (cls.__module__, cls.__name__)
 \end{minted}
-\caption{\label{org187da4e}
+\caption{\label{org4c0fe08}
 Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.}
 \end{listing}
 
@@ -383,7 +383,7 @@ Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.}
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 stream_handler = logging.StreamHandler()
 \end{minted}
-\caption{\label{orgfc783ca}
+\caption{\label{orgaeb5dce}
 Initialisieren eines Stream-Handlers.}
 \end{listing}
 
@@ -393,7 +393,7 @@ Initialisieren eines Stream-Handlers.}
 # TODO: Do this according to config.
 stream_handler.setLevel(logging.DEBUG)
 \end{minted}
-\caption{\label{orgaf37712}
+\caption{\label{org99b92eb}
 Setzen des \texttt{DEBUG} Log-Levels.}
 \end{listing}
 
@@ -404,7 +404,7 @@ Setzen des \texttt{DEBUG} Log-Levels.}
 formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
 stream_handler.setFormatter(formatter)
 \end{minted}
-\caption{\label{org5f2e3ea}
+\caption{\label{orge5e37a6}
 Anpassung der Ausgabe von Protokoll-Meldungen.}
 \end{listing}
 
@@ -417,7 +417,7 @@ cls.logger.addHandler(stream_handler)
 
 return cls
 \end{minted}
-\caption{\label{org3f57ab3}
+\caption{\label{orgec61315}
 Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.}
 \end{listing}
 \end{itemize}
@@ -451,7 +451,7 @@ def with_logger(cls):
     <<logger-set-formatter>>
     <<logger-return-logger>>
 \end{minted}
-\caption{\label{orgd9a8781}
+\caption{\label{orgf8da5a6}
 Das \texttt{common}-Modul und eine Methode zur Protokollierung in Klassen.}
 \end{listing}
 
@@ -467,7 +467,7 @@ class QDE(QApplication):
 
   <<app-class-body>>
 \end{minted}
-\caption{\label{org627e224}
+\caption{\label{org4069ad5}
 Definition der Klasse \texttt{Application} mit dem \texttt{with\_logger}-Dekorator des \texttt{common}-Modules.}
 \end{listing}
 
@@ -523,7 +523,7 @@ def setup_logging(self,
     else:
         logging.basicConfig(level=default_level)
 \end{minted}
-\caption{\label{org183d1e4}
+\caption{\label{org294a9b8}
 Methode zum Initialisieren der Protokollierung der Applikation.}
 \end{listing}
 
@@ -547,7 +547,7 @@ Methode zum Initialisieren der Protokollierung der Applikation.}
 
 <<app-project-imports>>
 \end{minted}
-\caption{\label{org1c83ef7}
+\caption{\label{org748c809}
 Definition der Importe des Haupt-Modules.}
 \end{listing}
 
@@ -559,7 +559,7 @@ from   PyQt5.Qt import QIcon
 import logging
 import os
 \end{minted}
-\caption{\label{orgb8719d4}
+\caption{\label{org5504ab0}
 Importe von Python-eigenen Modulen im Haupt-Modul.}
 \end{listing}
 
@@ -568,7 +568,7 @@ Importe von Python-eigenen Modulen im Haupt-Modul.}
 # Project imports
 from qde.editor.foundation import common
 \end{minted}
-\caption{\label{orgd5c3ab0}
+\caption{\label{org5e6eeed}
 Importe von selbst verfassten Modulen im Haupt-Modul.}
 \end{listing}
 
@@ -589,7 +589,7 @@ def __init__(self, arguments):
 
     self.setup_logging()
 \end{minted}
-\caption{\label{org770f684}
+\caption{\label{org7702788}
 Konstruktor des Haupt-Modules.}
 \end{listing}
 
@@ -602,25 +602,30 @@ schliesslich der Klasse hinzugefügt.
 
 <<app-setup-logging>>
 \end{minted}
-\caption{\label{org1244001}
+\caption{\label{org5fdb65c}
 Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.}
 \end{listing}
 
 \chapter{Working log}
-\label{sec:orgdf17598}
+\label{sec:org3798818}
 
 \textit{<2017-02-20 Mon> } Initial set up and structuring of the document.
+\textit{<2017-03-01 Wed> } Remove split files, re-add everything to index, add objectives.
+\textit{<2017-03-02 Thu> } Set up project schedule. Tangle everything instead of doing
+                 things manually. Begin changing language to English instead of
+                 German. Re-add make targets for cleaning and building the
+                 source code.
 
 \chapter{Bibliography}
-\label{sec:org87248af}
+\label{sec:org779111d}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:org1f6994c}
+\label{sec:orgd672a36}
 
 \section{Test cases}
-\label{sec:org4cc26c0}
+\label{sec:org249ed62}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -633,7 +638,7 @@ Als erster Schritt wird der Header des Test-Modules definiert.
 
 """Module for testing QDE class."""
 \end{minted}
-\caption{\label{org5bba854}
+\caption{\label{org6893ab4}
 Header des Test-Modules, \texttt{<<test-app-header>>}.}
 \end{listing}
 
@@ -646,7 +651,7 @@ Start-Argumente mitzugeben, also zum Beispiel:
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 python main.py argument1 argument2
 \end{minted}
-\caption{\label{org99f7f0d}
+\caption{\label{orgd1f84d9}
 Aufruf des Main-Modules mit zwei Argumenten, \texttt{argument1} und \texttt{argument2}.}
 \end{listing}
 
@@ -659,7 +664,7 @@ von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
 
 <<test-app-project-imports>>
 \end{minted}
-\caption{\label{org148d5ae}
+\caption{\label{orge011ad2}
 Definition der Importe für das Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -668,7 +673,7 @@ Definition der Importe für das Modul zum Testen der Applikation.}
 # System imports
 import sys
 \end{minted}
-\caption{\label{org91fba36}
+\caption{\label{org2474af3}
 Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -677,7 +682,7 @@ Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 # Project imports
 from qde.editor.application import application
 \end{minted}
-\caption{\label{orgc9a8396}
+\caption{\label{org60a86c1}
 Importe von selbst verfassten Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -692,7 +697,7 @@ def test_constructor():
     assert app.applicationName() == "QDE"
     assert app.applicationDisplayName() == "QDE"
 \end{minted}
-\caption{\label{orgded7cc3}
+\caption{\label{orgf829b7c}
 Methode zum Testen des Konstruktors der Applikation.}
 \end{listing}
 
@@ -739,7 +744,7 @@ def test_setup_logging_without_arguments():
     assert len(handlers) == 1
     handler = handlers[0]
 \end{minted}
-\caption{\label{org7077535}
+\caption{\label{org5dd740c}
 Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.}
 \end{listing}
 
@@ -750,7 +755,7 @@ entsprechend erweitert werden.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 import logging
 \end{minted}
-\caption{\label{orgbf36df9}
+\caption{\label{org493e1ff}
 Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -760,7 +765,7 @@ Und der Testfall muss den Testfällen hinzugefügt werden.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 <<test-app-test-logging-default>>
 \end{minted}
-\caption{\label{org2d205f7}
+\caption{\label{org2ff7ef3}
 Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -800,7 +805,7 @@ def test_with_logger():
     assert logger.propagate == False
     assert logger.name == name
 \end{minted}
-\caption{\label{org72c710e}
+\caption{\label{org0aa46fa}
 Testfälle der Hilfsmethode zur Protokollierung.}
 \end{listing}
 
@@ -810,10 +815,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:org27bdcac}
+\label{sec:org5cf2c71}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:org2ba6021}
+\label{sec:org6be7799}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -829,7 +834,7 @@ Kick-off meeting for the thesis.
 
 \begin{enumerate}
 \item Presentation and discussion of the current state of work
-\label{sec:orgbf5024b}
+\label{sec:orge2bd94a}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -849,7 +854,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \item Further steps / proceedings
-\label{sec:org3f4272a}
+\label{sec:org6514aca}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -877,42 +882,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \item To do for the next meeting
-\label{sec:org4295c23}
+\label{sec:org6cc4fd1}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:orgfb0506f}
+\label{sec:org09ca879}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:org70cc49d}
+\label{sec:org3e18528}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:org11e6cdf}
+\label{sec:orgef90fcd}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org0140f70}
+\label{sec:orgbc507aa}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
-\label{sec:org7476328}
+\label{sec:org78c1ecc}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org53aa7fb}
+\label{sec:orgae84fa4}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:orgf2230ab}
+\label{sec:org2fdab57}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org900cda5}
+\label{sec:org320804e}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:orgf3283b5}
+\label{sec:orgaddbe7c}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:orge66b260}
+\label{sec:org10d62c4}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -920,11 +925,11 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orgafa863b}
+\label{sec:orga12ede9}
 \end{enumerate}
 
 \item Scheduling of the next meeting
-\label{sec:org0e22edf}
+\label{sec:orgca97a19}
 
 \begin{itemize}
 \item To be defined
