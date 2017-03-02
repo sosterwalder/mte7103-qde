@@ -256,15 +256,14 @@ Im weiteren Verlauf des Dokumentes wird darauf verzichtet diese Dateien explizit
 zu erwähnen, sie werden direkt in den entsprechenden Codeblöcken erstellt und
 als gegeben angesehen.
 
-Nun kann mit der eigentlichen Erstellung des Editors begonnen werden. Wie unter
-<<Implementation>> beschrieben, werden für alle Funktionalitäten erst (Unit-) Tests
-verfasst und erst dann die eigentliche Funktionalität umgesetzt.
+Nun kann mit der eigentlichen Erstellung des Editors begonnen werden.
 
 Der Einstiegspunkt einer Qt-Applikation mit grafischer Oberfläche ist die Klasse
-=QtApplication=. Gemäss [fn:4] kann die Klasse direkt instanziert und benutzt
-werden, es ist unter Umständen jedoch sinnvoller die Klasse zu kapseln, was
-schlussendlich eine höhere Flexibilität bei der Umsetzung bietet. Es soll daher
-die Klasse =Application= erstellt werden, welche diese Abstraktion bietet.
+=QtApplication=. Gemäss [fn:7:http://doc.qt.io/Qt-5/qapplication.html] kann die
+Klasse direkt instanziert und benutzt werden, es ist unter Umständen jedoch
+sinnvoller die Klasse zu kapseln, was schlussendlich eine höhere Flexibilität
+bei der Umsetzung bietet. Es soll daher die Klasse =Application= erstellt
+werden, welche diese Abstraktion bietet.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Erstellung des =application=-Namespaces.
@@ -276,7 +275,8 @@ die Klasse =Application= erstellt werden, welche diese Abstraktion bietet.
 
 An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
 Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
-implementieren, da ein solcher bereits durch Qt vorhanden ist.[fn:5]
+implementieren, da ein solcher bereits durch Qt vorhanden
+ist[fn:8:http://doc.qt.io/Qt-5/qapplication.html#exec].
 
 Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
 initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
@@ -300,16 +300,15 @@ Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
 #+NAME:       fig:editor-foundation-namespace
-#+BEGIN_SRC bash :dir ../.
-mkdir -p src/qde/editor/foundation
-touch src/qde/editor/foundation/__init__.py
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
 #+END_SRC
 
 Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
 Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
 =logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
 werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
-hierfür das Decorator-Pattern von Python an[fn:6].
+hierfür das Decorator-Pattern von Python
+an[fn:9:https://www.python.org/dev/peps/pep-0318/].
 
 Die Klasse zur Protokollierung soll also Folgendes tun:
 
@@ -432,7 +431,8 @@ class QDE(QApplication):
 
 Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
 findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
-Python bietet hierzu vielfältige Möglichkeiten.[fn:7] So kann die
+Python bietet hierzu vielfältige
+Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
 Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
 bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
 Beispiel sehr einfach aus einer JSON-Datei generiert werden.
