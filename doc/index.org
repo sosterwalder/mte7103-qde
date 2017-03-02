@@ -50,126 +50,187 @@
 
 * TODO Administrative aspects
 
-[Administrative aspects].
+Some administrative aspects of this thesis are covered, while they are not
+required for the understanding of the result.
+
+The whole documentation uses the male form, whereby both genera are equally
+meant.
+
+** Involved persons
+
+| Author     | Sven Osterwalder[fn:1:sven.osterwalder@students.bfh.ch] |                                           |
+| Supervisor | Prof. Claude Fuhrer[fn:2:claude.fuhrer@bfh.ch]          | /Supervises the student doing the thesis/ |
+
+** Structure of the documentation
+
+This thesis is structured as follows:
+
+- Introduction
+- Objectives and limitations
+- Procedure
+- Implementation
+- Conclusion
+
+** Deliverable results
+
+- Report
+- Implementation
 
 * TODO Scope
 
-[Scope]
+** Motivation
+
+[Motivation.]
+
+** Objectives and limitations
+
+[Objectives and limitations.]
+
+** Preliminary activities
+
+[Preliminary activities.]
+
+** New learning contents
+
+[New learning contents.]
 
 * TODO Procedure
+** Organization of work
+*** Meetings
 
-- Literate programming
-- Agile
+Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
+reaching the defined goals and preventing erroneous directions of the thesis.
+The supervisor supported the author of this thesis by providing suggestions
+throughout the held meetings. The minutes of the meetings may be found under
+<<Meeting minutes>>.
 
-** Project schedule
-\begin{figure}[H]
-    \begin{ganttchart}[
-        vgrid,
-        x unit=0.4cm,
-        bar/.append style={fill=bfhgrey!50},
-    ]{1}{25}
-        \gantttitle{2017}{25} \ganttnewline{}
-        \gantttitlelist{8,...,32}{1} \ganttnewline{} % chktex 11: Disable "you should use \ldots to achieve.."
-        \ganttbar{Projektstart}{1}{1} \ganttnewline{}
-        \ganttlinkedbar{Anforderungen}{2}{3} \ganttnewline{}
-        \ganttlinkedbar{Erstellung Prototyp}{4}{10} \ganttnewline{}
-        \ganttlinkedbar{Dokumentation}{14}{23} \ganttnewline{}
-        \ganttlinkedbar{Korrekturen}{23}{24} \ganttnewline{}
-        \ganttlinkedmilestone{Abgabe Dokumentation}{24} \ganttnewline{}
-        \ganttbar{Erstellung Prototyp}{23}{23} \ganttnewline{}
-        \ganttbar{Vorbereitung Präsentation/Verteidigung}{24}{25} \ganttnewline{}
-        \ganttmilestone{Präsentation/Verteidigung}{25}
-    \end{ganttchart}
-    \caption{Zeitplan; Der Titel stellt Jahreszahlen, der Untertitel
-    Kalenderwochen dar}\label{fig:timeschedule}
-\end{figure}
+*** Phases of the project and milestones
+
+
+| Phase                                    | Description | Week / 2017 |
+|------------------------------------------+-------------+-------------|
+| Start of the project                     |             |           8 |
+| Definition of objectives and limitations |             |         8-9 |
+| Documentation and development            |             |        8-30 |
+| Corrections                              |             |       30-31 |
+| Preparation of the thesis' defense       |             |       31-32 |
+
+| Milestone                           | Description | End of week / 2017 |
+|-------------------------------------+-------------+--------------------|
+| Project structure is set up         |             |                  8 |
+| Mandatory project goals are reached |             |                 30 |
+| Hand-in of the thesis               |             |                 31 |
+| Defense of the thesis               |             |                 32 |
+
+*** Literate programming
+
+This thesis' implementation is done by a procedure named ``literate
+programming'', invented by Donald Knuth. What this means, is that the
+documentation as well as the code for the resulting program reside in the same
+file. The documentation is then /weaved/ into a separate document, which may be
+any by the editor support format. The code of the program is /tangled/ into a
+run-able computer program.
+
+*************** TODO Provide more information about literate programming.
+                    Citations, explain fragments, explain referencing
+                    fragments, code structure does not have to be ``normal''
+*************** END
+
+  Originally it was planned to develop this thesis' application test driven,
+  providing (unit-) test-cases first and implementing the functionality
+  afterwards. Initial trails showed quickly that this method, in company with
+  literate programming, would exaggerate the effort needed. Therefore conventional
+  testing is used. Test are developed after implementing functionality and run
+  separately. A coverage as high as possible is intended. Test cases are /tangled/
+  too, and may be found in the appendix.
+*************** TODO Insert reference/link to test cases here.
+*************** END
+
+** Standards and principles
+*** Code
+
+ [Code.]
+
+*** Diagrams
+
+ [Diagrams.]
+
+*** Project structure
+
+ [Project structure.]
 
 * TODO Implementation
 
-Die Umsetzung des Projektes findet mittels Literate Programming statt.
-Der Programmcode wird von Grund auf direkt aus dieser Dokumentation erzeugt.
+** Requirements
 
-Den Aufbau betreffend, wird erst die Funktionalität erklärt, dann wird die
-Funktionalität implementiert. (Unit-) Testfälle werden getrennt von dieser
-Dokumentation verfasst und befinden sich im Anhang unter 
-*************** TODO Insert reference/link to test cases here.
-*************** END
-.
+This chapter describes the requirements to extract the source code out of this
+documentation using /tangling/.
 
-Voraussetzungen, um den Programmcode direkt aus dieser Dokumentation zu
-erstellen, sind zum aktuellen Zeitpunkt die folgenden:
+At the current point of time, the requirements are the following:
 
-- Ein Unix-Derivat als Betriebssystem (Linux, macOS)
-- Python in der Version 3.5.x oder höher[fn:1]
-- Pyenv[fn:2]
-- Pyenv-virtualenv[fn:3]
+- A Unix derivative as operating system (Linux, macOS).
+- Python version 3.5.x or up[fn:3:https://www.python.org].
+- Pyenv[fn:4:https://github.com/yyuu/pyenv].
+- Pyenv-virtualenv[fn:5:https://github.com/yyuu/pyenv-virtualenv].
 
-Als erster Schritt wird eine passende Version von Python für virtualenv
-installiert. Die verfügbaren Versionen lassen sich wie folgt anzeigen.
+The first step is to install a matching version of python for the usage within
+the virtual environment. The available Python versions may be listed as follows.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Anzeige der verfügbaren Python-Versionen für Pyenv.
+#+CAPTION:    Listing all available versions of Python for use in Pyenv.
 #+NAME:       fig:impl-pyenv-list
 #+BEGIN_SRC bash :results output silent
 pyenv install --list
 #+END_SRC
 
-Die gewünschte Version wird wie folgt installiert. In diesem Beispiel handelt es
-sich um Version 3.6.0.
+The desired version may be installed as follows. This example shows the
+installation of version 3.6.0.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Installation von Python in der Version 3.6.0 für Pyenv.
+#+CAPTION:    Installation of Python version 3.6.0 for the usage with Pyenv.
 #+NAME:       fig:impl-pyenv-install
 #+BEGIN_SRC bash :dir ../.
 install 3.6.0
 #+END_SRC
 
-Es empfiehlt sich für das Projekt eine eigene, virtuelle Umgebung für Python zu
-erstellen. Darin werden alle Abhängigkeiten installiert und somit werden
-die Python-Pakete des Betriebsystem nicht kompromitiert. Es wird zuerst die
-gewünschte (und zuvor installierte) Version, dann der gewünschte Name der
-virtuellen Umgebung angegeben.
+It is highly recommended to create and use a project-specific virtual Python
+environment. All packages, that are required for this project are installed
+within this virtual environment protecting the operating systems' Python
+packages.
+First the desired version of Python has to be specified, then the desired name
+of the virtual environment.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung einer virtuellen Python-Umgebung mit Python Version 3.6.0.
+#+CAPTION:    Creation of the virtual environment =qde= for Python using version 3.6.0 of Python.
 #+NAME:       fig:impl-pyenv-venv
 #+BEGIN_SRC bash :dir ../.
 pyenv virtualenv 3.6.0 qde
 #+END_SRC
 
-Nun können die benötigten Abhängigkeiten für das Projekt problemlos installiert
-werden. Diese befinden sich in der Datei =python_requirements.txt= und werden
-mittels =pip= installiert.
+All required dependencies for the project may now safely be installed. Those are
+listed in the file =python_requirements.txt= and are installed using =pip=.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Installation der benötigten Abhängigkeiten des Projektes.
+#+CAPTION:    Installation of the projects' required dependencies.
 #+NAME:       fig:impl-pip-install
 #+BEGIN_SRC bash :dir ../.
 pip install -r python_requirements.txt
 #+END_SRC
 
-Somit sind nun alle Voraussetzungen erfüllt und die eigentliche Umsetzung kann
-beginnen.
+All requirements and dependencies are now met and the actual implementation of
+the project may begin now.
 
-Der gesamte Programmcode soll im Verzeichnis =src= unterhalb des
-Hauptverzeichnisses liegen.
+** Project structure
 
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung des /src/-Unterverzeichnisses.
-#+NAME:       fig:impl-mkdir-src
-#+BEGIN_SRC bash :dir ../.
-  mkdir -p src
-#+END_SRC
+This chapter describes the planned directory structure as well as an instruction
+on how to set up that structure.
 
-Um zu verhindern, dass mehrere Module denselben Namen verwenden, werden
-Namespaces verwendet.[fn:8] Der Haupt-Namespace des Projektes soll =qde= lauten.
+The whole source code shall be placed in the =src= directory underneath the main
+directory.
 
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung des =qde=-Namespaces.
-#+NAME:       fig:impl-mkdir-qde
-#+BEGIN_SRC bash :dir ../.
-mkdir -p src/qde
-#+END_SRC
+To prevent multiple modules having the same name, name spaces are
+used[fn:6:https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces].
+The main name space shall be analogous to the projects' name: =qde=.
 
 In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
 der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
