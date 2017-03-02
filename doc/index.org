@@ -811,13 +811,21 @@ Kick-off meeting for the thesis.
 
 **** To do for the next meeting
 
-***** TODO Create GitHub repository for the thesis. (SO)
+***** DONE Create GitHub repository for the thesis. (SO)
+      CLOSED: [2017-03-01 Wed 08:45]
 
-****** TODO Inform Mr. Fuhrer about the creation of the repository. (SO)
+****** DONE Inform Mr. Fuhrer about the creation of the repository. (SO)
+       CLOSED: [2017-03-01 Wed 08:46]
 
-***** TODO Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO) 
+***** DONE Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
+      CLOSED: [2017-03-01 Wed 08:46]
 
-***** TODO Set up appointments with Mr. Dubuis (CF)
+****** TODO Await answer of Mr. Dubuis (ED)
+
+***** DONE Set up appointments with Mr. Dubuis (CF)
+      CLOSED: [2017-02-27 Tue 15:21]
+
+****** TODO Await answer of Mr. Dubuis (ED)
 
 ***** DONE Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
       CLOSED: [2017-02-24 Fri 07:49]
@@ -832,6 +840,9 @@ Kick-off meeting for the thesis.
        attached as appendix as it most likely will exceed 80 pages. Instead the
        method will be introduced in the report and the report will be endowed
        with examples from the literate program.
+
+***** TODO Describe procedure and set up a time schedule including milestones. (SO)
+      DEADLINE: <2017-03-31 Fri>
 
 **** Scheduling of the next meeting
 
