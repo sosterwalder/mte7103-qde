@@ -1,4 +1,4 @@
-% Created 2017-02-28 Tue 16:58
+% Created 2017-03-02 Thu 22:37
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -62,61 +62,143 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:org780c5e7}
+\label{sec:orgeccb199}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org9790706}
+\label{sec:org2ed9020}
 
-[Administrative aspects].
+Some administrative aspects of this thesis are covered, while they are not
+required for the understanding of the result.
 
-\chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgdf9a84f}
+The whole documentation uses the male form, whereby both genera are equally
+meant.
 
-[Scope]
+\section{Involved persons}
+\label{sec:org886fbb7}
 
-\chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org5dc2502}
+\begin{center}
+\begin{tabular}{lll}
+Author & Sven Osterwalder\footnotemark & \\
+Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
+\end{tabular}
+\end{center}\footnotetext[1]{\label{orgcf0e761}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{orge05a87b}claude.fuhrer@bfh.ch}
+
+\section{Structure of the documentation}
+\label{sec:orgcd70a95}
+
+This thesis is structured as follows:
 
 \begin{itemize}
-\item Literate programming
-\item Agile
+\item Introduction
+\item Objectives and limitations
+\item Procedure
+\item Implementation
+\item Conclusion
 \end{itemize}
 
-\section{Project schedule}
-\label{sec:org22276dc}
-\begin{figure}[H]
-    \begin{ganttchart}[
-        vgrid,
-        x unit=0.4cm,
-        bar/.append style={fill=bfhgrey!50},
-    ]{1}{25}
-        \gantttitle{2017}{25} \ganttnewline{}
-        \gantttitlelist{8,...,32}{1} \ganttnewline{} % chktex 11: Disable "you should use \ldots to achieve.."
-        \ganttbar{Projektstart}{1}{1} \ganttnewline{}
-        \ganttlinkedbar{Anforderungen}{2}{3} \ganttnewline{}
-        \ganttlinkedbar{Erstellung Prototyp}{4}{10} \ganttnewline{}
-        \ganttlinkedbar{Dokumentation}{14}{23} \ganttnewline{}
-        \ganttlinkedbar{Korrekturen}{23}{24} \ganttnewline{}
-        \ganttlinkedmilestone{Abgabe Dokumentation}{24} \ganttnewline{}
-        \ganttbar{Erstellung Prototyp}{23}{23} \ganttnewline{}
-        \ganttbar{Vorbereitung Präsentation/Verteidigung}{24}{25} \ganttnewline{}
-        \ganttmilestone{Präsentation/Verteidigung}{25}
-    \end{ganttchart}
-    \caption{Zeitplan; Der Titel stellt Jahreszahlen, der Untertitel
-    Kalenderwochen dar}\label{fig:timeschedule}
-\end{figure}
+\section{Deliverable results}
+\label{sec:orga937497}
 
-\chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:org756301f}
+\begin{itemize}
+\item Report
+\item Implementation
+\end{itemize}
 
-Die Umsetzung des Projektes findet mittels Literate Programming statt.
-Der Programmcode wird von Grund auf direkt aus dieser Dokumentation erzeugt.
+\chapter{{\bfseries\sffamily TODO} Scope}
+\label{sec:org47e46bc}
 
-Den Aufbau betreffend, wird erst die Funktionalität erklärt, dann wird die
-Funktionalität implementiert. (Unit-) Testfälle werden getrennt von dieser
-Dokumentation verfasst und befinden sich im Anhang unter 
+\section{Motivation}
+\label{sec:org2e473f6}
+
+[Motivation.]
+
+\section{Objectives and limitations}
+\label{sec:org64e5095}
+
+[Objectives and limitations.]
+
+\section{Preliminary activities}
+\label{sec:org5d56d0d}
+
+[Preliminary activities.]
+
+\section{New learning contents}
+\label{sec:orgd2882be}
+
+[New learning contents.]
+
+\chapter{{\bfseries\sffamily TODO} Procedure}
+\label{sec:orgbef0d60}
+\section{Organization of work}
+\label{sec:orgc11a324}
+\subsection{Meetings}
+\label{sec:org4a38f3a}
+
+Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
+reaching the defined goals and preventing erroneous directions of the thesis.
+The supervisor supported the author of this thesis by providing suggestions
+throughout the held meetings. The minutes of the meetings may be found under
+\label{org3846b6e}.
+
+\subsection{Phases of the project and milestones}
+\label{sec:orga4ad2cc}
+
+
+\begin{center}
+\begin{tabular}{llr}
+Phase & Description & Week / 2017\\
+\hline
+Start of the project &  & 8\\
+Definition of objectives and limitations &  & 8-9\\
+Documentation and development &  & 8-30\\
+Corrections &  & 30-31\\
+Preparation of the thesis' defense &  & 31-32\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llr}
+Milestone & Description & End of week / 2017\\
+\hline
+Project structure is set up &  & 8\\
+Mandatory project goals are reached &  & 30\\
+Hand-in of the thesis &  & 31\\
+Defense of the thesis &  & 32\\
+\end{tabular}
+\end{center}
+
+\subsection{Literate programming}
+\label{sec:org761ae29}
+
+This thesis' implementation is done by a procedure named ``literate
+programming'', invented by Donald Knuth. What this means, is that the
+documentation as well as the code for the resulting program reside in the same
+file. The documentation is then \emph{weaved} into a separate document, which may be
+any by the editor support format. The code of the program is \emph{tangled} into a
+run-able computer program.
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+\textbf{\textsf{\textsc{TODO}}} Provide more information about literate programming.
+
+\rule[.8em]{\textwidth}{2pt}
+
+Citations, explain fragments, explain referencing
+fragments, code structure does not have to be ``normal''
+\end{minipage}
+}
+\end{center}
+
+Originally it was planned to develop this thesis' application test driven,
+providing (unit-) test-cases first and implementing the functionality
+afterwards. Initial trails showed quickly that this method, in company with
+literate programming, would exaggerate the effort needed. Therefore conventional
+testing is used. Test are developed after implementing functionality and run
+separately. A coverage as high as possible is intended. Test cases are \emph{tangled}
+too, and may be found in the appendix.
 \begin{center}
 \fbox{
 \begin{minipage}[c]{.6\textwidth}
@@ -125,107 +207,114 @@ Dokumentation verfasst und befinden sich im Anhang unter
 \end{minipage}
 }
 \end{center}
-.
 
-Voraussetzungen, um den Programmcode direkt aus dieser Dokumentation zu
-erstellen, sind zum aktuellen Zeitpunkt die folgenden:
+\section{Standards and principles}
+\label{sec:orge461548}
+\subsection{Code}
+\label{sec:org029fcec}
+
+[Code.]
+
+\subsection{Diagrams}
+\label{sec:orgf500ace}
+
+[Diagrams.]
+
+\subsection{Project structure}
+\label{sec:org360f7d3}
+
+[Project structure.]
+
+\chapter{{\bfseries\sffamily TODO} Implementation}
+\label{sec:orgcfeb7e6}
+
+\section{Requirements}
+\label{sec:org7d9cee3}
+
+This chapter describes the requirements to extract the source code out of this
+documentation using \emph{tangling}.
+
+At the current point of time, the requirements are the following:
 
 \begin{itemize}
-\item Ein Unix-Derivat als Betriebssystem (Linux, macOS)
-\item Python in der Version 3.5.x oder höher\footnote{\url{https://www.python.org}}
-\item Pyenv\footnote{\url{https://github.com/yyuu/pyenv}}
-\item Pyenv-virtualenv\footnote{\url{https://github.com/yyuu/pyenv-virtualenv}}
+\item A Unix derivative as operating system (Linux, macOS).
+\item Python version 3.5.x or up\footnote{\url{https://www.python.org}}.
+\item Pyenv\footnote{\url{https://github.com/yyuu/pyenv}}.
+\item Pyenv-virtualenv\footnote{\url{https://github.com/yyuu/pyenv-virtualenv}}.
 \end{itemize}
 
-Als erster Schritt wird eine passende Version von Python für virtualenv
-installiert. Die verfügbaren Versionen lassen sich wie folgt anzeigen.
+The first step is to install a matching version of python for the usage within
+the virtual environment. The available Python versions may be listed as follows.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv install --list
 \end{minted}
-\caption{\label{org9795c64}
-Anzeige der verfügbaren Python-Versionen für Pyenv.}
+\caption{\label{org579cab3}
+Listing all available versions of Python for use in Pyenv.}
 \end{listing}
 
-Die gewünschte Version wird wie folgt installiert. In diesem Beispiel handelt es
-sich um Version 3.6.0.
+The desired version may be installed as follows. This example shows the
+installation of version 3.6.0.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 install 3.6.0
 \end{minted}
-\caption{\label{org472a03d}
-Installation von Python in der Version 3.6.0 für Pyenv.}
+\caption{\label{org71b3761}
+Installation of Python version 3.6.0 for the usage with Pyenv.}
 \end{listing}
 
-Es empfiehlt sich für das Projekt eine eigene, virtuelle Umgebung für Python zu
-erstellen. Darin werden alle Abhängigkeiten installiert und somit werden
-die Python-Pakete des Betriebsystem nicht kompromitiert. Es wird zuerst die
-gewünschte (und zuvor installierte) Version, dann der gewünschte Name der
-virtuellen Umgebung angegeben.
+It is highly recommended to create and use a project-specific virtual Python
+environment. All packages, that are required for this project are installed
+within this virtual environment protecting the operating systems' Python
+packages.
+First the desired version of Python has to be specified, then the desired name
+of the virtual environment.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv virtualenv 3.6.0 qde
 \end{minted}
-\caption{\label{org87cd85f}
-Erstellung einer virtuellen Python-Umgebung mit Python Version 3.6.0.}
+\caption{\label{org645be09}
+Creation of the virtual environment \texttt{qde} for Python using version 3.6.0 of Python.}
 \end{listing}
 
-Nun können die benötigten Abhängigkeiten für das Projekt problemlos installiert
-werden. Diese befinden sich in der Datei \texttt{python\_requirements.txt} und werden
-mittels \texttt{pip} installiert.
+All required dependencies for the project may now safely be installed. Those are
+listed in the file \texttt{python\_requirements.txt} and are installed using \texttt{pip}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pip install -r python_requirements.txt
 \end{minted}
-\caption{\label{orgd7beb0a}
-Installation der benötigten Abhängigkeiten des Projektes.}
+\caption{\label{org7e6f3c8}
+Installation of the projects' required dependencies.}
 \end{listing}
 
-Somit sind nun alle Voraussetzungen erfüllt und die eigentliche Umsetzung kann
-beginnen.
+All requirements and dependencies are now met and the actual implementation of
+the project may begin now.
 
-Der gesamte Programmcode soll im Verzeichnis \texttt{src} unterhalb des
-Hauptverzeichnisses liegen.
+\section{Project structure}
+\label{sec:org06c4f56}
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-mkdir -p src
-\end{minted}
-\caption{\label{orge0b3285}
-Erstellung des \emph{src}-Unterverzeichnisses.}
-\end{listing}
+This chapter describes the planned directory structure as well as an instruction
+on how to set up that structure.
 
-Um zu verhindern, dass mehrere Module denselben Namen verwenden, werden
-Namespaces verwendet.\footnote{\url{https://docs.python.org/3/tutorial/classes.html\#python-scopes-and-namespaces}} Der Haupt-Namespace des Projektes soll \texttt{qde} lauten.
+The whole source code shall be placed in the \texttt{src} directory underneath the main
+directory.
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-mkdir -p src/qde
-\end{minted}
-\caption{\label{org2076295}
-Erstellung des \texttt{qde}-Namespaces.}
-\end{listing}
+To prevent multiple modules having the same name, name spaces are
+used\footnote{\url{https://docs.python.org/3/tutorial/classes.html\#python-scopes-and-namespaces}}.
+The main name space shall be analogous to the projects' name: \texttt{qde}.
 
 In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
 der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:orgbd196cd}
+\label{sec:orgc5a3405}
 
 Der Editor soll sich im Verzeichnis \texttt{editor} unterhalb des \texttt{src/qde}-Verzeichnisses
 befinden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-mkdir -p src/qde/editor
-\end{minted}
-\caption{\label{org414c284}
-Erstellung des \texttt{editor}-Namespaces.}
-\end{listing}
 
 Um sicherzustellen, dass Module als solche verwendet werden können, muss pro
 Modul und Namespace eine Datei zur Initialisierung vorhanden sein. Es handelt sich
@@ -233,37 +322,305 @@ dabei um Dateien namens \texttt{\_\_init\_\_.py}, welche im minimalen Fall leer 
 können aber auch regulären Programmcode, wie zum Beispiel Klassen oder Methoden
 enthalten.
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-touch src/qde/__init__.py
-touch src/qde/editor/__init__.py
-\end{minted}
-\caption{\label{orgfedb1e7}
-Erstellung des \texttt{qde}-Namespaces und des \texttt{editor}-Namespaces.}
-\end{listing}
-
 Im weiteren Verlauf des Dokumentes wird darauf verzichtet diese Dateien explizit
 zu erwähnen, sie werden direkt in den entsprechenden Codeblöcken erstellt und
 als gegeben angesehen.
 
-Nun kann mit der eigentlichen Erstellung des Editors begonnen werden. Wie unter
-\label{org4593466} beschrieben, werden für alle Funktionalitäten erst (Unit-) Tests
-verfasst und erst dann die eigentliche Funktionalität umgesetzt.
+Nun kann mit der eigentlichen Erstellung des Editors begonnen werden.
 
 Der Einstiegspunkt einer Qt-Applikation mit grafischer Oberfläche ist die Klasse
-\texttt{QtApplication}. Gemäss \footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} kann die Klasse direkt instanziert und benutzt
-werden, es ist unter Umständen jedoch sinnvoller die Klasse zu kapseln, was
-schlussendlich eine höhere Flexibilität bei der Umsetzung bietet. Es soll daher
-die Klasse \texttt{Application} erstellt werden, welche diese Abstraktion bietet.
+\texttt{QtApplication}. Gemäss \footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} kann die
+Klasse direkt instanziert und benutzt werden, es ist unter Umständen jedoch
+sinnvoller die Klasse zu kapseln, was schlussendlich eine höhere Flexibilität
+bei der Umsetzung bietet. Es soll daher die Klasse \texttt{Application} erstellt
+werden, welche diese Abstraktion bietet.
+
+An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
+Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
+implementieren, da ein solcher bereits durch Qt vorhanden
+ist\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html\#exec}}.
+
+Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
+initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
+verschiedenen Ebenen der Architektur, indem es diese mittels Signalen
+verbindet.\cite[S. 37 bis 38]{osterwalder_qde_2016}
+
+Weiter soll es nützliche Schnittstellen, wie zum Beispiel das Protokollieren
+von Meldungen, bereitstellen. Und schliesslich soll das Modul eine Möglichkeit
+bieten beim Verlassen der Applikation zusätzliche Aufgaben, wie etwa das
+Entfernen von temporären Dateien, zu bieten.
+
+Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
+gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
+Schritt ein Modul zur Protokollierung zu implementieren.
+Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
+Namespace \texttt{foundation} erstellt.
+
+Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
+Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
+
+Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
+Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
+\texttt{logging}-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
+werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
+hierfür das Decorator-Pattern von Python
+an\footnote{\url{https://www.python.org/dev/peps/pep-0318/}}.
+
+Die Klasse zur Protokollierung soll also Folgendes tun:
+
+\begin{itemize}
+\item Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+logger_name = "%s.%s" % (cls.__module__, cls.__name__)
+\end{minted}
+\caption{\label{org187da4e}
+Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.}
+\end{listing}
+
+\item Einen Stream-Handler nutzen
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+stream_handler = logging.StreamHandler()
+\end{minted}
+\caption{\label{orgfc783ca}
+Initialisieren eines Stream-Handlers.}
+\end{listing}
+
+\item Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# TODO: Do this according to config.
+stream_handler.setLevel(logging.DEBUG)
+\end{minted}
+\caption{\label{orgaf37712}
+Setzen des \texttt{DEBUG} Log-Levels.}
+\end{listing}
+
+\item Protokoll-Einträge ansprechend formatieren
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# TODO: Set up formatter in debug mode only
+formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
+stream_handler.setFormatter(formatter)
+\end{minted}
+\caption{\label{org5f2e3ea}
+Anpassung der Ausgabe von Protokoll-Meldungen.}
+\end{listing}
+
+\item Eine einfache Schnittstelle zur Protokollierung bieten
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+cls.logger = logging.getLogger(logger_name)
+cls.logger.propagate = False
+cls.logger.addHandler(stream_handler)
+
+return cls
+\end{minted}
+\caption{\label{org3f57ab3}
+Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.}
+\end{listing}
+\end{itemize}
+
+Nun kann die eigentliche Funktionalität implementiert werden.
 
 \begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-mkdir -p src/qde/editor/application
-touch src/qde/editor/application/__init__.py
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+import logging
+
+
+def with_logger(cls):
+    """Add a logger instance (using a steam handler) to the given class
+    instance.
+
+    :param cls: the class which the logger shall be added to
+    :type  cls: a class of type cls
+
+    :return: the class type with the logger instance added
+    :rtype:  a class of type cls
+    """
+
+    <<logger-name>>
+    <<logger-stream-handler>>
+    <<logger-set-level>>
+    <<logger-set-formatter>>
+    <<logger-return-logger>>
 \end{minted}
-\caption{\label{orgab9f768}
-Erstellung des \texttt{application}-Namespaces.}
+\caption{\label{orgd9a8781}
+Das \texttt{common}-Modul und eine Methode zur Protokollierung in Klassen.}
 \end{listing}
+
+
+Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
+werden.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+@common.with_logger
+class QDE(QApplication):
+  """Main application for QDE."""
+
+  <<app-class-body>>
+\end{minted}
+\caption{\label{org627e224}
+Definition der Klasse \texttt{Application} mit dem \texttt{with\_logger}-Dekorator des \texttt{common}-Modules.}
+\end{listing}
+
+Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
+findet, muss diese entsprechend konfiguriert werden. Das \emph{logging}-Modul von
+Python bietet hierzu vielfältige
+Möglichkeiten.\footnote{\url{https://docs.python.org/3/library/logging.html}} So kann die
+Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
+bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
+Beispiel sehr einfach aus einer JSON-Datei generiert werden.
+
+Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
+\begin{itemize}
+\item Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
+Standardkonfiguration, welche von Python mittels \texttt{basicConfig} vorgegeben
+wird.
+\item Als Name für die JSON-Datei wird \texttt{logging.json} angenommen.
+\item Ist in den Umgebungsvariablen des Betriebssystems die Variable \emph{LOG\_CFG}
+gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
+angenommen, dass sich die Datei \texttt{logging.json} im Hauptverzeichnis befindet.
+\item Existiert die JSON-Konfigurationsdatei nicht, wird auf die
+Standardkonfiguration zurückgegeriffen.
+\item Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
+zum Filtern der verschiedenen Protokollnachrichten.
+\end{itemize}
+
+Die Haupt-Applikation nimmt also die Parameter \texttt{Pfad}, \texttt{Protokollierungsstufe}
+sowie \texttt{Umgebungsvariable} entgegen.
+
+Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
+umgesetzt und der Klasse hinzugefügt werden.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def setup_logging(self,
+    default_path='logging.json',
+    default_level=logging.INFO,
+    env_key='LOG_CFG'
+):
+    """Setup logging configuration"""
+
+    path = default_path
+    value = os.getenv(env_key, None)
+
+    if value:
+        path = value
+
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+
+            config = json.load(f)
+            logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
+\end{minted}
+\caption{\label{org183d1e4}
+Methode zum Initialisieren der Protokollierung der Applikation.}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# -*- coding: utf-8 -*-
+
+"""Main application module for QDE."""
+
+<<app-imports>>
+
+<<app-class-definition>>
+\end{minted}
+\caption{Haupt-Modul und Einstiegspunkt der Applikation.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<app-system-imports>>
+
+<<app-project-imports>>
+\end{minted}
+\caption{\label{org1c83ef7}
+Definition der Importe des Haupt-Modules.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# System imports
+from   PyQt5.Qt import QApplication
+from   PyQt5.Qt import QIcon
+import logging
+import os
+\end{minted}
+\caption{\label{orgb8719d4}
+Importe von Python-eigenen Modulen im Haupt-Modul.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# Project imports
+from qde.editor.foundation import common
+\end{minted}
+\caption{\label{orgd5c3ab0}
+Importe von selbst verfassten Modulen im Haupt-Modul.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def __init__(self, arguments):
+    """Constructor.
+
+    :param arguments: a (variable) list of arguments, that are
+                      passed when calling this class.
+    :type  argv:      list
+    """
+
+    super(QDE, self).__init__(arguments)
+    self.setWindowIcon(QIcon("assets/icons/im.png"))
+    self.setApplicationName("QDE")
+    self.setApplicationDisplayName("QDE")
+
+    self.setup_logging()
+\end{minted}
+\caption{\label{org770f684}
+Konstruktor des Haupt-Modules.}
+\end{listing}
+
+Der Konstruktor und die Methode zum Einrichten der Protokollierung werden
+schliesslich der Klasse hinzugefügt.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<app-constructor>>
+
+<<app-setup-logging>>
+\end{minted}
+\caption{\label{org1244001}
+Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.}
+\end{listing}
+
+\chapter{Working log}
+\label{sec:orgdf17598}
+
+\textit{<2017-02-20 Mon> } Initial set up and structuring of the document.
+
+\chapter{Bibliography}
+\label{sec:org87248af}
+
+\printbibliography{}
+
+\chapter{Appendix}
+\label{sec:org1f6994c}
+
+\section{Test cases}
+\label{sec:org4cc26c0}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -276,7 +633,7 @@ Als erster Schritt wird der Header des Test-Modules definiert.
 
 """Module for testing QDE class."""
 \end{minted}
-\caption{\label{org0a773af}
+\caption{\label{org5bba854}
 Header des Test-Modules, \texttt{<<test-app-header>>}.}
 \end{listing}
 
@@ -289,7 +646,7 @@ Start-Argumente mitzugeben, also zum Beispiel:
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 python main.py argument1 argument2
 \end{minted}
-\caption{\label{orge386b83}
+\caption{\label{org99f7f0d}
 Aufruf des Main-Modules mit zwei Argumenten, \texttt{argument1} und \texttt{argument2}.}
 \end{listing}
 
@@ -302,7 +659,7 @@ von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
 
 <<test-app-project-imports>>
 \end{minted}
-\caption{\label{orgd0c4720}
+\caption{\label{org148d5ae}
 Definition der Importe für das Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -311,7 +668,7 @@ Definition der Importe für das Modul zum Testen der Applikation.}
 # System imports
 import sys
 \end{minted}
-\caption{\label{orgc47d531}
+\caption{\label{org91fba36}
 Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -320,7 +677,7 @@ Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 # Project imports
 from qde.editor.application import application
 \end{minted}
-\caption{\label{org3328d5d}
+\caption{\label{orgc9a8396}
 Importe von selbst verfassten Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -335,7 +692,7 @@ def test_constructor():
     assert app.applicationName() == "QDE"
     assert app.applicationDisplayName() == "QDE"
 \end{minted}
-\caption{\label{org9c90a6f}
+\caption{\label{orgded7cc3}
 Methode zum Testen des Konstruktors der Applikation.}
 \end{listing}
 
@@ -366,99 +723,46 @@ python -m pytest qde/editor/application/test_application.py
 \caption{Aufruf zum Testen des Applkations-Modules.}
 \end{listing}
 
-An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
-Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
-implementieren, da ein solcher bereits durch Qt vorhanden ist.\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html\#exec}}
+Um sicherzustellen, dass die Protokollierung wie gewünscht funktioniert, wird
+diese durch die entsprechenden Testfälle abgedeckt.
 
-Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
-initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
-verschiedenen Ebenen der Architektur, indem es diese mittels Signalen
-verbindet.\cite[S. 37 bis 38]{osterwalder_qde_2016}
+Der einfachste Testfall ist die Standardkonfiguration, also ein Aufruf ohne
+Parameter.
 
-Weiter soll es nützliche Schnittstellen, wie zum Beispiel das Protokollieren
-von Meldungen, bereitstellen. Und schliesslich soll das Modul eine Möglichkeit
-bieten beim Verlassen der Applikation zusätzliche Aufgaben, wie etwa das
-Entfernen von temporären Dateien, zu bieten.
-
-Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
-gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
-Schritt ein Modul zur Protokollierung zu implementieren.
-Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
-Namespace \texttt{foundation} erstellt.
-
-Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
-Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-mkdir -p src/qde/editor/foundation
-touch src/qde/editor/foundation/__init__.py
-\end{minted}
-\caption{\label{orgb1158ab}
-Erstellung und Initialisierung des \texttt{foundation}-Namespaces.}
-\end{listing}
-
-Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
-Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
-\texttt{logging}-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
-werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
-hierfür das Decorator-Pattern von Python an\footnote{\url{https://www.python.org/dev/peps/pep-0318/}}.
-
-Die Klasse zur Protokollierung soll also Folgendes tun:
-
-\begin{itemize}
-\item Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-logger_name = "%s.%s" % (cls.__module__, cls.__name__)
+def test_setup_logging_without_arguments():
+    """Test logging of QDE application without arguments."""
+    app = application.QDE(sys.argv)
+    root_logger = logging.root
+    handlers = root_logger.handlers
+    assert len(handlers) == 1
+    handler = handlers[0]
 \end{minted}
-\caption{\label{org16a7d85}
-Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.}
+\caption{\label{org7077535}
+Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.}
 \end{listing}
 
-\item Einen Stream-Handler nutzen
+Da obige Testfälle das \emph{logging}-Module benötigen, muss das Importieren der Module
+entsprechend erweitert werden.
+
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-stream_handler = logging.StreamHandler()
+import logging
 \end{minted}
-\caption{\label{org701ba1e}
-Initialisieren eines Stream-Handlers.}
+\caption{\label{orgbf36df9}
+Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
-\item Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
+Und der Testfall muss den Testfällen hinzugefügt werden.
+
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# TODO: Do this according to config.
-stream_handler.setLevel(logging.DEBUG)
+<<test-app-test-logging-default>>
 \end{minted}
-\caption{\label{orgffe05ce}
-Setzen des \texttt{DEBUG} Log-Levels.}
+\caption{\label{org2d205f7}
+Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.}
 \end{listing}
-
-\item Protokoll-Einträge ansprechend formatieren
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# TODO: Set up formatter in debug mode only
-formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
-stream_handler.setFormatter(formatter)
-\end{minted}
-\caption{\label{orgd93397b}
-Anpassung der Ausgabe von Protokoll-Meldungen.}
-\end{listing}
-
-\item Eine einfache Schnittstelle zur Protokollierung bieten
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-cls.logger = logging.getLogger(logger_name)
-cls.logger.propagate = False
-cls.logger.addHandler(stream_handler)
-
-return cls
-\end{minted}
-\caption{\label{org0515601}
-Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.}
-\end{listing}
-\end{itemize}
 
 Auch hierfür werden wiederum zuerst die Testfälle verfasst.
 
@@ -496,7 +800,7 @@ def test_with_logger():
     assert logger.propagate == False
     assert logger.name == name
 \end{minted}
-\caption{\label{org2e5ec0d}
+\caption{\label{org72c710e}
 Testfälle der Hilfsmethode zur Protokollierung.}
 \end{listing}
 
@@ -504,265 +808,12 @@ Testfälle der Hilfsmethode zur Protokollierung.}
 python -m pytest qde/editor/foundation/test_common.py
 \end{minted}
 
-Nun kann die eigentliche Funktionalität implementiert werden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# -*- coding: utf-8 -*-
-
-"""Module holding common helper methods."""
-
-# System imports
-import logging
-
-
-def with_logger(cls):
-    """Add a logger instance (using a steam handler) to the given class
-    instance.
-
-    :param cls: the class which the logger shall be added to
-    :type  cls: a class of type cls
-
-    :return: the class type with the logger instance added
-    :rtype:  a class of type cls
-    """
-
-    <<logger-name>>
-    <<logger-stream-handler>>
-    <<logger-set-level>>
-    <<logger-set-formatter>>
-    <<logger-return-logger>>
-\end{minted}
-\caption{\label{org0ebe6ad}
-Das \texttt{common}-Modul und eine Methode zur Protokollierung in Klassen.}
-\end{listing}
-
-Führt man nun die Testfälle erneut aus, so schlagen diese nicht mehr fehl.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-python -m pytest qde/editor/foundation/test_common.py
-\end{minted}
-\caption{Ausführen der Testfälle für das \texttt{common}-Modul.}
-\end{listing}
-
-Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
-werden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-@common.with_logger
-class QDE(QApplication):
-  """Main application for QDE."""
-
-  <<app-class-body>>
-\end{minted}
-\caption{\label{org598e769}
-Definition der Klasse \texttt{Application} mit dem \texttt{with\_logger}-Dekorator des \texttt{common}-Modules.}
-\end{listing}
-
-Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
-findet, muss diese entsprechend konfiguriert werden. Das \emph{logging}-Modul von
-Python bietet hierzu vielfältige Möglichkeiten.\footnote{\url{https://docs.python.org/3/library/logging.html}} So kann die
-Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
-bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
-Beispiel sehr einfach aus einer JSON-Datei generiert werden.
-
-Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
-\begin{itemize}
-\item Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
-Standardkonfiguration, welche von Python mittels \texttt{basicConfig} vorgegeben
-wird.
-\item Als Name für die JSON-Datei wird \texttt{logging.json} angenommen.
-\item Ist in den Umgebungsvariablen des Betriebssystems die Variable \emph{LOG\_CFG}
-gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
-angenommen, dass sich die Datei \texttt{logging.json} im Hauptverzeichnis befindet.
-\item Existiert die JSON-Konfigurationsdatei nicht, wird auf die
-Standardkonfiguration zurückgegeriffen.
-\item Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
-zum Filtern der verschiedenen Protokollnachrichten.
-\end{itemize}
-
-Die Haupt-Applikation nimmt also die Parameter \texttt{Pfad}, \texttt{Protokollierungsstufe}
-sowie \texttt{Umgebungsvariable} entgegen.
-
-Um sicherzustellen, dass die Protokollierung wie gewünscht funktioniert, wird
-diese durch die entsprechenden Testfälle abgedeckt.
-
-Der einfachste Testfall ist die Standardkonfiguration, also ein Aufruf ohne
-Parameter.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def test_setup_logging_without_arguments():
-    """Test logging of QDE application without arguments."""
-    app = application.QDE(sys.argv)
-    root_logger = logging.root
-    handlers = root_logger.handlers
-    assert len(handlers) == 1
-    handler = handlers[0]
-\end{minted}
-\caption{\label{orgf9e80f4}
-Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.}
-\end{listing}
-
-Da obige Testfälle das \emph{logging}-Module benötigen, muss das Importieren der Module
-entsprechend erweitert werden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-import logging
-\end{minted}
-\caption{\label{orgd8c9d30}
-Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.}
-\end{listing}
-
-Und der Testfall muss den Testfällen hinzugefügt werden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<test-app-test-logging-default>>
-\end{minted}
-\caption{\label{org50588ff}
-Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.}
-\end{listing}
-
-Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
-umgesetzt und der Klasse hinzugefügt werden.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def setup_logging(self,
-    default_path='logging.json',
-    default_level=logging.INFO,
-    env_key='LOG_CFG'
-):
-    """Setup logging configuration"""
-
-    path = default_path
-    value = os.getenv(env_key, None)
-
-    if value:
-        path = value
-
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-
-            config = json.load(f)
-            logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-\end{minted}
-\caption{\label{orge44e6fc}
-Methode zum Initialisieren der Protokollierung der Applikation.}
-\end{listing}
-
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# -*- coding: utf-8 -*-
-
-"""Main application module for QDE."""
-
-<<app-imports>>
-
-<<app-class-definition>>
-\end{minted}
-\caption{Haupt-Modul und Einstiegspunkt der Applikation.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-system-imports>>
-
-<<app-project-imports>>
-\end{minted}
-\caption{\label{orgf9a0a9c}
-Definition der Importe des Haupt-Modules.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# System imports
-from   PyQt5.Qt import QApplication
-from   PyQt5.Qt import QIcon
-import logging
-import os
-\end{minted}
-\caption{\label{org64b0c17}
-Importe von Python-eigenen Modulen im Haupt-Modul.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# Project imports
-from qde.editor.foundation import common
-\end{minted}
-\caption{\label{org47e7c52}
-Importe von selbst verfassten Modulen im Haupt-Modul.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def __init__(self, arguments):
-    """Constructor.
-
-    :param arguments: a (variable) list of arguments, that are
-                      passed when calling this class.
-    :type  argv:      list
-    """
-
-    super(QDE, self).__init__(arguments)
-    self.setWindowIcon(QIcon("assets/icons/im.png"))
-    self.setApplicationName("QDE")
-    self.setApplicationDisplayName("QDE")
-
-    self.setup_logging()
-\end{minted}
-\caption{\label{org74f93fc}
-Konstruktor des Haupt-Modules.}
-\end{listing}
-
-Der Konstruktor und die Methode zum Einrichten der Protokollierung werden
-schliesslich der Klasse hinzugefügt.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-constructor>>
-
-<<app-setup-logging>>
-\end{minted}
-\caption{\label{org017e569}
-Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.}
-\end{listing}
-
-Somit ist es nun möglich die Testfälle der Applikation auszuführen.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-python -m pytest qde/editor/application/test_application.py
-\end{minted}
-\caption{Ausführen der Testfälle für das Haupt-Modul.}
-\end{listing}
-
-\chapter{Worklog}
-\label{sec:orgc620b9b}
-
-\textit{<2017-02-20 Mon> } Initiale Struktur des Dokumentes
-
-\chapter{Bibliography}
-\label{sec:org3ec2262}
-
-\printbibliography{}
-
-\chapter{Appendix}
-\label{sec:orgb9f659c}
 
 \section{Meeting minutes}
-\label{sec:org4d9a7ad}
+\label{sec:org27bdcac}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:org67f788d}
+\label{sec:org2ba6021}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -778,7 +829,7 @@ Kick-off meeting for the thesis.
 
 \begin{enumerate}
 \item Presentation and discussion of the current state of work
-\label{sec:org7971ca8}
+\label{sec:orgbf5024b}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -798,7 +849,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \item Further steps / proceedings
-\label{sec:orgdf59fe7}
+\label{sec:org3f4272a}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -826,44 +877,54 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \item To do for the next meeting
-\label{sec:orgb5ca7af}
+\label{sec:org4295c23}
 
 \begin{enumerate}
-\item {\bfseries\sffamily TODO} Create GitHub repository for the thesis. (SO)
-\label{sec:orge240175}
-
+\item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
+\label{sec:orgfb0506f}
 \begin{enumerate}
-\item {\bfseries\sffamily TODO} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:orged71244}
+\item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
+\label{sec:org70cc49d}
 \end{enumerate}
 
-\item {\bfseries\sffamily TODO} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:org3caae0d}
+\item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
+\label{sec:org11e6cdf}
+\begin{enumerate}
+\item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
+\label{sec:org0140f70}
+\end{enumerate}
 
-\item {\bfseries\sffamily TODO} Set up appointments with Mr. Dubuis (CF)
-\label{sec:orgffcc5cd}
+\item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
+\label{sec:org7476328}
+\begin{enumerate}
+\item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
+\label{sec:org53aa7fb}
+\end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:org3f23689}
+\label{sec:orgf2230ab}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org428bd32}
+\label{sec:org900cda5}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org3a9379f}
+\label{sec:orgf3283b5}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org532dbdb}
+\label{sec:orge66b260}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
 with examples from the literate program.
 \end{enumerate}
+
+\item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
+\label{sec:orgafa863b}
 \end{enumerate}
 
 \item Scheduling of the next meeting
-\label{sec:org260b18a}
+\label{sec:org0e22edf}
 
 \begin{itemize}
 \item To be defined
