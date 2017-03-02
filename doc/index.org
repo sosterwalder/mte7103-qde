@@ -240,15 +240,6 @@ der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_
 Der Editor soll sich im Verzeichnis =editor= unterhalb des =src/qde=-Verzeichnisses
 befinden.
 
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung des =editor=-Namespaces.
-#+NAME:       fig:impl-mkdir-editor
-#+BEGIN_SRC bash :dir ../.
-mkdir -p src/qde/editor
-#+END_SRC
-
-#+RESULTS:
-
 Um sicherzustellen, dass Module als solche verwendet werden können, muss pro
 Modul und Namespace eine Datei zur Initialisierung vorhanden sein. Es handelt sich
 dabei um Dateien namens =__init__.py=, welche im minimalen Fall leer sind. Diese
