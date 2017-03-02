@@ -552,6 +552,11 @@ schliesslich der Klasse hinzugefügt.
 * Working log
 
 <2017-02-20 Mon> Initial set up and structuring of the document.
+<2017-03-01 Wed> Remove split files, re-add everything to index, add objectives.
+<2017-03-02 Thu> Set up project schedule. Tangle everything instead of doing
+                 things manually. Begin changing language to English instead of
+                 German. Re-add make targets for cleaning and building the
+                 source code.
 
 * Bibliography
 
