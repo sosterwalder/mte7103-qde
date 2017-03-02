@@ -1,0 +1,121 @@
+project qde "QDE"  2017-02-20-08:00:00 - 2017-08-11-23:00 {
+  timezone "Europe/Zurich"
+  timeformat "%Y-%m-%d"
+  numberformat "-" "" "," "." 1
+  currencyformat "(" ")" "," "." 0
+
+  scenario plan "Plan"
+}
+
+resource dev "Developers" {
+  resource dev1 "Sven Osterwalder"
+}
+
+task schedule "Project schedule" {
+  task start "Start of the project" {
+    start 2017-02-20-09:00
+    effort 2.5d
+    allocate dev1
+  }
+  
+  task objectives "Definition of objectives and limitations" {
+    effort 2.5d
+    depends !start
+    allocate dev1
+  }
+  
+  task doc "Documentation" {
+    effort 10w
+    start 2017-02-27
+    depends !objectives
+    allocate dev1 limits {dailymax 4h}
+  }
+  
+  task dev "Development" {
+    effort 10w
+    start 2017-02-27
+    depends !objectives
+    allocate dev1 limits {dailymax 4h}
+  }
+  
+  task corr "Corrections" {
+    effort 2w
+    depends !dev, !doc
+    allocate dev1
+  }
+  
+  task prep "Thesis' defense preparation" {
+    effort 1w
+    depends !corr
+    allocate dev1
+  }
+}
+
+task milestones "Milestones" {
+  task msstruct "Project structure is set up" {
+    end 2017-02-25
+  }
+  
+  task msgoals "Mandatory goals are reached" {
+    end %{${projectend} - 2w}
+  }
+  
+  task mshandin "Hand-in of the thesis" {
+    end %{${projectend} - 1w}
+  }
+  
+  task msdefense "Defense of the thesis" {
+    end ${projectend}
+  }
+}
+
+macro TaskTip [
+  tooltip istask() -8<-
+    '''Start: ''' <-query attribute='start'->
+    '''End: ''' <-query attribute='end'->
+    ----
+    '''Resources:'''
+
+    <-query attribute='resources'->
+    ----
+    '''Precursors: '''
+
+    <-query attribute='precursors'->
+    ----
+    '''Followers: '''
+
+    <-query attribute='followers'->
+    ->8-
+]
+
+textreport frame "" {
+  textreport "Overview" {
+    formats html
+    center '<[report id="overview"]>'
+  }
+  textreport "Schedule" {
+    formats html
+    center '<[report id="schedule"]>'
+  }
+  textreport "Milestones" {
+    formats html
+    center '<[report id="milestones"]>'
+  }
+}
+
+
+taskreport overview "Overview" {
+  headline "Overview"
+}
+
+taskreport schedule "Schedule" {
+  headline "Project schedule"
+  taskroot schedule
+}
+
+taskreport milestones "Milestones" {
+  headline "Milestones"
+  columns hierarchindex, name, start, end, complete, chart { ${TaskTip} }
+  taskroot milestones
+  hideresource 1
+}
