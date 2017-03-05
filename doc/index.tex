@@ -1,4 +1,4 @@
-% Created 2017-03-02 Thu 22:55
+% Created 2017-03-05 Sun 22:51
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -16,7 +16,7 @@
 \usepackage{hyperref}
 \usepackage{minted}
 \usepackage[a4paper, left=25mm, right=25mm, top=27mm, headheight=20mm, headsep=10mm, textheight=242mm, footskip=15mm]{geometry}
-\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage[backend=biber, style=ieee, natbib=true, url=false, doi=true, eprint=false]{biblatex}
 \usepackage[dvipsnames]{xcolor}
 % Definition of colors
 %---------------------------------------------------------------------------
@@ -40,6 +40,7 @@
 \usepackage{tcolorbox}
 \usepackage{pgfgantt}
 \usepackage{float}
+\usepackage{parskip}
 \restylefloat{listing}
 \tcbuselibrary{minted,skins}
 \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
@@ -62,12 +63,12 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:orgfe27747}
+\label{sec:org98b972d}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:orga79b7b5}
+\label{sec:orgd9bbc27}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -76,17 +77,17 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:org47842a1}
+\label{sec:org7741181}
 
 \begin{center}
 \begin{tabular}{lll}
 Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{orgfb069a2}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org4d7c76a}claude.fuhrer@bfh.ch}
+\end{center}\footnotetext[1]{\label{org098ab70}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{orgd825e78}claude.fuhrer@bfh.ch}
 
 \section{Structure of the documentation}
-\label{sec:orgba7c0f3}
+\label{sec:orga75ff0e}
 
 This thesis is structured as follows:
 
@@ -99,7 +100,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:orga4d6a54}
+\label{sec:orgeb3a5ac}
 
 \begin{itemize}
 \item Report
@@ -107,43 +108,43 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgec5be4d}
+\label{sec:orge27ffa7}
 
 \section{Motivation}
-\label{sec:org6f79b69}
+\label{sec:org81d6089}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:org18504e0}
+\label{sec:org04c6279}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:orgc590963}
+\label{sec:org56ac2f1}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:org1e7e825}
+\label{sec:orgd85bd78}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org7a55ea2}
+\label{sec:org14abb0c}
 \section{Organization of work}
-\label{sec:orge3b6515}
+\label{sec:org68c341b}
 \subsection{Meetings}
-\label{sec:orgeb53bc6}
+\label{sec:org224cbe8}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
 The supervisor supported the author of this thesis by providing suggestions
 throughout the held meetings. The minutes of the meetings may be found under
-\label{org5ea72a4}.
+\label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org83e5910}
+\label{sec:org8b766b6}
 
 
 \begin{center}
@@ -170,7 +171,7 @@ Defense of the thesis &  & 32\\
 \end{center}
 
 \subsection{Literate programming}
-\label{sec:orgd0b865b}
+\label{sec:org8e809b5}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -209,27 +210,58 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:orga96e158}
+\label{sec:org6f47221}
 \subsection{Code}
-\label{sec:org7381509}
+\label{sec:orgaa024fd}
 
 [Code.]
+\begin{itemize}
+\item Classes use camel case.
+\item Folders / name-spaces use only small letters.
+\item Methods are all small caps and use underscores as spaces.
+\item Signals: do\_something
+\item Slots: on\_something
+\item Importing: \texttt{from Foo import Bar}
+As the naming of the PyQt5 modules prefixes them by \emph{Qt}, it is very unlikely
+to have naming conflicts with other modules. Therefore the import format \texttt{from
+  PyQt5 import [QtModuleName]} is used. This still provides a (relatively)
+unique naming most probably without any conflicts but reduces the effort when
+writing a bit. The import of system modules is therefore as follows.
+\end{itemize}
+
+\subsubsection{Framework for implementation}
+\label{sec:framework-for-implementation}
+To stay consistent when implementing classes, it make sense to define a rough
+framework for implementation, which is as follows:
+
+\begin{enumerate}
+\item Define necessary signals.
+\item Within the constructor,
+\begin{itemize}
+\item Set up the user interface when it is a class concerning the graphical user
+interface.
+\item Set up class-specific aspects, such as the name, the tile or an icon.
+\item Initialize the connections, meaning hooking up the defined signals with
+corresponding methods.
+\end{itemize}
+\item Implement the remaining functionality in terms of methods and slots.
+\end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:orgabc6487}
+\label{sec:orga411358}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:orgd94cb31}
+\label{sec:orgfda0c1e}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:orgd2de195}
+\label{sec:org6950ed8}
 
 \section{Requirements}
-\label{sec:orgc325c28}
+\label{sec:orge4ed1c3}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -250,7 +282,7 @@ the virtual environment. The available Python versions may be listed as follows.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv install --list
 \end{minted}
-\caption{\label{org0db936b}
+\caption{\label{fig:impl-pyenv-list}
 Listing all available versions of Python for use in Pyenv.}
 \end{listing}
 
@@ -261,7 +293,7 @@ installation of version 3.6.0.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 install 3.6.0
 \end{minted}
-\caption{\label{orge7367a0}
+\caption{\label{fig:impl-pyenv-install}
 Installation of Python version 3.6.0 for the usage with Pyenv.}
 \end{listing}
 
@@ -276,7 +308,7 @@ of the virtual environment.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pyenv virtualenv 3.6.0 qde
 \end{minted}
-\caption{\label{org4e3f2a3}
+\caption{\label{fig:impl-pyenv-venv}
 Creation of the virtual environment \texttt{qde} for Python using version 3.6.0 of Python.}
 \end{listing}
 
@@ -287,145 +319,655 @@ listed in the file \texttt{python\_requirements.txt} and are installed using \te
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 pip install -r python_requirements.txt
 \end{minted}
-\caption{\label{org9a3c9e7}
+\caption{\label{fig:impl-pip-install}
 Installation of the projects' required dependencies.}
 \end{listing}
 
 All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
-\section{Project structure}
-\label{sec:orgdf6e0d0}
+\section{Name-spaces and project structure}
+\label{sec:org8a5fd48}
 
-This chapter describes the planned directory structure as well as an instruction
-on how to set up that structure.
+This chapter describes the planned directory structure as well as how the usage
+of name-spaces is intended.
 
 The whole source code shall be placed in the \texttt{src} directory underneath the main
-directory.
+directory. The creation of the single directories is not explicitly shown
+respectively done, instead the \texttt{:mkdirp} option provided by the source code
+block structure is used\footnote{\url{http://orgmode.org/manual/mkdirp.html\#mkdirp}}. The
+option has the same effect as would have \texttt{mkdir -p [directory/subdirectory]}: It
+creates all needed (sub-) directories, even when tangling a file. This prevents
+the tedious and non-interesting creation of directories within this document.
 
-To prevent multiple modules having the same name, name spaces are
+When dealing with directories and files, Python uses the term \emph{package} for a
+(sub-) directories and \emph{module} for files within directories, that is
+modules.\footnote{\url{https://docs.python.org/3/reference/import.html\#packages}}
+
+To prevent having multiple modules having the same name, name-spaces are
 used\footnote{\url{https://docs.python.org/3/tutorial/classes.html\#python-scopes-and-namespaces}}.
-The main name space shall be analogous to the projects' name: \texttt{qde}.
+The main name-space shall be analogous to the projects' name: \texttt{qde}. Underneath
+the source code folder \texttt{src}, each sub-folder represents a package and acts
+therefore also as a name-space.
 
-In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
-der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
+To actually allow a whole package and its modules being imported \emph{as modules},
+it needs to have at least a file inside called \texttt{\_\_init\_\_.py}. Those files may be
+empty or they may contain regular source code such as classes or methods.
+
+The first stage of the project shows the creation of the \emph{editor} component, as
+it provides the possibility of creating and editing real-time animations which
+may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:orgd87394d}
+\label{sec:orga4a857c}
 
-Der Editor soll sich im Verzeichnis \texttt{editor} unterhalb des \texttt{src/qde}-Verzeichnisses
-befinden.
+This chapter describes the creation of the \emph{editor} component.
 
-Um sicherzustellen, dass Module als solche verwendet werden können, muss pro
-Modul und Namespace eine Datei zur Initialisierung vorhanden sein. Es handelt sich
-dabei um Dateien namens \texttt{\_\_init\_\_.py}, welche im minimalen Fall leer sind. Diese
-können aber auch regulären Programmcode, wie zum Beispiel Klassen oder Methoden
-enthalten.
+The \emph{editor} component shall be placed within the \texttt{editor} directory beneath the
+\texttt{src/qde} directory tree. As stated in the prior chapter this requires as well
+an \texttt{\_\_init\_\_.py} file to let Python recognize the \texttt{editor} directory as a
+importable module. This fact and the creation of it is mentioned here for the
+sake of completeness. Later on it will be assumed as given and only the source
+code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 
-Im weiteren Verlauf des Dokumentes wird darauf verzichtet diese Dateien explizit
-zu erwähnen, sie werden direkt in den entsprechenden Codeblöcken erstellt und
-als gegeben angesehen.
+\subsection{Main application}
+\label{sec:org4594456}
 
-Nun kann mit der eigentlichen Erstellung des Editors begonnen werden.
+The main class of a Qt application using a graphical user interface (GUI)
+is provided by the class \texttt{QApplication}. According to
+\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} the class may be initialized and
+used directly without sub-classing it. It may however be useful to sub-class it
+nevertheless as this provides higher flexibility. Therefore the class
+\texttt{Application} is introduced, which sub-classes the \texttt{QApplication} class.
 
-Der Einstiegspunkt einer Qt-Applikation mit grafischer Oberfläche ist die Klasse
-\texttt{QtApplication}. Gemäss \footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} kann die
-Klasse direkt instanziert und benutzt werden, es ist unter Umständen jedoch
-sinnvoller die Klasse zu kapseln, was schlussendlich eine höhere Flexibilität
-bei der Umsetzung bietet. Es soll daher die Klasse \texttt{Application} erstellt
-werden, welche diese Abstraktion bietet.
+At this point it is necessary to think about the functionality of the class
+\texttt{Application} itself. Very roughly sketched, such a type of application
+initializes resources, enters a main loop where it stays until told to shut
+down. At the end it frees resources again.
 
-An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
-Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
-implementieren, da ein solcher bereits durch Qt vorhanden
-ist\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html\#exec}}.
+Due to the usage of \texttt{QApplication} as super class it is not necessary to
+implement a main (event-) loop, as such is provided by Qt itself
+\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html\#exec}}.
 
-Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
-initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
-verschiedenen Ebenen der Architektur, indem es diese mittels Signalen
-verbindet.\cite[S. 37 bis 38]{osterwalder_qde_2016}
+Concerning the initialization of
+resources\footnote{\url{https://www.python.org/dev/peps/pep-0263/}}, the application has
+to act as central node between the various layers of the architecture,
+initializing them and connecting them using signals.\cite[S. 37 bis 38]{osterwalder_qde_2016}
 
-Weiter soll es nützliche Schnittstellen, wie zum Beispiel das Protokollieren
-von Meldungen, bereitstellen. Und schliesslich soll das Modul eine Möglichkeit
-bieten beim Verlassen der Applikation zusätzliche Aufgaben, wie etwa das
-Entfernen von temporären Dateien, zu bieten.
+Before going into too much details about the actual \texttt{Application} class, let us
+first have a look at the structure of a Python module. Each (proper) Python
+module contains an (optional) file encoding, a
+docstring\footnote{\url{https://www.python.org/dev/peps/pep-0257/\#what-is-a-docstring}},
+imports of other modules and either loose methods or a class definition with
+methods underneath.
 
+The main module \texttt{application} containing also the \texttt{Application} class, looks
+therefore as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Main application module for QDE."""
+
+<<app-imports>>
+
+<<app-class-definition>>
+\end{minted}
+\caption{Main application module holding the \texttt{Application} class.}
+\end{listing}
+
+\subsubsection{Imports}
+\label{sec:org139f6dd}
+As you can see, the imports of the module are defined by \texttt{<<app-imports>>}. For
+achieving better readability, the imports are split up into system imports,
+meaning modules provided by the Python library itself or external modules, and
+project imports, modules created within the project. The imports are therefore
+split up as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# System imports
+<<app-system-imports>>
+
+# Project imports
+<<app-project-imports>>
+\end{minted}
+\caption{\label{app-imports}
+\texttt{<<app-imports>>}, definition of the application modules' imports.}
+\end{listing}
+
+As the actual imports are not known yet, let us first look at the applications'
+structure, defined by \texttt{<<app-class-definition>>}. The class is defined by its
+name, its super class (the parent class) and a class body. As stated at the
+beginning, the class will inherit from the Qt class \texttt{QApplication}, which
+provides the basics for a Qt GUI application.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+class Application(QtWidgets.QApplication):
+    """Main application for QDE."""
+
+    <<app-class-body>>
+\end{minted}
+\caption{\label{app-class-definition}
+\texttt{<<app-class-definition>>}, definition of the \texttt{Application} class.}
+\end{listing}
+
+As stated before and as clearly can be seen the class inherits from
+\texttt{QApplication}. This base class is not yet defined however which would produce
+an error when executing the main class. It is therefore necessary to make that
+base class available by importing it. As \texttt{QApplication} is an external class,
+not defined by this project, its import is added to the system imports.
+
+Python offers multiple possibilities concerning imports:
+
+\begin{itemize}
+\item \texttt{from foo import bar} or\\
+\texttt{import foo.bar}
+
+Imports the module \texttt{bar} from the package \texttt{foo}. All classes, methods and
+variables within \texttt{bar} are then accessible.
+
+\item \texttt{from foo import bar as baz} or\\
+\texttt{import foo.bar as baz}
+
+The importing is the same as above, \texttt{bar} is masked as \texttt{baz} although. This
+can be convenient when multiple modules have the same name.
+
+\item \texttt{from bar import SomeClass} or\\
+\texttt{import bar.SomeClass} or\\
+\texttt{import bar.SomeClass as SomeClass}
+
+Imports the class \texttt{SomeClass} from the module \texttt{bar}.
+
+\item \texttt{from foo.bar import some\_method} or\\
+\texttt{import foo.bar.some\_method} or\\
+\texttt{import foo.bar.some\_method as some\_method}
+
+Imports the method \texttt{some\_method} from the module \texttt{bar}.
+
+\item \texttt{from foo import *} or\\
+\texttt{import * from foo}
+
+Imports \emph{all} sub-packages and sub-modules from the package \texttt{foo}. However,
+explicit importing is better than implicit and therefore this option should
+not be used.\footnote{\url{https://www.python.org/dev/peps/pep-0020/}}
+
+\item \texttt{from bar import *} or
+\texttt{import * from bar}
+
+Imports \emph{all} classes and methods from the module \texttt{bar}. As stated above,
+explicit importing is better than implicit and therefore this option should
+also not be used.
+\end{itemize}
+
+As the naming of the PyQt5 modules prefixes them by \emph{Qt}, it is very unlikely to
+have naming conflicts with other modules. Therefore the import format \texttt{from
+PyQt5 import [QtModuleName]} is used. This still provides a (relatively) unique
+naming most probably without any conflicts but reduces the effort when
+writing a bit. The import of system modules is therefore as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+\end{minted}
+\caption{\label{app-system-imports}
+\texttt{<<app-system-imports>>}, import of system imports.}
+\end{listing}
+
+At this point of time it is rather unclear what the classes body consists of.
+What surely must be done, is initializing the class's parent, \texttt{QApplication}.
+Additionally it would be nice to having a matching title for the window set as
+well as maybe an icon for the application. The class's body therefore solely
+consists its constructor, as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<app-constructor>>
+\end{minted}
+\caption{\label{app-class-body}
+\texttt{<<app-class-body>>}, body of the class \texttt{Application}, containing only the constructor at the moment.}
+\end{listing}
+
+When looking at the constructor of the \texttt{QApplication}
+class\footnote{\url{https://doc.qt.io/qt-5/qapplication.html\#QApplication}} (as the
+documentation of PyQt does not provide a proper description and points to the
+C++ documentation), one can see that it needs the argument count \texttt{argc} as well
+as a vector \texttt{argv} containing the arguments. The argument count states how many
+arguments are being held by the argument vector \texttt{argv}. In the PyQt
+implementation however, only one argument is necessary: a list containing the
+arguments. \texttt{argc} may easily be derived by e.g. \texttt{len(arguments)}. Therefore it
+is necessary for to constructor to take in \texttt{arguments} as a required parameter.
+The applications' constructor looks hence as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def __init__(self, arguments):
+    """Constructor.
+
+    :param arguments: a (variable) list of arguments, that are
+                      passed when calling this class.
+    :type  argv:      list
+    """
+
+    super(Application, self).__init__(arguments)
+    self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))
+    self.setApplicationName("QDE")
+    self.setApplicationDisplayName("QDE")
+\end{minted}
+\caption{\label{app-constructor}
+\texttt{<<app-constructor>>}, constructor of the \texttt{Application} class.}
+\end{listing}
+
+\subsection{Main entry point}
+\label{sec:orgcd7ad82}
+
+If you run the application at this point nothing happens. Python is able to
+resolve all dependencies but as there is no \texttt{main} function there is nothing
+else to do, so nothing happens. The execution of the main loop is started when
+calling the \texttt{exec} function of a \texttt{QApplication}. So, for actually being able to
+start the application, a \texttt{main} function is needed, which creates an instance of
+the \texttt{Application} class and then runs its \texttt{exec} function.
+
+The main function could easily be added to the \texttt{Application} class, but for
+somebody who is not familiar with this applications' structure, this might be
+rather confusing. Instead a \texttt{editor.py} file at the root of the source directory
+\texttt{src} is much more intuitive.
+
+All that the main file shall do, is creating an instance of the main
+application, execute it and exit at the end of its life cycle.
+
+As stated in \label{Imports}, the constructor of \texttt{QApplication} requires the
+argument \texttt{arguments} to be passed in (yes, the naming may be a bit confusing
+here). The \texttt{arguments} argument is a list of arguments passed when calling the
+main entry point of the editor application. For example when calling \texttt{python editor.py foo bar baz},
+the variable \texttt{arguments} would be the list \texttt{[foo, bar, baz]} with
+\texttt{len(arguments)} being 3. To obtain the passed-in arguments, the \texttt{argv}
+attribute of the \texttt{sys} module may be used, as this holds exactly the list of the
+passed-in arguments when calling a Python script.
+
+The main entry script of the editor \texttt{editor.py} is therefore defined as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Main entry point for the QDE editor application. """
+
+# System imports
+import sys
+
+# Project imports
+from qde.editor.application import application
+
+
+if __name__ == "__main__":
+    app = application.Application(sys.argv)
+    status = app.exec()
+    sys.exit(status)
+\end{minted}
+\caption{\label{main}
+\texttt{<<main>>}, the main entry point for the whole editor application.}
+\end{listing}
+
+If you run the application now, a bit more happens. Python is able to
+resolve all dependencies and to find a \texttt{main} function which is then called.
+The \texttt{main} function creates an instance of the \texttt{Application} class and executes
+it by calling \texttt{exec}. This in turn enters the Qt main loop which keeps the
+application running unless explicitly told to shut down. But at this point there
+is nothing who could receive the request to shut down, so the only possibility
+to shut down the application is to quit or kill the spawned Python process
+itself --- not very nice.
+
+\subsection{Components}
+\label{sec:components}
+Instead it would be nice to have at least a window shown when starting the
+application, which allows a normal, deterministic and convenient shut down of
+the application, either by a keyboard shortcut or by selecting an appropriate
+option in the applications' menu.
+
+But having only a plain window is not that interesting, so this might be a good
+time to look at the components of the editor, which are defined by
+\citep[p. 29 ff.]{osterwalder_qde_2016} and are the following:
+
+\begin{itemize}
+\item A scene graph, allowing the creation and deletion of scenes. The scene graph
+has at least a root scene.
+\item A node-based graph structure, allowing the composition of scenes using nodes
+and connections between the nodes.
+\item A parameter window, showing parameters of the currently selected graph node.
+\item A rendering window, rendering the currently selected node or scene.
+\item A sequencer, allowing a time-based scheduling of defined scenes.
+\end{itemize}
+
+What \cite{osterwalder_qde_2016} does not explicitly mention, is the main
+window, which holds all those components and allows a proper shut down of the
+application.
+
+As a starting point, we shall implement the class \texttt{MainWindow} representing the
+main window.
+
+\subsubsection{Main window}
+\label{sec:org801d030}
+
+Before implementing the features of the main window, its features will be
+described. The main window is the central aspect of the graphical user interface
+and is hence part of the \texttt{gui} package.
+
+Its main functionality is to set up the actual user interface, containing all
+the components, described by \ref{sec:components}, as widgets. Qt offers the class
+\texttt{QMainWindow} from which \texttt{MainWindow} may inherit. The thoughts about the
+implementation follow section \ref{sec:framework-for-implementation}.
+
+The first step is setting up the necessary signals. They may not all be known at
+this point and may therefore be expanded later on. As described in section
+\ref{sec:components}, it would be nice if \texttt{MainWindow} would react to a request for
+closing it, either by a keyboard shortcut or a menu command. However,
+\texttt{MainWindow} is not able to force the \texttt{Application} to quit by itself. It would
+be possible to pass \texttt{MainWindow} a reference to \texttt{Application} but that would
+lead to a somewhat tight coupling and is therefore not considered as an option.
+Signals and slots allow exactly such cross-layer communication without coupling
+components tightly.
+
+First, the outline of \texttt{MainWindow} is defined.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding the main application window. """
+
+# System imports
+<<main-window-system-imports>>
+
+# Project imports
+<<main-window-project-imports>>
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    """The main window class.
+    Acts as an entry point for the QDE editor application.
+    """
+
+    <<main-window-signals>>
+
+    <<main-window-constructor>>
+
+    <<main-window-methods>>
+
+    <<main-window-slots>>
+\end{minted}
+\caption{Module holding the main application window class, \texttt{MainWindow}.}
+\end{listing}
+
+A fitting name for the signal, when the window and therefore the application,
+shall be closed might be \texttt{window\_closing}. The signal is introduced as follows.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# Signals
+window_closing = QtCore.pyqtSignal()
+\end{minted}
+\caption{\label{main-window-signals}
+Definition of signals for the main application window class, \texttt{MainWindow}.}
+\end{listing}
+
+Now, that the signal for closing the window and the application is defined, two
+additional things need to be considered: The emission of the signal by
+\texttt{MainWindow} itself as well as the consumption of the signal by a slots of other
+classes.
+
+First, the emission of the signal is implemented. The signal shall be emitted
+when the escape key on the keyboard is pressed or when the corresponding menu
+item was selected. For the first case, the keyboard event, Qt provides luckily
+events which may be used. Their outline is already provided by the parent class
+\texttt{QMainWindow} and therefore the event(s) simply need to be implemented. The
+event which listens to keyboard keys being pressed is called \texttt{keyPressEvent} and
+provides an event-object of type \texttt{QEvent}. All there is to do, is to retrieve
+the event's key by calling its \texttt{key} method and check if that key is actually
+the escape key by comparing it to \texttt{Key\_Escape}, provided by Qt. If this
+comparison is true, the signal shall be emitted.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def keyPressEvent(self, event):
+    """Gets triggered when a key press event is raised.
+
+    :param event: holds the triggered event.
+    :type  event: QKeyEvent
+    """
+
+    if event.key() == QtCore.Qt.Key_Escape:
+        self.window_closing.emit()
+    else:
+        super(MainWindow, self).keyPressEvent(event)
+\end{minted}
+\caption{\label{main-window-methods}
+Implementation of the \texttt{keyPressEvent} method on the \texttt{MainWindow} class.}
+\end{listing}
+
+Additionally the signal shall be emitted when selecting a corresponding menu
+item. But currently there is no such menu item defined. Qt handles interactions
+with menu items by using actions (\texttt{QAction}). They provide themselves a couple
+of signals, one being \texttt{triggered}, which gets emitted as soon as the action was
+triggered by a clicking on a menu item. As it is not possible to connect a
+signal with another signal, a slot, which receives the signal, needs to be
+defined. A slot is an annotated method.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+@QtCore.pyqtSlot()
+def on_quit(self):
+    """Slot which emits the :any:`window_closing` signal.
+    This slot gets triggered upon the selection of the menu item to close the
+    QDE application.
+    """
+
+    self.window_closing.emit()
+\end{minted}
+\caption{\label{main-window-slots}
+The \texttt{on\_quit} method, which acts as a slot when the menu item for quitting the application was triggered.}
+\end{listing}
+
+Now the main window is able to emit the signal it is shutting down (or
+rather it would like to shut down), but so far no one is listening to that
+signal, so nothing happens when that signal is being emitted.
+
+This leads to an expansion of the main application's construction: The main
+application has to create a main window an listen to its \texttt{window\_closing}
+signal. Luckily \texttt{Application} provides already a \texttt{quit} slot through
+\texttt{QApplication}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+    self.main_window = qde_main_window.MainWindow()
+    self.main_window.window_closing.connect(self.quit)
+    self.main_window.show()
+\end{minted}
+\caption{\label{app-constructor}
+Expansion of the main application's constructor, \texttt{<<app-constructor>>}, by the initialization of \texttt{MainWindow} and its signals.}
+\end{listing}
+
+So far none of the additional modules have been defined as there are no
+additional modules imported yet. The missing modules to be added to the main
+application as well as the main window.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+from qde.editor.gui import main_window as qde_main_window
+\end{minted}
+\caption{\label{app-project-imports}
+Expansion of \texttt{<<app-project-imports>>} by the missing imports.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+\end{minted}
+\caption{\label{main-window-system-imports}
+Expansion of \texttt{<<main-window-system-imports>>} by the missing imports.}
+\end{listing}
+
+Yet the constructor for the main window is still missing, so running the
+application would still do nothing. Therefore the constructor for the main
+window is now implemented. At the current point its solely purpose is to call
+the its parent's constructor.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def __init__(self):
+    """Constructor."""
+
+    super(MainWindow, self).__init__()
+\end{minted}
+\caption{\label{main-window-constructor}
+Constructor for the main window class \texttt{MainWindow}.}
+\end{listing}
+
+Although a Python process is spawned when starting the application, the main
+window is still not shown. The problem is, that the main window has no central
+widget
+set\footnote{\url{http://doc.qt.io/qt-5/qmainwindow.html\#creating-main-window-components}}.
+Setting a central widget and setting a layout for it solves this problem.
+
+The above described task matches perfectly the second point described in section
+\ref{sec:framework-for-implementation}. The described task will therefore be put in a
+method named \texttt{setup\_ui} and the constructor will be expanded correspondingly.
+The method \texttt{setup\_ui} seems also a very good place for setting things like the
+size of the window, setting its (object-) name and its title as well as moving
+it to a position on the user's screen. To ensure that the window is not hidden
+behind other windows, the method \texttt{activateWindow} coming from \texttt{QWidget} is
+called.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def setup_ui(self):
+    """Sets up the user interface specific components."""
+
+    self.setObjectName('MainWindow')
+    self.setWindowTitle('QDE')
+    self.resize(1024, 768)
+    self.move(100, 100)
+    self.activateWindow()
+
+    central_widget = QtWidgets.QWidget(self)
+    central_widget.setObjectName('central_widget')
+    grid_layout = QtWidgets.QGridLayout(central_widget)
+    central_widget.setLayout(grid_layout)
+    self.setCentralWidget(central_widget)
+    self.statusBar().showMessage('Ready.')
+\end{minted}
+\caption{\label{main-window-methods}
+The method \texttt{setup\_ui}, which is added to \texttt{<<main-window-methods>>, for setting up user interface specific tasks within the main window class =MainWindow}.}
+\end{listing}
+
+Now the \texttt{setup\_ui} method simply needs to be added to the constructor of the
+class \texttt{MainWindow}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+    self.setup_ui()
+\end{minted}
+\caption{\label{main-window-constructor}
+The method \texttt{setup\_ui} is added to the constructor of main window class \texttt{MainWindow}.}
+\end{listing}
+
+\subsection{Logging}
+\label{sec:org0d1a111}
+\begin{verbatim}
 Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
 gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
 Schritt ein Modul zur Protokollierung zu implementieren.
 Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
-Namespace \texttt{foundation} erstellt.
+Namespace =foundation= erstellt.
 
 Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
 Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
+#+NAME:       fig:editor-foundation-namespace
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
+#+END_SRC
+
 Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
 Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
-\texttt{logging}-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
+=logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
 werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
 hierfür das Decorator-Pattern von Python
-an\footnote{\url{https://www.python.org/dev/peps/pep-0318/}}.
+an[fn:9:https://www.python.org/dev/peps/pep-0318/].
 
 Die Klasse zur Protokollierung soll also Folgendes tun:
 
-\begin{itemize}
-\item Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-logger_name = "%s.%s" % (cls.__module__, cls.__name__)
-\end{minted}
-\caption{\label{org4c0fe08}
-Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.}
-\end{listing}
+- Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
+  #+NAME: logger-name
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
+  #+BEGIN_SRC python
+  logger_name = "%s.%s" % (cls.__module__, cls.__name__)
+  #+END_SRC
 
-\item Einen Stream-Handler nutzen
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-stream_handler = logging.StreamHandler()
-\end{minted}
-\caption{\label{orgaeb5dce}
-Initialisieren eines Stream-Handlers.}
-\end{listing}
+  #+RESULTS: logger-name
 
-\item Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# TODO: Do this according to config.
-stream_handler.setLevel(logging.DEBUG)
-\end{minted}
-\caption{\label{org99b92eb}
-Setzen des \texttt{DEBUG} Log-Levels.}
-\end{listing}
+- Einen Stream-Handler nutzen
+  #+NAME: logger-stream-handler
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Initialisieren eines Stream-Handlers.
+  #+BEGIN_SRC python
+    stream_handler = logging.StreamHandler()
+  #+END_SRC
 
-\item Protokoll-Einträge ansprechend formatieren
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# TODO: Set up formatter in debug mode only
-formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
-stream_handler.setFormatter(formatter)
-\end{minted}
-\caption{\label{orge5e37a6}
-Anpassung der Ausgabe von Protokoll-Meldungen.}
-\end{listing}
+    #+RESULTS: logger-stream-handler
 
-\item Eine einfache Schnittstelle zur Protokollierung bieten
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-cls.logger = logging.getLogger(logger_name)
-cls.logger.propagate = False
-cls.logger.addHandler(stream_handler)
+- Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
+  #+NAME: logger-set-level
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Setzen des =DEBUG= Log-Levels.
+  #+BEGIN_SRC python
+    # TODO: Do this according to config.
+    stream_handler.setLevel(logging.DEBUG)
+  #+END_SRC
 
-return cls
-\end{minted}
-\caption{\label{orgec61315}
-Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.}
-\end{listing}
-\end{itemize}
+    #+RESULTS: logger-set-level
+
+- Protokoll-Einträge ansprechend formatieren
+  #+NAME: logger-set-formatter
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
+  #+BEGIN_SRC python
+    # TODO: Set up formatter in debug mode only
+    formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
+    stream_handler.setFormatter(formatter)
+  #+END_SRC
+
+    #+RESULTS: logger-set-formatter
+
+- Eine einfache Schnittstelle zur Protokollierung bieten
+  #+NAME: logger-return-logger
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
+  #+BEGIN_SRC python
+    cls.logger = logging.getLogger(logger_name)
+    cls.logger.propagate = False
+    cls.logger.addHandler(stream_handler)
+
+    return cls
+  #+END_SRC
+
+    #+RESULTS: logger-return-logger
 
 Nun kann die eigentliche Funktionalität implementiert werden.
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
+#+NAME:       fig:editor-common-logging
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link :mkdirp yes
 # -*- coding: utf-8 -*-
 
 """Module holding common helper methods."""
@@ -450,58 +992,46 @@ def with_logger(cls):
     <<logger-set-level>>
     <<logger-set-formatter>>
     <<logger-return-logger>>
-\end{minted}
-\caption{\label{orgf8da5a6}
-Das \texttt{common}-Modul und eine Methode zur Protokollierung in Klassen.}
-\end{listing}
+#+END_SRC
+
+#+RESULTS: fig:editor-common-logging
 
 
 Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
 werden.
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-@common.with_logger
-class QDE(QApplication):
-  """Main application for QDE."""
-
-  <<app-class-body>>
-\end{minted}
-\caption{\label{org4069ad5}
-Definition der Klasse \texttt{Application} mit dem \texttt{with\_logger}-Dekorator des \texttt{common}-Modules.}
-\end{listing}
 
 Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
-findet, muss diese entsprechend konfiguriert werden. Das \emph{logging}-Modul von
+findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
 Python bietet hierzu vielfältige
-Möglichkeiten.\footnote{\url{https://docs.python.org/3/library/logging.html}} So kann die
+Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
 Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
 bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
 Beispiel sehr einfach aus einer JSON-Datei generiert werden.
 
 Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
-\begin{itemize}
-\item Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
-Standardkonfiguration, welche von Python mittels \texttt{basicConfig} vorgegeben
-wird.
-\item Als Name für die JSON-Datei wird \texttt{logging.json} angenommen.
-\item Ist in den Umgebungsvariablen des Betriebssystems die Variable \emph{LOG\_CFG}
-gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
-angenommen, dass sich die Datei \texttt{logging.json} im Hauptverzeichnis befindet.
-\item Existiert die JSON-Konfigurationsdatei nicht, wird auf die
-Standardkonfiguration zurückgegeriffen.
-\item Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
-zum Filtern der verschiedenen Protokollnachrichten.
-\end{itemize}
+- Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
+  Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
+  wird.
+- Als Name für die JSON-Datei wird =logging.json= angenommen.
+- Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
+  gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
+  angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
+- Existiert die JSON-Konfigurationsdatei nicht, wird auf die
+  Standardkonfiguration zurückgegeriffen.
+- Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
+  zum Filtern der verschiedenen Protokollnachrichten.
 
-Die Haupt-Applikation nimmt also die Parameter \texttt{Pfad}, \texttt{Protokollierungsstufe}
-sowie \texttt{Umgebungsvariable} entgegen.
+Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
+sowie =Umgebungsvariable= entgegen.
 
 Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
 umgesetzt und der Klasse hinzugefügt werden.
 
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#+NAME: app-setup-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
+#+BEGIN_SRC python
 def setup_logging(self,
     default_path='logging.json',
     default_level=logging.INFO,
@@ -522,110 +1052,55 @@ def setup_logging(self,
             logging.config.dictConfig(config)
     else:
         logging.basicConfig(level=default_level)
-\end{minted}
-\caption{\label{org294a9b8}
-Methode zum Initialisieren der Protokollierung der Applikation.}
-\end{listing}
-
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# -*- coding: utf-8 -*-
-
-"""Main application module for QDE."""
-
-<<app-imports>>
-
-<<app-class-definition>>
-\end{minted}
-\caption{Haupt-Modul und Einstiegspunkt der Applikation.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-system-imports>>
-
-<<app-project-imports>>
-\end{minted}
-\caption{\label{org748c809}
-Definition der Importe des Haupt-Modules.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# System imports
-from   PyQt5.Qt import QApplication
-from   PyQt5.Qt import QIcon
-import logging
-import os
-\end{minted}
-\caption{\label{org5504ab0}
-Importe von Python-eigenen Modulen im Haupt-Modul.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# Project imports
-from qde.editor.foundation import common
-\end{minted}
-\caption{\label{org5e6eeed}
-Importe von selbst verfassten Modulen im Haupt-Modul.}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def __init__(self, arguments):
-    """Constructor.
-
-    :param arguments: a (variable) list of arguments, that are
-                      passed when calling this class.
-    :type  argv:      list
-    """
-
-    super(QDE, self).__init__(arguments)
-    self.setWindowIcon(QIcon("assets/icons/im.png"))
-    self.setApplicationName("QDE")
-    self.setApplicationDisplayName("QDE")
-
-    self.setup_logging()
-\end{minted}
-\caption{\label{org7702788}
-Konstruktor des Haupt-Modules.}
-\end{listing}
-
-Der Konstruktor und die Methode zum Einrichten der Protokollierung werden
-schliesslich der Klasse hinzugefügt.
-
-\begin{listing}[H]
-\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-constructor>>
-
-<<app-setup-logging>>
-\end{minted}
-\caption{\label{org5fdb65c}
-Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.}
-\end{listing}
+#+END_SRC
+\end{verbatim}
 
 \chapter{Working log}
-\label{sec:org3798818}
+\label{sec:org7215214}
 
-\textit{<2017-02-20 Mon> } Initial set up and structuring of the document.
+\textit{<2017-02-20 Mon> } Set up and structure the document initially.
+\textit{<2017-02-21 Tue> } Re-structure the document, add first contents of the implementation.
+                 Add first tries to tangle the code.
+\textit{<2017-02-22 Wed> } Provide further content concerning the implementation:
+                 Introduce name-spaces/initializers, first steps for a logging
+                 facility.
+\textit{<2017-02-23 Thu> } Extend logging facility, provide (unit-) tests. Restructure the
+                 documentation.
+\textit{<2017-02-24 Fri> } Adapt document to output \LaTeX{} code as desired, change styling.
+                 Begin development of the applications' main routine.
+\textit{<2017-02-27 Mon> } Remove (unit-) tests from main document and put them into
+                 appendix instead. Begin explaining literate programming.
+\textit{<2017-02-28 Tue> } Provide a first draft for objectives and limitations. Re-structure
+                 the document. Correct \LaTeX{} output.
 \textit{<2017-03-01 Wed> } Remove split files, re-add everything to index, add objectives.
 \textit{<2017-03-02 Thu> } Set up project schedule. Tangle everything instead of doing
                  things manually. Begin changing language to English instead of
                  German. Re-add make targets for cleaning and building the
                  source code.
+\textit{<2017-03-03 Fri> } Keep work log up to date. Revise and finish chapter about
+                 name-spaces and the project structure for now.
+\textit{<2017-03-04 Sat> } Finish translating all already written texts from German to
+                 English. Describe the main entry point of the application as
+                 well as the main application itself.
+\textit{<2017-03-05 Sun> } Finish chapter about the main entry point and the main
+                 application for now, start describing the main window and implement its
+                 functionality. Keep the work log up to date. Fiddle with
+                 references and \LaTeX{} export. Find a bug: main\_window needs to
+                 be attached to a class, by using the \texttt{self} keyword, otherwise
+                 the window does not get shown. Introduce new make targets: one
+                 to clean Python cache files (*.pyc) and one to run the editor
+                 application directly.
 
 \chapter{Bibliography}
-\label{sec:org779111d}
+\label{sec:org5910138}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:orgd672a36}
+\label{sec:org17ec8cd}
 
 \section{Test cases}
-\label{sec:org249ed62}
+\label{sec:org006d529}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -638,7 +1113,7 @@ Als erster Schritt wird der Header des Test-Modules definiert.
 
 """Module for testing QDE class."""
 \end{minted}
-\caption{\label{org6893ab4}
+\caption{\label{test-app-header}
 Header des Test-Modules, \texttt{<<test-app-header>>}.}
 \end{listing}
 
@@ -651,7 +1126,7 @@ Start-Argumente mitzugeben, also zum Beispiel:
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
 python main.py argument1 argument2
 \end{minted}
-\caption{\label{orgd1f84d9}
+\caption{\label{fig:impl-python-call-arguments}
 Aufruf des Main-Modules mit zwei Argumenten, \texttt{argument1} und \texttt{argument2}.}
 \end{listing}
 
@@ -660,11 +1135,13 @@ von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# System imports
 <<test-app-system-imports>>
 
+# Project imports
 <<test-app-project-imports>>
 \end{minted}
-\caption{\label{orge011ad2}
+\caption{\label{test-app-imports}
 Definition der Importe für das Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -673,8 +1150,7 @@ Definition der Importe für das Modul zum Testen der Applikation.}
 # System imports
 import sys
 \end{minted}
-\caption{\label{org2474af3}
-Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
+\caption{Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
 \begin{listing}[H]
@@ -682,7 +1158,7 @@ Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.}
 # Project imports
 from qde.editor.application import application
 \end{minted}
-\caption{\label{org60a86c1}
+\caption{\label{test-app-project-imports}
 Importe von selbst verfassten Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -697,7 +1173,7 @@ def test_constructor():
     assert app.applicationName() == "QDE"
     assert app.applicationDisplayName() == "QDE"
 \end{minted}
-\caption{\label{orgf829b7c}
+\caption{\label{test-app-test-constructor}
 Methode zum Testen des Konstruktors der Applikation.}
 \end{listing}
 
@@ -744,7 +1220,7 @@ def test_setup_logging_without_arguments():
     assert len(handlers) == 1
     handler = handlers[0]
 \end{minted}
-\caption{\label{org5dd740c}
+\caption{\label{test-app-test-logging-default}
 Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.}
 \end{listing}
 
@@ -755,7 +1231,7 @@ entsprechend erweitert werden.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 import logging
 \end{minted}
-\caption{\label{org493e1ff}
+\caption{\label{test-app-system-imports}
 Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -765,7 +1241,7 @@ Und der Testfall muss den Testfällen hinzugefügt werden.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 <<test-app-test-logging-default>>
 \end{minted}
-\caption{\label{org2ff7ef3}
+\caption{\label{test-app-test-cases}
 Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.}
 \end{listing}
 
@@ -805,7 +1281,7 @@ def test_with_logger():
     assert logger.propagate == False
     assert logger.name == name
 \end{minted}
-\caption{\label{org0aa46fa}
+\caption{\label{fig:editor-common-logging-test}
 Testfälle der Hilfsmethode zur Protokollierung.}
 \end{listing}
 
@@ -815,10 +1291,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:org5cf2c71}
+\label{sec:orgdd50038}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:org6be7799}
+\label{sec:orgf102615}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -832,9 +1308,8 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 
 Kick-off meeting for the thesis.
 
-\begin{enumerate}
-\item Presentation and discussion of the current state of work
-\label{sec:orge2bd94a}
+\subsubsection{Presentation and discussion of the current state of work}
+\label{sec:org06350de}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -853,8 +1328,8 @@ the application. Also the report should not exceed around 80 pages. (CF)
 of the preceding documentations. (SO)
 \end{itemize}
 
-\item Further steps / proceedings
-\label{sec:org6514aca}
+\subsubsection{Further steps / proceedings}
+\label{sec:org4e12d68}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -881,43 +1356,43 @@ follow per e-mail. (CF)
 \end{itemize}
 \end{itemize}
 
-\item To do for the next meeting
-\label{sec:org6cc4fd1}
+\subsubsection{To do for the next meeting}
+\label{sec:org10296ef}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:org09ca879}
+\label{sec:org6cc1070}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:org3e18528}
+\label{sec:org58ee401}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:orgef90fcd}
+\label{sec:org10ee708}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgbc507aa}
+\label{sec:org9148ae0}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
-\label{sec:org78c1ecc}
+\label{sec:org6ae65ab}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgae84fa4}
+\label{sec:orgc633bd8}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:org2fdab57}
+\label{sec:org2781f28}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org320804e}
+\label{sec:org353d2e4}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:orgaddbe7c}
+\label{sec:org9793a1e}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org10d62c4}
+\label{sec:org9bf8fe2}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -925,14 +1400,13 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orga12ede9}
+\label{sec:orge7f09f4}
 \end{enumerate}
 
-\item Scheduling of the next meeting
-\label{sec:orgca97a19}
+\subsubsection{Scheduling of the next meeting}
+\label{sec:orgd5bb60e}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
-\end{enumerate}
 \end{document}

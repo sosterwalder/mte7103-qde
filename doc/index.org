@@ -1,9 +1,8 @@
 #+BIBLIOGRAPHY: bibliography ieee
-
 #+LATEX_CLASS: scrreprt
 #+LATEX_CLASS_OPTIONS: [10pt, openright, notitlepage]
 #+LATEX_HEADER: \usepackage[a4paper, left=25mm, right=25mm, top=27mm, headheight=20mm, headsep=10mm, textheight=242mm, footskip=15mm]{geometry}
-#+LATEX_HEADER: \usepackage[backend=biber, style=ieee]{biblatex}
+#+LATEX_HEADER: \usepackage[backend=biber, style=ieee, natbib=true, url=false, doi=true, eprint=false]{biblatex}
 #+LATEX_HEADER: \usepackage[dvipsnames]{xcolor}
 #+LATEX_HEADER: % Definition of colors
 #+LATEX_HEADER: %---------------------------------------------------------------------------
@@ -27,6 +26,7 @@
 #+LATEX_HEADER: \usepackage{tcolorbox}
 #+LATEX_HEADER: \usepackage{pgfgantt}
 #+LATEX_HEADER: \usepackage{float}
+#+LATEX_HEADER: \usepackage{parskip}
 #+LATEX_HEADER: \restylefloat{listing}
 #+LATEX_HEADER: \tcbuselibrary{minted,skins}
 #+LATEX_HEADER: \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
@@ -42,7 +42,7 @@
 #+AUTHOR: Sven Osterwalder
 #+EMAIL: sven.osterwalder@students.bfh.ch
 #+DATE: February 20, 2017
-#+OPTIONS: author:t date:t email:t ^:nil
+#+OPTIONS: author:t date:t email:t ^:nil H:5
 
 * TODO Introduction
 
@@ -149,7 +149,35 @@ run-able computer program.
 ** Standards and principles
 *** Code
 
- [Code.]
+[Code.]
+- Classes use camel case.
+- Folders / name-spaces use only small letters.
+- Methods are all small caps and use underscores as spaces.
+- Signals: do_something
+- Slots: on_something
+- Importing: =from Foo import Bar=
+  As the naming of the PyQt5 modules prefixes them by /Qt/, it is very unlikely
+  to have naming conflicts with other modules. Therefore the import format =from
+  PyQt5 import [QtModuleName]= is used. This still provides a (relatively)
+  unique naming most probably without any conflicts but reduces the effort when
+  writing a bit. The import of system modules is therefore as follows.
+
+**** Framework for implementation
+     :PROPERTIES:
+     :CUSTOM_ID: sec:framework-for-implementation
+     :END:
+
+To stay consistent when implementing classes, it make sense to define a rough
+framework for implementation, which is as follows:
+
+1. Define necessary signals.
+2. Within the constructor,
+  + Set up the user interface when it is a class concerning the graphical user
+    interface.
+  + Set up class-specific aspects, such as the name, the tile or an icon.
+  + Initialize the connections, meaning hooking up the defined signals with
+    corresponding methods.
+3. Implement the remaining functionality in terms of methods and slots.
 
 *** Diagrams
 
@@ -179,7 +207,7 @@ the virtual environment. The available Python versions may be listed as follows.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Listing all available versions of Python for use in Pyenv.
 #+NAME:       fig:impl-pyenv-list
-#+BEGIN_SRC bash :results output silent
+#+BEGIN_SRC bash
 pyenv install --list
 #+END_SRC
 
@@ -189,7 +217,7 @@ installation of version 3.6.0.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Installation of Python version 3.6.0 for the usage with Pyenv.
 #+NAME:       fig:impl-pyenv-install
-#+BEGIN_SRC bash :dir ../.
+#+BEGIN_SRC bash
 install 3.6.0
 #+END_SRC
 
@@ -203,7 +231,7 @@ of the virtual environment.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation of the virtual environment =qde= for Python using version 3.6.0 of Python.
 #+NAME:       fig:impl-pyenv-venv
-#+BEGIN_SRC bash :dir ../.
+#+BEGIN_SRC bash
 pyenv virtualenv 3.6.0 qde
 #+END_SRC
 
@@ -213,312 +241,233 @@ listed in the file =python_requirements.txt= and are installed using =pip=.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Installation of the projects' required dependencies.
 #+NAME:       fig:impl-pip-install
-#+BEGIN_SRC bash :dir ../.
+#+BEGIN_SRC bash
 pip install -r python_requirements.txt
 #+END_SRC
 
 All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
-** Project structure
+** Name-spaces and project structure
 
-This chapter describes the planned directory structure as well as an instruction
-on how to set up that structure.
+This chapter describes the planned directory structure as well as how the usage
+of name-spaces is intended.
 
 The whole source code shall be placed in the =src= directory underneath the main
-directory.
+directory. The creation of the single directories is not explicitly shown
+respectively done, instead the =:mkdirp= option provided by the source code
+block structure is used[fn:11:http://orgmode.org/manual/mkdirp.html#mkdirp]. The
+option has the same effect as would have =mkdir -p [directory/subdirectory]=: It
+creates all needed (sub-) directories, even when tangling a file. This prevents
+the tedious and non-interesting creation of directories within this document.
 
-To prevent multiple modules having the same name, name spaces are
+When dealing with directories and files, Python uses the term /package/ for a
+(sub-) directories and /module/ for files within directories, that is
+modules.[fn:13:https://docs.python.org/3/reference/import.html#packages]
+
+To prevent having multiple modules having the same name, name-spaces are
 used[fn:6:https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces].
-The main name space shall be analogous to the projects' name: =qde=.
+The main name-space shall be analogous to the projects' name: =qde=. Underneath
+the source code folder =src=, each sub-folder represents a package and acts
+therefore also as a name-space.
 
-In der ersten Phase des Projektes soll der Editor erstellt werden. Dieser dient
-der Erstellung und Verwaltung von Echtzeit-Animationen \cite[S. 29]{osterwalder_qde_2016}.
+To actually allow a whole package and its modules being imported /as modules/,
+it needs to have at least a file inside called =__init__.py=. Those files may be
+empty or they may contain regular source code such as classes or methods.
+
+The first stage of the project shows the creation of the /editor/ component, as
+it provides the possibility of creating and editing real-time animations which
+may then be played back by the /player/ component\cite[p. 29]{osterwalder_qde_2016}.
 
 ** Editor
 
-Der Editor soll sich im Verzeichnis =editor= unterhalb des =src/qde=-Verzeichnisses
-befinden.
+This chapter describes the creation of the /editor/ component.
 
-Um sicherzustellen, dass Module als solche verwendet werden können, muss pro
-Modul und Namespace eine Datei zur Initialisierung vorhanden sein. Es handelt sich
-dabei um Dateien namens =__init__.py=, welche im minimalen Fall leer sind. Diese
-können aber auch regulären Programmcode, wie zum Beispiel Klassen oder Methoden
-enthalten.
+The /editor/ component shall be placed within the =editor= directory beneath the
+=src/qde= directory tree. As stated in the prior chapter this requires as well
+an =__init__.py= file to let Python recognize the =editor= directory as a
+importable module. This fact and the creation of it is mentioned here for the
+sake of completeness. Later on it will be assumed as given and only the source
+code blocks for the creation of the =__init__.py= files are provided.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung des =qde=-Namespaces und des =editor=-Namespaces.
-#+NAME:       fig:impl-namespaces
-#+BEGIN_SRC python :tangle ../src/qde/__init__.py :noweb tangle :comments link :tangle ../src/qde/editor/__init__.py :mkdirp yes
+#+CAPTION:    Creation of the =qde= and =editor= name-spaces and initialization of the name-spaces as module.
+#+BEGIN_SRC python :tangle ../src/qde/__init__.py :tangle ../src/qde/editor/__init__.py :noweb tangle :comments link :mkdirp yes
 #+END_SRC
 
-Im weiteren Verlauf des Dokumentes wird darauf verzichtet diese Dateien explizit
-zu erwähnen, sie werden direkt in den entsprechenden Codeblöcken erstellt und
-als gegeben angesehen.
+*** Main application
 
-Nun kann mit der eigentlichen Erstellung des Editors begonnen werden.
-
-Der Einstiegspunkt einer Qt-Applikation mit grafischer Oberfläche ist die Klasse
-=QtApplication=. Gemäss [fn:7:http://doc.qt.io/Qt-5/qapplication.html] kann die
-Klasse direkt instanziert und benutzt werden, es ist unter Umständen jedoch
-sinnvoller die Klasse zu kapseln, was schlussendlich eine höhere Flexibilität
-bei der Umsetzung bietet. Es soll daher die Klasse =Application= erstellt
-werden, welche diese Abstraktion bietet.
+The main class of a Qt application using a graphical user interface (GUI)
+is provided by the class =QApplication=. According to
+[fn:7:http://doc.qt.io/Qt-5/qapplication.html] the class may be initialized and
+used directly without sub-classing it. It may however be useful to sub-class it
+nevertheless as this provides higher flexibility. Therefore the class
+=Application= is introduced, which sub-classes the =QApplication= class.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung des =application=-Namespaces.
-#+NAME:       fig:impl-application-namespace
+#+CAPTION:    Creation and initialization of the =application= name-space.
 #+BEGIN_SRC python :tangle ../src/qde/editor/application/__init__.py :noweb tangle :comments link :mkdirp yes
 #+END_SRC
 
-#+RESULTS:
+At this point it is necessary to think about the functionality of the class
+=Application= itself. Very roughly sketched, such a type of application
+initializes resources, enters a main loop where it stays until told to shut
+down. At the end it frees resources again.
 
-An dieser Stelle macht es Sinn, sich zu überlegen, welche Funktionalität die
-Applikation selbst haben soll. Es ist nicht nötig selbst einen Event-Loop zu
-implementieren, da ein solcher bereits durch Qt vorhanden
-ist[fn:8:http://doc.qt.io/Qt-5/qapplication.html#exec].
+Due to the usage of =QApplication= as super class it is not necessary to
+implement a main (event-) loop, as such is provided by Qt itself
+[fn:8:http://doc.qt.io/Qt-5/qapplication.html#exec].
 
-Die Applikation hat die Aufgabe die Kernelemente der Applikation zu
-initialisieren. So fungiert das Modul als Knotenpunkt zwischen den
-verschiedenen Ebenen der Architektur, indem es diese mittels Signalen
-verbindet.\cite[S. 37 bis 38]{osterwalder_qde_2016}
+Concerning the initialization of
+resources[fn:12:https://www.python.org/dev/peps/pep-0263/], the application has
+to act as central node between the various layers of the architecture,
+initializing them and connecting them using signals.\cite[S. 37 bis 38]{osterwalder_qde_2016}
 
-Weiter soll es nützliche Schnittstellen, wie zum Beispiel das Protokollieren
-von Meldungen, bereitstellen. Und schliesslich soll das Modul eine Möglichkeit
-bieten beim Verlassen der Applikation zusätzliche Aufgaben, wie etwa das
-Entfernen von temporären Dateien, zu bieten.
+Before going into too much details about the actual =Application= class, let us
+first have a look at the structure of a Python module. Each (proper) Python
+module contains an (optional) file encoding, a
+docstring[fn:9:https://www.python.org/dev/peps/pep-0257/#what-is-a-docstring],
+imports of other modules and either loose methods or a class definition with
+methods underneath.
 
-Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
-gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
-Schritt ein Modul zur Protokollierung zu implementieren.
-Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
-Namespace =foundation= erstellt.
-
-Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
-Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
+The main module =application= containing also the =Application= class, looks
+therefore as follows.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
-#+NAME:       fig:editor-foundation-namespace
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
-#+END_SRC
-
-Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
-Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
-=logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
-werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
-hierfür das Decorator-Pattern von Python
-an[fn:9:https://www.python.org/dev/peps/pep-0318/].
-
-Die Klasse zur Protokollierung soll also Folgendes tun:
-
-- Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
-  #+NAME: logger-name
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
-  #+BEGIN_SRC python
-  logger_name = "%s.%s" % (cls.__module__, cls.__name__)
-  #+END_SRC
-
-  #+RESULTS: logger-name
-
-- Einen Stream-Handler nutzen
-  #+NAME: logger-stream-handler
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Initialisieren eines Stream-Handlers.
-  #+BEGIN_SRC python
-    stream_handler = logging.StreamHandler()
-  #+END_SRC
-
-    #+RESULTS: logger-stream-handler
-
-- Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
-  #+NAME: logger-set-level
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Setzen des =DEBUG= Log-Levels.
-  #+BEGIN_SRC python
-    # TODO: Do this according to config.
-    stream_handler.setLevel(logging.DEBUG)
-  #+END_SRC
-
-    #+RESULTS: logger-set-level
-
-- Protokoll-Einträge ansprechend formatieren
-  #+NAME: logger-set-formatter
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
-  #+BEGIN_SRC python
-    # TODO: Set up formatter in debug mode only
-    formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
-    stream_handler.setFormatter(formatter)
-  #+END_SRC
-
-    #+RESULTS: logger-set-formatter
-
-- Eine einfache Schnittstelle zur Protokollierung bieten
-  #+NAME: logger-return-logger
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
-  #+BEGIN_SRC python
-    cls.logger = logging.getLogger(logger_name)
-    cls.logger.propagate = False
-    cls.logger.addHandler(stream_handler)
-
-    return cls
-  #+END_SRC
-
-    #+RESULTS: logger-return-logger
-
-Nun kann die eigentliche Funktionalität implementiert werden.
-
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
-#+NAME:       fig:editor-common-logging
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link :mkdirp yes
+#+CAPTION:    Main application module holding the =Application= class.
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :comments link :mkdirp yes
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Module holding common helper methods."""
+"""Main application module for QDE."""
 
-# System imports
-import logging
+<<app-imports>>
 
-
-def with_logger(cls):
-    """Add a logger instance (using a steam handler) to the given class
-    instance.
-
-    :param cls: the class which the logger shall be added to
-    :type  cls: a class of type cls
-
-    :return: the class type with the logger instance added
-    :rtype:  a class of type cls
-    """
-
-    <<logger-name>>
-    <<logger-stream-handler>>
-    <<logger-set-level>>
-    <<logger-set-formatter>>
-    <<logger-return-logger>>
+<<app-class-definition>>
 #+END_SRC
 
-#+RESULTS: fig:editor-common-logging
-
-
-Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
-werden.
-
-#+NAME: app-class-definition
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Definition der Klasse =Application= mit dem =with_logger=-Dekorator des =common=-Modules.
-#+BEGIN_SRC python
-@common.with_logger
-class QDE(QApplication):
-  """Main application for QDE."""
-
-  <<app-class-body>>
-#+END_SRC
-
-#+RESULTS: app-class-definition
-
-Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
-findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
-Python bietet hierzu vielfältige
-Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
-Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
-bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
-Beispiel sehr einfach aus einer JSON-Datei generiert werden.
-
-Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
-- Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
-  Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
-  wird.
-- Als Name für die JSON-Datei wird =logging.json= angenommen.
-- Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
-  gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
-  angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
-- Existiert die JSON-Konfigurationsdatei nicht, wird auf die
-  Standardkonfiguration zurückgegeriffen.
-- Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
-  zum Filtern der verschiedenen Protokollnachrichten.
-
-Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
-sowie =Umgebungsvariable= entgegen.
-
-Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
-umgesetzt und der Klasse hinzugefügt werden.
-
-#+NAME: app-setup-logging
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
-#+BEGIN_SRC python
-def setup_logging(self,
-    default_path='logging.json',
-    default_level=logging.INFO,
-    env_key='LOG_CFG'
-):
-    """Setup logging configuration"""
-
-    path = default_path
-    value = os.getenv(env_key, None)
-
-    if value:
-        path = value
-
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-
-            config = json.load(f)
-            logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-#+END_SRC
-
-
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Haupt-Modul und Einstiegspunkt der Applikation.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :comments link :mkdirp yes
-  # -*- coding: utf-8 -*-
-
-  """Main application module for QDE."""
-
-  <<app-imports>>
-
-  <<app-class-definition>>
-#+END_SRC
-
-#+RESULTS:
+**** Imports
+As you can see, the imports of the module are defined by =<<app-imports>>=. For
+achieving better readability, the imports are split up into system imports,
+meaning modules provided by the Python library itself or external modules, and
+project imports, modules created within the project. The imports are therefore
+split up as follows.
 
 #+NAME: app-imports
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Definition der Importe des Haupt-Modules.
+#+CAPTION:    =<<app-imports>>=, definition of the application modules' imports.
 #+BEGIN_SRC python
+# System imports
 <<app-system-imports>>
 
+# Project imports
 <<app-project-imports>>
 #+END_SRC
 
-#+NAME: app-system-imports
+As the actual imports are not known yet, let us first look at the applications'
+structure, defined by =<<app-class-definition>>=. The class is defined by its
+name, its super class (the parent class) and a class body. As stated at the
+beginning, the class will inherit from the Qt class =QApplication=, which
+provides the basics for a Qt GUI application.
+
+#+NAME: app-class-definition
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Importe von Python-eigenen Modulen im Haupt-Modul.
+#+CAPTION:    =<<app-class-definition>>=, definition of the =Application= class.
 #+BEGIN_SRC python
-# System imports
-from   PyQt5.Qt import QApplication
-from   PyQt5.Qt import QIcon
-import logging
-import os
+class Application(QtWidgets.QApplication):
+    """Main application for QDE."""
+
+    <<app-class-body>>
 #+END_SRC
 
-#+NAME: app-project-imports
+As stated before and as clearly can be seen the class inherits from
+=QApplication=. This base class is not yet defined however which would produce
+an error when executing the main class. It is therefore necessary to make that
+base class available by importing it. As =QApplication= is an external class,
+not defined by this project, its import is added to the system imports.
+
+Python offers multiple possibilities concerning imports:
+
+- =from foo import bar= or\\
+  =import foo.bar=
+
+  Imports the module =bar= from the package =foo=. All classes, methods and
+  variables within =bar= are then accessible.
+
+- =from foo import bar as baz= or\\
+  =import foo.bar as baz=
+
+  The importing is the same as above, =bar= is masked as =baz= although. This
+  can be convenient when multiple modules have the same name.
+
+- =from bar import SomeClass= or\\
+  =import bar.SomeClass= or\\
+  =import bar.SomeClass as SomeClass=
+
+  Imports the class =SomeClass= from the module =bar=.
+
+- =from foo.bar import some_method= or\\
+  =import foo.bar.some_method= or\\
+  =import foo.bar.some_method as some_method=
+
+  Imports the method =some_method= from the module =bar=.
+
+- =from foo import *= or\\
+  =import * from foo=
+
+  Imports /all/ sub-packages and sub-modules from the package =foo=. However,
+  explicit importing is better than implicit and therefore this option should
+  not be used.[fn:14:https://www.python.org/dev/peps/pep-0020/]
+
+- =from bar import *= or
+  =import * from bar=
+
+  Imports /all/ classes and methods from the module =bar=. As stated above,
+  explicit importing is better than implicit and therefore this option should
+  also not be used.
+
+As the naming of the PyQt5 modules prefixes them by /Qt/, it is very unlikely to
+have naming conflicts with other modules. Therefore the import format =from
+PyQt5 import [QtModuleName]= is used. This still provides a (relatively) unique
+naming most probably without any conflicts but reduces the effort when
+writing a bit. The import of system modules is therefore as follows.
+
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Importe von selbst verfassten Modulen im Haupt-Modul.
+#+CAPTION:    =<<app-system-imports>>=, import of system imports.
+#+NAME: app-system-imports
+#+HEADER: :prologue <<app-system-imports>>
 #+BEGIN_SRC python
-# Project imports
-from qde.editor.foundation import common
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 #+END_SRC
+
+At this point of time it is rather unclear what the classes body consists of.
+What surely must be done, is initializing the class's parent, =QApplication=.
+Additionally it would be nice to having a matching title for the window set as
+well as maybe an icon for the application. The class's body therefore solely
+consists its constructor, as follows.
+
+#+NAME: app-class-body
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    =<<app-class-body>>=, body of the class =Application=, containing only the constructor at the moment.
+#+BEGIN_SRC python
+<<app-constructor>>
+#+END_SRC
+
+When looking at the constructor of the =QApplication=
+class[fn:10:https://doc.qt.io/qt-5/qapplication.html#QApplication] (as the
+documentation of PyQt does not provide a proper description and points to the
+C++ documentation), one can see that it needs the argument count =argc= as well
+as a vector =argv= containing the arguments. The argument count states how many
+arguments are being held by the argument vector =argv=. In the PyQt
+implementation however, only one argument is necessary: a list containing the
+arguments. =argc= may easily be derived by e.g. =len(arguments)=. Therefore it
+is necessary for to constructor to take in =arguments= as a required parameter.
+The applications' constructor looks hence as follows.
 
 #+NAME: app-constructor
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Konstruktor des Haupt-Modules.
+#+CAPTION:    =<<app-constructor>>=, constructor of the =Application= class.
 #+BEGIN_SRC python
 def __init__(self, arguments):
     """Constructor.
@@ -528,35 +477,534 @@ def __init__(self, arguments):
     :type  argv:      list
     """
 
-    super(QDE, self).__init__(arguments)
-    self.setWindowIcon(QIcon("assets/icons/im.png"))
+    super(Application, self).__init__(arguments)
+    self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))
     self.setApplicationName("QDE")
     self.setApplicationDisplayName("QDE")
-
-    self.setup_logging()
 #+END_SRC
 
-Der Konstruktor und die Methode zum Einrichten der Protokollierung werden
-schliesslich der Klasse hinzugefügt.
+*** Main entry point
 
-#+NAME: app-class-body
+If you run the application at this point nothing happens. Python is able to
+resolve all dependencies but as there is no =main= function there is nothing
+else to do, so nothing happens. The execution of the main loop is started when
+calling the =exec= function of a =QApplication=. So, for actually being able to
+start the application, a =main= function is needed, which creates an instance of
+the =Application= class and then runs its =exec= function.
+
+The main function could easily be added to the =Application= class, but for
+somebody who is not familiar with this applications' structure, this might be
+rather confusing. Instead a =editor.py= file at the root of the source directory
+=src= is much more intuitive.
+
+All that the main file shall do, is creating an instance of the main
+application, execute it and exit at the end of its life cycle.
+
+As stated in <<Imports>>, the constructor of =QApplication= requires the
+argument =arguments= to be passed in (yes, the naming may be a bit confusing
+here). The =arguments= argument is a list of arguments passed when calling the
+main entry point of the editor application. For example when calling =python editor.py foo bar baz=,
+the variable =arguments= would be the list =[foo, bar, baz]= with
+=len(arguments)= being 3. To obtain the passed-in arguments, the =argv=
+attribute of the =sys= module may be used, as this holds exactly the list of the
+passed-in arguments when calling a Python script.
+
+The main entry script of the editor =editor.py= is therefore defined as follows.
+
+#+NAME: main
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Hinzufügen des Konstruktors sowie der Methode zum Einrichten der Protokollierung zum Körper des Haupt-Modules.
-#+HEADER: :prologue <<app-class-body>>
-#+BEGIN_SRC python
-<<app-constructor>>
+#+CAPTION:    =<<main>>=, the main entry point for the whole editor application.
+#+BEGIN_SRC python :tangle ../src/editor.py :noweb tangle :comments link :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-<<app-setup-logging>>
+""" Main entry point for the QDE editor application. """
+
+# System imports
+import sys
+
+# Project imports
+from qde.editor.application import application
+
+
+if __name__ == "__main__":
+    app = application.Application(sys.argv)
+    status = app.exec()
+    sys.exit(status)
 #+END_SRC
+
+If you run the application now, a bit more happens. Python is able to
+resolve all dependencies and to find a =main= function which is then called.
+The =main= function creates an instance of the =Application= class and executes
+it by calling =exec=. This in turn enters the Qt main loop which keeps the
+application running unless explicitly told to shut down. But at this point there
+is nothing who could receive the request to shut down, so the only possibility
+to shut down the application is to quit or kill the spawned Python process
+itself --- not very nice.
+
+*** Components
+    :PROPERTIES:
+    :CUSTOM_ID: sec:components
+    :END:
+
+Instead it would be nice to have at least a window shown when starting the
+application, which allows a normal, deterministic and convenient shut down of
+the application, either by a keyboard shortcut or by selecting an appropriate
+option in the applications' menu.
+
+But having only a plain window is not that interesting, so this might be a good
+time to look at the components of the editor, which are defined by
+\citep[p. 29 ff.]{osterwalder_qde_2016} and are the following:
+
+- A scene graph, allowing the creation and deletion of scenes. The scene graph
+  has at least a root scene.
+- A node-based graph structure, allowing the composition of scenes using nodes
+  and connections between the nodes.
+- A parameter window, showing parameters of the currently selected graph node.
+- A rendering window, rendering the currently selected node or scene.
+- A sequencer, allowing a time-based scheduling of defined scenes.
+
+What \cite{osterwalder_qde_2016} does not explicitly mention, is the main
+window, which holds all those components and allows a proper shut down of the
+application.
+
+As a starting point, we shall implement the class =MainWindow= representing the
+main window.
+
+**** Main window
+
+Before implementing the features of the main window, its features will be
+described. The main window is the central aspect of the graphical user interface
+and is hence part of the =gui= package.
+
+Its main functionality is to set up the actual user interface, containing all
+the components, described by [[Components]], as widgets. Qt offers the class
+=QMainWindow= from which =MainWindow= may inherit. The thoughts about the
+implementation follow section [[Framework for implementation]].
+
+The first step is setting up the necessary signals. They may not all be known at
+this point and may therefore be expanded later on. As described in section
+[[Components]], it would be nice if =MainWindow= would react to a request for
+closing it, either by a keyboard shortcut or a menu command. However,
+=MainWindow= is not able to force the =Application= to quit by itself. It would
+be possible to pass =MainWindow= a reference to =Application= but that would
+lead to a somewhat tight coupling and is therefore not considered as an option.
+Signals and slots allow exactly such cross-layer communication without coupling
+components tightly.
+
+First, the outline of =MainWindow= is defined.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Module holding the main application window class, =MainWindow=.
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui/main_window.py :noweb tangle :comments link :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding the main application window. """
+
+# System imports
+<<main-window-system-imports>>
+
+# Project imports
+<<main-window-project-imports>>
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    """The main window class.
+    Acts as an entry point for the QDE editor application.
+    """
+
+    <<main-window-signals>>
+
+    <<main-window-constructor>>
+
+    <<main-window-methods>>
+
+    <<main-window-slots>>
+#+END_SRC
+
+A fitting name for the signal, when the window and therefore the application,
+shall be closed might be =window_closing=. The signal is introduced as follows.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of signals for the main application window class, =MainWindow=.
+#+NAME:       main-window-signals
+#+HEADER:     :prologue <<main-window-signals>>
+#+BEGIN_SRC python
+# Signals
+window_closing = QtCore.pyqtSignal()
+#+END_SRC
+
+Now, that the signal for closing the window and the application is defined, two
+additional things need to be considered: The emission of the signal by
+=MainWindow= itself as well as the consumption of the signal by a slots of other
+classes.
+
+First, the emission of the signal is implemented. The signal shall be emitted
+when the escape key on the keyboard is pressed or when the corresponding menu
+item was selected. For the first case, the keyboard event, Qt provides luckily
+events which may be used. Their outline is already provided by the parent class
+=QMainWindow= and therefore the event(s) simply need to be implemented. The
+event which listens to keyboard keys being pressed is called =keyPressEvent= and
+provides an event-object of type =QEvent=. All there is to do, is to retrieve
+the event's key by calling its =key= method and check if that key is actually
+the escape key by comparing it to =Key_Escape=, provided by Qt. If this
+comparison is true, the signal shall be emitted.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the =keyPressEvent= method on the =MainWindow= class.
+#+NAME:       main-window-methods
+#+HEADER:     :prologue <<main-window-methods>>
+#+BEGIN_SRC python
+def keyPressEvent(self, event):
+    """Gets triggered when a key press event is raised.
+
+    :param event: holds the triggered event.
+    :type  event: QKeyEvent
+    """
+
+    if event.key() == QtCore.Qt.Key_Escape:
+        self.window_closing.emit()
+    else:
+        super(MainWindow, self).keyPressEvent(event)
+#+END_SRC
+
+Additionally the signal shall be emitted when selecting a corresponding menu
+item. But currently there is no such menu item defined. Qt handles interactions
+with menu items by using actions (=QAction=). They provide themselves a couple
+of signals, one being =triggered=, which gets emitted as soon as the action was
+triggered by a clicking on a menu item. As it is not possible to connect a
+signal with another signal, a slot, which receives the signal, needs to be
+defined. A slot is an annotated method.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The =on_quit= method, which acts as a slot when the menu item for quitting the application was triggered.
+#+NAME:       main-window-slots
+#+HEADER:     :prologue <<main-window-slots>>
+#+BEGIN_SRC python
+@QtCore.pyqtSlot()
+def on_quit(self):
+    """Slot which emits the :any:`window_closing` signal.
+    This slot gets triggered upon the selection of the menu item to close the
+    QDE application.
+    """
+
+    self.window_closing.emit()
+#+END_SRC
+
+Now the main window is able to emit the signal it is shutting down (or
+rather it would like to shut down), but so far no one is listening to that
+signal, so nothing happens when that signal is being emitted.
+
+This leads to an expansion of the main application's construction: The main
+application has to create a main window an listen to its =window_closing=
+signal. Luckily =Application= provides already a =quit= slot through
+=QApplication=.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the main application's constructor, =<<app-constructor>>=, by the initialization of =MainWindow= and its signals.
+#+NAME:       app-constructor
+#+HEADER:     :prologue <<app-constructor>>
+#+BEGIN_SRC python
+
+    self.main_window = qde_main_window.MainWindow()
+    self.main_window.window_closing.connect(self.quit)
+    self.main_window.show()
+#+END_SRC
+
+So far none of the additional modules have been defined as there are no
+additional modules imported yet. The missing modules to be added to the main
+application as well as the main window.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of =<<app-project-imports>>= by the missing imports.
+#+NAME:       app-project-imports
+#+HEADER:     :prologue <<app-project-imports>>
+#+BEGIN_SRC   python
+from qde.editor.gui import main_window as qde_main_window
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of =<<main-window-system-imports>>= by the missing imports.
+#+NAME:       main-window-system-imports
+#+HEADER:     :prologue <<main-window-system-imports>>
+#+BEGIN_SRC   python
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+#+END_SRC
+
+Yet the constructor for the main window is still missing, so running the
+application would still do nothing. Therefore the constructor for the main
+window is now implemented. At the current point its solely purpose is to call
+the its parent's constructor.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Constructor for the main window class =MainWindow=.
+#+NAME:       main-window-constructor
+#+HEADER:     :prologue <<main-window-constructor>>
+#+BEGIN_SRC python
+def __init__(self):
+    """Constructor."""
+
+    super(MainWindow, self).__init__()
+#+END_SRC
+
+Although a Python process is spawned when starting the application, the main
+window is still not shown. The problem is, that the main window has no central
+widget
+set[fn:15:http://doc.qt.io/qt-5/qmainwindow.html#creating-main-window-components].
+Setting a central widget and setting a layout for it solves this problem.
+
+The above described task matches perfectly the second point described in section
+[[Framework for implementation]]. The described task will therefore be put in a
+method named =setup_ui= and the constructor will be expanded correspondingly.
+The method =setup_ui= seems also a very good place for setting things like the
+size of the window, setting its (object-) name and its title as well as moving
+it to a position on the user's screen. To ensure that the window is not hidden
+behind other windows, the method =activateWindow= coming from =QWidget= is
+called.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =setup_ui=, which is added to =<<main-window-methods>>, for setting up user interface specific tasks within the main window class =MainWindow=.
+#+NAME:       main-window-methods
+#+HEADER:     :prologue <<main-window-methods>>
+#+BEGIN_SRC python
+def setup_ui(self):
+    """Sets up the user interface specific components."""
+
+    self.setObjectName('MainWindow')
+    self.setWindowTitle('QDE')
+    self.resize(1024, 768)
+    self.move(100, 100)
+    self.activateWindow()
+
+    central_widget = QtWidgets.QWidget(self)
+    central_widget.setObjectName('central_widget')
+    grid_layout = QtWidgets.QGridLayout(central_widget)
+    central_widget.setLayout(grid_layout)
+    self.setCentralWidget(central_widget)
+    self.statusBar().showMessage('Ready.')
+#+END_SRC
+
+Now the =setup_ui= method simply needs to be added to the constructor of the
+class =MainWindow=.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =setup_ui= is added to the constructor of main window class =MainWindow=.
+#+NAME:       main-window-constructor
+#+HEADER:     :prologue <<main-window-constructor>>
+#+BEGIN_SRC python
+    self.setup_ui()
+#+END_SRC
+
+*** Logging
+  : Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
+  : gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
+  : Schritt ein Modul zur Protokollierung zu implementieren.
+  : Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
+  : Namespace =foundation= erstellt.
+  : 
+  : Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
+  : Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
+  : 
+  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  : #+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
+  : #+NAME:       fig:editor-foundation-namespace
+  : #+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
+  : #+END_SRC
+  : 
+  : Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
+  : Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
+  : =logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
+  : werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
+  : hierfür das Decorator-Pattern von Python
+  : an[fn:9:https://www.python.org/dev/peps/pep-0318/].
+  : 
+  : Die Klasse zur Protokollierung soll also Folgendes tun:
+  : 
+  : - Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
+  :   #+NAME: logger-name
+  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  :   #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
+  :   #+BEGIN_SRC python
+  :   logger_name = "%s.%s" % (cls.__module__, cls.__name__)
+  :   #+END_SRC
+  : 
+  :   #+RESULTS: logger-name
+  : 
+  : - Einen Stream-Handler nutzen
+  :   #+NAME: logger-stream-handler
+  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  :   #+CAPTION:    Initialisieren eines Stream-Handlers.
+  :   #+BEGIN_SRC python
+  :     stream_handler = logging.StreamHandler()
+  :   #+END_SRC
+  : 
+  :     #+RESULTS: logger-stream-handler
+  : 
+  : - Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
+  :   #+NAME: logger-set-level
+  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  :   #+CAPTION:    Setzen des =DEBUG= Log-Levels.
+  :   #+BEGIN_SRC python
+  :     # TODO: Do this according to config.
+  :     stream_handler.setLevel(logging.DEBUG)
+  :   #+END_SRC
+  : 
+  :     #+RESULTS: logger-set-level
+  : 
+  : - Protokoll-Einträge ansprechend formatieren
+  :   #+NAME: logger-set-formatter
+  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  :   #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
+  :   #+BEGIN_SRC python
+  :     # TODO: Set up formatter in debug mode only
+  :     formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
+  :     stream_handler.setFormatter(formatter)
+  :   #+END_SRC
+  : 
+  :     #+RESULTS: logger-set-formatter
+  : 
+  : - Eine einfache Schnittstelle zur Protokollierung bieten
+  :   #+NAME: logger-return-logger
+  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  :   #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
+  :   #+BEGIN_SRC python
+  :     cls.logger = logging.getLogger(logger_name)
+  :     cls.logger.propagate = False
+  :     cls.logger.addHandler(stream_handler)
+  : 
+  :     return cls
+  :   #+END_SRC
+  : 
+  :     #+RESULTS: logger-return-logger
+  : 
+  : Nun kann die eigentliche Funktionalität implementiert werden.
+  : 
+  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  : #+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
+  : #+NAME:       fig:editor-common-logging
+  : #+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link :mkdirp yes
+  : # -*- coding: utf-8 -*-
+  : 
+  : """Module holding common helper methods."""
+  : 
+  : # System imports
+  : import logging
+  : 
+  : 
+  : def with_logger(cls):
+  :     """Add a logger instance (using a steam handler) to the given class
+  :     instance.
+  : 
+  :     :param cls: the class which the logger shall be added to
+  :     :type  cls: a class of type cls
+  : 
+  :     :return: the class type with the logger instance added
+  :     :rtype:  a class of type cls
+  :     """
+  : 
+  :     <<logger-name>>
+  :     <<logger-stream-handler>>
+  :     <<logger-set-level>>
+  :     <<logger-set-formatter>>
+  :     <<logger-return-logger>>
+  : #+END_SRC
+  : 
+  : #+RESULTS: fig:editor-common-logging
+  : 
+  : 
+  : Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
+  : werden.
+  : 
+  : 
+  : Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
+  : findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
+  : Python bietet hierzu vielfältige
+  : Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
+  : Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
+  : bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
+  : Beispiel sehr einfach aus einer JSON-Datei generiert werden.
+  : 
+  : Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
+  : - Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
+  :   Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
+  :   wird.
+  : - Als Name für die JSON-Datei wird =logging.json= angenommen.
+  : - Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
+  :   gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
+  :   angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
+  : - Existiert die JSON-Konfigurationsdatei nicht, wird auf die
+  :   Standardkonfiguration zurückgegeriffen.
+  : - Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
+  :   zum Filtern der verschiedenen Protokollnachrichten.
+  : 
+  : Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
+  : sowie =Umgebungsvariable= entgegen.
+  : 
+  : Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
+  : umgesetzt und der Klasse hinzugefügt werden.
+  : 
+  : #+NAME: app-setup-logging
+  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  : #+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
+  : #+BEGIN_SRC python
+  : def setup_logging(self,
+  :     default_path='logging.json',
+  :     default_level=logging.INFO,
+  :     env_key='LOG_CFG'
+  : ):
+  :     """Setup logging configuration"""
+  : 
+  :     path = default_path
+  :     value = os.getenv(env_key, None)
+  : 
+  :     if value:
+  :         path = value
+  : 
+  :     if os.path.exists(path):
+  :         with open(path, 'rt') as f:
+  : 
+  :             config = json.load(f)
+  :             logging.config.dictConfig(config)
+  :     else:
+  :         logging.basicConfig(level=default_level)
+  : #+END_SRC
 
 * Working log
 
-<2017-02-20 Mon> Initial set up and structuring of the document.
+<2017-02-20 Mon> Set up and structure the document initially.
+<2017-02-21 Tue> Re-structure the document, add first contents of the implementation.
+                 Add first tries to tangle the code.
+<2017-02-22 Wed> Provide further content concerning the implementation:
+                 Introduce name-spaces/initializers, first steps for a logging
+                 facility.
+<2017-02-23 Thu> Extend logging facility, provide (unit-) tests. Restructure the
+                 documentation.
+<2017-02-24 Fri> Adapt document to output LaTeX code as desired, change styling.
+                 Begin development of the applications' main routine.
+<2017-02-27 Mon> Remove (unit-) tests from main document and put them into
+                 appendix instead. Begin explaining literate programming.
+<2017-02-28 Tue> Provide a first draft for objectives and limitations. Re-structure
+                 the document. Correct LaTeX output.
 <2017-03-01 Wed> Remove split files, re-add everything to index, add objectives.
 <2017-03-02 Thu> Set up project schedule. Tangle everything instead of doing
                  things manually. Begin changing language to English instead of
                  German. Re-add make targets for cleaning and building the
                  source code.
+<2017-03-03 Fri> Keep work log up to date. Revise and finish chapter about
+                 name-spaces and the project structure for now.
+<2017-03-04 Sat> Finish translating all already written texts from German to
+                 English. Describe the main entry point of the application as
+                 well as the main application itself.
+<2017-03-05 Sun> Finish chapter about the main entry point and the main
+                 application for now, start describing the main window and implement its
+                 functionality. Keep the work log up to date. Fiddle with
+                 references and LaTeX export. Find a bug: main_window needs to
+                 be attached to a class, by using the =self= keyword, otherwise
+                 the window does not get shown. Introduce new make targets: one
+                 to clean Python cache files (*.pyc) and one to run the editor
+                 application directly.
 
 * Bibliography
 
@@ -595,8 +1043,6 @@ Start-Argumente mitzugeben, also zum Beispiel:
 python main.py argument1 argument2
 #+END_SRC
 
-#+RESULTS:
-
 Der Einfachheit halber werden die Importe in zwei Kategorien unterteilt: Importe
 von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
 
@@ -604,14 +1050,13 @@ von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Definition der Importe für das Modul zum Testen der Applikation.
 #+BEGIN_SRC python
+# System imports
 <<test-app-system-imports>>
 
+# Project imports
 <<test-app-project-imports>>
 #+END_SRC
 
-#+RESULTS: test-app-imports
-
-#+NAME: test-app-system-imports
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.
 #+BEGIN_SRC python
@@ -652,7 +1097,7 @@ only a test case for testing the constructor).
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION: Modul zum Testen der Applikation.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/test_application.py :noweb tangle :comments link :mkdirp yes
+#+BEGIN_SRC python
 <<test-app-header>>
 
 <<test-app-imports>>
@@ -669,11 +1114,9 @@ nicht existiert.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION: Aufruf zum Testen des Applkations-Modules.
-#+BEGIN_SRC bash :dir ../src
+#+BEGIN_SRC bash
 python -m pytest qde/editor/application/test_application.py
 #+END_SRC
-
-#+RESULTS:
 
 Um sicherzustellen, dass die Protokollierung wie gewünscht funktioniert, wird
 diese durch die entsprechenden Testfälle abgedeckt.
@@ -684,7 +1127,7 @@ Parameter.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.
 #+NAME:       test-app-test-logging-default
-#+BEGIN_SRC   python
+#+BEGIN_SRC python
 def test_setup_logging_without_arguments():
     """Test logging of QDE application without arguments."""
     app = application.QDE(sys.argv)
@@ -693,8 +1136,6 @@ def test_setup_logging_without_arguments():
     assert len(handlers) == 1
     handler = handlers[0]
 #+END_SRC
-
-#+RESULTS: test-app-test-logging-default
 
 Da obige Testfälle das /logging/-Module benötigen, muss das Importieren der Module
 entsprechend erweitert werden.
@@ -723,47 +1164,43 @@ Auch hierfür werden wiederum zuerst die Testfälle verfasst.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Testfälle der Hilfsmethode zur Protokollierung.
 #+NAME:       fig:editor-common-logging-test
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/test_common.py :noweb tangle :comments link :mkdirp yes
-  # -*- coding: utf-8 -*-
+#+BEGIN_SRC python
+# -*- coding: utf-8 -*-
 
-  """Module for testing common methods class."""
+"""Module for testing common methods class."""
 
-  # System imports
-  import logging
+# System imports
+import logging
 
-  # Project imports
-  from qde.editor.foundation import common
+# Project imports
+from qde.editor.foundation import common
 
 
-  @common.with_logger
-  class FooClass(object):
-      """Dummy class for testing the logging decorator."""
+@common.with_logger
+class FooClass(object):
+    """Dummy class for testing the logging decorator."""
 
-      def __init__(self):
-          """Constructor."""
-          pass
+    def __init__(self):
+        """Constructor."""
+        pass
 
-  def test_with_logger():
-      """Test if the @with_logger decorator works correctly."""
+def test_with_logger():
+    """Test if the @with_logger decorator works correctly."""
 
-      foo_instance = FooClass()
-      logger = foo_instance.logger
-      name = "qde.editor.foundation.test_common.FooClass"
-      assert logger is not None
-      assert len(logger.handlers) == 1
-      handler = logger.handlers[0]
-      assert type(handler) == logging.StreamHandler
-      assert logger.propagate == False
-      assert logger.name == name
+    foo_instance = FooClass()
+    logger = foo_instance.logger
+    name = "qde.editor.foundation.test_common.FooClass"
+    assert logger is not None
+    assert len(logger.handlers) == 1
+    handler = logger.handlers[0]
+    assert type(handler) == logging.StreamHandler
+    assert logger.propagate == False
+    assert logger.name == name
 #+END_SRC
 
-#+RESULTS: fig:editor-common-logging-test
-
-#+BEGIN_SRC bash :dir ../src
-  python -m pytest qde/editor/foundation/test_common.py
+#+BEGIN_SRC bash
+python -m pytest qde/editor/foundation/test_common.py
 #+END_SRC
-
-#+RESULTS:
 
 
 ** Meeting minutes
