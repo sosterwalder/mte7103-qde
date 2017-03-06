@@ -166,18 +166,40 @@ run-able computer program.
 ** Standards and principles
 *** Code
 
-[Code.]
+**** TODO Principles
+
 - Classes use camel case.
 - Folders / name-spaces use only small letters.
 - Methods are all small caps and use underscores as spaces.
 - Signals: do_something
 - Slots: on_something
-- Importing: =from Foo import Bar=
+- Importing: {{{verb(from Foo import Bar)}}}\\
   As the naming of the PyQt5 modules prefixes them by /Qt/, it is very unlikely
-  to have naming conflicts with other modules. Therefore the import format =from
-  PyQt5 import [QtModuleName]= is used. This still provides a (relatively)
-  unique naming most probably without any conflicts but reduces the effort when
-  writing a bit. The import of system modules is therefore as follows.
+  to have naming conflicts with other modules. Therefore the import format
+  {{{verb(from PyQt5 import [QtModuleName])}}} is used. This still provides a
+  (relatively) unique naming most probably without any conflicts but reduces the
+  effort when writing a bit. The import of system modules is therefore as
+  follows.
+
+**** Layering
+     :PROPERTIES:
+     :CUSTOM_ID: sec:layering
+     :END:
+
+As written in \cite[p. 38 ff.]{osterwalder_qde_2016}, a layered architecture is
+foreseen. A relaxed layered architecture leads to low coupling,
+reduces dependencies and enhances cohesion as well as clarity.
+
+As the architecture's core [[Components][components]] are all graphical, a graphical user
+interface for those components is developed. As the their data shall be
+exportable, it would be relatively tedious if the graphical user interface would
+hold that data. Instead models and model-view separation are used. Additionally
+controllers are introduced which act as workflow objects of the application
+layer and interfere between the model and its view.
+
+To avoid coupling and therefore dependencies, signals and
+slots[fn:16:http://doc.qt.io/qt-5/signalsandslots.html] are used in terms of the
+observer pattern to allow inter-object and inter-layer communication.
 
 **** Framework for implementation
      :PROPERTIES:
