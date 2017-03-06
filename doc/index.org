@@ -692,8 +692,7 @@ comparison is true, the signal shall be emitted.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Implementation of the =keyPressEvent= method on the =MainWindow= class.
-#+NAME:       main-window-methods
-#+HEADER:     :prologue <<main-window-methods>>
+#+NAME:       main-window-keypressevent
 #+BEGIN_SRC python
 def keyPressEvent(self, event):
     """Gets triggered when a key press event is raised.
@@ -803,10 +802,25 @@ it to a position on the user's screen. To ensure that the window is not hidden
 behind other windows, the method =activateWindow= coming from =QWidget= is
 called.
 
+As it is not sure at this point, if the main window will receive additional
+methods, it may be wise to split =<<main-window-methods>>= up, by inserting the
+yet known methods (only =setup_ui= so far) explicitly. This provides the
+advantage, that new methods can easily be appended and the implemented methods
+may be expanded easily as well.
+
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    The method =setup_ui=, which is added to =<<main-window-methods>>, for setting up user interface specific tasks within the main window class =MainWindow=.
+#+CAPTION:    The placeholder =<<main-window-methods>>= declared explicitly.
 #+NAME:       main-window-methods
 #+HEADER:     :prologue <<main-window-methods>>
+#+BEGIN_SRC python
+<<main-window-keypressevent>>
+
+<<main-window-setupui>>
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =setup_ui=, which was added to =<<main-window-methods>> before, for setting up user interface specific tasks within the main window class =MainWindow=.
+#+NAME:       main-window-setupui
 #+BEGIN_SRC python
 def setup_ui(self):
     """Sets up the user interface specific components."""
