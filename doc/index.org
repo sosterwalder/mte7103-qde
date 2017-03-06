@@ -1178,38 +1178,47 @@ def __init__(self):
 
 * Working log
 
-<2017-02-20 Mon> Set up and structure the document initially.
-<2017-02-21 Tue> Re-structure the document, add first contents of the implementation.
-                 Add first tries to tangle the code.
-<2017-02-22 Wed> Provide further content concerning the implementation:
-                 Introduce name-spaces/initializers, first steps for a logging
-                 facility.
-<2017-02-23 Thu> Extend logging facility, provide (unit-) tests. Restructure the
-                 documentation.
-<2017-02-24 Fri> Adapt document to output LaTeX code as desired, change styling.
-                 Begin development of the applications' main routine.
-<2017-02-27 Mon> Remove (unit-) tests from main document and put them into
-                 appendix instead. Begin explaining literate programming.
-<2017-02-28 Tue> Provide a first draft for objectives and limitations. Re-structure
-                 the document. Correct LaTeX output.
-<2017-03-01 Wed> Remove split files, re-add everything to index, add objectives.
-<2017-03-02 Thu> Set up project schedule. Tangle everything instead of doing
-                 things manually. Begin changing language to English instead of
-                 German. Re-add make targets for cleaning and building the
-                 source code.
-<2017-03-03 Fri> Keep work log up to date. Revise and finish chapter about
-                 name-spaces and the project structure for now.
-<2017-03-04 Sat> Finish translating all already written texts from German to
-                 English. Describe the main entry point of the application as
-                 well as the main application itself.
-<2017-03-05 Sun> Finish chapter about the main entry point and the main
-                 application for now, start describing the main window and implement its
-                 functionality. Keep the work log up to date. Fiddle with
-                 references and LaTeX export. Find a bug: main_window needs to
-                 be attached to a class, by using the =self= keyword, otherwise
-                 the window does not get shown. Introduce new make targets: one
-                 to clean Python cache files (*.pyc) and one to run the editor
-                 application directly.
+- <2017-02-20 Mon> :: Set up and structure the document initially.
+
+- <2017-02-21 Tue> :: Re-structure the document, add first contents of the
+     implementation. Add first tries to tangle the code.
+
+- <2017-02-22 Wed> :: Provide further content concerning the implementation:
+     Introduce name-spaces/initializers, first steps for a logging facility.
+
+- <2017-02-23 Thu> :: Extend logging facility, provide (unit-) tests.
+     Restructure the documentation.
+
+- <2017-02-24 Fri> :: Adapt document to output LaTeX code as desired, change
+     styling. Begin development of the applications' main routine.
+
+- <2017-02-27 Mon> :: Remove (unit-) tests from main document and put them into
+     appendix instead. Begin explaining literate programming.
+
+- <2017-02-28 Tue> :: Provide a first draft for objectives and limitations.
+     Re-structure the document. Correct LaTeX output.
+
+- <2017-03-01 Wed> :: Remove split files, re-add everything to index, add
+     objectives.
+
+- <2017-03-02 Thu> :: Set up project schedule. Tangle everything instead of
+     doing things manually. Begin changing language to English instead of German.
+     Re-add make targets for cleaning and building the source code.
+
+- <2017-03-03 Fri> :: Keep work log up to date. Revise and finish chapter about
+     name-spaces and the project structure for now.
+
+- <2017-03-04 Sat> :: Finish translating all already written texts from German
+     to English. Describe the main entry point of the application as well as the
+     main application itself.
+
+- <2017-03-05 Sun> :: Finish chapter about the main entry point and the main
+     application for now, start describing the main window and implement its
+     functionality. Keep the work log up to date. Fiddle with references and
+     LaTeX export. Find a bug: main_window needs to be attached to a class, by
+     using the =self= keyword, otherwise the window does not get shown.
+     Introduce new make targets: one to clean Python cache files (*.pyc) and one
+     to run the editor application directly.
 
 * Bibliography
 
