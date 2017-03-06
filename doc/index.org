@@ -35,11 +35,15 @@
 #+LATEX_HEADER: \tcbuselibrary{minted,skins}
 #+LATEX_HEADER: \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
 #+LATEX_HEADER: \addbibresource{bibliography.bib}
+#+LATEX_HEADER: \usepackage{newverbs}[2011/07/23]
+#+LATEX_HEADER: \newcommand{\myverb}{\collectverb{\fcolorbox{black!50}{black!25}}}
+
+#+MACRO: verb \myverb{$1}
+
 #+DESCRIPTION:
 #+KEYWORDS:
 #+SUBTITLE:
 #+LATEX_HEADER_EXTRA:
-#+LATEX_COMPILER: pdflatex
 
 #+TITLE: QDE --- A visual animation system.
 #+SUBTITLE: MTE-7103: Master-Thesis
