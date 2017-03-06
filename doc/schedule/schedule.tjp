@@ -106,11 +106,13 @@ textreport frame "" {
 
 taskreport overview "Overview" {
   headline "Overview"
+  columns hierarchindex, chart {scale week width 1500 ${TaskTip}}
 }
 
 taskreport schedule "Schedule" {
   headline "Project schedule"
   taskroot schedule
+  columns hierarchindex, name, start, end, complete, chart {scale week width 1500 ${TaskTip}}
 }
 
 taskreport milestones "Milestones" {
