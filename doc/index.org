@@ -950,7 +950,7 @@ a good starting point for the implementation of the remaining components.
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
-written in [[sec:layering]], each component has a view --- residing in the /gui/
+written in section [[Layering]], each component has a view --- residing in the /gui/
 package ---, a model --- residing in the /domain/ package --- and a controller
 acting as workflow object --- residing in the /application/ package.
 
@@ -965,7 +965,7 @@ As at this point its functionality is not known, its implementation is rather
 dull. It is composed of solely an empty constructor.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Scene module inside the {{{verb(domain)}}} package, holding the =Scene= class.
+#+CAPTION:    Scene module inside the =domain= package, holding the =Scene= class.
 #+BEGIN_SRC python :tangle ../src/qde/editor/domain/scene.py :noweb tangle :comments link :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
@@ -994,7 +994,7 @@ class Scene(object):
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Constructor of the scene model class, {{{verb(Scene)}}}.
+#+CAPTION:    Constructor of the scene model class, =Scene=.
 #+NAME:       domain-scene-constructor
 #+HEADER:     :prologue <<domain-scene-constructor>>
 #+BEGIN_SRC python
@@ -1219,6 +1219,15 @@ def __init__(self):
      using the =self= keyword, otherwise the window does not get shown.
      Introduce new make targets: one to clean Python cache files (*.pyc) and one
      to run the editor application directly.
+
+- <2017-03-06 Mon> :: Update the work log. Add an image of the editor as well as
+     the project schedule. Add the implementation of the main window's layout.
+     Implement the scene domain model. Move keyPressEvent to its own source
+     block instead of expanding the methods of the main window directly. Add a
+     section about (the architecture's) layers to the principles section. Add
+     Mr. Eric Dubuis as an expert to the involved persons. Introduce the command
+     'myverb' for having nicer verbatim blocks. Use the given image-width for
+     inline images in org-mode when available.
 
 * Bibliography
 
