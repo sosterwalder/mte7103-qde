@@ -850,6 +850,158 @@ class =MainWindow=.
     self.setup_ui()
 #+END_SRC
 
+#+NAME: fig:editor-alpha
+#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The QDE editor application in a very early stage, containing only a grid layout.
+[[./images/qde_alpha.png]]
+
+When starting the application a plain window containing a grid layout is shown,
+as can be seen in figure [[fig:editor-alpha]]. As written in [[Components]] and
+shown in \citep[p. 29 ff.]{osterwalder_qde_2016}, the main window will contain all
+the components. To ensure, that those components are shown as defined, a simple
+grid layout may not provide enough possibilities.
+
+A possible solution to reach the desired layout is to use the horizontal box
+layout =QHBoxLayout= in combination with splitters. The horizontal box layout
+lines up widgets horizontally where as the splitters allow splitting either
+horizontally or vertically. Recalling the components from [[Components]], the following are needed:
+
+- A scene graph, on the left of the window, covering the whole height
+- A node graph on the right of the scene graph, covering as much height as
+  possible
+- A view for showing the properties (and therefore parameters) of the selected
+  node on the right of the node graph, covering as much height as possible
+- A display for rendering the selected node, on the right of the properties
+  view, covering as much height as possible
+- A sequencer at the right of the scene graph and below the other components at
+  the bottom of the window, covering as much width as possible
+
+To sum up, a horizontally box layout and a vertical splitter allow splitting the
+main window in two halves: The left side will be used for the scene graph where
+as the other side will hold the remaining components. As the sequencer is
+located below the other components of the right side, a horizontal splitter is
+needed for proper separation. The components above the sequencer could simply be
+added to the right side of the split as a horizontal box layout builds the
+layout's basis, for convenience however, additional splitters will be used. This
+allows the user to re-arrange the layout to his taste. To achieve the described
+layout, the following tasks are necessary:
+
+- Create a widget for the horizontal box layout
+- Create the horizontal box layout
+- Add the scene graph to the horizontal box layout
+- Instantiate the components of the split's right side
+  - The node graph
+  - The parameter view
+  - The rendering view
+- Create a horizontal splitter
+  - Add the rendering view to it
+  - Add the parameter view to it
+- Create a vertical splitter
+  - Add the horizontally splitter to it
+  - Add the scene graph to it
+- Add the vertical splitter to the horizontal box layout
+
+The implementation of the explained layout is done in the =setup_ui= method and
+is as follows. For the not yet existing widgets placeholders are used.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Lay-outing of the main window by expanding the =setup_ui= method.
+#+NAME:       main-window-setupui
+#+HEADER:     :prologue <<main-window-setupui>>
+#+BEGIN_SRC   python
+
+    horizontal_layout_widget = QtWidgets.QWidget(central_widget)
+    horizontal_layout_widget.setObjectName('horizontal_layout_widget')
+    horizontal_layout_widget.setGeometry(QtCore.QRect(12, 12, 781, 541))
+    horizontal_layout_widget.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
+                                           QtWidgets.QSizePolicy.MinimumExpanding)
+    grid_layout.addWidget(horizontal_layout_widget, 0, 0)
+
+    horizontal_layout = QtWidgets.QHBoxLayout(horizontal_layout_widget)
+    horizontal_layout.setObjectName('horizontal_layout')
+    horizontal_layout.setContentsMargins(0, 0, 0, 0)
+
+    <<main-window-setupui-scenegraph>>
+    <<main-window-setupui-nodegraph>>
+    <<main-window-setupui-parameterview>>
+    <<main-window-setupui-renderview>>
+
+    horizontal_splitter = QtWidgets.QSplitter()
+    <<main-window-setupui-add-renderview-to-horizontal-splitter>>
+    <<main-window-setupui-add-parameterview-to-horizontal-splitter>>
+
+    vertical_splitter = QtWidgets.QSplitter()
+    vertical_splitter.setOrientation(QtCore.Qt.Vertical)
+    vertical_splitter.addWidget(horizontal_splitter)
+    <<main-window-setupui-add-nodegraph-to-vertical-splitter>>
+
+    horizontal_layout.addWidget(vertical_splitter)
+#+END_SRC
+
+All the above taken actions to lay out the main window change nothing in the
+window's yet plain appearance. This is quite obvious, as none of the actual
+components are implemented yet.
+
+The most straight-forward component to implement may be scene graph, so this is
+a good starting point for the implementation of the remaining components.
+
+**** Scene graph
+
+The scene graph component does, as also the other components do, have two
+aspects to consider: A graphical aspect as well as its data structure. As
+written in [[sec:layering]], each component has a view --- residing in the /gui/
+package ---, a model --- residing in the /domain/ package --- and a controller
+acting as workflow object --- residing in the /application/ package.
+
+The {{{verb(SceneGraphController)}}} class will manage instances of scene models
+whereas the {{{verb(SceneGraphView)}}} will display a tree of scenes, starting
+with a root scene of type {{{verb(Scene)}}}.
+
+The least tedious of those aspects may be the scene model, {{{verb(Scene)}}}, so
+the scene model is implemented first.
+
+As at this point its functionality is not known, its implementation is rather
+dull. It is composed of solely an empty constructor.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Scene module inside the {{{verb(domain)}}} package, holding the =Scene= class.
+#+BEGIN_SRC python :tangle ../src/qde/editor/domain/scene.py :noweb tangle :comments link :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the domain layer. """
+
+# System imports
+<<domain-scene-system-imports>>
+
+# Project imports
+<<domain-scene-project-imports>>
+
+
+class Scene(object):
+    """The scene model.
+    It is used as a base class for scene instances within the scene graph.
+    """
+
+    <<domain-scene-signals>>
+
+    <<domain-scene-constructor>>
+
+    <<domain-scene-methods>>
+
+    <<domain-scene-slots>>
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Constructor of the scene model class, {{{verb(Scene)}}}.
+#+NAME:       domain-scene-constructor
+#+HEADER:     :prologue <<domain-scene-constructor>>
+#+BEGIN_SRC python
+def __init__(self):
+    pass
+#+END_SRC
+
 *** Logging
   : Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
   : gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
