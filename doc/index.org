@@ -131,6 +131,14 @@ throughout the held meetings. The minutes of the meetings may be found under
 | Hand-in of the thesis               |             |                 31 |
 | Defense of the thesis               |             |                 32 |
 
+#+NAME: fig:schedule
+#+ATTR_LATEX: :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The project's schedule.
+[[./images/project_schedule.png]]
+
+Figure [[fig:schedule]] shows the project's schedule.
+
 *** Literate programming
 
 This thesis' implementation is done by a procedure named ``literate
