@@ -1,3 +1,7 @@
+# Local Variables:
+# org-image-actual-width: nil
+# End:
+
 #+BIBLIOGRAPHY: bibliography ieee
 #+LATEX_CLASS: scrreprt
 #+LATEX_CLASS_OPTIONS: [10pt, openright, notitlepage]
