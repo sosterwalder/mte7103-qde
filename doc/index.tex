@@ -1,4 +1,4 @@
-% Created 2017-03-05 Sun 22:51
+% Created 2017-03-06 Mon 16:37
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -45,6 +45,8 @@
 \tcbuselibrary{minted,skins}
 \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
 \addbibresource{bibliography.bib}
+\usepackage{newverbs}[2011/07/23]
+\newcommand{\myverb}{\collectverb{\fcolorbox{black!50}{black!25}}}
 \author{Sven Osterwalder\thanks{sven.osterwalder@students.bfh.ch}}
 \date{February 20, 2017}
 \title{QDE --- A visual animation system.\\\medskip
@@ -63,12 +65,12 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:org98b972d}
+\label{sec:orgbf7ff44}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:orgd9bbc27}
+\label{sec:orgfe1c5b4}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -77,17 +79,18 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:org7741181}
+\label{sec:orgb2587f4}
 
 \begin{center}
 \begin{tabular}{lll}
 Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
+Expert & Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org098ab70}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{orgd825e78}claude.fuhrer@bfh.ch}
+\end{center}\footnotetext[1]{\label{org6dc9b64}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org784dcf8}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org782d32e}eric.dubuis@comet.ch}
 
 \section{Structure of the documentation}
-\label{sec:orga75ff0e}
+\label{sec:orgc77c6b5}
 
 This thesis is structured as follows:
 
@@ -100,7 +103,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:orgeb3a5ac}
+\label{sec:org2073326}
 
 \begin{itemize}
 \item Report
@@ -108,34 +111,34 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orge27ffa7}
+\label{sec:orgbec7fd6}
 
 \section{Motivation}
-\label{sec:org81d6089}
+\label{sec:org4407eb0}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:org04c6279}
+\label{sec:orgdcd7780}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org56ac2f1}
+\label{sec:org7e25722}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:orgd85bd78}
+\label{sec:org0ebadf0}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org14abb0c}
+\label{sec:orgc2986a5}
 \section{Organization of work}
-\label{sec:org68c341b}
+\label{sec:orga619086}
 \subsection{Meetings}
-\label{sec:org224cbe8}
+\label{sec:org586921c}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -144,7 +147,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org8b766b6}
+\label{sec:orgcbdc0ab}
 
 
 \begin{center}
@@ -170,8 +173,17 @@ Defense of the thesis &  & 32\\
 \end{tabular}
 \end{center}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\linewidth]{./images/project_schedule.png}
+\caption{\label{fig:schedule}
+The project's schedule.}
+\end{figure}
+
+Figure \ref{fig:schedule} shows the project's schedule.
+
 \subsection{Literate programming}
-\label{sec:org8e809b5}
+\label{sec:org10476ed}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -210,24 +222,44 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:org6f47221}
+\label{sec:org7b5da71}
 \subsection{Code}
-\label{sec:orgaa024fd}
+\label{sec:org9c0d754}
 
-[Code.]
+\subsubsection{{\bfseries\sffamily TODO} Principles}
+\label{sec:org4850ba4}
+
 \begin{itemize}
 \item Classes use camel case.
 \item Folders / name-spaces use only small letters.
 \item Methods are all small caps and use underscores as spaces.
 \item Signals: do\_something
 \item Slots: on\_something
-\item Importing: \texttt{from Foo import Bar}
+\item Importing: \myverb{from Foo import Bar}\\
 As the naming of the PyQt5 modules prefixes them by \emph{Qt}, it is very unlikely
-to have naming conflicts with other modules. Therefore the import format \texttt{from
-  PyQt5 import [QtModuleName]} is used. This still provides a (relatively)
-unique naming most probably without any conflicts but reduces the effort when
-writing a bit. The import of system modules is therefore as follows.
+to have naming conflicts with other modules. Therefore the import format
+\myverb{from PyQt5 import [QtModuleName]} is used. This still provides a
+(relatively) unique naming most probably without any conflicts but reduces the
+effort when writing a bit. The import of system modules is therefore as
+follows.
 \end{itemize}
+
+\subsubsection{Layering}
+\label{sec:layering}
+As written in \cite[p. 38 ff.]{osterwalder_qde_2016}, a layered architecture is
+foreseen. A relaxed layered architecture leads to low coupling,
+reduces dependencies and enhances cohesion as well as clarity.
+
+As the architecture's core \hyperref[sec:components]{components} are all graphical, a graphical user
+interface for those components is developed. As the their data shall be
+exportable, it would be relatively tedious if the graphical user interface would
+hold that data. Instead models and model-view separation are used. Additionally
+controllers are introduced which act as workflow objects of the application
+layer and interfere between the model and its view.
+
+To avoid coupling and therefore dependencies, signals and
+slots\footnote{\url{http://doc.qt.io/qt-5/signalsandslots.html}} are used in terms of the
+observer pattern to allow inter-object and inter-layer communication.
 
 \subsubsection{Framework for implementation}
 \label{sec:framework-for-implementation}
@@ -248,20 +280,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:orga411358}
+\label{sec:org55bf99d}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:orgfda0c1e}
+\label{sec:orgbe1835b}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:org6950ed8}
+\label{sec:orgbd3f633}
 
 \section{Requirements}
-\label{sec:orge4ed1c3}
+\label{sec:org577fc23}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -327,7 +359,7 @@ All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
 \section{Name-spaces and project structure}
-\label{sec:org8a5fd48}
+\label{sec:org6b6580b}
 
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
@@ -359,7 +391,7 @@ it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:orga4a857c}
+\label{sec:org3e891e8}
 
 This chapter describes the creation of the \emph{editor} component.
 
@@ -371,7 +403,7 @@ sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 
 \subsection{Main application}
-\label{sec:org4594456}
+\label{sec:org61a1703}
 
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
@@ -419,7 +451,7 @@ therefore as follows.
 \end{listing}
 
 \subsubsection{Imports}
-\label{sec:org139f6dd}
+\label{sec:org5459be3}
 As you can see, the imports of the module are defined by \texttt{<<app-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -563,7 +595,7 @@ def __init__(self, arguments):
 \end{listing}
 
 \subsection{Main entry point}
-\label{sec:orgcd7ad82}
+\label{sec:orgda48793}
 
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
@@ -652,7 +684,7 @@ As a starting point, we shall implement the class \texttt{MainWindow} representi
 main window.
 
 \subsubsection{Main window}
-\label{sec:org801d030}
+\label{sec:org1632560}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -747,7 +779,7 @@ def keyPressEvent(self, event):
     else:
         super(MainWindow, self).keyPressEvent(event)
 \end{minted}
-\caption{\label{main-window-methods}
+\caption{\label{main-window-keypressevent}
 Implementation of the \texttt{keyPressEvent} method on the \texttt{MainWindow} class.}
 \end{listing}
 
@@ -845,6 +877,22 @@ it to a position on the user's screen. To ensure that the window is not hidden
 behind other windows, the method \texttt{activateWindow} coming from \texttt{QWidget} is
 called.
 
+As it is not sure at this point, if the main window will receive additional
+methods, it may be wise to split \texttt{<<main-window-methods>>} up, by inserting the
+yet known methods (only \texttt{setup\_ui} so far) explicitly. This provides the
+advantage, that new methods can easily be appended and the implemented methods
+may be expanded easily as well.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<main-window-keypressevent>>
+
+<<main-window-setupui>>
+\end{minted}
+\caption{\label{main-window-methods}
+The placeholder \texttt{<<main-window-methods>>} declared explicitly.}
+\end{listing}
+
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 def setup_ui(self):
@@ -863,8 +911,8 @@ def setup_ui(self):
     self.setCentralWidget(central_widget)
     self.statusBar().showMessage('Ready.')
 \end{minted}
-\caption{\label{main-window-methods}
-The method \texttt{setup\_ui}, which is added to \texttt{<<main-window-methods>>, for setting up user interface specific tasks within the main window class =MainWindow}.}
+\caption{\label{main-window-setupui}
+The method \texttt{setup\_ui}, which was added to \texttt{<<main-window-methods>> before, for setting up user interface specific tasks within the main window class =MainWindow}.}
 \end{listing}
 
 Now the \texttt{setup\_ui} method simply needs to be added to the constructor of the
@@ -878,8 +926,172 @@ class \texttt{MainWindow}.
 The method \texttt{setup\_ui} is added to the constructor of main window class \texttt{MainWindow}.}
 \end{listing}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=2in]{./images/qde_alpha.png}
+\caption{\label{fig:editor-alpha}
+The QDE editor application in a very early stage, containing only a grid layout.}
+\end{figure}
+
+When starting the application a plain window containing a grid layout is shown,
+as can be seen in figure \ref{fig:editor-alpha}. As written in \ref{sec:components} and
+shown in \citep[p. 29 ff.]{osterwalder_qde_2016}, the main window will contain all
+the components. To ensure, that those components are shown as defined, a simple
+grid layout may not provide enough possibilities.
+
+A possible solution to reach the desired layout is to use the horizontal box
+layout \texttt{QHBoxLayout} in combination with splitters. The horizontal box layout
+lines up widgets horizontally where as the splitters allow splitting either
+horizontally or vertically. Recalling the components from \ref{sec:components}, the following are needed:
+
+\begin{itemize}
+\item A scene graph, on the left of the window, covering the whole height
+\item A node graph on the right of the scene graph, covering as much height as
+possible
+\item A view for showing the properties (and therefore parameters) of the selected
+node on the right of the node graph, covering as much height as possible
+\item A display for rendering the selected node, on the right of the properties
+view, covering as much height as possible
+\item A sequencer at the right of the scene graph and below the other components at
+the bottom of the window, covering as much width as possible
+\end{itemize}
+
+To sum up, a horizontally box layout and a vertical splitter allow splitting the
+main window in two halves: The left side will be used for the scene graph where
+as the other side will hold the remaining components. As the sequencer is
+located below the other components of the right side, a horizontal splitter is
+needed for proper separation. The components above the sequencer could simply be
+added to the right side of the split as a horizontal box layout builds the
+layout's basis, for convenience however, additional splitters will be used. This
+allows the user to re-arrange the layout to his taste. To achieve the described
+layout, the following tasks are necessary:
+
+\begin{itemize}
+\item Create a widget for the horizontal box layout
+\item Create the horizontal box layout
+\item Add the scene graph to the horizontal box layout
+\item Instantiate the components of the split's right side
+\begin{itemize}
+\item The node graph
+\item The parameter view
+\item The rendering view
+\end{itemize}
+\item Create a horizontal splitter
+\begin{itemize}
+\item Add the rendering view to it
+\item Add the parameter view to it
+\end{itemize}
+\item Create a vertical splitter
+\begin{itemize}
+\item Add the horizontally splitter to it
+\item Add the scene graph to it
+\end{itemize}
+\item Add the vertical splitter to the horizontal box layout
+\end{itemize}
+
+The implementation of the explained layout is done in the \texttt{setup\_ui} method and
+is as follows. For the not yet existing widgets placeholders are used.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+    horizontal_layout_widget = QtWidgets.QWidget(central_widget)
+    horizontal_layout_widget.setObjectName('horizontal_layout_widget')
+    horizontal_layout_widget.setGeometry(QtCore.QRect(12, 12, 781, 541))
+    horizontal_layout_widget.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
+                                           QtWidgets.QSizePolicy.MinimumExpanding)
+    grid_layout.addWidget(horizontal_layout_widget, 0, 0)
+
+    horizontal_layout = QtWidgets.QHBoxLayout(horizontal_layout_widget)
+    horizontal_layout.setObjectName('horizontal_layout')
+    horizontal_layout.setContentsMargins(0, 0, 0, 0)
+
+    <<main-window-setupui-scenegraph>>
+    <<main-window-setupui-nodegraph>>
+    <<main-window-setupui-parameterview>>
+    <<main-window-setupui-renderview>>
+
+    horizontal_splitter = QtWidgets.QSplitter()
+    <<main-window-setupui-add-renderview-to-horizontal-splitter>>
+    <<main-window-setupui-add-parameterview-to-horizontal-splitter>>
+
+    vertical_splitter = QtWidgets.QSplitter()
+    vertical_splitter.setOrientation(QtCore.Qt.Vertical)
+    vertical_splitter.addWidget(horizontal_splitter)
+    <<main-window-setupui-add-nodegraph-to-vertical-splitter>>
+
+    horizontal_layout.addWidget(vertical_splitter)
+\end{minted}
+\caption{\label{main-window-setupui}
+Lay-outing of the main window by expanding the \texttt{setup\_ui} method.}
+\end{listing}
+
+All the above taken actions to lay out the main window change nothing in the
+window's yet plain appearance. This is quite obvious, as none of the actual
+components are implemented yet.
+
+The most straight-forward component to implement may be scene graph, so this is
+a good starting point for the implementation of the remaining components.
+
+\subsubsection{Scene graph}
+\label{sec:org41367fd}
+
+The scene graph component does, as also the other components do, have two
+aspects to consider: A graphical aspect as well as its data structure. As
+written in section \ref{sec:layering}, each component has a view --- residing in the \emph{gui}
+package ---, a model --- residing in the \emph{domain} package --- and a controller
+acting as workflow object --- residing in the \emph{application} package.
+
+The \myverb{SceneGraphController} class will manage instances of scene models
+whereas the \myverb{SceneGraphView} will display a tree of scenes, starting
+with a root scene of type \myverb{Scene}.
+
+The least tedious of those aspects may be the scene model, \myverb{Scene}, so
+the scene model is implemented first.
+
+As at this point its functionality is not known, its implementation is rather
+dull. It is composed of solely an empty constructor.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the domain layer. """
+
+# System imports
+<<domain-scene-system-imports>>
+
+# Project imports
+<<domain-scene-project-imports>>
+
+
+class Scene(object):
+    """The scene model.
+    It is used as a base class for scene instances within the scene graph.
+    """
+
+    <<domain-scene-signals>>
+
+    <<domain-scene-constructor>>
+
+    <<domain-scene-methods>>
+
+    <<domain-scene-slots>>
+\end{minted}
+\caption{Scene module inside the \texttt{domain} package, holding the \texttt{Scene} class.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+def __init__(self):
+    pass
+\end{minted}
+\caption{\label{domain-scene-constructor}
+Constructor of the scene model class, \texttt{Scene}.}
+\end{listing}
+
 \subsection{Logging}
-\label{sec:org0d1a111}
+\label{sec:orga8a90b1}
 \begin{verbatim}
 Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
 gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
@@ -1056,51 +1268,71 @@ def setup_logging(self,
 \end{verbatim}
 
 \chapter{Working log}
-\label{sec:org7215214}
+\label{sec:org7483b2e}
 
-\textit{<2017-02-20 Mon> } Set up and structure the document initially.
-\textit{<2017-02-21 Tue> } Re-structure the document, add first contents of the implementation.
-                 Add first tries to tangle the code.
-\textit{<2017-02-22 Wed> } Provide further content concerning the implementation:
-                 Introduce name-spaces/initializers, first steps for a logging
-                 facility.
-\textit{<2017-02-23 Thu> } Extend logging facility, provide (unit-) tests. Restructure the
-                 documentation.
-\textit{<2017-02-24 Fri> } Adapt document to output \LaTeX{} code as desired, change styling.
-                 Begin development of the applications' main routine.
-\textit{<2017-02-27 Mon> } Remove (unit-) tests from main document and put them into
-                 appendix instead. Begin explaining literate programming.
-\textit{<2017-02-28 Tue> } Provide a first draft for objectives and limitations. Re-structure
-                 the document. Correct \LaTeX{} output.
-\textit{<2017-03-01 Wed> } Remove split files, re-add everything to index, add objectives.
-\textit{<2017-03-02 Thu> } Set up project schedule. Tangle everything instead of doing
-                 things manually. Begin changing language to English instead of
-                 German. Re-add make targets for cleaning and building the
-                 source code.
-\textit{<2017-03-03 Fri> } Keep work log up to date. Revise and finish chapter about
-                 name-spaces and the project structure for now.
-\textit{<2017-03-04 Sat> } Finish translating all already written texts from German to
-                 English. Describe the main entry point of the application as
-                 well as the main application itself.
-\textit{<2017-03-05 Sun> } Finish chapter about the main entry point and the main
-                 application for now, start describing the main window and implement its
-                 functionality. Keep the work log up to date. Fiddle with
-                 references and \LaTeX{} export. Find a bug: main\_window needs to
-                 be attached to a class, by using the \texttt{self} keyword, otherwise
-                 the window does not get shown. Introduce new make targets: one
-                 to clean Python cache files (*.pyc) and one to run the editor
-                 application directly.
+\begin{description}
+\item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
+
+\item[{\textit{<2017-02-21 Tue>}}] Re-structure the document, add first contents of the
+implementation. Add first tries to tangle the code.
+
+\item[{\textit{<2017-02-22 Wed>}}] Provide further content concerning the implementation:
+Introduce name-spaces/initializers, first steps for a logging facility.
+
+\item[{\textit{<2017-02-23 Thu>}}] Extend logging facility, provide (unit-) tests.
+Restructure the documentation.
+
+\item[{\textit{<2017-02-24 Fri>}}] Adapt document to output \LaTeX{} code as desired, change
+styling. Begin development of the applications' main routine.
+
+\item[{\textit{<2017-02-27 Mon>}}] Remove (unit-) tests from main document and put them into
+appendix instead. Begin explaining literate programming.
+
+\item[{\textit{<2017-02-28 Tue>}}] Provide a first draft for objectives and limitations.
+Re-structure the document. Correct \LaTeX{} output.
+
+\item[{\textit{<2017-03-01 Wed>}}] Remove split files, re-add everything to index, add
+objectives.
+
+\item[{\textit{<2017-03-02 Thu>}}] Set up project schedule. Tangle everything instead of
+doing things manually. Begin changing language to English instead of German.
+Re-add make targets for cleaning and building the source code.
+
+\item[{\textit{<2017-03-03 Fri>}}] Keep work log up to date. Revise and finish chapter about
+name-spaces and the project structure for now.
+
+\item[{\textit{<2017-03-04 Sat>}}] Finish translating all already written texts from German
+to English. Describe the main entry point of the application as well as the
+main application itself.
+
+\item[{\textit{<2017-03-05 Sun>}}] Finish chapter about the main entry point and the main
+application for now, start describing the main window and implement its
+functionality. Keep the work log up to date. Fiddle with references and
+\LaTeX{} export. Find a bug: main\_window needs to be attached to a class, by
+using the \texttt{self} keyword, otherwise the window does not get shown.
+Introduce new make targets: one to clean Python cache files (*.pyc) and one
+to run the editor application directly.
+
+\item[{\textit{<2017-03-06 Mon>}}] Update the work log. Add an image of the editor as well as
+the project schedule. Add the implementation of the main window's layout.
+Implement the scene domain model. Move keyPressEvent to its own source
+block instead of expanding the methods of the main window directly. Add a
+section about (the architecture's) layers to the principles section. Add
+Mr. Eric Dubuis as an expert to the involved persons. Introduce the command
+'myverb' for having nicer verbatim blocks. Use the given image-width for
+inline images in org-mode when available.
+\end{description}
 
 \chapter{Bibliography}
-\label{sec:org5910138}
+\label{sec:org531f156}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:org17ec8cd}
+\label{sec:org12f633f}
 
 \section{Test cases}
-\label{sec:org006d529}
+\label{sec:orgc1b6e68}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -1291,10 +1523,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:orgdd50038}
+\label{sec:org2c260f1}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:orgf102615}
+\label{sec:orgfc4a0e1}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -1309,7 +1541,7 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 Kick-off meeting for the thesis.
 
 \subsubsection{Presentation and discussion of the current state of work}
-\label{sec:org06350de}
+\label{sec:orgb882440}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -1329,7 +1561,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \subsubsection{Further steps / proceedings}
-\label{sec:org4e12d68}
+\label{sec:orgf1f0481}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -1357,42 +1589,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \subsubsection{To do for the next meeting}
-\label{sec:org10296ef}
+\label{sec:orgb401b11}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:org6cc1070}
+\label{sec:org4871338}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:org58ee401}
+\label{sec:orgc65ff25}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:org10ee708}
+\label{sec:orgde68638}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org9148ae0}
+\label{sec:org5fd9547}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
-\label{sec:org6ae65ab}
+\label{sec:org91cb937}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgc633bd8}
+\label{sec:orgdff7c72}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:org2781f28}
+\label{sec:orgf77def7}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org353d2e4}
+\label{sec:org6371910}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org9793a1e}
+\label{sec:org8ebab94}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org9bf8fe2}
+\label{sec:org0278082}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -1400,11 +1632,11 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orge7f09f4}
+\label{sec:orge80ccc1}
 \end{enumerate}
 
 \subsubsection{Scheduling of the next meeting}
-\label{sec:orgd5bb60e}
+\label{sec:orgac027c6}
 
 \begin{itemize}
 \item To be defined
