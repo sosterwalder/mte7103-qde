@@ -236,11 +236,12 @@ framework for implementation, which is as follows:
 
 1. Define necessary signals.
 2. Within the constructor,
-  + Set up the user interface when it is a class concerning the graphical user
-    interface.
-  + Set up class-specific aspects, such as the name, the tile or an icon.
-  + Initialize the connections, meaning hooking up the defined signals with
-    corresponding methods.
+   + Set up the user interface when it is a class concerning the graphical user
+     interface.
+   + Set up class-specific aspects, such as the name, the tile or an icon.
+   + Set up other components, used by that class.
+   + Initialize the connections, meaning hooking up the defined signals with
+     corresponding methods.
 3. Implement the remaining functionality in terms of methods and slots.
 
 *** Diagrams
