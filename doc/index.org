@@ -1,5 +1,6 @@
 # Local Variables:
 # org-image-actual-width: nil
+# org-babel-use-quick-and-dirty-noweb-expansion: t
 # End:
 
 #+BIBLIOGRAPHY: bibliography ieee
@@ -186,16 +187,43 @@ run-able computer program.
      :CUSTOM_ID: sec:layering
      :END:
 
-As written in \cite[p. 38 ff.]{osterwalder_qde_2016}, a layered architecture is
-foreseen. A relaxed layered architecture leads to low coupling,
-reduces dependencies and enhances cohesion as well as clarity.
+Concerning the architecture, a layered architecture is foreseen, as stated in
+\cite[p. 38 ff.]{osterwalder_qde_2016}. A relaxed layered architecture leads to
+low coupling, reduces dependencies and enhances cohesion as well as clarity.
 
 As the architecture's core [[Components][components]] are all graphical, a graphical user
 interface for those components is developed. As the their data shall be
 exportable, it would be relatively tedious if the graphical user interface would
-hold that data. Instead models and model-view separation are used. Additionally
-controllers are introduced which act as workflow objects of the application
-layer and interfere between the model and its view.
+hold and control that data. Instead models and model-view separation are used.
+Additionally controllers are introduced which act as workflow objects of the
+{{{verb(application)}}} layer and interfere between the model and its view.
+
+***** Model-View-Controller
+
+While models may be instantiated anywhere directly, this would although not
+contribute to having clean code and sane data structures. Instead controllers,
+lying within the {{{verb(application)}}} layer, will manage instances of models.
+The instantiating may either be induced by the graphical user interface
+or by the player when loading and playing exported animations.
+
+A view may never contain model-data (coming from the {{{verb(domain)}}} layer)
+directly, instead view models are used \cite{martin_fowler_presentation_2004}.
+
+The behavior described above corresponds to the well-known model-view-controller
+pattern expanded by view models.
+
+As Qt is used as the core for the editor, it may be quite obvious to use Qt's
+model/view programming practices, as described by
+[fn:20:http://doc.qt.io/qt-5/model-view-programming.html]. However, Qt combines
+the controller and the view, meaning the view acts also as a controller while
+still separating the storage of data. The editor application does not actually
+store data (in a conventional way, e.g. using a database) but solely exports it.
+Due to this circumstance the model-view-controller pattern is explicitly used,
+as also stated in \cite[p. 38]{osterwalder_qde_2016}.
+
+*************** TODO Describe the exact process of communication between
+*************** ViewModel, Controller and Model.
+*************** END
 
 To avoid coupling and therefore dependencies, signals and
 slots[fn:16:http://doc.qt.io/qt-5/signalsandslots.html] are used in terms of the
@@ -330,8 +358,12 @@ sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the =__init__.py= files are provided.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Creation of the =qde= and =editor= name-spaces and initialization of the name-spaces as module.
-#+BEGIN_SRC python :tangle ../src/qde/__init__.py :tangle ../src/qde/editor/__init__.py :noweb tangle :comments link :mkdirp yes
+#+CAPTION:    Creation of the =qde= name space and initialization of the name space as module.
+#+BEGIN_SRC python :tangle ../src/qde/__init__.py :noweb tangle :mkdirp yes
+#+END_SRC
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Creation of the =editor= name space and initialization of the name space as module.
+#+BEGIN_SRC python :tangle ../src/qde/editor/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 *** Main application
@@ -345,7 +377,7 @@ nevertheless as this provides higher flexibility. Therefore the class
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation and initialization of the =application= name-space.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/__init__.py :noweb tangle :comments link :mkdirp yes
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 At this point it is necessary to think about the functionality of the class
@@ -374,7 +406,7 @@ therefore as follows.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Main application module holding the =Application= class.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :comments link :mkdirp yes
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -384,6 +416,8 @@ therefore as follows.
 
 <<app-class-definition>>
 #+END_SRC
+
+#+RESULTS:
 
 **** Imports
 As you can see, the imports of the module are defined by =<<app-imports>>=. For
@@ -553,7 +587,7 @@ The main entry script of the editor =editor.py= is therefore defined as follows.
 #+NAME: main
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    =<<main>>=, the main entry point for the whole editor application.
-#+BEGIN_SRC python :tangle ../src/editor.py :noweb tangle :comments link :mkdirp yes
+#+BEGIN_SRC python :tangle ../src/editor.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -614,7 +648,13 @@ main window.
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
-and is hence part of the =gui= package.
+and is hence part of the {{{verb(gui)}}} package.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Creation of the =gui= name space and initialization of the name space as module.
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui/__init__.py :noweb tangle :mkdirp yes
+#+END_SRC
+
 
 Its main functionality is to set up the actual user interface, containing all
 the components, described by [[Components]], as widgets. Qt offers the class
@@ -635,7 +675,7 @@ First, the outline of =MainWindow= is defined.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Module holding the main application window class, =MainWindow=.
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui/main_window.py :noweb tangle :comments link :mkdirp yes
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui/main_window.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -850,14 +890,14 @@ class =MainWindow=.
     self.setup_ui()
 #+END_SRC
 
-#+NAME: fig:editor-alpha
+#+NAME: fig:editor-alpha-01
 #+ATTR_LATEX: :width 2in :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The QDE editor application in a very early stage, containing only a grid layout.
-[[./images/qde_alpha.png]]
+[[./images/qde_alpha_01.png]]
 
 When starting the application a plain window containing a grid layout is shown,
-as can be seen in figure [[fig:editor-alpha]]. As written in [[Components]] and
+as can be seen in figure [[fig:editor-alpha-01]]. As written in [[Components]] and
 shown in \citep[p. 29 ff.]{osterwalder_qde_2016}, the main window will contain all
 the components. To ensure, that those components are shown as defined, a simple
 grid layout may not provide enough possibilities.
@@ -946,7 +986,7 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-**** Scene graph
+**** TODO Scene graph
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -956,17 +996,22 @@ acting as workflow object --- residing in the /application/ package.
 
 The {{{verb(SceneGraphController)}}} class will manage instances of scene models
 whereas the {{{verb(SceneGraphView)}}} will display a tree of scenes, starting
-with a root scene of type {{{verb(Scene)}}}.
+with a root scene of type {{{verb(SceneModel)}}}.
 
-The least tedious of those aspects may be the scene model, {{{verb(Scene)}}}, so
+The least tedious of those aspects may be the scene model, {{{verb(SceneModel)}}}, so
 the scene model is implemented first.
 
 As at this point its functionality is not known, its implementation is rather
 dull. It is composed of solely an empty constructor.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Scene module inside the =domain= package, holding the =Scene= class.
-#+BEGIN_SRC python :tangle ../src/qde/editor/domain/scene.py :noweb tangle :comments link :mkdirp yes
+#+CAPTION:    Creation of the =domain= name space and initialization of the name space as module.
+#+BEGIN_SRC python :tangle ../src/qde/editor/domain/__init__.py :noweb tangle :mkdirp yes
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Scene module inside the =domain= package, holding the =SceneModel= class.
+#+BEGIN_SRC python :tangle ../src/qde/editor/domain/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -979,7 +1024,7 @@ dull. It is composed of solely an empty constructor.
 <<domain-scene-project-imports>>
 
 
-class Scene(object):
+class SceneModel(object):
     """The scene model.
     It is used as a base class for scene instances within the scene graph.
     """
@@ -994,13 +1039,299 @@ class Scene(object):
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Constructor of the scene model class, =Scene=.
+#+CAPTION:    Constructor of the scene model class, =SceneModel=.
 #+NAME:       domain-scene-constructor
 #+HEADER:     :prologue <<domain-scene-constructor>>
 #+BEGIN_SRC python
 def __init__(self):
     pass
 #+END_SRC
+
+Scenes may now be instantiated, it is however important to do the management of
+scenes in a controlled manner. This is where the specific controllers within the
+{{{verb(application)}}} layer come in, as described in more detail in section
+[[Layering]]. Therefore the class {{{verb(SceneGraphController)}}} will now be
+implemented, for being able to manage scenes.
+
+As the scene graph shall be built as a tree structure, an appropriate data
+structure is needed. Qt provides the {{{verb(QTreeWidget)}}} class, but that
+class is in this case not suitable, as it does not separate the data from its
+representation, as stated by Qt: ``Developers who do not need the flexibility of
+the Model/View framework can use this class to create simple hierarchical lists
+very easily. A more flexible approach involves combining a QTreeView with a
+standard item model. This allows the storage of data to be separated from its
+representation.''[fn:18:http://doc.qt.io/qt-5/qtreewidget.html#details]
+
+Therefore the class
+{{{verb(QAbstractItemModel)}}}[fn:e3eb4d58d8c947d:http://doc.qt.io/qt-5/qabstractitemmodel.html]
+is chosen for implementation. Before implementing the actual methods, it is
+important to think about the attributes, that the scene graph controller will
+have. According to the class's documentation, some methods must be implemented
+at very least: ``When subclassing QAbstractItemModel, at the very least you must
+implement index(), parent(), rowCount(), columnCount(), and data(). These
+functions are used in all read-only models, and form the basis of editable
+models.''
+
+For being able edit the nodes of the scene graph and to have a custom header
+displayed, further methods have to be implemented: ``To enable editing in your
+model, you must also implement setData(), and reimplement flags() to ensure that
+ItemIsEditable is returned. You can also reimplement headerData() and
+setHeaderData() to control the way the headers for your model are presented.''
+
+From the remarks above the attributes may be defined. As the scene graph is
+implemented as a tree structure, it must have a *root node*, which is of type
+{{{verb(SceneGraphViewModel)}}} (coming from the {{{verb(gui_domain)}}} layer).
+Whenever a scene is added as a node, the item model needs to be informed for
+updating the display. This happens by emitting the {{{verb(rowsInserted)}}}
+signal, which is already given by the {{{verb(QAbstractItemModel)}}} class. This
+signal needs the current model index as well as the first and last position as
+parameters. The current model index represents the parent of the item to add,
+whereas the item will be inserted between the two given positions, first and
+last. Concerning the model index the Qt documentation states: ``An invalid model
+index can be constructed with the QModelIndex constructor. Invalid indexes are
+often used as parent indexes when referring to top-level items in a model.''
+Therefore for creating the initial node of the scene graph, the root node, the
+constructor of {{{verb(QModelIndex)}}} will be used.
+As *header data* the name of the scenes as well as the number of nodes a scene
+contains shall be displayed.
+
+Speaking of signals, brings up the definition of signals for the scene graph
+controller. To prevent coupling, two signals are added: {{{verb(scene_added)}}}
+and {{{verb(scene_removed)}}}. The first will be emitted whenever a new node is
+inserted into the scene graph by {{{verb(insertRows)}}} being called. The latter
+is emitted whenever an existing node is removed from the scene graph by calling
+the {{{verb(removeRows)}}} method.
+
+But what currently is missing for being able to implement a first draft of the
+scene graph, is the view model {{{verb(SceneGraphViewModel)}}}. View models are
+used to visually represent something within the graphical user interface and
+they provide an interface to the {{{verb(domain)}}} layer. To this point, a
+simple reference in terms of an attribute is used, which may be changed later
+on. Concerning the user interface, a view model must fulfill the requirements
+posed by the user interface's corresponding component. In terms of the scene
+graph the view model must provide at least a name and a row. Additionally, as
+already mentioned, a reference to the domain object is being added. The class
+inherits from {{{verb(QObject)}}} as this base class already provides a tree
+structure, which fits the structure of the scene graph perfectly.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Creation of the =gui_domain= name space and initialization of the name space as module.
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/__init__.py :noweb tangle :mkdirp yes
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Scene module inside the =gui_domain= package, holding currently only the =SceneGraphViewModel= class.
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/scene.py :noweb tangle :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the gui_domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+<<guidomain-scene-system-imports>>
+
+# Project imports
+<<guidomain-scene-project-imports>>
+
+
+class SceneGraphViewModel(Qt.QObject):
+    """View model representing scene graph items.
+
+    The SceneGraphViewModel corresponds to an entry within the scene graph. It
+    is used by the QAbstractItemModel class and must therefore at least provide
+    a name and a row.
+    """
+
+    <<guidomain-scene-viewmodel-signals>>
+
+    <<guidomain-scene-viewmodel-constructor>>
+
+    <<guidomain-scene-viewmodel-methods>>
+
+    <<guidomain-scene-viewmodel-slots>>
+#+END_SRC
+
+#+NAME: guidomain-scene-viewmodel-constructor
+#+CAPTION:    Constructor for the scene graph view model, =SceneGraphViewModel=.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+BEGIN_SRC python
+# .. py:function::
+def __init__(
+        self,
+        row,
+        domain_object,
+        name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
+        parent=None
+):
+    """Constructor.
+
+    :param row:           The row the view model is in.
+    :type  row:           int
+    :param domain_object: Reference to a scene model.
+    :type  domain_object: qde.editor.domain.scene.SceneModel
+    :param name:          The name of the view model, which will be displayed in
+                          the scene graph.
+    :type  name:          str
+    :param parent:        The parent of the current view model within the scene
+                          graph.
+    :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+    """
+
+    super(SceneGraphViewModel, self).__init__(parent)
+    self.row  = row
+    self.domain_object = domain_object
+    self.name = name
+#+END_SRC
+
+Now, with the scene graph view model being available, the scene graph controller
+may finally be implemented.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The outline of the =SceneGraphController= class, inside the =application= package.
+#+BEGIN_SRC python :tangle ../src/qde/editor/application/scene_graph.py :noweb tangle :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene graph related aspects concerning the application layer.
+"""
+
+# System imports
+from PyQt5 import QtCore
+<<app-scenegraph-system-imports>>
+
+# Project imports
+from qde.editor.domain     import scene as domain_scene
+from qde.editor.gui_domain import scene as guidomain_scene
+<<app-scenegraph-project-imports>>
+
+
+class SceneGraphController(QtCore.QAbstractItemModel):
+    """The scene graph controller.
+    A controller for managing the scene graph by adding, editing and removing
+    scenes.
+    """
+
+    scene_added = QtCore.pyqtSignal(domain_scene.SceneModel)
+    scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
+    <<app-scenegraph-controller-signals>>
+
+    def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent:        The parent of the current view model within the
+                              scene graph.
+        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+        """
+
+        super(SceneGraphController, self).__init__(parent)
+        self.header_data = [
+            QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),
+            QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
+        ]
+        self.root_node = guidomain_scene.SceneGraphViewModel(
+            row=0
+            domain_object=root_node,
+            name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
+        )
+        self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
+        <<app-scenegraph-controller-constructor>>
+
+    <<app-scenegraph-controller-methods>>
+
+    <<app-scenegraph-controller-slots>>
+#+END_SRC
+
+At this point data structures in terms of a (data-) model, which holds the
+actual, for the scene graph relevant data of a scene, and a view model, which
+holds the data relevant for the user interface, are implemented. Further a
+controller for handling the flow of the data for both models is implemented.
+What is still missing, is the actual representation of the scene graph in terms
+of a view.
+
+Qt offers a plethora of widgets for implementing views. One such widget is
+{{{verb(QTreeView)}}}, which ``implements a tree representation of items from a
+model. This class is used to provide standard hierarchical lists that were
+previously provided by the QListView class, but using the more flexible approach
+provided by Qt's model/view
+architecture.''[fn:f377826acb87691:http://doc.qt.io/qt-5/qtreeview.html#details]
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The outline of the =SceneGraphView= class, within the =scene= module of the =gui= package.
+#+BEGIN_SRC python :tangle ../src/qde/editor/gui/scene.py :noweb tangle :mkdirp yes
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the graphical user interface layer.
+"""
+
+# System imports
+from PyQt5 import QtWidgets
+<<gui-scene-system-imports>>
+
+# Project imports
+<<gui-scene-project-imports>>
+
+
+class SceneGraphView(QtWidgets.QTreeView):
+    """The scene graph view widget.
+    A widget for displaying and managing the scene graph.
+    """
+
+    <<gui-scene-controller-signals>>
+
+    def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent:        The parent of the current view widget.
+        :type parent:         QtCore.QObject
+        """
+
+        super(SceneGraphView, self).__init__(parent)
+        <<gui-scene-graph-constructor>>
+
+    <<gui-scene-graph-methods>>
+
+    <<gui-scene-graph-slots>>
+#+END_SRC
+
+Having the scene graph view implemented as a widget, it is now necessary to add
+the widget to the main window and initializing it. As described in section
+TODO, the widget is added to the horizontal layout, using the earlier defined
+{{{verb(main-window-setupui-scenegraph)}}} placeholder. For being able to
+instantiate a scene graph widget, its module must be imported as well. The
+maximum width of the widget is limited by using the {{{verb(setMaximumWidth)}}}
+method.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Import of the =scene= module from the =gui= layer.
+#+NAME:       main-window-project-imports
+#+HEADER:     :prologue <<main-window-project-imports>>
+#+BEGIN_SRC python
+from qde.editor.gui import scene as guiscene
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The scene graph widget is being initialized and added to the horizontal layout.
+#+NAME:       main-window-setupui-scenegraph
+#+HEADER:     :prologue <<main-window-setupui-scenegraph>>
+#+BEGIN_SRC python
+scene_graph_widget = guiscene.SceneGraphView()
+scene_graph_widget.setObjectName('scene_graph')
+scene_graph_widget.setMaximumWidth(300)
+horizontal_layout.addWidget(scene_graph_widget)
+#+END_SRC
+
+When starting the editor application now, after implementing and adding the
+scene graph widget, the widget appears on the left side of the main window. It
+does not provide any functionality yet.
+
+#+NAME: fig:editor-alpha-02
+#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The QDE editor application having the scene graph widget added, which is visible as a blank rectangle on the left of the window.
+[[./images/qde_alpha_02.png]]
 
 *** Logging
   : Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
@@ -1176,7 +1507,7 @@ def __init__(self):
   :         logging.basicConfig(level=default_level)
   : #+END_SRC
 
-* Working log
+* Work log
 
 - <2017-02-20 Mon> :: Set up and structure the document initially.
 
@@ -1228,6 +1559,15 @@ def __init__(self):
      Mr. Eric Dubuis as an expert to the involved persons. Introduce the command
      'myverb' for having nicer verbatim blocks. Use the given image-width for
      inline images in org-mode when available.
+
+-  <2017-03-07 Tue> :: Expand the layering principles by adding a section about
+      the model-view-controller pattern and introduce view models. Explain and
+     implement the data- and the view model for scene graph items.
+
+-  <2017-03-08 Wed> :: Implement the controller for handling the scene graph.
+
+-  <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
+      into the application. Update the work log.
 
 * Bibliography
 
@@ -1512,3 +1852,11 @@ Kick-off meeting for the thesis.
 **** Scheduling of the next meeting
 
 - To be defined
+
+* Glossary
+
+- animation :: An animation is a composition of scenes. Each animation is
+               defined by a time span, meaning it has a defined start- and
+               end-time. As the name indicates, an animation contains animated
+               elements, being properties of nodes (e.g. the position of a node
+               and so on).
