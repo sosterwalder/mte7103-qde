@@ -1,4 +1,4 @@
-% Created 2017-03-10 Fri 09:17
+% Created 2017-03-10 Fri 17:27
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -65,12 +65,12 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:orge1fb54e}
+\label{sec:org1de766f}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org74fa8d9}
+\label{sec:org84408f4}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -79,18 +79,18 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:org908ffa4}
+\label{sec:org4ae2cb8}
 
 \begin{center}
 \begin{tabular}{lll}
 Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
-Expert & Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
+Expert & Dr. Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org5fb617b}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org6012d0f}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{orgfc40481}eric.dubuis@comet.ch}
+\end{center}\footnotetext[1]{\label{orgf21489a}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org7ba0836}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org829bf23}eric.dubuis@comet.ch}
 
 \section{Structure of the documentation}
-\label{sec:org89c36d2}
+\label{sec:org6f65e77}
 
 This thesis is structured as follows:
 
@@ -103,7 +103,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:org3462eae}
+\label{sec:orgc301660}
 
 \begin{itemize}
 \item Report
@@ -111,34 +111,34 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgd879b30}
+\label{sec:org4c6e23b}
 
 \section{Motivation}
-\label{sec:orgb44bbde}
+\label{sec:orgfe13fb9}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:org18ab89e}
+\label{sec:orge3b92b4}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:orgb5f4666}
+\label{sec:org9d0fd14}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:org11d6f42}
+\label{sec:org4b96ed7}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:orgc031c0b}
+\label{sec:orge3a24b9}
 \section{Organization of work}
-\label{sec:org48412bd}
+\label{sec:org56bbe27}
 \subsection{Meetings}
-\label{sec:orgdb208eb}
+\label{sec:org738d69f}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -147,7 +147,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org9288af1}
+\label{sec:org1134302}
 
 
 \begin{center}
@@ -183,7 +183,7 @@ The project's schedule.}
 Figure \ref{fig:schedule} shows the project's schedule.
 
 \subsection{Literate programming}
-\label{sec:orgbc5fa0a}
+\label{sec:org0ebd5a7}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -222,12 +222,12 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:orgc052259}
+\label{sec:org3b66046}
 \subsection{Code}
-\label{sec:org16e9c88}
+\label{sec:orgcada0d0}
 
 \subsubsection{{\bfseries\sffamily TODO} Principles}
-\label{sec:orgea2bb27}
+\label{sec:orgcccd928}
 
 \begin{itemize}
 \item Classes use camel case.
@@ -259,7 +259,7 @@ Additionally controllers are introduced which act as workflow objects of the
 
 \begin{enumerate}
 \item Model-View-Controller
-\label{sec:org37f2e25}
+\label{sec:orgc5a6ea0}
 
 While models may be instantiated anywhere directly, this would although not
 contribute to having clean code and sane data structures. Instead controllers,
@@ -316,6 +316,7 @@ framework for implementation, which is as follows:
 \item Set up the user interface when it is a class concerning the graphical user
 interface.
 \item Set up class-specific aspects, such as the name, the tile or an icon.
+\item Set up other components, used by that class.
 \item Initialize the connections, meaning hooking up the defined signals with
 corresponding methods.
 \end{itemize}
@@ -323,20 +324,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:org580983f}
+\label{sec:org9d47539}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:org544c080}
+\label{sec:orgd3c7d47}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:org8258c90}
+\label{sec:orge7ce64b}
 
 \section{Requirements}
-\label{sec:org5de4381}
+\label{sec:orge815e61}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -402,7 +403,7 @@ All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
 \section{Name-spaces and project structure}
-\label{sec:org8aa1d32}
+\label{sec:orgfe3dff5}
 
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
@@ -434,7 +435,7 @@ it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:orgdc43b49}
+\label{sec:org5ebd349}
 
 This chapter describes the creation of the \emph{editor} component.
 
@@ -446,7 +447,7 @@ sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 
 \subsection{Main application}
-\label{sec:org39d5bff}
+\label{sec:org70323bc}
 
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
@@ -494,7 +495,7 @@ therefore as follows.
 \end{listing}
 
 \subsubsection{Imports}
-\label{sec:org0ff2fd6}
+\label{sec:orgfb48551}
 As you can see, the imports of the module are defined by \texttt{<<app-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -602,6 +603,14 @@ consists its constructor, as follows.
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 <<app-constructor>>
+
+def setup_components(self):
+    <<app-setup-components>>
+
+def setup_connections(self):
+    <<app-setup-connections>>
+
+<<app-methods>>
 \end{minted}
 \caption{\label{app-class-body}
 \texttt{<<app-class-body>>}, body of the class \texttt{Application}, containing only the constructor at the moment.}
@@ -616,7 +625,9 @@ arguments are being held by the argument vector \texttt{argv}. In the PyQt
 implementation however, only one argument is necessary: a list containing the
 arguments. \texttt{argc} may easily be derived by e.g. \texttt{len(arguments)}. Therefore it
 is necessary for to constructor to take in \texttt{arguments} as a required parameter.
-The applications' constructor looks hence as follows.
+As described in section \ref{sec:framework-for-implementation}, a method for setting up
+the connections, which may be defined later on, is added to the constructor. The
+application's constructor looks hence as follows.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
@@ -632,13 +643,16 @@ def __init__(self, arguments):
     self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))
     self.setApplicationName("QDE")
     self.setApplicationDisplayName("QDE")
+
+    self.setup_components()
+    self.setup_connections()
 \end{minted}
 \caption{\label{app-constructor}
 \texttt{<<app-constructor>>}, constructor of the \texttt{Application} class.}
 \end{listing}
 
 \subsection{Main entry point}
-\label{sec:org6cb978b}
+\label{sec:org57bc3c7}
 
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
@@ -727,7 +741,7 @@ As a starting point, we shall implement the class \texttt{MainWindow} representi
 main window.
 
 \subsubsection{Main window}
-\label{sec:orgb00a21d}
+\label{sec:org7a1c3bc}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -771,7 +785,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     <<main-window-signals>>
 
-    <<main-window-constructor>>
+    def __init__(self):
+        """Constructor."""
+
+        <<main-window-constructor>>
 
     <<main-window-methods>>
 
@@ -862,15 +879,14 @@ signal. Luckily \texttt{Application} provides already a \texttt{quit} slot throu
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
     self.main_window = qde_main_window.MainWindow()
     self.main_window.window_closing.connect(self.quit)
-    self.main_window.show()
 \end{minted}
-\caption{\label{app-constructor}
-Expansion of the main application's constructor, \texttt{<<app-constructor>>}, by the initialization of \texttt{MainWindow} and its signals.}
+\caption{\label{app-setup-components}
+Expansion of setting up the main application's components by the initialization of \texttt{MainWindow} and its signals.}
 \end{listing}
 
 So far none of the additional modules have been defined as there are no
-additional modules imported yet. The missing modules to be added to the main
-application as well as the main window.
+additional modules imported yet. The missing modules need to be added to the
+main application as well as the main window.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
@@ -896,10 +912,7 @@ the its parent's constructor.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def __init__(self):
-    """Constructor."""
-
-    super(MainWindow, self).__init__()
+super(MainWindow, self).__init__()
 \end{minted}
 \caption{\label{main-window-constructor}
 Constructor for the main window class \texttt{MainWindow}.}
@@ -963,21 +976,32 @@ class \texttt{MainWindow}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-    self.setup_ui()
+self.setup_ui()
 \end{minted}
 \caption{\label{main-window-constructor}
 The method \texttt{setup\_ui} is added to the constructor of main window class \texttt{MainWindow}.}
 \end{listing}
 
+Finally the main window has to be shown by calling its \myverb{show} method
+at the end of the main application's construction.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+    self.main_window.show()
+\end{minted}
+\caption{\label{app-constructor}
+The main window is being shown at the end of the main application's construction.}
+\end{listing}
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=2in]{./images/qde_alpha.png}
-\caption{\label{fig:editor-alpha}
+\includegraphics[width=2in]{./images/qde_alpha_01.png}
+\caption{\label{fig:editor-alpha-01}
 The QDE editor application in a very early stage, containing only a grid layout.}
 \end{figure}
 
 When starting the application a plain window containing a grid layout is shown,
-as can be seen in figure \ref{fig:editor-alpha}. As written in \ref{sec:components} and
+as can be seen in figure \ref{fig:editor-alpha-01}. As written in \ref{sec:components} and
 shown in \citep[p. 29 ff.]{osterwalder_qde_2016}, the main window will contain all
 the components. To ensure, that those components are shown as defined, a simple
 grid layout may not provide enough possibilities.
@@ -1076,7 +1100,7 @@ The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
 \subsubsection{{\bfseries\sffamily TODO} Scene graph}
-\label{sec:orgbef74d9}
+\label{sec:orgfd7fafd}
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1224,15 +1248,16 @@ class SceneGraphViewModel(Qt.QObject):
     a name and a row.
     """
 
-    <<guidomain-scene-viewmodel-signals>>
+    <<guidomain-scene-scenegraphviewmodel-signals>>
 
-    <<guidomain-scene-viewmodel-constructor>>
+    <<guidomain-scene-scenegraphviewmodel-constructor>>
 
-    <<guidomain-scene-viewmodel-methods>>
+    <<guidomain-scene-scenegraphviewmodel-methods>>
 
-    <<guidomain-scene-viewmodel-slots>>
+    <<guidomain-scene-scenegraphviewmodel-slots>>
 \end{minted}
-\caption{Scene module inside the \texttt{gui\_domain} package, holding currently only the \texttt{SceneGraphViewModel} class.}
+\caption{\label{guidomain-scene}
+Scene module inside the \texttt{gui\_domain} package, holding currently only the \texttt{SceneGraphViewModel} class.}
 \end{listing}
 
 \begin{listing}[H]
@@ -1264,7 +1289,7 @@ def __init__(
     self.domain_object = domain_object
     self.name = name
 \end{minted}
-\caption{\label{guidomain-scene-viewmodel-constructor}
+\caption{\label{guidomain-scene-scenegraphviewmodel-constructor}
 Constructor for the scene graph view model, \texttt{SceneGraphViewModel}.}
 \end{listing}
 
@@ -1299,12 +1324,15 @@ class SceneGraphController(QtCore.QAbstractItemModel):
     scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
     <<app-scenegraph-controller-signals>>
 
-    def __init__(self, parent=None):
+    def __init__(self, root_node_domain_object, parent=None):
         """Constructor.
 
-        :param parent:        The parent of the current view model within the
-                              scene graph.
-        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+        :param root_node_domain_object: The domain object of the root node of
+                                        the scene graph view model.
+        :type root_node_domain_object:  qde.editor.domain.scene.SceneModel
+        :param parent: The parent of the current view model within the scene
+                       graph.
+        :type parent:  qde.editor.gui_domain.scene.SceneGraphViewModel
         """
 
         super(SceneGraphController, self).__init__(parent)
@@ -1313,8 +1341,8 @@ class SceneGraphController(QtCore.QAbstractItemModel):
             QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
         ]
         self.root_node = guidomain_scene.SceneGraphViewModel(
-            row=0
-            domain_object=root_node,
+            row=0,
+            domain_object=root_node_domain_object,
             name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
         )
         self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
@@ -1324,7 +1352,8 @@ class SceneGraphController(QtCore.QAbstractItemModel):
 
     <<app-scenegraph-controller-slots>>
 \end{minted}
-\caption{The outline of the \texttt{SceneGraphController} class, inside the \texttt{application} package.}
+\caption{\label{lst:app-scenegraph}
+The outline of the \texttt{SceneGraphController} class, inside the \texttt{application} package.}
 \end{listing}
 
 At this point data structures in terms of a (data-) model, which holds the
@@ -1341,187 +1370,415 @@ previously provided by the QListView class, but using the more flexible approach
 provided by Qt's model/view
 architecture.''\footnote{\url{http://doc.qt.io/qt-5/qtreeview.html\#details}}
 
-
-
-\subsection{Logging}
-\label{sec:orgb3a3220}
-\begin{verbatim}
-Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
-gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
-Schritt ein Modul zur Protokollierung zu implementieren.
-Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
-Namespace =foundation= erstellt.
-
-Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
-Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
-
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
-#+NAME:       fig:editor-foundation-namespace
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
-#+END_SRC
-
-Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
-Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
-=logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
-werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
-hierfür das Decorator-Pattern von Python
-an[fn:9:https://www.python.org/dev/peps/pep-0318/].
-
-Die Klasse zur Protokollierung soll also Folgendes tun:
-
-- Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
-  #+NAME: logger-name
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
-  #+BEGIN_SRC python
-  logger_name = "%s.%s" % (cls.__module__, cls.__name__)
-  #+END_SRC
-
-  #+RESULTS: logger-name
-
-- Einen Stream-Handler nutzen
-  #+NAME: logger-stream-handler
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Initialisieren eines Stream-Handlers.
-  #+BEGIN_SRC python
-    stream_handler = logging.StreamHandler()
-  #+END_SRC
-
-    #+RESULTS: logger-stream-handler
-
-- Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
-  #+NAME: logger-set-level
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Setzen des =DEBUG= Log-Levels.
-  #+BEGIN_SRC python
-    # TODO: Do this according to config.
-    stream_handler.setLevel(logging.DEBUG)
-  #+END_SRC
-
-    #+RESULTS: logger-set-level
-
-- Protokoll-Einträge ansprechend formatieren
-  #+NAME: logger-set-formatter
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
-  #+BEGIN_SRC python
-    # TODO: Set up formatter in debug mode only
-    formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
-    stream_handler.setFormatter(formatter)
-  #+END_SRC
-
-    #+RESULTS: logger-set-formatter
-
-- Eine einfache Schnittstelle zur Protokollierung bieten
-  #+NAME: logger-return-logger
-  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
-  #+BEGIN_SRC python
-    cls.logger = logging.getLogger(logger_name)
-    cls.logger.propagate = False
-    cls.logger.addHandler(stream_handler)
-
-    return cls
-  #+END_SRC
-
-    #+RESULTS: logger-return-logger
-
-Nun kann die eigentliche Funktionalität implementiert werden.
-
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
-#+NAME:       fig:editor-common-logging
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link :mkdirp yes
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Module holding common helper methods."""
+""" Module holding scene related aspects concerning the graphical user interface layer.
+"""
 
 # System imports
-import logging
+from PyQt5 import QtWidgets
+<<gui-scene-system-imports>>
+
+# Project imports
+<<gui-scene-project-imports>>
 
 
-def with_logger(cls):
-    """Add a logger instance (using a steam handler) to the given class
-    instance.
-
-    :param cls: the class which the logger shall be added to
-    :type  cls: a class of type cls
-
-    :return: the class type with the logger instance added
-    :rtype:  a class of type cls
+class SceneGraphView(QtWidgets.QTreeView):
+    """The scene graph view widget.
+    A widget for displaying and managing the scene graph.
     """
 
-    <<logger-name>>
-    <<logger-stream-handler>>
-    <<logger-set-level>>
-    <<logger-set-formatter>>
-    <<logger-return-logger>>
-#+END_SRC
+    <<gui-scene-controller-signals>>
 
-#+RESULTS: fig:editor-common-logging
+    def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent:        The parent of the current view widget.
+        :type parent:         QtCore.QObject
+        """
+
+        super(SceneGraphView, self).__init__(parent)
+        <<gui-scene-graph-constructor>>
+
+    <<gui-scene-graph-methods>>
+
+    <<gui-scene-graph-slots>>
+\end{minted}
+\caption{The outline of the \texttt{SceneGraphView} class, within the \texttt{scene} module of the \texttt{gui} package.}
+\end{listing}
+
+Having the scene graph view implemented as a widget, it is now necessary to add
+the widget to the main window and initializing it. As described in section
+TODO, the widget is added to the horizontal layout, using the earlier defined
+\myverb{main-window-setupui-scenegraph} placeholder. For being able to
+instantiate a scene graph widget, its module must be imported as well. The
+maximum width of the widget is limited by using the \myverb{setMaximumWidth}
+method.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+from qde.editor.gui import scene as guiscene
+\end{minted}
+\caption{\label{main-window-project-imports}
+Import of the \texttt{scene} module from the \texttt{gui} layer.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+self.scene_graph_widget = guiscene.SceneGraphView()
+self.scene_graph_widget.setObjectName('scene_graph')
+self.scene_graph_widget.setMaximumWidth(300)
+horizontal_layout.addWidget(self.scene_graph_widget)
+\end{minted}
+\caption{\label{main-window-setupui-scenegraph}
+The scene graph widget is being initialized and added to the horizontal layout.}
+\end{listing}
+
+When starting the editor application now, after implementing and adding the
+scene graph widget, the widget appears on the left side of the main window. It
+does not provide any functionality yet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=2in]{./images/qde_alpha_02.png}
+\caption{\label{fig:editor-alpha-02}
+The QDE editor application having the scene graph widget added, which is visible as a blank, white rectangle on the left of the window.}
+\end{figure}
+
+For finally being able to manage scenes within the scene graph, a few aspects
+are still missing, which will be tackled now.
+
+First of all, the scene graph appears to hold no data at all. This is not
+surprising, as no scene nodes were added by now, which might be a good point to
+start with. Actually this is not the entire truth, as the root node (view model)
+was already added within the scene graph controller. The controller emits the
+signal, that a row was inserted, but no other component is receiving this
+signal. Obviously this could be achieved by connecting the scene graph
+controller and the scene graph view, but as Qt's model/view approach is at least
+partially used, simply setting the view's model leads to the same result while
+providing greater functionality.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<app-setup-connections>>=
+    self.main_window.scene_graph_widget.setModel(
+        self.scene_graph_controller
+    )
+\end{minted}
+\caption{The method \texttt{setup\_connections} being defined by setting the scene graph widget's model.}
+\end{listing}
+The component that ties the layers together, is, as previously described, the
+main application. This means, that the main application has to provide all the
+necessary data structures and controllers. Regarding the scene graph this means
+setting up a root scene (as a domain-/data-model) and setting up the scene graph
+controller. As the main application's layer, the \myverb{application} layer,
+is directly below the layer of the view models, \myverb{gui_domain} this
+opposes no problem.
+
+Therefore the root scene as well as the scene graph controller will be
+implemented in the main application's \myverb{setup_components} method,
+whereas setting the scene graph widget's model will be implemented in the
+\myverb{setup_connections} method.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<<app-setup-components>>+=
+    root_scene = scene.SceneModel()
+    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+\end{minted}
+\caption{The method \texttt{setup\_components} being expanded by the creation of the root scene as well as the scene graph controller.}
+\end{listing}
+The necessary imports are still missing however, so those are added to the main
+application's imports.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-project-imports>+=
+    from qde.editor.gui import main_window as qde_main_window
+    from qde.editor.domain import scene
+    from qde.editor.application import scene_graph
+\end{minted}
+\caption{Expansion of the main application's imports by the necessary packages.}
+\end{listing}
+
+The application is still not showing the desired result: The display of the
+scene graph in form of a tree containing the root node. When looking at the
+outputs of the application, the messages as seen in listing \ref{lst:app-error-01} can
+be observed.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
+NotImplementedError: QAbstractItemModel.columnCount() is abstract and must be overridden
+NotImplementedError: QAbstractItemModel.rowCount() is abstract and must be overridden
+\end{minted}
+\caption{\label{lst:app-error-01}
+Output (erroneous) when running the editor application.}
+\end{listing}
+
+The messages from listing \ref{lst:app-error-01} state, that not all of the necessary
+methods from the sub-classed \myverb{QAbstractItemModel} are implemented yet.
+Currently the methods \myverb{columnCount} and \myverb{rowCount} are
+missing. Those methods return ``the number of columns for the children of the
+given
+parent''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#columnCount}}
+and ``the number of rows under the given
+parent''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#rowCount}}
+respectively. The implementation of those missing methods are as follows in
+listing \ref{lst:app-scenegraph-controller-methods-01}. The method
+\myverb{columnCount} is trivial, as there will always be only two columns (as
+defined by the header in listing \ref{lst:app-scenegraph}): The name of the scene and
+the number of nodes it contains. The method \myverb{rowCount} shall return
+\texttt{1} if the parent is invalid, otherwise it shall return the parent's children.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-methods>=
+    def columnCount(self, parent):
+        """Return the number of columns for the children of the given parent.
+    
+        :param parent: The index of the item in the scene graph, which the
+                        column count shall be returned for.
+        :type  parent: QtCore.QModelIndex
+    
+        :return: the number of columns for the children of the given parent.
+        :rtype:  int
+        """
+    
+        return len(self.header_data)
+
+    def rowCount(self, parent):
+        """Return the number of rows for the children of the given parent.
+    
+        :param parent: The index of the item in the scene graph, which the
+                        row count shall be returned for.
+        :type  parent: QtCore.QModelIndex
+    
+        :return: the number of rows for the children of the given parent.
+        :rtype:  int
+        """
+    
+        if not parent.isValid():
+            return 1
+    
+        # Get the actual object stored by the parent. In this case it is a
+        # SceneGraphViewModel.
+        node = parent.internalPointer()
+    
+        return len(node.children())
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-methods-01}
+The code block \texttt{<<app-scenegraph-controller-methods>>}, defining the methods \texttt{columnCount} and \texttt{rowCount} within the scene controller.}
+\end{listing}
+
+When running the application now, there is still an error message, although a
+new one as can be seen in listing \ref{lst:app-error-02}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
+NotImplementedError: QAbstractItemModel.index() is abstract and must be overridden
+\end{minted}
+\caption{\label{lst:app-error-02}
+Output (erroneous) when running the editor application.}
+\end{listing}
+
+This time the \myverb{index} method is missing in the scene controller.
+According the documentation, the method ``returns the index of the item in the
+model specified by the given row, column and parent
+index.''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#index}}
+Furthermore, ``when reimplementing this function in a subclass, call
+createIndex() to generate model indexes that other components can use to refer
+to items in your
+model.''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#index}}
+
+The implementation of the missing method \myverb{index} is as follows in
+listing \ref{lst:app-scenegraph-controller-methods-02}. The method needs to return the
+index of the given row and column for the given parent. There are two cases
+however: either the parent is valid or it is not. In the former case, the scene
+graph view model of the parent is extracted and an index based on the row, the
+column and the child node at the given row as parent is being created. In the
+latter case, when the given parent is not valid, an index based on the scene
+graph's root node is created.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-methods>+=
+    def index(self, row, column, parent=QtCore.QModelIndex()):
+        """Return the index of the item in the model specified by the given row,
+        column and parent index.
+    
+        :param row: The row for which the index shall be returned.
+        :type  row: int
+        :param column: The column for which the index shall be returned.
+        :type column: int
+        :param parent: The parent index of the item in the model. An invalid model
+                       index is given as the default parameter.
+        :type parent: QtQore.QModelIndex
+    
+        :return: the model index based on the given row, column and the parent
+                 index.
+        :rtype: QtCore.QModelIndex
+        """
+    
+        # If the given parent (index) is not valid, create a new index based on the
+        # currently set root node
+        if not parent.isValid():
+            return self.createIndex(row, column, self.root_node)
+    
+        # The internal pointer of the the parent (index) returns a scene graph view
+        # model
+        parent_node = parent.internalPointer()
+        child_nodes = parent_node.children()
+    
+        return self.createIndex(row, column, child_nodes[row])
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-methods-02}
+The code block \texttt{<<app-scenegraph-controller-methods>>}, is expanded by the \texttt{index} method within the scene controller.}
+\end{listing}
+
+Although the scene graph is showing now two columns when running the editor
+application, there are still error messages, as shown in listing \ref{lst:app-error-03}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
+NotImplementedError: QAbstractItemModel.parent() is abstract and must be overridden
+NotImplementedError: QAbstractItemModel.data() is abstract and must be overridden
+\end{minted}
+\caption{\label{lst:app-error-03}
+Output (erroneous) when running the editor application.}
+\end{listing}
+
+The methods \myverb{parent} and \myverb{data} are missing from the
+implementation. The Qt documentation states says about \myverb{parent}:
+``Returns the parent of the model item with the given index. If the item has no
+parent, an invalid QModelIndex is returned.
+
+A common convention used in models that expose tree data structures is that only
+items in the first column have children. For that case, when reimplementing this
+function in a subclass the column of the returned QModelIndex would be 0.
+
+When reimplementing this function in a subclass, be careful to avoid calling
+QModelIndex member functions, such as QModelIndex::parent(), since indexes
+belonging to your model will simply call your implementation, leading to
+infinite
+recursion.''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#parent}}
+
+Those remarks lead to the implementation, that can be seen in listing
+\ref{lst:app-scenegraph-controller-methods-03}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-methods>+=
+    def parent(self, model_index):
+        """Return the parent of the model item with the given index. If the item has
+        no parent, an invalid QModelIndex is returned.
+    
+        :param model_index: The model index which the parent model index shall be
+                            derived for.
+        :type model_index: int
+    
+        :return: the model index of the parent model item for the given model index.
+        :rtype: QtCore.QModelIndex
+        """
+    
+        if not model_index.isValid():
+            return QtCore.QModelIndex()
+    
+        # The internal pointer of the the model index returns a scene graph view
+        # model.
+        node = model_index.internalPointer()
+        if node.parent() is None:
+            return QtCore.QModelIndex()
+        else:
+            return self.createIndex(node.parent().row, 0, node.parent())
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-methods-03}
+The code block \texttt{<<app-scenegraph-controller-methods>>}, is expanded by the \texttt{parent} method within the scene controller.}
+\end{listing}
+
+About the \myverb{data} method, the Qt documentation says the following:
+
+``Returns the data stored under the given role for the item referred to by the
+index.
+
+Note: If you do not have a value to return, return an invalid QVariant instead
+of returning
+0.''\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#data}}
+
+The scene graph stores two different kinds of data: the name of the scene and its
+nodes. Which of the two gets returned depends on the column. The first column,
+column 0, returns the name, where as the second column, column 1, returns the
+number of nodes the scene contains. It is not yet possible to implement the
+second case, as scenes itself do not exist (as view models) and are not yet
+provided as a reference within the scene graph view model.
+
+For still being able to follow the current stream of thought, only a minimalist
+realization of the scene view model class \myverb{SceneViewModel} is provided
+by now, as can be seen in listing \ref{lst:guidomain-scene-sceneviewmodel}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<guidomain-scene>+=
+    class SceneViewModel(Qt.QObject):
+        """View model representing a scene.
+    
+        The SceneViewModel corresponds to an SceneGraphViewModel entry within the
+        scene graph.
+        """
+    
+        
+    
+        def __init__(self):
+            """Constructor."""
+        
+            pass
+\end{minted}
+\caption{\label{lst:guidomain-scene-sceneviewmodel}
+Expansion of the \texttt{scene} module within the \texttt{gui\_domain} layer by the \texttt{SceneViewModel} class. Note, that the implementation of the class is very incomplete at the moment.}
+\end{listing}
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+\textbf{\textsf{\textsc{TODO}}} Continue here.
+
+\end{minipage}
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+Find out why guidomain-scene is not being expanded
+
+\end{minipage}
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+Add a reference of a new scene view model to the scene graph view model on init.
+
+\end{minipage}
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+Implement data() in scene graph controller
+
+\end{minipage}
+}
+\end{center}
 
 
-Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
-werden.
 
-
-Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
-findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
-Python bietet hierzu vielfältige
-Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
-Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
-bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
-Beispiel sehr einfach aus einer JSON-Datei generiert werden.
-
-Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
-- Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
-  Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
-  wird.
-- Als Name für die JSON-Datei wird =logging.json= angenommen.
-- Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
-  gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
-  angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
-- Existiert die JSON-Konfigurationsdatei nicht, wird auf die
-  Standardkonfiguration zurückgegeriffen.
-- Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
-  zum Filtern der verschiedenen Protokollnachrichten.
-
-Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
-sowie =Umgebungsvariable= entgegen.
-
-Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
-umgesetzt und der Klasse hinzugefügt werden.
-
-#+NAME: app-setup-logging
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
-#+BEGIN_SRC python
-def setup_logging(self,
-    default_path='logging.json',
-    default_level=logging.INFO,
-    env_key='LOG_CFG'
-):
-    """Setup logging configuration"""
-
-    path = default_path
-    value = os.getenv(env_key, None)
-
-    if value:
-        path = value
-
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-
-            config = json.load(f)
-            logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-#+END_SRC
-\end{verbatim}
-
-\chapter{Working log}
-\label{sec:org9bb342e}
+\chapter{Work log}
+\label{sec:orgb23d4f3}
 
 \begin{description}
 \item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
@@ -1571,21 +1828,35 @@ the project schedule. Add the implementation of the main window's layout.
 Implement the scene domain model. Move keyPressEvent to its own source
 block instead of expanding the methods of the main window directly. Add a
 section about (the architecture's) layers to the principles section. Add
-Mr. Eric Dubuis as an expert to the involved persons. Introduce the command
-'myverb' for having nicer verbatim blocks. Use the given image-width for
+Dr. Eric Dubuis as an expert to the involved persons. Introduce the 'verb'
+macro for having nicer verbatim blocks. Use the given image-width for
 inline images in org-mode when available.
+
+\item[{\textit{<2017-03-07 Tue>}}] Expand the layering principles by adding a section about
+the model-view-controller pattern and introduce view models. Explain and
+implement the data- and the view model for scene graph items.
+
+\item[{\textit{<2017-03-08 Wed>}}] Implement the controller for handling the scene graph.
+ Allow the semi-automatic creation of an API documentation by introducing
+Sphinx. Introduce new make targets for creating the API documentation as
+RST and as HTML.
+
+\item[{\textit{<2017-03-10 Fri>}}] Implement the scene graph view as widget and integrate it
+ into the application. Update the work log. Fix typing errors. Start to
+implement missing methods in the scene graph controller for being able to
+use the scene graph widget.
 \end{description}
 
 \chapter{Bibliography}
-\label{sec:orgb5adcaa}
+\label{sec:orgce59140}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:org9d4657e}
+\label{sec:org6f4c0c5}
 
 \section{Test cases}
-\label{sec:org7b29052}
+\label{sec:org969867f}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -1776,10 +2047,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:org1461f3f}
+\label{sec:org53120a9}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:org10bbd40}
+\label{sec:org28e57ae}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -1794,7 +2065,7 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 Kick-off meeting for the thesis.
 
 \subsubsection{Presentation and discussion of the current state of work}
-\label{sec:org12ce601}
+\label{sec:org9d2e2da}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -1814,7 +2085,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \subsubsection{Further steps / proceedings}
-\label{sec:org8195f67}
+\label{sec:org9722dc4}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -1842,42 +2113,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \subsubsection{To do for the next meeting}
-\label{sec:orge605bfe}
+\label{sec:org5a95893}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:orga900fe7}
+\label{sec:org3f02c7e}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:orged5e347}
+\label{sec:org48b443d}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:orge842c63}
+\label{sec:org074e0ac}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgef6ae0e}
+\label{sec:org5dd2198}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
-\label{sec:orgb71e044}
+\label{sec:org9191020}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgc97aa15}
+\label{sec:org398a0ed}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:org878f447}
+\label{sec:org0596e59}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org41ed3d8}
+\label{sec:orgb151130}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org9718cdb}
+\label{sec:org05ed0de}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org94ea805}
+\label{sec:orga9a5f8f}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -1885,18 +2156,18 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:org02f5dbf}
+\label{sec:orgf4793c0}
 \end{enumerate}
 
 \subsubsection{Scheduling of the next meeting}
-\label{sec:org3824fb6}
+\label{sec:org8f41f84}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
 
 \chapter{Glossary}
-\label{sec:org79e3c82}
+\label{sec:orgc17493e}
 
 \begin{description}
 \item[{animation}] An animation is a composition of scenes. Each animation is
