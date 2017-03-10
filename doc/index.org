@@ -522,7 +522,16 @@ consists its constructor, as follows.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    =<<app-class-body>>=, body of the class =Application=, containing only the constructor at the moment.
 #+BEGIN_SRC python
+
 <<app-constructor>>
+
+def setup_components(self):
+    <<app-setup-components>>
+
+def setup_connections(self):
+    <<app-setup-connections>>
+
+<<app-methods>>
 #+END_SRC
 
 When looking at the constructor of the =QApplication=
@@ -534,7 +543,9 @@ arguments are being held by the argument vector =argv=. In the PyQt
 implementation however, only one argument is necessary: a list containing the
 arguments. =argc= may easily be derived by e.g. =len(arguments)=. Therefore it
 is necessary for to constructor to take in =arguments= as a required parameter.
-The applications' constructor looks hence as follows.
+As described in section [[Framework for implementation]], a method for setting up
+the connections, which may be defined later on, is added to the constructor. The
+application's constructor looks hence as follows.
 
 #+NAME: app-constructor
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
@@ -552,6 +563,9 @@ def __init__(self, arguments):
     self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))
     self.setApplicationName("QDE")
     self.setApplicationDisplayName("QDE")
+
+    self.setup_components()
+    self.setup_connections()
 #+END_SRC
 
 *** Main entry point
@@ -693,7 +707,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     <<main-window-signals>>
 
-    <<main-window-constructor>>
+    def __init__(self):
+        """Constructor."""
+
+        <<main-window-constructor>>
 
     <<main-window-methods>>
 
@@ -778,19 +795,17 @@ signal. Luckily =Application= provides already a =quit= slot through
 =QApplication=.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Expansion of the main application's constructor, =<<app-constructor>>=, by the initialization of =MainWindow= and its signals.
-#+NAME:       app-constructor
-#+HEADER:     :prologue <<app-constructor>>
+#+CAPTION:    Expansion of setting up the main application's components by the initialization of =MainWindow= and its signals.
+#+NAME:       app-setup-components
+#+HEADER:     :prologue <<app-setup-components>>
 #+BEGIN_SRC python
-
     self.main_window = qde_main_window.MainWindow()
     self.main_window.window_closing.connect(self.quit)
-    self.main_window.show()
 #+END_SRC
 
 So far none of the additional modules have been defined as there are no
-additional modules imported yet. The missing modules to be added to the main
-application as well as the main window.
+additional modules imported yet. The missing modules need to be added to the
+main application as well as the main window.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Expansion of =<<app-project-imports>>= by the missing imports.
@@ -819,10 +834,7 @@ the its parent's constructor.
 #+NAME:       main-window-constructor
 #+HEADER:     :prologue <<main-window-constructor>>
 #+BEGIN_SRC python
-def __init__(self):
-    """Constructor."""
-
-    super(MainWindow, self).__init__()
+super(MainWindow, self).__init__()
 #+END_SRC
 
 Although a Python process is spawned when starting the application, the main
@@ -885,7 +897,19 @@ class =MainWindow=.
 #+NAME:       main-window-constructor
 #+HEADER:     :prologue <<main-window-constructor>>
 #+BEGIN_SRC python
-    self.setup_ui()
+self.setup_ui()
+#+END_SRC
+
+Finally the main window has to be shown by calling its {{{verb(show)}}} method
+at the end of the main application's construction.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The main window is being shown at the end of the main application's construction.
+#+NAME:       app-constructor
+#+HEADER:     :prologue <<app-constructor>>
+#+BEGIN_SRC python
+
+    self.main_window.show()
 #+END_SRC
 
 #+NAME: fig:editor-alpha-01
@@ -984,7 +1008,8 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-**** TODO Scene graph
+**** DONE Scene graph
+     CLOSED: [2017-03-10 Fri 17:19]
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1119,6 +1144,7 @@ structure, which fits the structure of the scene graph perfectly.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Scene module inside the =gui_domain= package, holding currently only the =SceneGraphViewModel= class.
+#+NAME:       guidomain-scene
 #+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
@@ -1142,16 +1168,16 @@ class SceneGraphViewModel(Qt.QObject):
     a name and a row.
     """
 
-    <<guidomain-scene-viewmodel-signals>>
+    <<guidomain-scene-scenegraphviewmodel-signals>>
 
-    <<guidomain-scene-viewmodel-constructor>>
+    <<guidomain-scene-scenegraphviewmodel-constructor>>
 
-    <<guidomain-scene-viewmodel-methods>>
+    <<guidomain-scene-scenegraphviewmodel-methods>>
 
-    <<guidomain-scene-viewmodel-slots>>
+    <<guidomain-scene-scenegraphviewmodel-slots>>
 #+END_SRC
 
-#+NAME: guidomain-scene-viewmodel-constructor
+#+NAME: guidomain-scene-scenegraphviewmodel-constructor
 #+CAPTION:    Constructor for the scene graph view model, =SceneGraphViewModel=.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+BEGIN_SRC python
@@ -1187,6 +1213,7 @@ Now, with the scene graph view model being available, the scene graph controller
 may finally be implemented.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-scenegraph
 #+CAPTION:    The outline of the =SceneGraphController= class, inside the =application= package.
 #+BEGIN_SRC python :tangle ../src/qde/editor/application/scene_graph.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
@@ -1215,12 +1242,15 @@ class SceneGraphController(QtCore.QAbstractItemModel):
     scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
     <<app-scenegraph-controller-signals>>
 
-    def __init__(self, parent=None):
+    def __init__(self, root_node_domain_object, parent=None):
         """Constructor.
 
-        :param parent:        The parent of the current view model within the
-                              scene graph.
-        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+        :param root_node_domain_object: The domain object of the root node of
+                                        the scene graph view model.
+        :type root_node_domain_object:  qde.editor.domain.scene.SceneModel
+        :param parent: The parent of the current view model within the scene
+                       graph.
+        :type parent:  qde.editor.gui_domain.scene.SceneGraphViewModel
         """
 
         super(SceneGraphController, self).__init__(parent)
@@ -1229,8 +1259,8 @@ class SceneGraphController(QtCore.QAbstractItemModel):
             QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
         ]
         self.root_node = guidomain_scene.SceneGraphViewModel(
-            row=0
-            domain_object=root_node,
+            row=0,
+            domain_object=root_node_domain_object,
             name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
         )
         self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
@@ -1315,10 +1345,10 @@ from qde.editor.gui import scene as guiscene
 #+NAME:       main-window-setupui-scenegraph
 #+HEADER:     :prologue <<main-window-setupui-scenegraph>>
 #+BEGIN_SRC python
-scene_graph_widget = guiscene.SceneGraphView()
-scene_graph_widget.setObjectName('scene_graph')
-scene_graph_widget.setMaximumWidth(300)
-horizontal_layout.addWidget(scene_graph_widget)
+self.scene_graph_widget = guiscene.SceneGraphView()
+self.scene_graph_widget.setObjectName('scene_graph')
+self.scene_graph_widget.setMaximumWidth(300)
+horizontal_layout.addWidget(self.scene_graph_widget)
 #+END_SRC
 
 When starting the editor application now, after implementing and adding the
@@ -1328,182 +1358,387 @@ does not provide any functionality yet.
 #+NAME: fig:editor-alpha-02
 #+ATTR_LATEX: :width 2in :placement [H]
 #+ATTR_ORG: :width 50px
-#+CAPTION: The QDE editor application having the scene graph widget added, which is visible as a blank rectangle on the left of the window.
+#+CAPTION: The QDE editor application having the scene graph widget added, which is visible as a blank, white rectangle on the left of the window.
 [[./images/qde_alpha_02.png]]
 
-*** Logging
-  : Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
-  : gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
-  : Schritt ein Modul zur Protokollierung zu implementieren.
-  : Protokollierung ist ein sehr zentrales Element, daher wird das Modul im
-  : Namespace =foundation= erstellt.
-  : 
-  : Die (Datei-) Struktur zur Erstellung und Benennung der Module erfolgt ab diesem
-  : Zeitpunkt nach dem Schichten-Modell gemäss \cite[S. 40]{osterwalder_qde_2016}.
-  : 
-  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  : #+CAPTION:    Erstellung und Initialisierung des =foundation=-Namespaces.
-  : #+NAME:       fig:editor-foundation-namespace
-  : #+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes
-  : #+END_SRC
-  : 
-  : Die Protokollierung auf Klassen-Basis stattfinden. Vorerst sollen
-  : Protokollierungen als Stream ausgegeben werden. Pro Klasse muss also eine
-  : =logging=-Instanz instanziert und mit dem entsprechenden Handler ausgestattet
-  : werden. Um den Programmcode nicht unnötig wiederholen zu müssen, bietet sich
-  : hierfür das Decorator-Pattern von Python
-  : an[fn:9:https://www.python.org/dev/peps/pep-0318/].
-  : 
-  : Die Klasse zur Protokollierung soll also Folgendes tun:
-  : 
-  : - Einen Logger-Namen auf Basis des aktuellen Moduls und der aktuellen Klasse setzen
-  :   #+NAME: logger-name
-  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  :   #+CAPTION:    Setzen des Logger-Names auf Basis des aktuellen Modules und Klasse.
-  :   #+BEGIN_SRC python
-  :   logger_name = "%s.%s" % (cls.__module__, cls.__name__)
-  :   #+END_SRC
-  : 
-  :   #+RESULTS: logger-name
-  : 
-  : - Einen Stream-Handler nutzen
-  :   #+NAME: logger-stream-handler
-  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  :   #+CAPTION:    Initialisieren eines Stream-Handlers.
-  :   #+BEGIN_SRC python
-  :     stream_handler = logging.StreamHandler()
-  :   #+END_SRC
-  : 
-  :     #+RESULTS: logger-stream-handler
-  : 
-  : - Die Stufe der Protokollierung abhängig von der aktuellen Konfiguration setzen
-  :   #+NAME: logger-set-level
-  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  :   #+CAPTION:    Setzen des =DEBUG= Log-Levels.
-  :   #+BEGIN_SRC python
-  :     # TODO: Do this according to config.
-  :     stream_handler.setLevel(logging.DEBUG)
-  :   #+END_SRC
-  : 
-  :     #+RESULTS: logger-set-level
-  : 
-  : - Protokoll-Einträge ansprechend formatieren
-  :   #+NAME: logger-set-formatter
-  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  :   #+CAPTION:    Anpassung der Ausgabe von Protokoll-Meldungen.
-  :   #+BEGIN_SRC python
-  :     # TODO: Set up formatter in debug mode only
-  :     formatter = logging.Formatter("%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s")
-  :     stream_handler.setFormatter(formatter)
-  :   #+END_SRC
-  : 
-  :     #+RESULTS: logger-set-formatter
-  : 
-  : - Eine einfache Schnittstelle zur Protokollierung bieten
-  :   #+NAME: logger-return-logger
-  :   #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  :   #+CAPTION:    Nutzung des erstellten Stream-Handlers und Rückgabe der Klasse.
-  :   #+BEGIN_SRC python
-  :     cls.logger = logging.getLogger(logger_name)
-  :     cls.logger.propagate = False
-  :     cls.logger.addHandler(stream_handler)
-  : 
-  :     return cls
-  :   #+END_SRC
-  : 
-  :     #+RESULTS: logger-return-logger
-  : 
-  : Nun kann die eigentliche Funktionalität implementiert werden.
-  : 
-  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  : #+CAPTION:    Das =common=-Modul und eine Methode zur Protokollierung in Klassen.
-  : #+NAME:       fig:editor-common-logging
-  : #+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb tangle :comments link :mkdirp yes
-  : # -*- coding: utf-8 -*-
-  : 
-  : """Module holding common helper methods."""
-  : 
-  : # System imports
-  : import logging
-  : 
-  : 
-  : def with_logger(cls):
-  :     """Add a logger instance (using a steam handler) to the given class
-  :     instance.
-  : 
-  :     :param cls: the class which the logger shall be added to
-  :     :type  cls: a class of type cls
-  : 
-  :     :return: the class type with the logger instance added
-  :     :rtype:  a class of type cls
-  :     """
-  : 
-  :     <<logger-name>>
-  :     <<logger-stream-handler>>
-  :     <<logger-set-level>>
-  :     <<logger-set-formatter>>
-  :     <<logger-return-logger>>
-  : #+END_SRC
-  : 
-  : #+RESULTS: fig:editor-common-logging
-  : 
-  : 
-  : Der Decorator kann nun direkt auf die Klasse der QDE-Applikation angewendet
-  : werden.
-  : 
-  : 
-  : Damit die Protokollierung jedoch nicht nur via STDOUT in der Konsole statt
-  : findet, muss diese entsprechend konfiguriert werden. Das /logging/-Modul von
-  : Python bietet hierzu vielfältige
-  : Möglichkeiten.[fn:10:https://docs.python.org/3/library/logging.html] So kann die
-  : Protokollierung mittels der ``Configuration API'' konfiguriert werden. Hier
-  : bietet sich die Konfiguration via Dictionary an. Ein Dictionary kann zum
-  : Beispiel sehr einfach aus einer JSON-Datei generiert werden.
-  : 
-  : Die Haupt-Applikation soll die Protokollierung folgendermassen vornehmen:
-  : - Die Konfiguration erfolgt entweder via externer JSON-Datei oder verwendet die
-  :   Standardkonfiguration, welche von Python mittels =basicConfig= vorgegeben
-  :   wird.
-  : - Als Name für die JSON-Datei wird =logging.json= angenommen.
-  : - Ist in den Umgebungsvariablen des Betriebssystems die Variable /LOG_CFG/
-  :   gesetzt, wird diese als Pfad für die JSON-Datei angenommen. Ansonsten wird
-  :   angenommen, dass sich die Datei =logging.json= im Hauptverzeichnis befindet.
-  : - Existiert die JSON-Konfigurationsdatei nicht, wird auf die
-  :   Standardkonfiguration zurückgegeriffen.
-  : - Die Protokollierung verwendet immer eine Protokollierungsstufe (Log-Level)
-  :   zum Filtern der verschiedenen Protokollnachrichten.
-  : 
-  : Die Haupt-Applikation nimmt also die Parameter =Pfad=, =Protokollierungsstufe=
-  : sowie =Umgebungsvariable= entgegen.
-  : 
-  : Nun kann die eigentliche Umsetzung zur Konfiguration der Protokollierung
-  : umgesetzt und der Klasse hinzugefügt werden.
-  : 
-  : #+NAME: app-setup-logging
-  : #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-  : #+CAPTION:    Methode zum Initialisieren der Protokollierung der Applikation.
-  : #+BEGIN_SRC python
-  : def setup_logging(self,
-  :     default_path='logging.json',
-  :     default_level=logging.INFO,
-  :     env_key='LOG_CFG'
-  : ):
-  :     """Setup logging configuration"""
-  : 
-  :     path = default_path
-  :     value = os.getenv(env_key, None)
-  : 
-  :     if value:
-  :         path = value
-  : 
-  :     if os.path.exists(path):
-  :         with open(path, 'rt') as f:
-  : 
-  :             config = json.load(f)
-  :             logging.config.dictConfig(config)
-  :     else:
-  :         logging.basicConfig(level=default_level)
-  : #+END_SRC
+For finally being able to manage scenes within the scene graph, a few aspects
+are still missing, which will be tackled now.
+
+First of all, the scene graph appears to hold no data at all. This is not
+surprising, as no scene nodes were added by now, which might be a good point to
+start with. Actually this is not the entire truth, as the root node (view model)
+was already added within the scene graph controller. The controller emits the
+signal, that a row was inserted, but no other component is receiving this
+signal. Obviously this could be achieved by connecting the scene graph
+controller and the scene graph view, but as Qt's model/view approach is at least
+partially used, simply setting the view's model leads to the same result while
+providing greater functionality.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =setup_connections= being defined by setting the scene graph widget's model.
+#+BEGIN_SRC python
+<<app-setup-connections>>=
+    self.main_window.scene_graph_widget.setModel(
+        self.scene_graph_controller
+    )
+#+END_SRC
+#+NAME:       app-setup-connections
+#+HEADER:     :prologue <<app-setup-connections>>
+#+BEGIN_SRC python :exports none
+    self.main_window.scene_graph_widget.setModel(
+        self.scene_graph_controller
+    )
+#+END_SRC
+
+The component that ties the layers together, is, as previously described, the
+main application. This means, that the main application has to provide all the
+necessary data structures and controllers. Regarding the scene graph this means
+setting up a root scene (as a domain-/data-model) and setting up the scene graph
+controller. As the main application's layer, the {{{verb(application)}}} layer,
+is directly below the layer of the view models, {{{verb(gui_domain)}}} this
+opposes no problem.
+
+Therefore the root scene as well as the scene graph controller will be
+implemented in the main application's {{{verb(setup_components)}}} method,
+whereas setting the scene graph widget's model will be implemented in the
+{{{verb(setup_connections)}}} method.
+
+#+CAPTION:    The method =setup_components= being expanded by the creation of the root scene as well as the scene graph controller.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+BEGIN_SRC python
+<<app-setup-components>>+=
+    root_scene = scene.SceneModel()
+    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+#+END_SRC
+#+NAME:       app-setup-components
+#+HEADER:     :prologue <<app-setup-components>>
+#+BEGIN_SRC python :exports none
+    root_scene = scene.SceneModel()
+    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+#+END_SRC
+
+The necessary imports are still missing however, so those are added to the main
+application's imports.
+
+#+NAME:       app-project-imports
+#+HEADER:     :prologue <<app-project-imports>>
+#+BEGIN_SRC python :exports none
+from qde.editor.domain import scene
+from qde.editor.application import scene_graph
+#+END_SRC
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the main application's imports by the necessary packages.
+#+BEGIN_SRC python :noweb yes
+<app-project-imports>+=
+    <<app-project-imports>>
+#+END_SRC
+
+#+RESULTS: app-project-imports
+
+The application is still not showing the desired result: The display of the
+scene graph in form of a tree containing the root node. When looking at the
+outputs of the application, the messages as seen in listing [[lst:app-error-01]] can
+be observed.
+
+#+CAPTION: Output (erroneous) when running the editor application.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:app-error-01
+#+BEGIN_SRC bash
+NotImplementedError: QAbstractItemModel.columnCount() is abstract and must be overridden
+NotImplementedError: QAbstractItemModel.rowCount() is abstract and must be overridden
+#+END_src
+
+The messages from listing [[lst:app-error-01]] state, that not all of the necessary
+methods from the sub-classed {{{verb(QAbstractItemModel)}}} are implemented yet.
+Currently the methods {{{verb(columnCount)}}} and {{{verb(rowCount)}}} are
+missing. Those methods return ``the number of columns for the children of the
+given
+parent''[fn:83abdf14c73abab:http://doc.qt.io/qt-5/qabstractitemmodel.html#columnCount]
+and ``the number of rows under the given
+parent''[fn:76294354838b8f1:http://doc.qt.io/qt-5/qabstractitemmodel.html#rowCount]
+respectively. The implementation of those missing methods are as follows in
+listing [[lst:app-scenegraph-controller-methods-01]]. The method
+{{{verb(columnCount)}}} is trivial, as there will always be only two columns (as
+defined by the header in listing [[lst:app-scenegraph]]): The name of the scene and
+the number of nodes it contains. The method {{{verb(rowCount)}}} shall return
+=1= if the parent is invalid, otherwise it shall return the parent's children.
+
+#+NAME:       app-scenegraph-controller-methods-column-count
+#+BEGIN_SRC python :exports none
+def columnCount(self, parent):
+    """Return the number of columns for the children of the given parent.
+
+    :param parent: The index of the item in the scene graph, which the
+                    column count shall be returned for.
+    :type  parent: QtCore.QModelIndex
+
+    :return: the number of columns for the children of the given parent.
+    :rtype:  int
+    """
+
+    return len(self.header_data)
+#+END_SRC
+
+#+NAME:       app-scenegraph-controller-methods-row-count
+#+BEGIN_SRC python :exports none
+def rowCount(self, parent):
+    """Return the number of rows for the children of the given parent.
+
+    :param parent: The index of the item in the scene graph, which the
+                    row count shall be returned for.
+    :type  parent: QtCore.QModelIndex
+
+    :return: the number of rows for the children of the given parent.
+    :rtype:  int
+    """
+
+    if not parent.isValid():
+        return 1
+
+    # Get the actual object stored by the parent. In this case it is a
+    # SceneGraphViewModel.
+    node = parent.internalPointer()
+
+    return len(node.children())
+#+END_SRC
+
+#+NAME:       app-scenegraph-controller-methods
+#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
+#+BEGIN_SRC python :exports none
+<<app-scenegraph-controller-methods-column-count>>
+
+<<app-scenegraph-controller-methods-row-count>>
+#+END_SRC
+
+#+CAPTION: The code block =<<app-scenegraph-controller-methods>>=, defining the methods =columnCount= and =rowCount= within the scene controller.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-scenegraph-controller-methods-01
+#+BEGIN_SRC python :noweb yes
+
+<app-scenegraph-controller-methods>=
+    <<app-scenegraph-controller-methods-column-count>>
+
+    <<app-scenegraph-controller-methods-row-count>>
+#+END_SRC
+
+When running the application now, there is still an error message, although a
+new one as can be seen in listing [[lst:app-error-02]].
+
+#+CAPTION: Output (erroneous) when running the editor application.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:app-error-02
+#+BEGIN_SRC bash
+NotImplementedError: QAbstractItemModel.index() is abstract and must be overridden
+#+END_src
+
+This time the {{{verb(index)}}} method is missing in the scene controller.
+According the documentation, the method ``returns the index of the item in the
+model specified by the given row, column and parent
+index.''[fn:14309fdf586d8fa9:http://doc.qt.io/qt-5/qabstractitemmodel.html#index]
+Furthermore, ``when reimplementing this function in a subclass, call
+createIndex() to generate model indexes that other components can use to refer
+to items in your
+model.''[fn:c387c6b498f1eca:http://doc.qt.io/qt-5/qabstractitemmodel.html#index]
+
+The implementation of the missing method {{{verb(index)}}} is as follows in
+listing [[lst:app-scenegraph-controller-methods-02]]. The method needs to return the
+index of the given row and column for the given parent. There are two cases
+however: either the parent is valid or it is not. In the former case, the scene
+graph view model of the parent is extracted and an index based on the row, the
+column and the child node at the given row as parent is being created. In the
+latter case, when the given parent is not valid, an index based on the scene
+graph's root node is created.
+
+#+NAME:       app-scenegraph-controller-methods-index
+#+BEGIN_SRC python :exports none
+def index(self, row, column, parent=QtCore.QModelIndex()):
+    """Return the index of the item in the model specified by the given row,
+    column and parent index.
+
+    :param row: The row for which the index shall be returned.
+    :type  row: int
+    :param column: The column for which the index shall be returned.
+    :type column: int
+    :param parent: The parent index of the item in the model. An invalid model
+                   index is given as the default parameter.
+    :type parent: QtQore.QModelIndex
+
+    :return: the model index based on the given row, column and the parent
+             index.
+    :rtype: QtCore.QModelIndex
+    """
+
+    # If the given parent (index) is not valid, create a new index based on the
+    # currently set root node
+    if not parent.isValid():
+        return self.createIndex(row, column, self.root_node)
+
+    # The internal pointer of the the parent (index) returns a scene graph view
+    # model
+    parent_node = parent.internalPointer()
+    child_nodes = parent_node.children()
+
+    return self.createIndex(row, column, child_nodes[row])
+#+END_SRC
+
+#+NAME:       app-scenegraph-controller-methods
+#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-index>>
+#+END_SRC
+
+#+CAPTION: The code block =<<app-scenegraph-controller-methods>>=, is expanded by the =index= method within the scene controller.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-scenegraph-controller-methods-02
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-index>>
+#+END_SRC
+
+Although the scene graph is showing now two columns when running the editor
+application, there are still error messages, as shown in listing [[lst:app-error-03]].
+
+#+CAPTION: Output (erroneous) when running the editor application.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:app-error-03
+#+BEGIN_SRC bash
+NotImplementedError: QAbstractItemModel.parent() is abstract and must be overridden
+NotImplementedError: QAbstractItemModel.data() is abstract and must be overridden
+#+END_SRC
+
+The methods {{{verb(parent)}}} and {{{verb(data)}}} are missing from the
+implementation. The Qt documentation states says about {{{verb(parent)}}}:
+``Returns the parent of the model item with the given index. If the item has no
+parent, an invalid QModelIndex is returned.
+
+A common convention used in models that expose tree data structures is that only
+items in the first column have children. For that case, when reimplementing this
+function in a subclass the column of the returned QModelIndex would be 0.
+
+When reimplementing this function in a subclass, be careful to avoid calling
+QModelIndex member functions, such as QModelIndex::parent(), since indexes
+belonging to your model will simply call your implementation, leading to
+infinite
+recursion.''[fn:3c3bede78fe52b8:http://doc.qt.io/qt-5/qabstractitemmodel.html#parent]
+
+Those remarks lead to the implementation, that can be seen in listing
+[[lst:app-scenegraph-controller-methods-03]].
+
+#+NAME:       app-scenegraph-controller-methods-parent
+#+BEGIN_SRC python :exports none
+def parent(self, model_index):
+    """Return the parent of the model item with the given index. If the item has
+    no parent, an invalid QModelIndex is returned.
+
+    :param model_index: The model index which the parent model index shall be
+                        derived for.
+    :type model_index: int
+
+    :return: the model index of the parent model item for the given model index.
+    :rtype: QtCore.QModelIndex
+    """
+
+    if not model_index.isValid():
+        return QtCore.QModelIndex()
+
+    # The internal pointer of the the model index returns a scene graph view
+    # model.
+    node = model_index.internalPointer()
+    if node.parent() is None:
+        return QtCore.QModelIndex()
+    else:
+        return self.createIndex(node.parent().row, 0, node.parent())
+#+END_SRC
+
+#+NAME:       app-scenegraph-controller-methods
+#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-parent>>
+#+END_SRC
+
+#+CAPTION: The code block =<<app-scenegraph-controller-methods>>=, is expanded by the =parent= method within the scene controller.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-scenegraph-controller-methods-03
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-parent>>
+#+END_SRC
+
+About the {{{verb(data)}}} method, the Qt documentation says the following:
+
+``Returns the data stored under the given role for the item referred to by the
+index.
+
+Note: If you do not have a value to return, return an invalid QVariant instead
+of returning
+0.''[fn:4e8bc3e102075:http://doc.qt.io/qt-5/qabstractitemmodel.html#data]
+
+The scene graph stores two different kinds of data: the name of the scene and its
+nodes. Which of the two gets returned depends on the column. The first column,
+column 0, returns the name, where as the second column, column 1, returns the
+number of nodes the scene contains. It is not yet possible to implement the
+second case, as scenes itself do not exist (as view models) and are not yet
+provided as a reference within the scene graph view model.
+
+For still being able to follow the current stream of thought, only a minimalist
+realization of the scene view model class {{{verb(SceneViewModel)}}} is provided
+by now, as can be seen in listing [[lst:guidomain-scene-sceneviewmodel]].
+
+#+NAME:       guidomain-scene-sceneviewmodel
+#+BEGIN_SRC python :exports none
+class SceneViewModel(Qt.QObject):
+    """View model representing a scene.
+
+    The SceneViewModel corresponds to an SceneGraphViewModel entry within the
+    scene graph.
+    """
+
+    <<guidomain-scene-sceneviewmodel-signals>>
+
+    <<guidomain-scene-sceneviewmodel-constructor>>
+
+    <<guidomain-scene-sceneviewmodel-methods>>
+
+    <<guidomain-scene-sceneviewmodel-slots>>
+#+END_SRC
+
+#+NAME: guidomain-scene-sceneviewmodel-constructor
+#+BEGIN_SRC python :exports none
+def __init__(self):
+    """Constructor."""
+
+    pass
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       guidomain-scene
+#+HEADER:     :prologue <<guidomain-scene>>
+#+BEGIN_SRC python :exports none
+
+<<guidomain-scene-sceneviewmodel>>
+#+END_SRC
+
+#+NAME:       lst:guidomain-scene-sceneviewmodel
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the =scene= module within the =gui_domain= layer by the =SceneViewModel= class. Note, that the implementation of the class is very incomplete at the moment.
+#+BEGIN_SRC python :noweb yes
+
+<guidomain-scene>+=
+    <<guidomain-scene-sceneviewmodel>>
+#+END_SRC
+
+*************** TODO Continue here.
+
+*************** Find out why guidomain-scene is not being expanded
+
+*************** Add a reference of a new scene view model to the scene graph view model on init.
+
+*************** Implement data() in scene graph controller
+*************** END
+
+
 
 * Work log
 
@@ -1554,15 +1789,18 @@ does not provide any functionality yet.
      Implement the scene domain model. Move keyPressEvent to its own source
      block instead of expanding the methods of the main window directly. Add a
      section about (the architecture's) layers to the principles section. Add
-     Mr. Eric Dubuis as an expert to the involved persons. Introduce the command
-     'myverb' for having nicer verbatim blocks. Use the given image-width for
+     Mr. Eric Dubuis as an expert to the involved persons. Introduce the 'verb'
+     macro for having nicer verbatim blocks. Use the given image-width for
      inline images in org-mode when available.
 
 -  <2017-03-07 Tue> :: Expand the layering principles by adding a section about
       the model-view-controller pattern and introduce view models. Explain and
-     implement the data- and the view model for scene graph items.
+      implement the data- and the view model for scene graph items.
 
 -  <2017-03-08 Wed> :: Implement the controller for handling the scene graph.
+      Allow the semi-automatic creation of an API documentation by introducing
+     Sphinx. Introduce new make targets for creating the API documentation as
+     RST and as HTML.
 
 -  <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
       into the application. Update the work log.
