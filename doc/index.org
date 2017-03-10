@@ -1008,8 +1008,7 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-**** DONE Scene graph
-     CLOSED: [2017-03-10 Fri 17:19]
+**** TODO Scene graph
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1803,7 +1802,9 @@ def __init__(self):
      RST and as HTML.
 
 -  <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
-      into the application. Update the work log.
+      into the application. Update the work log. Fix typing errors. Start to
+     implement missing methods in the scene graph controller for being able to
+     use the scene graph widget.
 
 * Bibliography
 
