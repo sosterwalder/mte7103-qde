@@ -1,6 +1,9 @@
 ## Swap files made by Vi
 *.swp
 
+## Swap files amde by Emacs
+.#*.org
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -139,7 +142,10 @@ sympy-plots-for-*.tex/
 # Eclipse / UML
 *.metadata
 
+
 # Project specific
 src/
 doc/_minted-index/
+doc/build/
 doc/auto/
+doc/source/*.rst
