@@ -1789,7 +1789,7 @@ def __init__(self):
      Implement the scene domain model. Move keyPressEvent to its own source
      block instead of expanding the methods of the main window directly. Add a
      section about (the architecture's) layers to the principles section. Add
-     Mr. Eric Dubuis as an expert to the involved persons. Introduce the 'verb'
+     Dr. Eric Dubuis as an expert to the involved persons. Introduce the 'verb'
      macro for having nicer verbatim blocks. Use the given image-width for
      inline images in org-mode when available.
 
