@@ -1,4 +1,4 @@
-% Created 2017-03-06 Mon 16:37
+% Created 2017-03-10 Fri 09:17
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -65,12 +65,12 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:orgbf7ff44}
+\label{sec:orge1fb54e}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:orgfe1c5b4}
+\label{sec:org74fa8d9}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -79,7 +79,7 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:orgb2587f4}
+\label{sec:org908ffa4}
 
 \begin{center}
 \begin{tabular}{lll}
@@ -87,10 +87,10 @@ Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 Expert & Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org6dc9b64}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org784dcf8}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org782d32e}eric.dubuis@comet.ch}
+\end{center}\footnotetext[1]{\label{org5fb617b}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org6012d0f}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{orgfc40481}eric.dubuis@comet.ch}
 
 \section{Structure of the documentation}
-\label{sec:orgc77c6b5}
+\label{sec:org89c36d2}
 
 This thesis is structured as follows:
 
@@ -103,7 +103,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:org2073326}
+\label{sec:org3462eae}
 
 \begin{itemize}
 \item Report
@@ -111,34 +111,34 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgbec7fd6}
+\label{sec:orgd879b30}
 
 \section{Motivation}
-\label{sec:org4407eb0}
+\label{sec:orgb44bbde}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:orgdcd7780}
+\label{sec:org18ab89e}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org7e25722}
+\label{sec:orgb5f4666}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:org0ebadf0}
+\label{sec:org11d6f42}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:orgc2986a5}
+\label{sec:orgc031c0b}
 \section{Organization of work}
-\label{sec:orga619086}
+\label{sec:org48412bd}
 \subsection{Meetings}
-\label{sec:org586921c}
+\label{sec:orgdb208eb}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -147,7 +147,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:orgcbdc0ab}
+\label{sec:org9288af1}
 
 
 \begin{center}
@@ -183,7 +183,7 @@ The project's schedule.}
 Figure \ref{fig:schedule} shows the project's schedule.
 
 \subsection{Literate programming}
-\label{sec:org10476ed}
+\label{sec:orgbc5fa0a}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -222,12 +222,12 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:org7b5da71}
+\label{sec:orgc052259}
 \subsection{Code}
-\label{sec:org9c0d754}
+\label{sec:org16e9c88}
 
 \subsubsection{{\bfseries\sffamily TODO} Principles}
-\label{sec:org4850ba4}
+\label{sec:orgea2bb27}
 
 \begin{itemize}
 \item Classes use camel case.
@@ -246,20 +246,63 @@ follows.
 
 \subsubsection{Layering}
 \label{sec:layering}
-As written in \cite[p. 38 ff.]{osterwalder_qde_2016}, a layered architecture is
-foreseen. A relaxed layered architecture leads to low coupling,
-reduces dependencies and enhances cohesion as well as clarity.
+Concerning the architecture, a layered architecture is foreseen, as stated in
+\cite[p. 38 ff.]{osterwalder_qde_2016}. A relaxed layered architecture leads to
+low coupling, reduces dependencies and enhances cohesion as well as clarity.
 
 As the architecture's core \hyperref[sec:components]{components} are all graphical, a graphical user
 interface for those components is developed. As the their data shall be
 exportable, it would be relatively tedious if the graphical user interface would
-hold that data. Instead models and model-view separation are used. Additionally
-controllers are introduced which act as workflow objects of the application
-layer and interfere between the model and its view.
+hold and control that data. Instead models and model-view separation are used.
+Additionally controllers are introduced which act as workflow objects of the
+\myverb{application} layer and interfere between the model and its view.
+
+\begin{enumerate}
+\item Model-View-Controller
+\label{sec:org37f2e25}
+
+While models may be instantiated anywhere directly, this would although not
+contribute to having clean code and sane data structures. Instead controllers,
+lying within the \myverb{application} layer, will manage instances of models.
+The instantiating may either be induced by the graphical user interface
+or by the player when loading and playing exported animations.
+
+A view may never contain model-data (coming from the \myverb{domain} layer)
+directly, instead view models are used \cite{martin_fowler_presentation_2004}.
+
+The behavior described above corresponds to the well-known model-view-controller
+pattern expanded by view models.
+
+As Qt is used as the core for the editor, it may be quite obvious to use Qt's
+model/view programming practices, as described by
+\footnote{\url{http://doc.qt.io/qt-5/model-view-programming.html}}. However, Qt combines
+the controller and the view, meaning the view acts also as a controller while
+still separating the storage of data. The editor application does not actually
+store data (in a conventional way, e.g. using a database) but solely exports it.
+Due to this circumstance the model-view-controller pattern is explicitly used,
+as also stated in \cite[p. 38]{osterwalder_qde_2016}.
+
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+\textbf{\textsf{\textsc{TODO}}} Describe the exact process of communication between
+
+\end{minipage}
+}
+\end{center}
+\begin{center}
+\fbox{
+\begin{minipage}[c]{.6\textwidth}
+ViewModel, Controller and Model.
+
+\end{minipage}
+}
+\end{center}
 
 To avoid coupling and therefore dependencies, signals and
 slots\footnote{\url{http://doc.qt.io/qt-5/signalsandslots.html}} are used in terms of the
 observer pattern to allow inter-object and inter-layer communication.
+\end{enumerate}
 
 \subsubsection{Framework for implementation}
 \label{sec:framework-for-implementation}
@@ -280,20 +323,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:org55bf99d}
+\label{sec:org580983f}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:orgbe1835b}
+\label{sec:org544c080}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:orgbd3f633}
+\label{sec:org8258c90}
 
 \section{Requirements}
-\label{sec:org577fc23}
+\label{sec:org5de4381}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -359,7 +402,7 @@ All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
 \section{Name-spaces and project structure}
-\label{sec:org6b6580b}
+\label{sec:org8aa1d32}
 
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
@@ -391,7 +434,7 @@ it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:org3e891e8}
+\label{sec:orgdc43b49}
 
 This chapter describes the creation of the \emph{editor} component.
 
@@ -403,7 +446,7 @@ sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 
 \subsection{Main application}
-\label{sec:org61a1703}
+\label{sec:org39d5bff}
 
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
@@ -451,7 +494,7 @@ therefore as follows.
 \end{listing}
 
 \subsubsection{Imports}
-\label{sec:org5459be3}
+\label{sec:org0ff2fd6}
 As you can see, the imports of the module are defined by \texttt{<<app-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -595,7 +638,7 @@ def __init__(self, arguments):
 \end{listing}
 
 \subsection{Main entry point}
-\label{sec:orgda48793}
+\label{sec:org6cb978b}
 
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
@@ -684,11 +727,11 @@ As a starting point, we shall implement the class \texttt{MainWindow} representi
 main window.
 
 \subsubsection{Main window}
-\label{sec:org1632560}
+\label{sec:orgb00a21d}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
-and is hence part of the \texttt{gui} package.
+and is hence part of the \myverb{gui} package.
 
 Its main functionality is to set up the actual user interface, containing all
 the components, described by \ref{sec:components}, as widgets. Qt offers the class
@@ -1032,8 +1075,8 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-\subsubsection{Scene graph}
-\label{sec:org41367fd}
+\subsubsection{{\bfseries\sffamily TODO} Scene graph}
+\label{sec:orgbef74d9}
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1043,9 +1086,9 @@ acting as workflow object --- residing in the \emph{application} package.
 
 The \myverb{SceneGraphController} class will manage instances of scene models
 whereas the \myverb{SceneGraphView} will display a tree of scenes, starting
-with a root scene of type \myverb{Scene}.
+with a root scene of type \myverb{SceneModel}.
 
-The least tedious of those aspects may be the scene model, \myverb{Scene}, so
+The least tedious of those aspects may be the scene model, \myverb{SceneModel}, so
 the scene model is implemented first.
 
 As at this point its functionality is not known, its implementation is rather
@@ -1065,7 +1108,7 @@ dull. It is composed of solely an empty constructor.
 <<domain-scene-project-imports>>
 
 
-class Scene(object):
+class SceneModel(object):
     """The scene model.
     It is used as a base class for scene instances within the scene graph.
     """
@@ -1078,7 +1121,7 @@ class Scene(object):
 
     <<domain-scene-slots>>
 \end{minted}
-\caption{Scene module inside the \texttt{domain} package, holding the \texttt{Scene} class.}
+\caption{Scene module inside the \texttt{domain} package, holding the \texttt{SceneModel} class.}
 \end{listing}
 
 \begin{listing}[H]
@@ -1087,11 +1130,221 @@ def __init__(self):
     pass
 \end{minted}
 \caption{\label{domain-scene-constructor}
-Constructor of the scene model class, \texttt{Scene}.}
+Constructor of the scene model class, \texttt{SceneModel}.}
 \end{listing}
 
+Scenes may now be instantiated, it is however important to do the management of
+scenes in a controlled manner. This is where the specific controllers within the
+\myverb{application} layer come in, as described in more detail in section
+\ref{sec:layering}. Therefore the class \myverb{SceneGraphController} will now be
+implemented, for being able to manage scenes.
+
+As the scene graph shall be built as a tree structure, an appropriate data
+structure is needed. Qt provides the \myverb{QTreeWidget} class, but that
+class is in this case not suitable, as it does not separate the data from its
+representation, as stated by Qt: ``Developers who do not need the flexibility of
+the Model/View framework can use this class to create simple hierarchical lists
+very easily. A more flexible approach involves combining a QTreeView with a
+standard item model. This allows the storage of data to be separated from its
+representation.''\footnote{\url{http://doc.qt.io/qt-5/qtreewidget.html\#details}}
+
+Therefore the class
+\myverb{QAbstractItemModel}[fn:e3eb4d58d8c947d:http://doc.qt.io/qt-5/qabstractitemmodel.html]
+is chosen for implementation. Before implementing the actual methods, it is
+important to think about the attributes, that the scene graph controller will
+have. According to the class's documentation, some methods must be implemented
+at very least: ``When subclassing QAbstractItemModel, at the very least you must
+implement index(), parent(), rowCount(), columnCount(), and data(). These
+functions are used in all read-only models, and form the basis of editable
+models.''
+
+For being able edit the nodes of the scene graph and to have a custom header
+displayed, further methods have to be implemented: ``To enable editing in your
+model, you must also implement setData(), and reimplement flags() to ensure that
+ItemIsEditable is returned. You can also reimplement headerData() and
+setHeaderData() to control the way the headers for your model are presented.''
+
+From the remarks above the attributes may be defined. As the scene graph is
+implemented as a tree structure, it must have a \textbf{root node}, which is of type
+\myverb{SceneGraphViewModel} (coming from the \myverb{gui_domain} layer).
+Whenever a scene is added as a node, the item model needs to be informed for
+updating the display. This happens by emitting the \myverb{rowsInserted}
+signal, which is already given by the \myverb{QAbstractItemModel} class. This
+signal needs the current model index as well as the first and last position as
+parameters. The current model index represents the parent of the item to add,
+whereas the item will be inserted between the two given positions, first and
+last. Concerning the model index the Qt documentation states: ``An invalid model
+index can be constructed with the QModelIndex constructor. Invalid indexes are
+often used as parent indexes when referring to top-level items in a model.''
+Therefore for creating the initial node of the scene graph, the root node, the
+constructor of \myverb{QModelIndex} will be used.
+As \textbf{header data} the name of the scenes as well as the number of nodes a scene
+contains shall be displayed.
+
+Speaking of signals, brings up the definition of signals for the scene graph
+controller. To prevent coupling, two signals are added: \myverb{scene_added}
+and \myverb{scene_removed}. The first will be emitted whenever a new node is
+inserted into the scene graph by \myverb{insertRows} being called. The latter
+is emitted whenever an existing node is removed from the scene graph by calling
+the \myverb{removeRows} method.
+
+But what currently is missing for being able to implement a first draft of the
+scene graph, is the view model \myverb{SceneGraphViewModel}. View models are
+used to visually represent something within the graphical user interface and
+they provide an interface to the \myverb{domain} layer. To this point, a
+simple reference in terms of an attribute is used, which may be changed later
+on. Concerning the user interface, a view model must fulfill the requirements
+posed by the user interface's corresponding component. In terms of the scene
+graph the view model must provide at least a name and a row. Additionally, as
+already mentioned, a reference to the domain object is being added. The class
+inherits from \myverb{QObject} as this base class already provides a tree
+structure, which fits the structure of the scene graph perfectly.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the gui_domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+<<guidomain-scene-system-imports>>
+
+# Project imports
+<<guidomain-scene-project-imports>>
+
+
+class SceneGraphViewModel(Qt.QObject):
+    """View model representing scene graph items.
+
+    The SceneGraphViewModel corresponds to an entry within the scene graph. It
+    is used by the QAbstractItemModel class and must therefore at least provide
+    a name and a row.
+    """
+
+    <<guidomain-scene-viewmodel-signals>>
+
+    <<guidomain-scene-viewmodel-constructor>>
+
+    <<guidomain-scene-viewmodel-methods>>
+
+    <<guidomain-scene-viewmodel-slots>>
+\end{minted}
+\caption{Scene module inside the \texttt{gui\_domain} package, holding currently only the \texttt{SceneGraphViewModel} class.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# .. py:function::
+def __init__(
+        self,
+        row,
+        domain_object,
+        name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
+        parent=None
+):
+    """Constructor.
+
+    :param row:           The row the view model is in.
+    :type  row:           int
+    :param domain_object: Reference to a scene model.
+    :type  domain_object: qde.editor.domain.scene.SceneModel
+    :param name:          The name of the view model, which will be displayed in
+                          the scene graph.
+    :type  name:          str
+    :param parent:        The parent of the current view model within the scene
+                          graph.
+    :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+    """
+
+    super(SceneGraphViewModel, self).__init__(parent)
+    self.row  = row
+    self.domain_object = domain_object
+    self.name = name
+\end{minted}
+\caption{\label{guidomain-scene-viewmodel-constructor}
+Constructor for the scene graph view model, \texttt{SceneGraphViewModel}.}
+\end{listing}
+
+Now, with the scene graph view model being available, the scene graph controller
+may finally be implemented.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene graph related aspects concerning the application layer.
+"""
+
+# System imports
+from PyQt5 import QtCore
+<<app-scenegraph-system-imports>>
+
+# Project imports
+from qde.editor.domain     import scene as domain_scene
+from qde.editor.gui_domain import scene as guidomain_scene
+<<app-scenegraph-project-imports>>
+
+
+class SceneGraphController(QtCore.QAbstractItemModel):
+    """The scene graph controller.
+    A controller for managing the scene graph by adding, editing and removing
+    scenes.
+    """
+
+    scene_added = QtCore.pyqtSignal(domain_scene.SceneModel)
+    scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
+    <<app-scenegraph-controller-signals>>
+
+    def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent:        The parent of the current view model within the
+                              scene graph.
+        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+        """
+
+        super(SceneGraphController, self).__init__(parent)
+        self.header_data = [
+            QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),
+            QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
+        ]
+        self.root_node = guidomain_scene.SceneGraphViewModel(
+            row=0
+            domain_object=root_node,
+            name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
+        )
+        self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
+        <<app-scenegraph-controller-constructor>>
+
+    <<app-scenegraph-controller-methods>>
+
+    <<app-scenegraph-controller-slots>>
+\end{minted}
+\caption{The outline of the \texttt{SceneGraphController} class, inside the \texttt{application} package.}
+\end{listing}
+
+At this point data structures in terms of a (data-) model, which holds the
+actual, for the scene graph relevant data of a scene, and a view model, which
+holds the data relevant for the user interface, are implemented. Further a
+controller for handling the flow of the data for both models is implemented.
+What is still missing, is the actual representation of the scene graph in terms
+of a view.
+
+Qt offers a plethora of widgets for implementing views. One such widget is
+\myverb{QTreeView}, which ``implements a tree representation of items from a
+model. This class is used to provide standard hierarchical lists that were
+previously provided by the QListView class, but using the more flexible approach
+provided by Qt's model/view
+architecture.''\footnote{\url{http://doc.qt.io/qt-5/qtreeview.html\#details}}
+
+
+
 \subsection{Logging}
-\label{sec:orga8a90b1}
+\label{sec:orgb3a3220}
 \begin{verbatim}
 Da es sehr nützlich ist, den Zustand einer Applikation jederzeit in Form von
 gezielten Ausgaben nachvollziehen zu können, bietet es sich an als ersten
@@ -1268,7 +1521,7 @@ def setup_logging(self,
 \end{verbatim}
 
 \chapter{Working log}
-\label{sec:org7483b2e}
+\label{sec:org9bb342e}
 
 \begin{description}
 \item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
@@ -1324,15 +1577,15 @@ inline images in org-mode when available.
 \end{description}
 
 \chapter{Bibliography}
-\label{sec:org531f156}
+\label{sec:orgb5adcaa}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:org12f633f}
+\label{sec:org9d4657e}
 
 \section{Test cases}
-\label{sec:orgc1b6e68}
+\label{sec:org7b29052}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -1523,10 +1776,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:org2c260f1}
+\label{sec:org1461f3f}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:orgfc4a0e1}
+\label{sec:org10bbd40}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -1541,7 +1794,7 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 Kick-off meeting for the thesis.
 
 \subsubsection{Presentation and discussion of the current state of work}
-\label{sec:orgb882440}
+\label{sec:org12ce601}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -1561,7 +1814,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \subsubsection{Further steps / proceedings}
-\label{sec:orgf1f0481}
+\label{sec:org8195f67}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -1589,42 +1842,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \subsubsection{To do for the next meeting}
-\label{sec:orgb401b11}
+\label{sec:orge605bfe}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:org4871338}
+\label{sec:orga900fe7}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:orgc65ff25}
+\label{sec:orged5e347}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:orgde68638}
+\label{sec:orge842c63}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org5fd9547}
+\label{sec:orgef6ae0e}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Mr. Dubuis (CF)
-\label{sec:org91cb937}
+\label{sec:orgb71e044}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgdff7c72}
+\label{sec:orgc97aa15}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:orgf77def7}
+\label{sec:org878f447}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org6371910}
+\label{sec:org41ed3d8}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org8ebab94}
+\label{sec:org9718cdb}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org0278082}
+\label{sec:org94ea805}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -1632,13 +1885,24 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orge80ccc1}
+\label{sec:org02f5dbf}
 \end{enumerate}
 
 \subsubsection{Scheduling of the next meeting}
-\label{sec:orgac027c6}
+\label{sec:org3824fb6}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
+
+\chapter{Glossary}
+\label{sec:org79e3c82}
+
+\begin{description}
+\item[{animation}] An animation is a composition of scenes. Each animation is
+defined by a time span, meaning it has a defined start- and
+end-time. As the name indicates, an animation contains animated
+elements, being properties of nodes (e.g. the position of a node
+and so on).
+\end{description}
 \end{document}
