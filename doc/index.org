@@ -41,13 +41,10 @@
 
 #+MACRO: verb \myverb{$1}
 
-#+DESCRIPTION:
-#+KEYWORDS:
-#+SUBTITLE:
-#+LATEX_HEADER_EXTRA:
-
 #+TITLE: QDE --- A visual animation system.
 #+SUBTITLE: MTE-7103: Master-Thesis
+#+KEYWORDS:
+#+DESCRIPTION:
 #+AUTHOR: Sven Osterwalder
 #+EMAIL: sven.osterwalder@students.bfh.ch
 #+DATE: February 20, 2017
@@ -69,7 +66,7 @@ meant.
 
 | Author     | Sven Osterwalder[fn:1:sven.osterwalder@students.bfh.ch] |                                                                                     |
 | Supervisor | Prof. Claude Fuhrer[fn:2:claude.fuhrer@bfh.ch]          | /Supervises the student doing the thesis/                                           |
-| Expert     | Eric Dubuis[fn:17:eric.dubuis@comet.ch]                 | /Provides expertise concerning the thesis' subject, monitors and grades the thesis/ |
+| Expert     | Dr. Eric Dubuis[fn:17:eric.dubuis@comet.ch]             | /Provides expertise concerning the thesis' subject, monitors and grades the thesis/ |
 
 ** Structure of the documentation
 
