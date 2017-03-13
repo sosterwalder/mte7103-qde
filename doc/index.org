@@ -1333,7 +1333,8 @@ class SceneGraphView(QtWidgets.QTreeView):
     A widget for displaying and managing the scene graph.
     """
 
-    <<gui-scene-controller-signals>>
+    # Signals
+    <<gui-scene-graph-signals>>
 
     def __init__(self, parent=None):
         """Constructor.
@@ -1347,6 +1348,7 @@ class SceneGraphView(QtWidgets.QTreeView):
 
     <<gui-scene-graph-methods>>
 
+    # Slots
     <<gui-scene-graph-slots>>
 #+END_SRC
 
@@ -1927,7 +1929,7 @@ supported. The sections are given by the two columns 0 and 1, which correspond
 to the header data. The implementation of the {{{verb(headerData)}}} is shown in
 listing [[lst:app-scenegraph-controller-methods-header-data]].
 
-:GUIDOMAIN_SCENE_SCENEVIEWMODEL_METHODS_HEADERDATA:
+:APP_SCENEGRAPH_CONTROLLER_METHODS_HEADERDATA:
 #+NAME:      app-scenegraph-controller-methods-header-data
 #+BEGIN_SRC python :exports none
 def headerData(self, section, orientation=QtCore.Qt.Horizontal,
@@ -1967,13 +1969,12 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 #+NAME:       app-scenegraph-controller-methods
 #+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
-
 <<app-scenegraph-controller-methods-header-data>>
 #+END_SRC
 
 #+NAME:       lst:app-scenegraph-controller-methods-header-data
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Expansion of the scene view model's methods by adding the =headerData= method which overwrites the method inherited by QAbstractItemModel.
+#+CAPTION:    Expansion of the scene graph controller's methods by adding the =headerData= method which overwrites the method inherited by =QAbstractItemModel=.
 #+BEGIN_SRC python :noweb yes
 
 <app-scenegraph-controller-methods>+=
@@ -1986,6 +1987,318 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 #+ATTR_ORG: :width 50px
 #+CAPTION: The QDE editor application showing the scene graph widget, containing the root node of the scene graph.
 [[./images/qde_alpha_03.png]]
+
+So far the application creates an instance of a scene model through the main
+application, then managed by the scene graph controller. But for having only a
+single (root-) scene, the whole scene graph architecture would be a massive
+overkill. Instead it shall be possible to have multiple and nested scenes, what
+allows the creation of diversified animations. Therefore the scene graph view
+needs to provide at least the creation of new nodes, the deletion of existing
+nodes and the selection of a existing nodes. First the selection of existing
+nodes is implemented.
+
+To detect if a node was selected within the scene tree of the scene graph view,
+the selection model provides the {{{verb(selectionChanged)}}} signal. The
+selection model is inherent in the data model of the {{{verb(QTreeView)}}}. For
+being able to use the signal, the {{{verb(setModel)}}} method of the tree view
+must be overridden. It is however very important to call the very same method on
+the parent first. When setting the model, the root item of the model is set to be
+selected.
+For more flexibility, the slot {{{verb(on_tree_item_selected)}}} will be
+triggered upon a selection of a tree item. The implementation of those aspects
+can be seen in listings [[lst:gui-scene-system-imports-01]],
+[[lst:gui-scene-project-imports-01]], [[lst:gui-scene-graph-signals-01]],
+[[lst:gui-scene-graph-methods-set-model]] and [[lst:gui-scene-graph-slots-01]].
+
+:GUI_SCENE_SYSTEM_IMPORTS_01:
+#+NAME:      gui-scene-system-imports-01
+#+BEGIN_SRC python :exports none
+from PyQt5 import Qt
+from PyQt5 import QtCore
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-system-imports
+#+HEADER:     :prologue <<gui-scene-system-imports>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-system-imports-01>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-system-imports-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the necessary system imports for selecting tree items within the view's scene package.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-system-imports>=
+    <<gui-scene-system-imports-01>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_PROJECT_IMPORTS_01:
+#+NAME:      gui-scene-project-imports-01
+#+BEGIN_SRC python :exports none
+from qde.editor.gui_domain import scene
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-project-imports
+#+HEADER:     :prologue <<gui-scene-project-imports>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-project-imports-01>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-project-imports-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the necessary imports for selecting tree items within the view's scene package.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-project-imports>=
+    <<gui-scene-project-imports-01>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SIGNALS_01:
+#+NAME:      gui-scene-graph-signals-01
+#+BEGIN_SRC python :exports none
+tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-signals
+#+HEADER:     :prologue <<gui-scene-graph-signals>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-signals-01>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-signals-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the signal in case tree items are selected.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-signals>=
+    <<gui-scene-graph-signals-01>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SETMODEL:
+#+NAME:      gui-scene-graph-methods-set-model
+#+BEGIN_SRC python :exports none
+def setModel(self, model):
+    """Set the model for the view to present.
+
+    This method is only used for being able to use the selection model's
+    selectionChanged method and setting the current selection to the root node.
+
+    :param model: The item model which the view shall present.
+    :type  model: QtCore.QAbstractItemModel
+    """
+
+    super(SceneGraphView, self).setModel(model)
+
+    selection_model = self.selectionModel()
+    selection_model.selectionChanged.connect(
+        self.on_tree_item_selected
+    )
+
+    self.setCurrentIndex(model.index(0, 0))
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-methods
+#+HEADER:     :prologue <<gui-scene-graph-methods>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-methods-set-model>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-methods-set-model
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The overridden =setModel= method coming from =QTreeView= being added to the methods of the scene graph view class.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-methods>+=
+    <<gui-scene-graph-methods-set-model>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SLOTS_01:
+#+NAME:      gui-scene-graph-slots-01
+#+BEGIN_SRC python :exports none
+@QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)
+def on_tree_item_selected(self, selected, deselected):
+    """Slot which is called when the selection within the scene graph view is
+    changed.
+
+    The previous selection (which may be empty) is specified by the deselected
+    parameter, the new selection is specified by the selected paramater.
+
+    This method emits the selected scene graph item as scene graph view model.
+
+    :param selected: The new selection of scenes.
+    :type  selected: QtCore.QModelIndex
+    :param deselected: The previous selected scenes.
+    :type  deselected: QtCore.QModelIndex
+    """
+
+    selected_item = selected.first()
+    selected_index = selected_item.indexes()[0]
+    selected_scene_graph_view_model = selected_index.internalPointer()
+    self.tree_item_selected.emit(selected_scene_graph_view_model)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-slots
+#+HEADER:     :prologue <<gui-scene-graph-slots>>
+#+BEGIN_SRC python :exports none
+
+<<gui-scene-graph-slots-01>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-slots-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the slot which gets called in case tree items are selected.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-slots>+=
+    <<gui-scene-graph-slots-01>>
+#+END_SRC
+:END:
+
+In the same manner the adding and removal of scenes is implemented. However, the
+tree widgets does not provide direct signals for those cases as it is the case
+when selecting a tree item, instead actions have to be used. Two actions are
+implemented: one for adding a new item and one for removing an existing item.
+
+An action gets triggered, typically by hovering over some item (in terms of a
+context menu for example) or by pressing a defined shortcut. For the adding and
+the removal the latter will be used. As the particular shortcut shall only be
+valid for the widget, the {{{verb(WidgetShortcut)}}} shortcut context is used.
+Adding of a scene item shall happen when pressing the =a= key on the keyboard,
+removal of a selected node upon the press of the =delete= key on the keyboard.
+
+The actions have to be added to the scene graph view and their
+{{{verb(triggered)}}} signal is connected with the slot {{{verb(on_new_tree_item)}}}
+and {{{verb(on_tree_item_removed)}}} respectively.
+
+
+The implementation of the addition and removal of tree items within the scene
+graph view is shown in listing TODO.
+
+Taking a step back at this point, the (main-) functionality of the editor
+application is as follows. When starting, an instance of the
+{{{verb(Application)}}} class is spawned. As stated before, this class
+is a central aspect of the application as it connects the various layers of the
+architecture. The {{{verb(Application)}}} class spawns the main window, creates
+the root scene of the application and spawns the scene graph controller by
+providing it with the root scene.
+
+:GUI_SCENE_GRAPH_SIGNALS_02:
+#+NAME:      gui-scene-graph-signals-02
+#+BEGIN_SRC python :exports none
+tree_item_added = QtCore.pyqtSignal(QtCore.QModelIndex)
+tree_item_removed = QtCore.pyqtSignal(QtCore.QModelIndex)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-signals
+#+HEADER:     :prologue <<gui-scene-graph-signals>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-signals-02>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-signals-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the signals in case a tree item is added or removed.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-signals>+=
+    <<gui-scene-graph-signals-02>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_CONSTRUCTOR_01:
+#+NAME:      gui-scene-graph-constructor-01
+#+BEGIN_SRC python :exports none
+new_action_label = QtCore.QCoreApplication.translate(
+    __class__.__name__, 'New scene'
+)
+new_action = QtWidgets.QAction(new_action_label, self)
+new_action.setShortcut(Qt.QKeySequence('a'))
+new_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+new_action.triggered.connect(self.on_new_tree_item)
+self.addAction(new_action)
+
+remove_action_label = QtCore.QCoreApplication.translate(
+    __class__.__name__, 'Remove selected scene(s)'
+)
+remove_action = QtWidgets.QAction(remove_action_label, self)
+remove_action.setShortcut(Qt.QKeySequence('Delete'))
+remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+remove_action.triggered.connect(self.on_tree_item_removed)
+self.addAction(remove_action)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-constructor
+#+HEADER:     :prologue <<gui-scene-graph-constructor>>
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-constructor-01>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-constructor-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The actions to add a new scene and to remove existing scenes are added to the constructor of the scene graph view.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-constructor>+=
+    <<gui-scene-graph-constructor-01>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SLOTS_02:
+#+NAME:      gui-scene-graph-slots-02
+#+BEGIN_SRC python :exports none
+@QtCore.pyqtSlot()
+def on_new_tree_item(self):
+    """Slot which is called when a new tree item was added by the scene graph
+    view.
+
+    This method emits the selected scene graph item as new tree item in form of
+    a scene graph view model.
+    """
+
+    selected_indexes = self.selectedIndexes()
+
+    # Sanity check: is actually an item selected?
+    if len(selected_indexes) > 0:
+        selected_item = selected_indexes[0]
+        self.tree_item_added.emit(selected_item)
+
+@QtCore.pyqtSlot()
+def on_tree_item_removed(self):
+    """Slot which is called when a one or multiple tree items were removed by
+    the scene graph view.
+
+    This method emits the removed scene graph item in form of scene graph view
+    models.
+    """
+
+    selected_indexes = self.selectedIndexes()
+
+    # Sanity check: is actually an item selected?
+    if len(selected_indexes) > 0:
+        selected_item = selected_indexes[0]
+        self.tree_item_removed.emit(selected_item)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-slots
+#+HEADER:     :prologue <<gui-scene-graph-slots>>
+#+BEGIN_SRC python :exports none
+
+<<gui-scene-graph-slots-02>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-slots-02
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the slots which gets called in case tree items are added or removed respectively.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-slots>+=
+    <<gui-scene-graph-slots-02>>
+#+END_SRC
+:END:
 
 * Work log
 
@@ -2057,7 +2370,8 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 -  <2017-03-13 Mon> :: Implement the scene view model. Initialize such a model
      within the scene graph view model. Implement the =headerData= as well as
      the =data= methods of the scene graph controller. Update the work log. Add
-     an image of the editor's current state.
+     an image of the editor's current state. Continue implementation of the
+     scene graph view model.
 
 * Bibliography
 
