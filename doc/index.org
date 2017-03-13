@@ -1,8 +1,11 @@
+:LOCAL_VARIABLES:
 # Local Variables:
 # org-image-actual-width: nil
 # org-babel-use-quick-and-dirty-noweb-expansion: t
 # End:
+:END:
 
+:LATEX_STUFF:
 #+BIBLIOGRAPHY: bibliography ieee
 #+LATEX_CLASS: scrreprt
 #+LATEX_CLASS_OPTIONS: [10pt, openright, notitlepage]
@@ -38,9 +41,13 @@
 #+LATEX_HEADER: \addbibresource{bibliography.bib}
 #+LATEX_HEADER: \usepackage{newverbs}[2011/07/23]
 #+LATEX_HEADER: \newcommand{\myverb}{\collectverb{\fcolorbox{black!50}{black!25}}}
+:END:
 
+:MARCROS:
 #+MACRO: verb \myverb{$1}
+:END:
 
+:DOCUMENT_HEADER:
 #+TITLE: QDE --- A visual animation system.
 #+SUBTITLE: MTE-7103: Master-Thesis
 #+KEYWORDS:
@@ -49,9 +56,10 @@
 #+EMAIL: sven.osterwalder@students.bfh.ch
 #+DATE: February 20, 2017
 #+OPTIONS: author:t date:t email:t ^:nil H:5
- 
+:END:
+
 * TODO Introduction
- 
+
 [Introduction here].
 
 * TODO Administrative aspects
