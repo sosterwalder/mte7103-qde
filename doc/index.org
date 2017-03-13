@@ -49,9 +49,9 @@
 #+EMAIL: sven.osterwalder@students.bfh.ch
 #+DATE: February 20, 2017
 #+OPTIONS: author:t date:t email:t ^:nil H:5
-
+ 
 * TODO Introduction
-
+ 
 [Introduction here].
 
 * TODO Administrative aspects
@@ -133,7 +133,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 #+ATTR_LATEX: :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The project's schedule.
-[[./images/project_schedule.png]]
+./images/project_schedule.png]]
 
 Figure [[fig:schedule]] shows the project's schedule.
 
@@ -1142,7 +1142,7 @@ structure, which fits the structure of the scene graph perfectly.
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Scene module inside the =gui_domain= package, holding currently only the =SceneGraphViewModel= class.
+#+CAPTION:    Scene module inside the =gui_domain= package.
 #+NAME:       guidomain-scene
 #+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
@@ -1158,7 +1158,11 @@ from PyQt5 import QtCore
 # Project imports
 <<guidomain-scene-project-imports>>
 
+<<guidomain-scene-body>>
+#+END_SRC
 
+#+NAME: guidomain-scene-scenegraphviewmodel
+#+BEGIN_SRC python :exports none
 class SceneGraphViewModel(Qt.QObject):
     """View model representing scene graph items.
 
@@ -1174,6 +1178,21 @@ class SceneGraphViewModel(Qt.QObject):
     <<guidomain-scene-scenegraphviewmodel-methods>>
 
     <<guidomain-scene-scenegraphviewmodel-slots>>
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       guidomain-scene-body
+#+HEADER:     :prologue <<guidomain-scene-body>>
+#+BEGIN_SRC python :exports none
+<<guidomain-scene-scenegraphviewmodel>>
+#+END_SRC
+
+#+NAME:       lst:guidomain-scene-scenegraphviewmodel
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the body of the =scene= module, which is in the =gui_domain= layer.
+#+BEGIN_SRC python :noweb yes
+<guidomain-scene-body>=
+    <<guidomain-scene-scenegraphviewmodel>>
 #+END_SRC
 
 #+NAME: guidomain-scene-scenegraphviewmodel-constructor
@@ -1607,7 +1626,7 @@ NotImplementedError: QAbstractItemModel.data() is abstract and must be overridde
 #+END_SRC
 
 The methods {{{verb(parent)}}} and {{{verb(data)}}} are missing from the
-implementation. The Qt documentation states says about {{{verb(parent)}}}:
+implementation. The Qt documentation states about {{{verb(parent)}}}:
 ``Returns the parent of the model item with the given index. If the item has no
 parent, an invalid QModelIndex is returned.
 
@@ -1624,6 +1643,7 @@ recursion.''[fn:3c3bede78fe52b8:http://doc.qt.io/qt-5/qabstractitemmodel.html#pa
 Those remarks lead to the implementation, that can be seen in listing
 [[lst:app-scenegraph-controller-methods-03]].
 
+:APP_SCENEGRAPH_CONTROLLER_METHODS_PARENT:
 #+NAME:       app-scenegraph-controller-methods-parent
 #+BEGIN_SRC python :exports none
 def parent(self, model_index):
@@ -1664,6 +1684,7 @@ def parent(self, model_index):
 <app-scenegraph-controller-methods>+=
     <<app-scenegraph-controller-methods-parent>>
 #+END_SRC
+:END:
 
 About the {{{verb(data)}}} method, the Qt documentation says the following:
 
@@ -1685,6 +1706,7 @@ For still being able to follow the current stream of thought, only a minimalist
 realization of the scene view model class {{{verb(SceneViewModel)}}} is provided
 by now, as can be seen in listing [[lst:guidomain-scene-sceneviewmodel]].
 
+:GUIDOMAIN_SCENE_SCENEVIEWMODEL:
 #+NAME:       guidomain-scene-sceneviewmodel
 #+BEGIN_SRC python :exports none
 class SceneViewModel(Qt.QObject):
@@ -1703,41 +1725,259 @@ class SceneViewModel(Qt.QObject):
     <<guidomain-scene-sceneviewmodel-slots>>
 #+END_SRC
 
-#+NAME: guidomain-scene-sceneviewmodel-constructor
+#+NAME:       guidomain-scene-sceneviewmodel-01
 #+BEGIN_SRC python :exports none
-def __init__(self):
-    """Constructor."""
+class SceneViewModel(Qt.QObject):
+    """View model representing a scene.
+
+    The SceneViewModel corresponds to an SceneGraphViewModel entry within the
+    scene graph.
+    """
 
     pass
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+NAME:       guidomain-scene
-#+HEADER:     :prologue <<guidomain-scene>>
+#+NAME:       guidomain-scene-body
+#+HEADER:     :prologue <<guidomain-scene-body>>
 #+BEGIN_SRC python :exports none
-
 <<guidomain-scene-sceneviewmodel>>
 #+END_SRC
 
 #+NAME:       lst:guidomain-scene-sceneviewmodel
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Expansion of the =scene= module within the =gui_domain= layer by the =SceneViewModel= class. Note, that the implementation of the class is very incomplete at the moment.
+#+CAPTION:    Expansion of the =scene= module, which is within the =gui_domain= layer, by the =SceneViewModel= class. Note, that the implementation of the class provides no functionality at all at the moment.
 #+BEGIN_SRC python :noweb yes
 
-<guidomain-scene>+=
-    <<guidomain-scene-sceneviewmodel>>
+<guidomain-scene-body>+=
+    <<guidomain-scene-sceneviewmodel-01>>
+#+END_SRC
+:END:
+
+Having the scene view model class defined, it may now be used by the scene graph
+view model. This reference will then be used by the scene graph controller for
+getting the number of nodes a scene contains.
+
+:GUIDOMAIN_SCENE_SCENEGRAPHVIEWMODEL_CONSTRUCTOR:
+#+NAME:       guidomain-scene-scenegraphviewmodel-constructor-01
+#+BEGIN_SRC   python :exports none
+    self.scene_view_model = SceneViewModel()
 #+END_SRC
 
-*************** TODO Continue here.
+#+NAME:       guidomain-scene-scenegraphviewmodel-constructor
+#+HEADER:     prologue: guidomain-scene-scenegraphviewmodel-constructor
+#+BEGIN_SRC   python :exports none
+<<guidomain-scene-scenegraphviewmodel-constructor-01>>
+#+END_SRC
 
-*************** Find out why guidomain-scene is not being expanded
+#+NAME:       lst:guidomain-scene-scenegraphviewmodel-constructor-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the constructor of the =SceneGraphViewModel= class by a reference to a scene view model.
+#+BEGIN_SRC python :noweb yes
 
-*************** Add a reference of a new scene view model to the scene graph view model on init.
+<guidomain-scene-scenegraphviewmodel-constructor>+=
+    <<guidomain-scene-scenegraphviewmodel-constructor-01>>
+#+END_SRC
+:END:
 
-*************** Implement data() in scene graph controller
-*************** END
+All prerequisites for implementing the {{{verb(data)}}} method of the scene
+graph controller are now met and the method may therefore now be implemented.
+The method has two parameters: the model index and the role. The model index
+holds the position of the item within the data model. The role indicates what
+type of data is provided. Currently the only role considered is the display of
+models (further information may be found
+at[fn:1b47276f9eb32ac2:http://doc.qt.io/qt-5/qt.html#ItemDataRole-enum]).
+Depending on the column of the model index, either the name of the scene graph
+node or the number of nodes its scene holds is returned.
 
+:APP_SCENEGRAPH_CONTROLLER_METHODS_DATA:
+#+NAME:       app-scenegraph-controller-methods-data
+#+BEGIN_SRC python :exports none
+def data(self, model_index, role=QtCore.Qt.DisplayRole):
+    """Return the data stored unter the given role for the item referred by the
+    index.
 
+    :param model_index: The (data-) model index of the item.
+    :type model_index: int
+    :param role: The role which shall be used for representing the data. The
+                 default (and currently only supported) is displaying the data.
+    :type role:  QtCore.Qt.DisplayRole
+
+    :return: the data stored under the given role for the item referred by the
+             given index.
+    :rtype:  str
+    """
+
+    if not model_index.isValid():
+        return None
+
+    # The internal pointer of the model index returns a scene graph view
+    # model.
+    node = model_index.internalPointer()
+
+    if role == QtCore.Qt.DisplayRole:
+        # Return either the name of the scene or its number of nodes.
+        column = model_index.column()
+
+        if column == 0:
+            return node.name
+        elif column == 1:
+            return node.scene_view_model.graph_node_count
+#+END_SRC
+
+#+NAME:       app-scenegraph-controller-methods
+#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-data>>
+#+END_SRC
+
+#+CAPTION: The code block =<<app-scenegraph-controller-methods>>= is expanded by the =data= method within the scene controller.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-scenegraph-controller-methods-04
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-data>>
+#+END_SRC
+:END:
+
+The editor application would at this point still produce an error when being
+run. The {{{verb(data)}}} method accesses a property of the scene view model
+when getting the second column, the number of nodes a scene contains:
+{{{verb(graph_node_count)}}}. As the scene view model is only a placeholder at the
+moment, it is necessary to implement that property first. As the name says, the
+property {{{verb(graph_node_count)}}} returns the number of graph nodes a scene view
+model contains. Therefore the scene view model needs to hold graph nodes as a
+list which leads to the definition of its constructor before implementing the
+{{{verb(graph_node_count)}}} method.
+
+:GUIDOMAIN_SCENE_SCENEVIEWMODEL_CONSTRUCTOR:
+#+NAME:       guidomain-scene-sceneviewmodel-constructor
+#+BEGIN_SRC   python :exports none
+def __init__(self):
+    """Constructor."""
+
+    self.graph_nodes = []
+#+END_SRC
+
+#+NAME:       lst:guidomain-scene-scenegraphviewmodel-constructor
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition of the constructor of the =SceneViewModel= class.
+#+BEGIN_SRC python :noweb yes
+
+<guidomain-scene-sceneviewmodel-constructor>=
+    <<guidomain-scene-sceneviewmodel-constructor>>
+#+END_SRC
+:END:
+
+The method {{{verb(graph_node_count)}}} then simply returns the length of the
+graph node list, as can be seen in listing
+[[lst:guidomain-scene-sceneviewmodel-methods-graphnodecount]].
+
+:GUIDOMAIN_SCENE_SCENEVIEWMODEL_METHODS_GRAPHNODECOUNT:
+#+NAME:       guidomain-scene-sceneviewmodel-methods-graphnodecount
+#+BEGIN_SRC python :exports none
+@property
+def graph_node_count(self):
+    """Return the number of graph nodes, that this scene contains."""
+
+    return len(self.graph_nodes)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       guidomain-scene-sceneviewmodel-methods
+#+HEADER:     :prologue <<guidomain-scene-sceneviewmodel-methods>>
+#+BEGIN_SRC python :exports none
+<<guidomain-scene-sceneviewmodel-methods-graphnodecount>>
+#+END_SRC
+
+#+NAME:       lst:guidomain-scene-sceneviewmodel-methods-graphnodecount
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the scene view model's methods by adding the =graph_node_count= property.
+#+BEGIN_SRC python :noweb yes
+
+<guidomain-scene-sceneviewmodel-methods>+=
+    <<guidomain-scene-sceneviewmodel-methods-graphnodecount>>
+#+END_SRC
+:END:
+
+When launching the editor application now, the scene graph is shown containing
+the root node, as intended. One small detail is still left although. The header
+data was defined in the scene graph controller, but it is not shown correctly.
+Only the numbers 1 and 2 are shown as header. To get the header display the
+column names correctly, the {{{verb(headerData)}}} method has to be implemented.
+
+The Qt documentation states: ``Returns the data for the given role and section
+in the header with the specified orientation.
+
+For horizontal headers, the section number corresponds to the column number.
+Similarly, for vertical headers, the section number corresponds to the row
+number.''[fn:168b7c4ead833d4b:http://doc.qt.io/qt-5/qabstractitemmodel.html#headerData]
+
+At the moment only the displaying-role and a horizontal orientation shall be
+supported. The sections are given by the two columns 0 and 1, which correspond
+to the header data. The implementation of the {{{verb(headerData)}}} is shown in
+listing [[lst:app-scenegraph-controller-methods-header-data]].
+
+:GUIDOMAIN_SCENE_SCENEVIEWMODEL_METHODS_HEADERDATA:
+#+NAME:      app-scenegraph-controller-methods-header-data
+#+BEGIN_SRC python :exports none
+def headerData(self, section, orientation=QtCore.Qt.Horizontal,
+               role=QtCore.Qt.DisplayRole):
+    """Return the data for the given role and section in the header with the
+    specified orientation.
+
+    Currently vertical is the only supported orientation. The only supported
+    role is DisplayRole. As the sections correspond to the header, there are
+    only two supported sections: 0 and 1. If one of those parameters is not
+    within the described values, None is returned.
+
+    :param section: the section in the header. Currently only 0 and 1 are
+                    supported.
+    :type  section: int
+    :param orientation: the orientation of the display. Currently only
+                        Horizontal is supported.
+    :type orientation:  QtCore.Qt.Orientation
+    :param role: The role which shall be used for representing the data. The
+                 default (and currently only supported) is displaying the data.
+    :type role:  QtCore.Qt.DisplayRole
+
+    :return: the header data for the given section using the given role and orientation.
+    :rtype:  str
+    """
+
+    if (
+            orientation == QtCore.Qt.Horizontal  and
+            role        == QtCore.Qt.DisplayRole and
+            section     in [0, 1]
+    ):
+        return self.header_data[section]
+
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-scenegraph-controller-methods
+#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-header-data>>
+#+END_SRC
+
+#+NAME:       lst:app-scenegraph-controller-methods-header-data
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Expansion of the scene view model's methods by adding the =headerData= method which overwrites the method inherited by QAbstractItemModel.
+#+BEGIN_SRC python :noweb yes
+
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-header-data>>
+#+END_SRC
+:END:
+
+#+NAME: fig:editor-alpha-03
+#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The QDE editor application showing the scene graph widget, containing the root node of the scene graph.
+[[./images/qde_alpha_03.png]]
 
 * Work log
 
@@ -1792,19 +2032,24 @@ def __init__(self):
      macro for having nicer verbatim blocks. Use the given image-width for
      inline images in org-mode when available.
 
--  <2017-03-07 Tue> :: Expand the layering principles by adding a section about
-      the model-view-controller pattern and introduce view models. Explain and
-      implement the data- and the view model for scene graph items.
+- <2017-03-07 Tue> :: Expand the layering principles by adding a section about
+     the model-view-controller pattern and introduce view models. Explain and
+     implement the data- and the view model for scene graph items.
 
--  <2017-03-08 Wed> :: Implement the controller for handling the scene graph.
-      Allow the semi-automatic creation of an API documentation by introducing
+- <2017-03-08 Wed> :: Implement the controller for handling the scene graph.
+     Allow the semi-automatic creation of an API documentation by introducing
      Sphinx. Introduce new make targets for creating the API documentation as
      RST and as HTML.
 
--  <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
-      into the application. Update the work log. Fix typing errors. Start to
+- <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
+     into the application. Update the work log. Fix typing errors. Start to
      implement missing methods in the scene graph controller for being able to
      use the scene graph widget.
+
+-  <2017-03-13 Mon> :: Implement the scene view model. Initialize such a model
+     within the scene graph view model. Implement the =headerData= as well as
+     the =data= methods of the scene graph controller. Update the work log. Add
+     an image of the editor's current state.
 
 * Bibliography
 
@@ -2059,12 +2304,12 @@ Kick-off meeting for the thesis.
 ****** DONE Inform Mr. Fuhrer about the creation of the repository. (SO)
        CLOSED: [2017-03-01 Wed 08:46]
 
-***** DONE Ask Mr. Dubuis by mail how he wants to receive the documentation. (SO)
+***** DONE Ask Dr. Dubuis by mail how he wants to receive the documentation. (SO)
       CLOSED: [2017-03-01 Wed 08:46]
 
 ****** TODO Await answer of Mr. Dubuis (ED)
 
-***** DONE Set up appointments with Mr. Dubuis (CF)
+***** DONE Set up appointments with Dr. Dubuis (CF)
       CLOSED: [2017-02-27 Tue 15:21]
 
 ****** TODO Await answer of Mr. Dubuis (ED)
