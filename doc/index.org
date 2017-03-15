@@ -418,29 +418,29 @@ therefore as follows.
 
 """Main application module for QDE."""
 
-<<app-imports>>
+<<app-application-imports>>
 
-<<app-class-definition>>
+<<app-application-class-definition>>
 #+END_SRC
 
 #+RESULTS:
 
 **** Imports
-As you can see, the imports of the module are defined by =<<app-imports>>=. For
+As you can see, the imports of the module are defined by =<<app-application-imports>>=. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
 project imports, modules created within the project. The imports are therefore
 split up as follows.
 
-#+NAME: app-imports
+#+NAME: app-application-imports
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    =<<app-imports>>=, definition of the application modules' imports.
+#+CAPTION:    =<<app-application-imports>>=, definition of the application modules' imports.
 #+BEGIN_SRC python
 # System imports
-<<app-system-imports>>
+<<app-application-system-imports>>
 
 # Project imports
-<<app-project-imports>>
+<<app-application-project-imports>>
 #+END_SRC
 
 As the actual imports are not known yet, let us first look at the applications'
@@ -449,14 +449,14 @@ name, its super class (the parent class) and a class body. As stated at the
 beginning, the class will inherit from the Qt class =QApplication=, which
 provides the basics for a Qt GUI application.
 
-#+NAME: app-class-definition
+#+NAME: app-application-class-definition
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    =<<app-class-definition>>=, definition of the =Application= class.
+#+CAPTION:    =<<app-application-class-definition>>=, definition of the =Application= class.
 #+BEGIN_SRC python
 class Application(QtWidgets.QApplication):
     """Main application for QDE."""
 
-    <<app-class-body>>
+    <<app-application-class-body>>
 #+END_SRC
 
 As stated before and as clearly can be seen the class inherits from
@@ -512,9 +512,8 @@ naming most probably without any conflicts but reduces the effort when
 writing a bit. The import of system modules is therefore as follows.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    =<<app-system-imports>>=, import of system imports.
-#+NAME: app-system-imports
-#+HEADER: :prologue <<app-system-imports>>
+#+CAPTION:    =<<app-application-system-imports>>=, import of system imports.
+#+NAME: app-application-system-imports
 #+BEGIN_SRC python
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
@@ -526,20 +525,20 @@ Additionally it would be nice to having a matching title for the window set as
 well as maybe an icon for the application. The class's body therefore solely
 consists its constructor, as follows.
 
-#+NAME: app-class-body
+#+NAME: app-application-class-body
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    =<<app-class-body>>=, body of the class =Application=, containing only the constructor at the moment.
+#+CAPTION:    =<<app-application-class-body>>=, body of the class =Application=, containing only the constructor at the moment.
 #+BEGIN_SRC python
 
-<<app-constructor>>
+<<app-application-constructor>>
 
 def setup_components(self):
-    <<app-setup-components>>
+    <<app-application-methods-setup-components>>
 
 def setup_connections(self):
-    <<app-setup-connections>>
+    <<app-application-methods-setup-connections>>
 
-<<app-methods>>
+<<app-application-methods>>
 #+END_SRC
 
 When looking at the constructor of the =QApplication=
@@ -555,9 +554,9 @@ As described in section [[Framework for implementation]], a method for setting u
 the connections, which may be defined later on, is added to the constructor. The
 application's constructor looks hence as follows.
 
-#+NAME: app-constructor
+#+NAME: app-application-constructor
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    =<<app-constructor>>=, constructor of the =Application= class.
+#+CAPTION:    =<<app-application-constructor>>=, constructor of the =Application= class.
 #+BEGIN_SRC python
 def __init__(self, arguments):
     """Constructor.
@@ -661,10 +660,10 @@ What \cite{osterwalder_qde_2016} does not explicitly mention, is the main
 window, which holds all those components and allows a proper shut down of the
 application.
 
-As a starting point, we shall implement the class =MainWindow= representing the
-main window.
+As a starting point, we shall implement the class {{{verb(MainWindow)}}}
+representing the main window.
 
-**** Main window
+*** TODO Main window
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -731,7 +730,6 @@ shall be closed might be =window_closing=. The signal is introduced as follows.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Definition of signals for the main application window class, =MainWindow=.
 #+NAME:       main-window-signals
-#+HEADER:     :prologue <<main-window-signals>>
 #+BEGIN_SRC python
 # Signals
 window_closing = QtCore.pyqtSignal()
@@ -781,7 +779,6 @@ defined. A slot is an annotated method.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The =on_quit= method, which acts as a slot when the menu item for quitting the application was triggered.
 #+NAME:       main-window-slots
-#+HEADER:     :prologue <<main-window-slots>>
 #+BEGIN_SRC python
 @QtCore.pyqtSlot()
 def on_quit(self):
@@ -804,11 +801,10 @@ signal. Luckily =Application= provides already a =quit= slot through
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Expansion of setting up the main application's components by the initialization of =MainWindow= and its signals.
-#+NAME:       app-setup-components
-#+HEADER:     :prologue <<app-setup-components>>
+#+NAME:       app-application-methods-setup-components
 #+BEGIN_SRC python
-    self.main_window = qde_main_window.MainWindow()
-    self.main_window.window_closing.connect(self.quit)
+self.main_window = qde_main_window.MainWindow()
+self.main_window.window_closing.connect(self.quit)
 #+END_SRC
 
 So far none of the additional modules have been defined as there are no
@@ -816,9 +812,8 @@ additional modules imported yet. The missing modules need to be added to the
 main application as well as the main window.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Expansion of =<<app-project-imports>>= by the missing imports.
-#+NAME:       app-project-imports
-#+HEADER:     :prologue <<app-project-imports>>
+#+CAPTION:    Expansion of =<<app-application-project-imports>>= by the missing imports.
+#+NAME:       app-application-project-imports
 #+BEGIN_SRC   python
 from qde.editor.gui import main_window as qde_main_window
 #+END_SRC
@@ -826,7 +821,6 @@ from qde.editor.gui import main_window as qde_main_window
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Expansion of =<<main-window-system-imports>>= by the missing imports.
 #+NAME:       main-window-system-imports
-#+HEADER:     :prologue <<main-window-system-imports>>
 #+BEGIN_SRC   python
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
@@ -840,7 +834,6 @@ the its parent's constructor.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Constructor for the main window class =MainWindow=.
 #+NAME:       main-window-constructor
-#+HEADER:     :prologue <<main-window-constructor>>
 #+BEGIN_SRC python
 super(MainWindow, self).__init__()
 #+END_SRC
@@ -869,7 +862,6 @@ may be expanded easily as well.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The placeholder =<<main-window-methods>>= declared explicitly.
 #+NAME:       main-window-methods
-#+HEADER:     :prologue <<main-window-methods>>
 #+BEGIN_SRC python
 <<main-window-keypressevent>>
 
@@ -903,7 +895,6 @@ class =MainWindow=.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The method =setup_ui= is added to the constructor of main window class =MainWindow=.
 #+NAME:       main-window-constructor
-#+HEADER:     :prologue <<main-window-constructor>>
 #+BEGIN_SRC python
 self.setup_ui()
 #+END_SRC
@@ -913,8 +904,7 @@ at the end of the main application's construction.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The main window is being shown at the end of the main application's construction.
-#+NAME:       app-constructor
-#+HEADER:     :prologue <<app-constructor>>
+#+NAME:       app-application-constructor
 #+BEGIN_SRC python
 
     self.main_window.show()
@@ -978,7 +968,6 @@ is as follows. For the not yet existing widgets placeholders are used.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Lay-outing of the main window by expanding the =setup_ui= method.
 #+NAME:       main-window-setupui
-#+HEADER:     :prologue <<main-window-setupui>>
 #+BEGIN_SRC   python
 
     horizontal_layout_widget = QtWidgets.QWidget(central_widget)
@@ -1016,7 +1005,7 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-**** TODO Scene graph
+*** TODO Scene graph
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1071,7 +1060,6 @@ class SceneModel(object):
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Constructor of the scene model class, =SceneModel=.
 #+NAME:       domain-scene-constructor
-#+HEADER:     :prologue <<domain-scene-constructor>>
 #+BEGIN_SRC python
 def __init__(self):
     pass
@@ -1190,7 +1178,6 @@ class SceneGraphViewModel(Qt.QObject):
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       guidomain-scene-body
-#+HEADER:     :prologue <<guidomain-scene-body>>
 #+BEGIN_SRC python :exports none
 <<guidomain-scene-scenegraphviewmodel>>
 #+END_SRC
@@ -1238,6 +1225,7 @@ def __init__(
 Now, with the scene graph view model being available, the scene graph controller
 may finally be implemented.
 
+:APP_SCENEGRAPH:
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       lst:app-scenegraph
 #+CAPTION:    The outline of the =SceneGraphController= class, inside the =application= package.
@@ -1296,6 +1284,7 @@ class SceneGraphController(QtCore.QAbstractItemModel):
 
     <<app-scenegraph-controller-slots>>
 #+END_SRC
+:END:
 
 At this point data structures in terms of a (data-) model, which holds the
 actual, for the scene graph relevant data of a scene, and a view model, which
@@ -1311,6 +1300,7 @@ previously provided by the QListView class, but using the more flexible approach
 provided by Qt's model/view
 architecture.''[fn:f377826acb87691:http://doc.qt.io/qt-5/qtreeview.html#details]
 
+:GUI_SCENE:
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The outline of the =SceneGraphView= class, within the =scene= module of the =gui= package.
 #+BEGIN_SRC python :tangle ../src/qde/editor/gui/scene.py :noweb tangle :mkdirp yes
@@ -1328,6 +1318,7 @@ from PyQt5 import QtWidgets
 <<gui-scene-project-imports>>
 
 
+<<gui-scene-graph-class-decorators>>
 class SceneGraphView(QtWidgets.QTreeView):
     """The scene graph view widget.
     A widget for displaying and managing the scene graph.
@@ -1351,6 +1342,7 @@ class SceneGraphView(QtWidgets.QTreeView):
     # Slots
     <<gui-scene-graph-slots>>
 #+END_SRC
+:END:
 
 Having the scene graph view implemented as a widget, it is now necessary to add
 the widget to the main window and initializing it. As described in section
@@ -1360,10 +1352,10 @@ instantiate a scene graph widget, its module must be imported as well. The
 maximum width of the widget is limited by using the {{{verb(setMaximumWidth)}}}
 method.
 
+:MAIN_WINDOW_PROJECT_IMPORTS:
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Import of the =scene= module from the =gui= layer.
 #+NAME:       main-window-project-imports
-#+HEADER:     :prologue <<main-window-project-imports>>
 #+BEGIN_SRC python
 from qde.editor.gui import scene as guiscene
 #+END_SRC
@@ -1371,13 +1363,13 @@ from qde.editor.gui import scene as guiscene
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The scene graph widget is being initialized and added to the horizontal layout.
 #+NAME:       main-window-setupui-scenegraph
-#+HEADER:     :prologue <<main-window-setupui-scenegraph>>
 #+BEGIN_SRC python
 self.scene_graph_widget = guiscene.SceneGraphView()
 self.scene_graph_widget.setObjectName('scene_graph')
 self.scene_graph_widget.setMaximumWidth(300)
 horizontal_layout.addWidget(self.scene_graph_widget)
 #+END_SRC
+:END:
 
 When starting the editor application now, after implementing and adding the
 scene graph widget, the widget appears on the left side of the main window. It
@@ -1402,21 +1394,27 @@ controller and the scene graph view, but as Qt's model/view approach is at least
 partially used, simply setting the view's model leads to the same result while
 providing greater functionality.
 
+:APP_APPLICATION_METHODS_SETUP_CONNECTIONS_01:
+#+NAME:       app-application-methods-setup-connections-01
+#+BEGIN_SRC python :exports none
+self.main_window.scene_graph_widget.setModel(
+    self.scene_graph_controller
+)
+#+END_SRC
+
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       lst:app-application-methods-setup-connections-01
 #+CAPTION:    The method =setup_connections= being defined by setting the scene graph widget's model.
 #+BEGIN_SRC python
-<<app-setup-connections>>=
-    self.main_window.scene_graph_widget.setModel(
-        self.scene_graph_controller
-    )
+<app-application-methods-setup-connections>=
+    <<app-application-methods-setup-connections-01>>
 #+END_SRC
-#+NAME:       app-setup-connections
-#+HEADER:     :prologue <<app-setup-connections>>
+
+#+NAME:       app-application-methods-setup-connections
 #+BEGIN_SRC python :exports none
-    self.main_window.scene_graph_widget.setModel(
-        self.scene_graph_controller
-    )
+<<app-application-methods-setup-connections-01>>
 #+END_SRC
+:END:
 
 The component that ties the layers together, is, as previously described, the
 main application. This means, that the main application has to provide all the
@@ -1431,37 +1429,43 @@ implemented in the main application's {{{verb(setup_components)}}} method,
 whereas setting the scene graph widget's model will be implemented in the
 {{{verb(setup_connections)}}} method.
 
+:APP_APPLICATION_METHODS_SETUP_COMPONENTS:
+#+NAME:     app-application-methods-setup-components-01
+#+BEGIN_SRC python :exports none
+root_scene = scene.SceneModel()
+self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+#+END_SRC
+
 #+CAPTION:    The method =setup_components= being expanded by the creation of the root scene as well as the scene graph controller.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+BEGIN_SRC python
-<<app-setup-components>>+=
-    root_scene = scene.SceneModel()
-    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+<app-application-methods-setup-components>+=
+    <<app-application-methods-setup-components-01>>
 #+END_SRC
-#+NAME:       app-setup-components
-#+HEADER:     :prologue <<app-setup-components>>
+
+#+NAME:       app-application-methods-setup-components
 #+BEGIN_SRC python :exports none
-    root_scene = scene.SceneModel()
-    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+<<app-application-methods-setup-components-01>>
 #+END_SRC
+:END:
 
 The necessary imports are still missing however, so those are added to the main
 application's imports.
 
-#+NAME:       app-project-imports
-#+HEADER:     :prologue <<app-project-imports>>
+:APP_APPLICATION_PROJECT_IMPORTS:
+#+NAME:       app-application-project-imports
 #+BEGIN_SRC python :exports none
 from qde.editor.domain import scene
 from qde.editor.application import scene_graph
 #+END_SRC
+
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Expansion of the main application's imports by the necessary packages.
 #+BEGIN_SRC python :noweb yes
-<app-project-imports>+=
-    <<app-project-imports>>
+<app-application-project-imports>+=
+    <<app-application-project-imports>>
 #+END_SRC
-
-#+RESULTS: app-project-imports
+:END:
 
 The application is still not showing the desired result: The display of the
 scene graph in form of a tree containing the root node. When looking at the
@@ -1491,6 +1495,7 @@ defined by the header in listing [[lst:app-scenegraph]]): The name of the scene 
 the number of nodes it contains. The method {{{verb(rowCount)}}} shall return
 =1= if the parent is invalid, otherwise it shall return the parent's children.
 
+:APP_SCENEGRAPH_CONTROLLER_METHODS:
 #+NAME:       app-scenegraph-controller-methods-column-count
 #+BEGIN_SRC python :exports none
 def columnCount(self, parent):
@@ -1531,7 +1536,6 @@ def rowCount(self, parent):
 #+END_SRC
 
 #+NAME:       app-scenegraph-controller-methods
-#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
 <<app-scenegraph-controller-methods-column-count>>
 
@@ -1548,6 +1552,7 @@ def rowCount(self, parent):
 
     <<app-scenegraph-controller-methods-row-count>>
 #+END_SRC
+:END:
 
 When running the application now, there is still an error message, although a
 new one as can be seen in listing [[lst:app-error-02]].
@@ -1577,6 +1582,7 @@ column and the child node at the given row as parent is being created. In the
 latter case, when the given parent is not valid, an index based on the scene
 graph's root node is created.
 
+:APP_SCENEGRAPH_CONTROLLER_METHODS_INDEX:
 #+NAME:       app-scenegraph-controller-methods-index
 #+BEGIN_SRC python :exports none
 def index(self, row, column, parent=QtCore.QModelIndex()):
@@ -1610,7 +1616,6 @@ def index(self, row, column, parent=QtCore.QModelIndex()):
 #+END_SRC
 
 #+NAME:       app-scenegraph-controller-methods
-#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
 
 <<app-scenegraph-controller-methods-index>>
@@ -1623,6 +1628,7 @@ def index(self, row, column, parent=QtCore.QModelIndex()):
 <app-scenegraph-controller-methods>+=
     <<app-scenegraph-controller-methods-index>>
 #+END_SRC
+:END:
 
 Although the scene graph is showing now two columns when running the editor
 application, there are still error messages, as shown in listing [[lst:app-error-03]].
@@ -1681,7 +1687,6 @@ def parent(self, model_index):
 #+END_SRC
 
 #+NAME:       app-scenegraph-controller-methods
-#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
 
 <<app-scenegraph-controller-methods-parent>>
@@ -1749,7 +1754,6 @@ class SceneViewModel(Qt.QObject):
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       guidomain-scene-body
-#+HEADER:     :prologue <<guidomain-scene-body>>
 #+BEGIN_SRC python :exports none
 <<guidomain-scene-sceneviewmodel>>
 #+END_SRC
@@ -1775,7 +1779,6 @@ getting the number of nodes a scene contains.
 #+END_SRC
 
 #+NAME:       guidomain-scene-scenegraphviewmodel-constructor
-#+HEADER:     prologue: guidomain-scene-scenegraphviewmodel-constructor
 #+BEGIN_SRC   python :exports none
 <<guidomain-scene-scenegraphviewmodel-constructor-01>>
 #+END_SRC
@@ -1836,7 +1839,6 @@ def data(self, model_index, role=QtCore.Qt.DisplayRole):
 #+END_SRC
 
 #+NAME:       app-scenegraph-controller-methods
-#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
 
 <<app-scenegraph-controller-methods-data>>
@@ -1896,7 +1898,6 @@ def graph_node_count(self):
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       guidomain-scene-sceneviewmodel-methods
-#+HEADER:     :prologue <<guidomain-scene-sceneviewmodel-methods>>
 #+BEGIN_SRC python :exports none
 <<guidomain-scene-sceneviewmodel-methods-graphnodecount>>
 #+END_SRC
@@ -1967,8 +1968,8 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       app-scenegraph-controller-methods
-#+HEADER:     :prologue <<app-scenegraph-controller-methods>>
 #+BEGIN_SRC python :exports none
+
 <<app-scenegraph-controller-methods-header-data>>
 #+END_SRC
 
@@ -2019,7 +2020,6 @@ from PyQt5 import QtCore
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-system-imports
-#+HEADER:     :prologue <<gui-scene-system-imports>>
 #+BEGIN_SRC python :exports none
 <<gui-scene-system-imports-01>>
 #+END_SRC
@@ -2041,7 +2041,6 @@ from qde.editor.gui_domain import scene
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-project-imports
-#+HEADER:     :prologue <<gui-scene-project-imports>>
 #+BEGIN_SRC python :exports none
 <<gui-scene-project-imports-01>>
 #+END_SRC
@@ -2063,7 +2062,6 @@ tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-signals
-#+HEADER:     :prologue <<gui-scene-graph-signals>>
 #+BEGIN_SRC python :exports none
 <<gui-scene-graph-signals-01>>
 #+END_SRC
@@ -2102,7 +2100,6 @@ def setModel(self, model):
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-methods
-#+HEADER:     :prologue <<gui-scene-graph-methods>>
 #+BEGIN_SRC python :exports none
 <<gui-scene-graph-methods-set-model>>
 #+END_SRC
@@ -2143,7 +2140,6 @@ def on_tree_item_selected(self, selected, deselected):
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-slots
-#+HEADER:     :prologue <<gui-scene-graph-slots>>
 #+BEGIN_SRC python :exports none
 
 <<gui-scene-graph-slots-01>>
@@ -2174,9 +2170,9 @@ The actions have to be added to the scene graph view and their
 {{{verb(triggered)}}} signal is connected with the slot {{{verb(on_new_tree_item)}}}
 and {{{verb(on_tree_item_removed)}}} respectively.
 
-
 The implementation of the addition and removal of tree items within the scene
-graph view is shown in listing TODO.
+graph view is shown in listings [[lst:gui-scene-graph-slots-02]] and
+[[lst:gui-scene-graph-slots-02]].
 
 Taking a step back at this point, the (main-) functionality of the editor
 application is as follows. When starting, an instance of the
@@ -2186,30 +2182,48 @@ architecture. The {{{verb(Application)}}} class spawns the main window, creates
 the root scene of the application and spawns the scene graph controller by
 providing it with the root scene.
 
-:GUI_SCENE_GRAPH_SIGNALS_02:
-#+NAME:      gui-scene-graph-signals-02
+:GUI_SCENE_GRAPH_SIGNALS_TREE_ITEM_ADDED:
+#+NAME:      gui-scene-graph-signals-tree-item-added
 #+BEGIN_SRC python :exports none
 tree_item_added = QtCore.pyqtSignal(QtCore.QModelIndex)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-signals
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-signals-tree-item-added>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-signals-tree-item-removed
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The signal in case a tree item is added gets appended to the scene graph widget's signals.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-signals>+=
+    <<gui-scene-graph-signals-tree-item-added>>
+#+END_SRC
+:END:
+:GUI_SCENE_GRAPH_SIGNALS_TREE_ITEM_REMOVED:
+#+NAME:      gui-scene-graph-signals-tree-item-removed
+#+BEGIN_SRC python :exports none
 tree_item_removed = QtCore.pyqtSignal(QtCore.QModelIndex)
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-signals
-#+HEADER:     :prologue <<gui-scene-graph-signals>>
 #+BEGIN_SRC python :exports none
-<<gui-scene-graph-signals-02>>
+<<gui-scene-graph-signals-tree-item-removed>>
 #+END_SRC
 
-#+NAME:       lst:gui-scene-graph-signals-01
+#+NAME:       lst:gui-scene-graph-signals-tree-item-removed
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Definition of the signals in case a tree item is added or removed.
+#+CAPTION:    The signal in case a tree item is removed gets appended to the scene graph widget's signals.
 #+BEGIN_SRC python :noweb yes
 <gui-scene-graph-signals>+=
-    <<gui-scene-graph-signals-02>>
+    <<gui-scene-graph-signals-tree-item-removed>>
 #+END_SRC
 :END:
 
-:GUI_SCENE_GRAPH_CONSTRUCTOR_01:
+:GUI_SCENE_GRAPH_CONSTRUCTOR_ADD_ACTIONS:
 #+NAME:      gui-scene-graph-constructor-01
 #+BEGIN_SRC python :exports none
 new_action_label = QtCore.QCoreApplication.translate(
@@ -2233,7 +2247,6 @@ self.addAction(remove_action)
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-constructor
-#+HEADER:     :prologue <<gui-scene-graph-constructor>>
 #+BEGIN_SRC python :exports none
 <<gui-scene-graph-constructor-01>>
 #+END_SRC
@@ -2247,7 +2260,7 @@ self.addAction(remove_action)
 #+END_SRC
 :END:
 
-:GUI_SCENE_GRAPH_SLOTS_02:
+:GUI_SCENE_GRAPH_SLOTS_ON_TREE_ITEM_ADDED:
 #+NAME:      gui-scene-graph-slots-02
 #+BEGIN_SRC python :exports none
 @QtCore.pyqtSlot()
@@ -2265,7 +2278,27 @@ def on_new_tree_item(self):
     if len(selected_indexes) > 0:
         selected_item = selected_indexes[0]
         self.tree_item_added.emit(selected_item)
+#+END_SRC
 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       gui-scene-graph-slots
+#+BEGIN_SRC python :exports none
+
+<<gui-scene-graph-slots-02>>
+#+END_SRC
+
+#+NAME:       lst:gui-scene-graph-slots-02
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The =on_new_tree_item= slot is added to the scene graph view's slots.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-slots>+=
+    <<gui-scene-graph-slots-02>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SLOTS_ON_TREE_ITEM_REMOVED:
+#+NAME:      gui-scene-graph-slots-03
+#+BEGIN_SRC python :exports none
 @QtCore.pyqtSlot()
 def on_tree_item_removed(self):
     """Slot which is called when a one or multiple tree items were removed by
@@ -2277,28 +2310,701 @@ def on_tree_item_removed(self):
 
     selected_indexes = self.selectedIndexes()
 
-    # Sanity check: is actually an item selected?
+    # Sanity check: is actually an item selected? And has that item a parent?
+    # We only allow removal of items with a valid parent, as we do not want to
+    # have the root item removed.
     if len(selected_indexes) > 0:
         selected_item = selected_indexes[0]
-        self.tree_item_removed.emit(selected_item)
+        if selected_item.parent().isValid():
+            self.tree_item_removed.emit(selected_item)
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       gui-scene-graph-slots
-#+HEADER:     :prologue <<gui-scene-graph-slots>>
 #+BEGIN_SRC python :exports none
 
-<<gui-scene-graph-slots-02>>
+<<gui-scene-graph-slots-03>>
 #+END_SRC
 
-#+NAME:       lst:gui-scene-graph-slots-02
+#+NAME:       lst:gui-scene-graph-slots-03
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Definition of the slots which gets called in case tree items are added or removed respectively.
+#+CAPTION:    The =on_tree_item_removed= slot is added to the scene graph view's slots.
 #+BEGIN_SRC python :noweb yes
 <gui-scene-graph-slots>+=
-    <<gui-scene-graph-slots-02>>
+    <<gui-scene-graph-slots-03>>
 #+END_SRC
 :END:
+
+When launching the editor application now, the root scene is selected within the
+scene graph. When pressing the =a= or the =delete= key on the keyboard nothing
+happens. But why does nothing happen? Let us reconsider.
+
+Both times, when one of the two keys is pressed, the corresponding slot is
+hopefully called. When the scene graph has a selection, one of the two signals,
+{{{verb(tree_item_added)}}} or {{{verb(tree_item_removed)}}}, is emitted.
+The problem seems to be, that currently no other component is paying attention
+to those signals. So let us connect the two signals with a corresponding slot.
+As stated before, the {{{verb(Application)}}} class acts as a connection between
+layers and therefore inter-layer connections have to happen there. The
+implementation of the connections is shown in listing
+[[lst:app-application-methods-setup-connections-02]].
+
+:APP_APPLICATION_METHODS_SETUP_CONNECTIONS_02:
+#+NAME:     app-application-methods-setup-connections-02
+#+BEGIN_SRC python :exports none
+self.main_window.scene_graph_widget.tree_item_added.connect(
+    self.scene_graph_controller.on_tree_item_added
+)
+self.main_window.scene_graph_widget.tree_item_removed.connect(
+    self.scene_graph_controller.on_tree_item_removed
+)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-application-methods-setup-connections
+#+BEGIN_SRC python :exports none
+<<app-application-methods-setup-connections-02>>
+#+END_SRC
+
+#+NAME:       lst:app-application-methods-setup-connections-02 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Connections between the scene graph view and the scene graph controller are added to the =setup_connections= method of the main application.
+#+BEGIN_SRC python :noweb yes
+<app-application-methods-setup-connections>+=
+    <<app-application-methods-setup-connections-02>>
+#+END_SRC
+:END:
+
+Setting up the connections as shown in listing
+[[lst:app-application-methods-setup-connections-02]] connects the scene graph view
+with the controller. But currently the controller does not know what to do in
+the case an scene graph item is added or removed as the needed slots are
+missing.
+
+But what shall actually happen upon those events? In the case a scene graph item
+is added, a new scene graph entry (a row) has to be added to the data model. In
+the case an existing scene graph item is being removed, the item has to be
+removed from the data model.
+
+As the scene graph controller inherits from {{{verb(QAbstractItemModel)}}} the
+corresponding methods, {{{verb(insertRows)}}} and {{{verb(removeRows)}}}, have
+to be implemented. First, let us implement the slots as they are very easy to
+implement. Implementing {{{verb(on_tree_item_added)}}} is straightforward: the
+{{{verb(insertRows)}}} method is called by providing the row, the count and
+the parent of the new item. Note, that the row is currently always zero. The
+implementation can be seen in listing
+[[lst:app-scenegraph-controller-slots-01]].
+
+:APP_SCENEGRAPH_CONTROLLER_SLOTS_01:
+#+NAME:     app-scenegraph-controller-slots-01
+#+BEGIN_SRC python :exports none
+@QtCore.pyqtSlot(QtCore.QModelIndex)
+def on_tree_item_added(self, parent_index):
+    """Add a new row under the given parent.
+
+    :param parent_index: The index of the parent item.
+    :type  parent_index: QtCore.QModelIndex
+    """
+
+    if parent_index.isValid():
+        self.insertRows(0, 1, parent_index)
+    else:
+        # TODO: Log warning or error
+        pass
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-scenegraph-controller-slots
+#+BEGIN_SRC python :exports none
+<<app-scenegraph-controller-slots-01>>
+#+END_SRC
+
+#+NAME:       lst:app-scenegraph-controller-slots-01
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The slot =on_tree_item_added= is being added to the scene graph controller's slots.
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-slots>+=
+    <<app-scenegraph-controller-slots-01>>
+#+END_SRC
+:END:
+
+The implementation of {{{verb(on_tree_item_added)}}} is analogous: the
+{{{verb(removeRows)}}} method is called by providing the row, the count and
+the parent of the new item. The implementation can be seen in listing
+[[lst:app-scenegraph-controller-slots-02]].
+ 
+:APP_SCENEGRAPH_CONTROLLER_SLOTS_02:
+#+NAME:     app-scenegraph-controller-slots-02
+#+BEGIN_SRC python :exports none
+@QtCore.pyqtSlot(QtCore.QModelIndex)
+def on_tree_item_removed(self, selected_index):
+    """Remove the currently selected item from the scene graph.
+
+    :param selected_index: The index of the current selection.
+    :type  selected_index: QtCore.QModelIndex
+    """
+
+    if selected_index.isValid():
+        row    = selected_index.row()
+        parent = selected_index.parent()
+        self.removeRows(row, 1, parent)
+    else:
+        # TODO: Log warning or error
+        pass
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-scenegraph-controller-slots
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-slots-02>>
+#+END_SRC
+
+#+NAME:       lst:app-scenegraph-controller-slots-02
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The slot =on_tree_item_removed= is being added to the scene graph controller's slots.
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-slots>+=
+    <<app-scenegraph-controller-slots-02>>
+#+END_SRC
+:END:
+
+Having the slots for adding and removing scene graph items implemented, the
+actual methods for these actions are still missing. So, let us implement these
+now.
+
+When inserting a row, the first thing to do is calling
+{{{verb(beginInsertRows)}}} by providing the index of the parent item, the
+current row and the last row of insertion (which is the current row plus the
+count minus one). Then a scene model, representing the actual data structure of
+a scene, as well as a scene graph view model is being created, representing the
+very same scene model within the graphical user interface. The transaction is
+then being ended by calling {{{verb(endInsertRows)}}}. Finally the view widget
+is being told to redraw itself by emitting the {{{verb(layoutChanged)}}} signal
+and the {{{verb(scene_added)}}} signal is emitting the newly created domain
+model to inform other components (subscribers) about the creation. This can be
+seen in listing [[lst:app-scenegraph-controller-methods-insert-rows]].
+
+:APP_SCENEGRAPH_CONTROLLER_METHODS_INSERTROWS:
+#+NAME:     app-scenegraph-controller-methods-insert-rows
+#+BEGIN_SRC python :exports none
+def insertRows(self, row, count, parent_index=QtCore.QModelIndex()):
+    """ Insert the given number of rows into the scene graph below the given
+    parent.
+
+    :param row: The row after which the new rows shall be inserted.
+    :type  row: int
+    :param count: The number of rows to insert.
+    :type  count: int
+    :param parent_index: The index of the parent item, under which the rows will
+                         be inserted.
+    :type parent_index:  QtCore.QModelIndex
+
+    :return: a boolean value. True when the insertion was successful, False otherwise.
+    :rtype:  bool
+    """
+
+    if parent_index.isValid():
+        self.beginInsertRows(parent_index, row, row + count - 1)
+
+        # The internal pointer of the parent index returns a scene graph view
+        # model.
+        parent_node = parent_index.internalPointer()
+
+        domain_scene_model = domain_scene.SceneModel()
+        guidomain_scene.SceneGraphViewModel(
+            row=row,
+            domain_object=domain_scene_model,
+            parent=parent_node
+        )
+
+        self.endInsertRows()
+
+        self.layoutChanged.emit()
+        self.scene_added.emit(domain_scene_model)
+    else:
+        return False
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-scenegraph-controller-methods
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-insert-rows>>
+#+END_SRC
+
+#+NAME:       lst:app-scenegraph-controller-methods-insert-rows
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =insertRows= is being added to the scene graph controller's methods.
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-insert-rows>>
+#+END_SRC
+:END:
+
+Removing a row is very similar. Analogous, the first thing to do is calling
+{{{verb(beginRemoveRows)}}} by providing the index of the parent item, the
+current row and the last row of insertion (which is the current row plus the
+count minus one).
+The actual removal of the node is then done by getting that node from its parent
+by using the provided row and the parent's column. The node is then removed by
+setting its parent to =None=. Qt's data model will therefore then remove the
+node. The transaction is then being ended by calling {{{verb(endRemoveRows)}}}.
+Finally, again the view widget is being told to redraw itself by emitting the
+{{{verb(layoutChanged)}}} signal and the {{{verb(scene_removed)}}} signal is
+emitting the linked domain model to inform other components (subscribers) about
+the removal. This can be seen in listing
+[[lst:app-scenegraph-controller-methods-remove-rows]].
+
+:APP_SCENEGRAPH_CONTROLLER_METHODS_REMOVEROWS:
+#+NAME:     app-scenegraph-controller-methods-remove-rows
+#+BEGIN_SRC python :exports none
+def removeRows(self, row, count, parent_index=QtCore.QModelIndex()):
+    """Remove the given number of rows, lying below the given parent, from the
+    scene graph.
+
+    :param row: The row which marks the beginning of the removal.
+    :type  row: int
+    :param count: The number of rows to remove starting from the given row.
+    :type  count: int
+    :param parent_index: The index of the parent item, under which the rows will
+                         be removed.
+    :type parent_index:  QtCore.QModelIndex
+
+    :return: a boolean value. True when the removal was successful, False otherwise.
+    :rtype:  bool
+    """
+
+    if parent_index.isValid():
+        self.beginRemoveRows(parent_index, row, row + count - 1)
+
+        node_index = parent_index.child(row, parent_index.column())
+        # The internal pointer of the node index returns a scene graph view
+        # model.
+        node = node_index.internalPointer()
+        node.setParent(None)
+
+        self.endRemoveRows()
+
+        self.layoutChanged.emit()
+        self.scene_removed.emit(node.domain_object)
+    else:
+        return False
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-scenegraph-controller-methods
+#+BEGIN_SRC python :exports none
+
+<<app-scenegraph-controller-methods-remove-rows>>
+#+END_SRC
+
+#+NAME:       lst:app-scenegraph-controller-methods-remove-rows
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The method =removeRows= is being added to the scene graph controller's methods.
+#+BEGIN_SRC python :noweb yes
+<app-scenegraph-controller-methods>+=
+    <<app-scenegraph-controller-methods-remove-rows>>
+#+END_SRC
+:END:
+
+simplest approaches is a verbose output at various places of the application,
+which may be as simple as using Python's {{{verb(print)}}} function. Using the
+{{{verb(print)}}} function may allow printing something immediately, but it
+lacks of flexibility and demands each time a bit of effort to format the output
+accordingly (e.g. adding the class and the function name and so on). Python's
+logging facility provides much more functionality while being able to keep
+things simple as well --- if needed. Later on even a widget may be used to
+output the logging messages. So, before implementing the needed
+connections and the needed handling of those signals, logging will be
+implemented and applied to have some feedback at all.
+
+**** TODO Logging
+
+As logging is a very central and basic functionality, the module is placed in
+the {{{verb(foundation)}}} layer.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes :exports none
+#+END_SRC
+
+Logging shall be provided on a class-basis, meaning that each class (who wants
+to log something) needs to instantiate a logger and use a corresponding handler.
+
+Python's logging module uses the basic configuration by default, calling the
+{{{verb(basicConfig)}}} whenever something is logged for the first time. This
+creates a stream handler with a basic formatter. However, the logging facility
+may extensively be
+configured[fn:6cacbc0479c63b5:https://docs.python.org/3/library/logging.html].
+
+For example, the logging may be configured by using the ``Configuration API'',
+which offers configuring the logging facility by using a dictionary. A
+dictionary may very easily be created by using a JSON file.
+
+As mentioned before, logging is a central aspect of the application. Therefore
+it is the task of the main application to set up the logging facility which may
+then be used by other classes through a decorator.
+
+The main application shall therefore set up the logging facility as follows:
+
+- Use either an external logging configuration or the default logging configuration.
+
+- When using an external logging configuration
+
+  - The location of the external logging configuration may be set by the
+    environment variable {{{verb(QDE_LOG_CFG)}}}.
+
+  - Is no such environment variable set, the configuration file is assumed to be
+    named {{{verb(logging.json)}}} and to reside in the application's main
+    directory.
+
+- When using no external logging configuration, the default logging configuration
+  defined by {{{verb(basicConfig)}}} is used.
+
+  - Always set a level when using no external logging configuration, the default
+    being {{{verb(INFO)}}}.
+
+This leads to two parameters when setting up the logging configuration: The
+default path of the external logging configuration and the default logging
+level when using no external logging configuration. The implementation of
+setting up the logging facility can be seen in listing
+[[lst:app-application-methods-setup-logging]].
+
+:APP_APPLICATION_METHODS_SETUP_LOGGING:
+#+NAME:     app-application-methods-setup-logging
+#+BEGIN_SRC python :exports none
+def setup_logging(self,
+                  default_path='logging.json',
+                  default_level=logging.INFO):
+    """Setup logging configuration"""
+
+    env_key  = 'QDE_LOG_CFG'
+    env_path = os.getenv(env_key, None)
+    path     = env_path or default_path
+
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+            config = json.load(f)
+            logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-application-methods
+#+BEGIN_SRC python :exports none
+<<app-application-methods-setup-logging>>
+#+END_SRC
+
+#+NAME:       lst:app-application-methods-setup-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The =setup_logging= method is being added to the main application class =Application=.
+#+BEGIN_SRC python :noweb yes
+
+<app-application-methods>+=
+   <<app-application-methods-setup-logging>>
+#+END_SRC
+:END:
+
+:APP_APPLICATION_CONSTRUCTOR_CALL_SETUP_LOGGING:
+#+NAME:     app-application-constructor-call-setup-logging
+#+BEGIN_SRC python :exports none
+    self.setup_logging()
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-application-constructor
+#+BEGIN_SRC python :exports none
+<<app-application-constructor-call-setup-logging>>
+#+END_SRC
+
+#+NAME:       lst:app-application-constructor-call-setup-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The call of the =setup_logging= method is being added to the main application's constructor.
+#+BEGIN_SRC python :noweb yes
+<app-application-constructor>+=
+   <<app-application-constructor-call-setup-logging>>
+#+END_SRC
+:END:
+
+:APP_APPLICATION_SYSTEM_IMPORTS:
+#+NAME:     app-application-system-imports-logging
+#+BEGIN_SRC python :exports none
+import logging
+import logging.config
+import os
+import json
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:       app-application-system-imports
+#+BEGIN_SRC python :exports none
+<<app-application-system-imports-logging>>
+#+END_SRC
+
+#+NAME:       lst:app-application-system-imports-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    The =logging= module is added to the application module's system imports.
+#+BEGIN_SRC python :noweb yes
+<app-application-system-imports>+=
+    <<app-application-system-imports-logging>>
+#+END_SRC
+:END:
+
+For not having only basic logging available, a logging configuration is defined
+and provided by listing [[lst:logging-configuration]]. The logging configuration
+provides three handlers: a console handler, which logs debug messages to STDOUT,
+a info file handler, which logs informational messages to a file named
+{{{verb(info.log)}}}, and a error file handler, which logs errors to a file
+named {{{verb(error.log)}}}. The default level is set to debug and all handlers
+are used.
+
+:LOGGING_JSON:
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME:    lst:logging-configuration
+#+CAPTION: The configuration of the logging facility in JSON format.
+#+BEGIN_SRC json :tangle ../logging.json :noweb tangle
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+
+        "info_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "info.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": "errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "info_file_handler", "error_file_handler"],
+        "propagate": "no"
+    }
+}
+#+END_SRC
+:END:
+
+The logging configuration as shown in listing [[lst:logging-configuration]] allows
+to get an arbitrarily named logger which uses that configuration.
+ 
+As stated before, logging shall be provided on a class basis. This has the
+consequence, that each class has to instantiate a logging instance. To prevent
+the repetition of the same code fragment over and over, Python's decorator
+pattern is used[fn:b072baf8ac6840a:https://www.python.org/dev/peps/pep-0318/].
+
+The decorator will be implemented as a method named {{{verb(with_logger)}}} in
+the {{{verb(common)}}} module. All, that this method does is to set the logger
+name to the name of the module it is in combined with his own name. It then
+attaches a property named {{{verb(logger)}}} to the class that calls the method.
+The method has therefore the following functionality.
+
+- Provide a name based on the current module and class.
+  #+NAME: logger-name
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    Setting of the name based on the current module and class name.
+  #+BEGIN_SRC python
+logger_name = "{module_name}.{class_name}".format(
+    module_name=cls.__module__,
+    class_name=cls.__name__
+)
+  #+END_SRC
+- Provide an easy to use interface for logging.
+  #+NAME: logger-return-logger
+  #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+  #+CAPTION:    The logger is being attached to the class itself.
+  #+BEGIN_SRC python
+cls.logger = logging.getLogger(logger_name)
+
+return cls
+  #+END_SRC
+
+This definition of the functionality allows the actual implementation of the
+logging facility which follows in listing [[lst:foundation-common]].
+  
+:FOUNDATION_COMMON_LOGGING:
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the logging facility as a method inside the =common=  module.
+#+NAME:       lst:foundation-common
+#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb yes :comments link :mkdirp yes
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+import logging
+<<foundation-common-system-imports>>
+
+# Project imports
+<<foundation-common-project-imports>>
+
+
+def with_logger(cls):
+    """Add a logger instance (using a stream handler) to the given class.
+
+    :param cls: the class which the logger shall be added to.
+    :type  cls: a class of type cls.
+
+    :return: the class with the logger instance added.
+    :rtype:  a class of type cls.
+    """
+
+    <<logger-name>>
+    <<logger-return-logger>>
+ #+END_SRC
+:END:
+
+The implementation of the {{{verb(with_logger)}}} method allows the usage of the
+logging facility as a decorator as shown in the example in listing
+[[lst:with-logger-example]].
+
+:WITH_LOGGER_EXAMPLE:
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:with-logger-example
+#+CAPTION: The class =SomeClass= gets annotated by the =with_logger= decorator from the =common= module. All of the class's methods are then able to use the =logger= property as can be seen in method =some_method=.
+#+BEGIN_SRC python
+# Project imports
+from qde.editor.foundation import common
+
+@common.with_logger
+def SomeClass(object):
+    """This class provides literally nothing and is used only to demonstrate the
+    usage of the logging decorator."""
+
+    def some_method():
+        """This method does literally nothing and is used only to demonstrate the
+        usage of the logging decorator."""
+
+        self.logger.debug("I am some logging entry used for demonstration
+                           purposes only.")
+ #+END_SRC
+ :END:
+
+This brings us back to original intention: log whenever a scene is added or
+removed in the scene graph view. To implement the logging three steps are
+necessary. First, the {{{verb(common)}}} module needs to be imported.
+
+:GUI_SCENE_PROJECT_IMPORTS_02:
+#+NAME: gui-scene-project-imports-02
+#+BEGIN_SRC python :exports none
+from qde.editor.foundation import common
+#+END_SRC
+
+#+NAME: gui-scene-project-imports
+#+BEGIN_SRC python :exports none
+<<gui-scene-project-imports-02>>
+#+END_SRC
+
+#+NAME: lst:gui-scene-project-imports-02
+#+CAPTION: The =common= module is added to the project imports of the =scene= module residing in the =gui= layer.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-project-imports>+=
+    <<gui-scene-project-imports-02>>
+#+END_SRC
+:END:
+
+Second, the class needs the {{{verb(with_logger)}}} decorator.
+
+:GUI_SCENE_GRAPH_CLASS_DECORATOR_01:
+#+NAME: gui-scene-graph-class-decorators-01
+#+BEGIN_SRC python :exports none
+@common.with_logger
+#+END_SRC
+
+#+NAME: gui-scene-graph-class-decorators
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-class-decorators-01>>
+#+END_SRC
+
+#+NAME: lst:gui-scene-graph-class-decorators-01
+#+CAPTION: The =with_logger= decorator is added to the scene graph view class's decorators.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-class-decorators>=
+    <<gui-scene-graph-class-decorators-01>>
+#+END_SRC
+:END:
+
+And third, the actual logging needs to be added to the corresponding methods.
+
+:GUI_SCENE_GRAPH_SLOTS_02_LOGGING:
+#+NAME: gui-scene-graph-slots-02-logging
+#+BEGIN_SRC python :exports none
+self.logger.debug("A new scene graph item was added.")
+#+END_SRC
+
+#+NAME: gui-scene-graph-slots-02
+#+BEGIN_SRC python :exports none
+        <<gui-scene-graph-slots-02-logging>>
+#+END_SRC
+
+#+NAME: lst:gui-scene-graph-slots-02-logging
+#+CAPTION: A debug message is being logged, whenever a new scene is added to the scene graph within the scene graph view.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-slots-02>=
+    <<gui-scene-graph-slots-02-logging>>
+#+END_SRC
+:END:
+
+:GUI_SCENE_GRAPH_SLOTS_03_LOGGING:
+#+NAME: gui-scene-graph-slots-03-logging
+#+BEGIN_SRC python :exports none
+            self.logger.debug((
+                "The scene graph item at row {row} "
+                "and column {column} was removed."
+            ).format(
+                row=selected_item.row(),
+                column=selected_item.column()
+            ))
+#+END_SRC
+
+#+NAME: gui-scene-graph-slots-03
+#+BEGIN_SRC python :exports none
+<<gui-scene-graph-slots-03-logging>>
+#+END_SRC
+
+#+NAME: lst:gui-scene-graph-slots-03-logging
+#+CAPTION: A debug message is being logged, whenever an existing scene is removed from the scene graph within the scene graph view.
+#+BEGIN_SRC python :noweb yes
+<gui-scene-graph-slots-03>=
+    <<gui-scene-graph-slots-03-logging>>
+#+END_SRC
+:END:
+
+Whenever the =a= or the =delete= key is being pressed now, when the scene graph
+view is focused, the corresponding log messages appear in the standard output,
+hence the console. This behavior can be seen in figure [[fig:editor-alpha-04]].
+
+#+NAME: fig:editor-alpha-04
+#+ATTR_LATEX: :width 4in :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The console output when the =a= and the =delete= keys are pressed multiple times with the scene graph view being the active widget.
+[[./images/qde_alpha_04.png]]
 
 * Work log
 
@@ -2367,11 +3073,22 @@ def on_tree_item_removed(self):
      implement missing methods in the scene graph controller for being able to
      use the scene graph widget.
 
--  <2017-03-13 Mon> :: Implement the scene view model. Initialize such a model
+- <2017-03-13 Mon> :: Implement the scene view model. Initialize such a model
      within the scene graph view model. Implement the =headerData= as well as
      the =data= methods of the scene graph controller. Update the work log. Add
      an image of the editor's current state. Continue implementation of the
      scene graph view model.
+
+- <2017-03-14 Tue> :: Continue the implementation of the scene graph view model.
+     Implement logging. Implement logging. Implement logging. Implement logging
+     functionality. Log whenever a node is added or removed from the scene graph
+     view.
+
+- <2017-03-15 Wed> :: Move logging further down in structure. Add connections
+     between scene graph view and controller. Finish implementing the adding and
+     removal of scene graph items. Update the work log.
+
+     Next steps: (Re-) Introduce logging. Begin implementing the node graph.
 
 * Bibliography
 
@@ -2510,7 +3227,6 @@ entsprechend erweitert werden.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.
 #+NAME: test-app-system-imports
-#+HEADER: :prologue <<test-app-system-imports>>
 #+BEGIN_SRC python
 import logging
 #+END_SRC
@@ -2520,7 +3236,6 @@ Und der Testfall muss den Testfällen hinzugefügt werden.
 #+NAME: test-app-test-cases
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.
-#+HEADER: :prologue <<test-app-test-cases>>
 #+BEGIN_SRC python
 
 <<test-app-test-logging-default>>
