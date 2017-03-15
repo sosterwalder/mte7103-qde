@@ -9,13 +9,16 @@ clean:
 clean-cache:
 	find . -name "*.pyc" -type f -delete
 
+clear-screen:
+	@clear
+
 htmldoc:
 	make -C doc html
 
 pdf:
 	emacs --batch --script $HOME/.spacemacs -l org doc/index.org -f org-latex-export-to-pdf
 
-run-editor:
+run-editor: clean-cache clear-screen
 	python src/editor.py
 
 src:
