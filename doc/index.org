@@ -141,7 +141,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 #+ATTR_LATEX: :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The project's schedule.
-./images/project_schedule.png]]
+[[./images/project_schedule.png]]
 
 Figure [[fig:schedule]] shows the project's schedule.
 
