@@ -1,4 +1,4 @@
-% Created 2017-03-13 Mon 12:17
+% Created 2017-03-15 Wed 10:55
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -64,13 +64,14 @@
 \tableofcontents
 
 
+
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:orgbf6ee62}
+\label{sec:orgd1b9bb9}
 
 [Introduction here].
 
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org7cb878e}
+\label{sec:org42a5d29}
 
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
@@ -79,7 +80,7 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:orgeb87fa1}
+\label{sec:org198cd83}
 
 \begin{center}
 \begin{tabular}{lll}
@@ -87,10 +88,10 @@ Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 Expert & Dr. Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org2ccca9a}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org339fbfd}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org7fa24bb}eric.dubuis@comet.ch}
+\end{center}\footnotetext[1]{\label{org7dc34b7}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org0b118b7}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org41ac812}eric.dubuis@comet.ch}
 
 \section{Structure of the documentation}
-\label{sec:org05883da}
+\label{sec:org2f13a52}
 
 This thesis is structured as follows:
 
@@ -103,7 +104,7 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:org40eae1c}
+\label{sec:orga22e953}
 
 \begin{itemize}
 \item Report
@@ -111,34 +112,34 @@ This thesis is structured as follows:
 \end{itemize}
 
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgb8462fa}
+\label{sec:orgd72fc86}
 
 \section{Motivation}
-\label{sec:orge864cf1}
+\label{sec:org4add7cb}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:orgb59b57e}
+\label{sec:org03b67b2}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org88f0330}
+\label{sec:org551d103}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:org12808a4}
+\label{sec:org3c010ea}
 
 [New learning contents.]
 
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org63036ae}
+\label{sec:org62d5965}
 \section{Organization of work}
-\label{sec:org1410b01}
+\label{sec:org0f7eab5}
 \subsection{Meetings}
-\label{sec:org7ffddce}
+\label{sec:org48e6332}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -147,7 +148,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org7e25e4d}
+\label{sec:orgc72c569}
 
 
 \begin{center}
@@ -173,12 +174,17 @@ Defense of the thesis &  & 32\\
 \end{tabular}
 \end{center}
 
-./images/project\_schedule.png]]
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\linewidth]{./images/project_schedule.png}
+\caption{\label{fig:schedule}
+The project's schedule.}
+\end{figure}
 
 Figure \ref{fig:schedule} shows the project's schedule.
 
 \subsection{Literate programming}
-\label{sec:org271668e}
+\label{sec:org3e8e56f}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -217,12 +223,12 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:org3b7492b}
+\label{sec:org1406fa1}
 \subsection{Code}
-\label{sec:org2ea091d}
+\label{sec:orga0e976a}
 
 \subsubsection{{\bfseries\sffamily TODO} Principles}
-\label{sec:org5dc9e76}
+\label{sec:orga56cefa}
 
 \begin{itemize}
 \item Classes use camel case.
@@ -254,7 +260,7 @@ Additionally controllers are introduced which act as workflow objects of the
 
 \begin{enumerate}
 \item Model-View-Controller
-\label{sec:org24906e8}
+\label{sec:orgc4ea700}
 
 While models may be instantiated anywhere directly, this would although not
 contribute to having clean code and sane data structures. Instead controllers,
@@ -319,20 +325,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:org777305c}
+\label{sec:org36b6c39}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:org4b5e8b1}
+\label{sec:org2e3bebb}
 
 [Project structure.]
 
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:org5006749}
+\label{sec:org8bd62c5}
 
 \section{Requirements}
-\label{sec:org1891f78}
+\label{sec:org8216c6a}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -398,7 +404,7 @@ All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 
 \section{Name-spaces and project structure}
-\label{sec:org1ece3f2}
+\label{sec:orgbdbcbd2}
 
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
@@ -430,7 +436,7 @@ it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 
 \section{Editor}
-\label{sec:org544ab6d}
+\label{sec:orgda4a1b1}
 
 This chapter describes the creation of the \emph{editor} component.
 
@@ -442,7 +448,7 @@ sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 
 \subsection{Main application}
-\label{sec:org46b383c}
+\label{sec:org1b26239}
 
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
@@ -482,16 +488,16 @@ therefore as follows.
 
 """Main application module for QDE."""
 
-<<app-imports>>
+<<app-application-imports>>
 
-<<app-class-definition>>
+<<app-application-class-definition>>
 \end{minted}
 \caption{Main application module holding the \texttt{Application} class.}
 \end{listing}
 
 \subsubsection{Imports}
-\label{sec:org162549c}
-As you can see, the imports of the module are defined by \texttt{<<app-imports>>}. For
+\label{sec:org73aec0e}
+As you can see, the imports of the module are defined by \texttt{<<app-application-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
 project imports, modules created within the project. The imports are therefore
@@ -500,13 +506,13 @@ split up as follows.
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 # System imports
-<<app-system-imports>>
+<<app-application-system-imports>>
 
 # Project imports
-<<app-project-imports>>
+<<app-application-project-imports>>
 \end{minted}
-\caption{\label{app-imports}
-\texttt{<<app-imports>>}, definition of the application modules' imports.}
+\caption{\label{app-application-imports}
+\texttt{<<app-application-imports>>}, definition of the application modules' imports.}
 \end{listing}
 
 As the actual imports are not known yet, let us first look at the applications'
@@ -520,10 +526,10 @@ provides the basics for a Qt GUI application.
 class Application(QtWidgets.QApplication):
     """Main application for QDE."""
 
-    <<app-class-body>>
+    <<app-application-class-body>>
 \end{minted}
-\caption{\label{app-class-definition}
-\texttt{<<app-class-definition>>}, definition of the \texttt{Application} class.}
+\caption{\label{app-application-class-definition}
+\texttt{<<app-application-class-definition>>}, definition of the \texttt{Application} class.}
 \end{listing}
 
 As stated before and as clearly can be seen the class inherits from
@@ -585,8 +591,8 @@ writing a bit. The import of system modules is therefore as follows.
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 \end{minted}
-\caption{\label{app-system-imports}
-\texttt{<<app-system-imports>>}, import of system imports.}
+\caption{\label{app-application-system-imports}
+\texttt{<<app-application-system-imports>>}, import of system imports.}
 \end{listing}
 
 At this point of time it is rather unclear what the classes body consists of.
@@ -597,18 +603,18 @@ consists its constructor, as follows.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-constructor>>
+<<app-application-constructor>>
 
 def setup_components(self):
-    <<app-setup-components>>
+    <<app-application-methods-setup-components>>
 
 def setup_connections(self):
-    <<app-setup-connections>>
+    <<app-application-methods-setup-connections>>
 
-<<app-methods>>
+<<app-application-methods>>
 \end{minted}
-\caption{\label{app-class-body}
-\texttt{<<app-class-body>>}, body of the class \texttt{Application}, containing only the constructor at the moment.}
+\caption{\label{app-application-class-body}
+\texttt{<<app-application-class-body>>}, body of the class \texttt{Application}, containing only the constructor at the moment.}
 \end{listing}
 
 When looking at the constructor of the \texttt{QApplication}
@@ -642,12 +648,12 @@ def __init__(self, arguments):
     self.setup_components()
     self.setup_connections()
 \end{minted}
-\caption{\label{app-constructor}
-\texttt{<<app-constructor>>}, constructor of the \texttt{Application} class.}
+\caption{\label{app-application-constructor}
+\texttt{<<app-application-constructor>>}, constructor of the \texttt{Application} class.}
 \end{listing}
 
 \subsection{Main entry point}
-\label{sec:orgc2c9cc8}
+\label{sec:org4f2ccc3}
 
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
@@ -732,11 +738,11 @@ What \cite{osterwalder_qde_2016} does not explicitly mention, is the main
 window, which holds all those components and allows a proper shut down of the
 application.
 
-As a starting point, we shall implement the class \texttt{MainWindow} representing the
-main window.
+As a starting point, we shall implement the class \myverb{MainWindow}
+representing the main window.
 
-\subsubsection{Main window}
-\label{sec:org16260f9}
+\subsection{{\bfseries\sffamily TODO} Main window}
+\label{sec:org290352f}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -872,10 +878,10 @@ signal. Luckily \texttt{Application} provides already a \texttt{quit} slot throu
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-    self.main_window = qde_main_window.MainWindow()
-    self.main_window.window_closing.connect(self.quit)
+self.main_window = qde_main_window.MainWindow()
+self.main_window.window_closing.connect(self.quit)
 \end{minted}
-\caption{\label{app-setup-components}
+\caption{\label{app-application-methods-setup-components}
 Expansion of setting up the main application's components by the initialization of \texttt{MainWindow} and its signals.}
 \end{listing}
 
@@ -887,8 +893,8 @@ main application as well as the main window.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
 from qde.editor.gui import main_window as qde_main_window
 \end{minted}
-\caption{\label{app-project-imports}
-Expansion of \texttt{<<app-project-imports>>} by the missing imports.}
+\caption{\label{app-application-project-imports}
+Expansion of \texttt{<<app-application-project-imports>>} by the missing imports.}
 \end{listing}
 
 \begin{listing}[H]
@@ -984,7 +990,7 @@ at the end of the main application's construction.
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
     self.main_window.show()
 \end{minted}
-\caption{\label{app-constructor}
+\caption{\label{app-application-constructor}
 The main window is being shown at the end of the main application's construction.}
 \end{listing}
 
@@ -1094,8 +1100,8 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 
-\subsubsection{{\bfseries\sffamily TODO} Scene graph}
-\label{sec:org27eb7aa}
+\subsection{{\bfseries\sffamily TODO} Scene graph}
+\label{sec:orgad9bda9}
 
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
@@ -1411,12 +1417,14 @@ from PyQt5 import QtWidgets
 <<gui-scene-project-imports>>
 
 
+<<gui-scene-graph-class-decorators>>
 class SceneGraphView(QtWidgets.QTreeView):
     """The scene graph view widget.
     A widget for displaying and managing the scene graph.
     """
 
-    <<gui-scene-controller-signals>>
+    # Signals
+    <<gui-scene-graph-signals>>
 
     def __init__(self, parent=None):
         """Constructor.
@@ -1430,6 +1438,7 @@ class SceneGraphView(QtWidgets.QTreeView):
 
     <<gui-scene-graph-methods>>
 
+    # Slots
     <<gui-scene-graph-slots>>
 \end{minted}
 \caption{The outline of the \texttt{SceneGraphView} class, within the \texttt{scene} module of the \texttt{gui} package.}
@@ -1488,13 +1497,13 @@ providing greater functionality.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-setup-connections>>=
-    self.main_window.scene_graph_widget.setModel(
-        self.scene_graph_controller
-    )
+<app-application-methods-setup-connections>=
+    <<app-application-methods-setup-connections-01>>
 \end{minted}
-\caption{The method \texttt{setup\_connections} being defined by setting the scene graph widget's model.}
+\caption{\label{lst:app-application-methods-setup-connections-01}
+The method \texttt{setup\_connections} being defined by setting the scene graph widget's model.}
 \end{listing}
+
 The component that ties the layers together, is, as previously described, the
 main application. This means, that the main application has to provide all the
 necessary data structures and controllers. Regarding the scene graph this means
@@ -1510,18 +1519,18 @@ whereas setting the scene graph widget's model will be implemented in the
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<<app-setup-components>>+=
-    root_scene = scene.SceneModel()
-    self.scene_graph_controller = scene_graph.SceneGraphController(root_scene)
+<app-application-methods-setup-components>+=
+    <<app-application-methods-setup-components-01>>
 \end{minted}
 \caption{The method \texttt{setup\_components} being expanded by the creation of the root scene as well as the scene graph controller.}
 \end{listing}
+
 The necessary imports are still missing however, so those are added to the main
 application's imports.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-project-imports>+=
+<app-application-project-imports>+=
     from qde.editor.gui import main_window as qde_main_window
     from qde.editor.domain import scene
     from qde.editor.application import scene_graph
@@ -1912,7 +1921,7 @@ listing \ref{lst:app-scenegraph-controller-methods-header-data}.
             return self.header_data[section]
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-header-data}
-Expansion of the scene view model's methods by adding the \texttt{headerData} method which overwrites the method inherited by QAbstractItemModel.}
+Expansion of the scene graph controller's methods by adding the \texttt{headerData} method which overwrites the method inherited by \texttt{QAbstractItemModel}.}
 \end{listing}
 
 \begin{figure}[H]
@@ -1922,8 +1931,780 @@ Expansion of the scene view model's methods by adding the \texttt{headerData} me
 The QDE editor application showing the scene graph widget, containing the root node of the scene graph.}
 \end{figure}
 
+So far the application creates an instance of a scene model through the main
+application, then managed by the scene graph controller. But for having only a
+single (root-) scene, the whole scene graph architecture would be a massive
+overkill. Instead it shall be possible to have multiple and nested scenes, what
+allows the creation of diversified animations. Therefore the scene graph view
+needs to provide at least the creation of new nodes, the deletion of existing
+nodes and the selection of a existing nodes. First the selection of existing
+nodes is implemented.
+
+To detect if a node was selected within the scene tree of the scene graph view,
+the selection model provides the \myverb{selectionChanged} signal. The
+selection model is inherent in the data model of the \myverb{QTreeView}. For
+being able to use the signal, the \myverb{setModel} method of the tree view
+must be overridden. It is however very important to call the very same method on
+the parent first. When setting the model, the root item of the model is set to be
+selected.
+For more flexibility, the slot \myverb{on_tree_item_selected} will be
+triggered upon a selection of a tree item. The implementation of those aspects
+can be seen in listings \ref{lst:gui-scene-system-imports-01},
+\ref{lst:gui-scene-project-imports-01}, \ref{lst:gui-scene-graph-signals-01},
+\ref{lst:gui-scene-graph-methods-set-model} and \ref{lst:gui-scene-graph-slots-01}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-system-imports>=
+    from PyQt5 import Qt
+    from PyQt5 import QtCore
+\end{minted}
+\caption{\label{lst:gui-scene-system-imports-01}
+Definition of the necessary system imports for selecting tree items within the view's scene package.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-project-imports>=
+    from qde.editor.gui_domain import scene
+\end{minted}
+\caption{\label{lst:gui-scene-project-imports-01}
+Definition of the necessary imports for selecting tree items within the view's scene package.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-signals>=
+    tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
+\end{minted}
+\caption{\label{lst:gui-scene-graph-signals-01}
+Definition of the signal in case tree items are selected.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-methods>+=
+    def setModel(self, model):
+        """Set the model for the view to present.
+    
+        This method is only used for being able to use the selection model's
+        selectionChanged method and setting the current selection to the root node.
+    
+        :param model: The item model which the view shall present.
+        :type  model: QtCore.QAbstractItemModel
+        """
+    
+        super(SceneGraphView, self).setModel(model)
+    
+        selection_model = self.selectionModel()
+        selection_model.selectionChanged.connect(
+            self.on_tree_item_selected
+        )
+    
+        self.setCurrentIndex(model.index(0, 0))
+\end{minted}
+\caption{\label{lst:gui-scene-graph-methods-set-model}
+The overridden \texttt{setModel} method coming from \texttt{QTreeView} being added to the methods of the scene graph view class.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-slots>+=
+    @QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)
+    def on_tree_item_selected(self, selected, deselected):
+        """Slot which is called when the selection within the scene graph view is
+        changed.
+    
+        The previous selection (which may be empty) is specified by the deselected
+        parameter, the new selection is specified by the selected paramater.
+    
+        This method emits the selected scene graph item as scene graph view model.
+    
+        :param selected: The new selection of scenes.
+        :type  selected: QtCore.QModelIndex
+        :param deselected: The previous selected scenes.
+        :type  deselected: QtCore.QModelIndex
+        """
+    
+        selected_item = selected.first()
+        selected_index = selected_item.indexes()[0]
+        selected_scene_graph_view_model = selected_index.internalPointer()
+        self.tree_item_selected.emit(selected_scene_graph_view_model)
+\end{minted}
+\caption{\label{lst:gui-scene-graph-slots-01}
+Definition of the slot which gets called in case tree items are selected.}
+\end{listing}
+
+In the same manner the adding and removal of scenes is implemented. However, the
+tree widgets does not provide direct signals for those cases as it is the case
+when selecting a tree item, instead actions have to be used. Two actions are
+implemented: one for adding a new item and one for removing an existing item.
+
+An action gets triggered, typically by hovering over some item (in terms of a
+context menu for example) or by pressing a defined shortcut. For the adding and
+the removal the latter will be used. As the particular shortcut shall only be
+valid for the widget, the \myverb{WidgetShortcut} shortcut context is used.
+Adding of a scene item shall happen when pressing the \texttt{a} key on the keyboard,
+removal of a selected node upon the press of the \texttt{delete} key on the keyboard.
+
+The actions have to be added to the scene graph view and their
+\myverb{triggered} signal is connected with the slot \myverb{on_new_tree_item}
+and \myverb{on_tree_item_removed} respectively.
+
+The implementation of the addition and removal of tree items within the scene
+graph view is shown in listings \ref{lst:gui-scene-graph-slots-02} and
+\ref{lst:gui-scene-graph-slots-02}.
+
+Taking a step back at this point, the (main-) functionality of the editor
+application is as follows. When starting, an instance of the
+\myverb{Application} class is spawned. As stated before, this class
+is a central aspect of the application as it connects the various layers of the
+architecture. The \myverb{Application} class spawns the main window, creates
+the root scene of the application and spawns the scene graph controller by
+providing it with the root scene.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-signals>+=
+    tree_item_added = QtCore.pyqtSignal(QtCore.QModelIndex)
+\end{minted}
+\caption{\label{lst:gui-scene-graph-signals-tree-item-removed}
+The signal in case a tree item is added gets appended to the scene graph widget's signals.}
+\end{listing}
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-signals>+=
+    tree_item_removed = QtCore.pyqtSignal(QtCore.QModelIndex)
+\end{minted}
+\caption{\label{lst:gui-scene-graph-signals-tree-item-removed}
+The signal in case a tree item is removed gets appended to the scene graph widget's signals.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-constructor>+=
+    new_action_label = QtCore.QCoreApplication.translate(
+        __class__.__name__, 'New scene'
+    )
+    new_action = QtWidgets.QAction(new_action_label, self)
+    new_action.setShortcut(Qt.QKeySequence('a'))
+    new_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+    new_action.triggered.connect(self.on_new_tree_item)
+    self.addAction(new_action)
+    
+    remove_action_label = QtCore.QCoreApplication.translate(
+        __class__.__name__, 'Remove selected scene(s)'
+    )
+    remove_action = QtWidgets.QAction(remove_action_label, self)
+    remove_action.setShortcut(Qt.QKeySequence('Delete'))
+    remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+    remove_action.triggered.connect(self.on_tree_item_removed)
+    self.addAction(remove_action)
+\end{minted}
+\caption{\label{lst:gui-scene-graph-constructor-01}
+The actions to add a new scene and to remove existing scenes are added to the constructor of the scene graph view.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-slots>+=
+    @QtCore.pyqtSlot()
+    def on_new_tree_item(self):
+        """Slot which is called when a new tree item was added by the scene graph
+        view.
+    
+        This method emits the selected scene graph item as new tree item in form of
+        a scene graph view model.
+        """
+    
+        selected_indexes = self.selectedIndexes()
+    
+        # Sanity check: is actually an item selected?
+        if len(selected_indexes) > 0:
+            selected_item = selected_indexes[0]
+            self.tree_item_added.emit(selected_item)
+            self.logger.debug("A new scene graph item was added.")
+\end{minted}
+\caption{\label{lst:gui-scene-graph-slots-02}
+The \texttt{on\_new\_tree\_item} slot is added to the scene graph view's slots.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<gui-scene-graph-slots>+=
+    @QtCore.pyqtSlot()
+    def on_tree_item_removed(self):
+        """Slot which is called when a one or multiple tree items were removed by
+        the scene graph view.
+    
+        This method emits the removed scene graph item in form of scene graph view
+        models.
+        """
+    
+        selected_indexes = self.selectedIndexes()
+    
+        # Sanity check: is actually an item selected? And has that item a parent?
+        # We only allow removal of items with a valid parent, as we do not want to
+        # have the root item removed.
+        if len(selected_indexes) > 0:
+            selected_item = selected_indexes[0]
+            if selected_item.parent().isValid():
+                self.tree_item_removed.emit(selected_item)
+                self.logger.debug((
+                    "The scene graph item at row {row} "
+                    "and column {column} was removed."
+                ).format(
+                    row=selected_item.row(),
+                    column=selected_item.column()
+                ))
+\end{minted}
+\caption{\label{lst:gui-scene-graph-slots-03}
+The \texttt{on\_tree\_item\_removed} slot is added to the scene graph view's slots.}
+\end{listing}
+
+When launching the editor application now, the root scene is selected within the
+scene graph. When pressing the \texttt{a} or the \texttt{delete} key on the keyboard nothing
+happens. But why does nothing happen? Let us reconsider.
+
+Both times, when one of the two keys is pressed, the corresponding slot is
+hopefully called. When the scene graph has a selection, one of the two signals,
+\myverb{tree_item_added} or \myverb{tree_item_removed}, is emitted.
+The problem seems to be, that currently no other component is paying attention
+to those signals. So let us connect the two signals with a corresponding slot.
+As stated before, the \myverb{Application} class acts as a connection between
+layers and therefore inter-layer connections have to happen there. The
+implementation of the connections is shown in listing
+\ref{lst:app-application-methods-setup-connections-02}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-application-methods-setup-connections>+=
+    self.main_window.scene_graph_widget.tree_item_added.connect(
+        self.scene_graph_controller.on_tree_item_added
+    )
+    self.main_window.scene_graph_widget.tree_item_removed.connect(
+        self.scene_graph_controller.on_tree_item_removed
+    )
+\end{minted}
+\caption{\label{lst:app-application-methods-setup-connections-02}
+Connections between the scene graph view and the scene graph controller are added to the \texttt{setup\_connections} method of the main application.}
+\end{listing}
+
+Setting up the connections as shown in listing
+\ref{lst:app-application-methods-setup-connections-02} connects the scene graph view
+with the controller. But currently the controller does not know what to do in
+the case an scene graph item is added or removed as the needed slots are
+missing.
+
+But what shall actually happen upon those events? In the case a scene graph item
+is added, a new scene graph entry (a row) has to be added to the data model. In
+the case an existing scene graph item is being removed, the item has to be
+removed from the data model.
+
+As the scene graph controller inherits from \myverb{QAbstractItemModel} the
+corresponding methods, \myverb{insertRows} and \myverb{removeRows}, have
+to be implemented. First, let us implement the slots as they are very easy to
+implement. Implementing \myverb{on_tree_item_added} is straightforward: the
+\myverb{insertRows} method is called by providing the row, the count and
+the parent of the new item. Note, that the row is currently always zero. The
+implementation can be seen in listing
+\ref{lst:app-scenegraph-controller-slots-01}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-slots>+=
+    @QtCore.pyqtSlot(QtCore.QModelIndex)
+    def on_tree_item_added(self, parent_index):
+        """Add a new row under the given parent.
+    
+        :param parent_index: The index of the parent item.
+        :type  parent_index: QtCore.QModelIndex
+        """
+    
+        if parent_index.isValid():
+            self.insertRows(0, 1, parent_index)
+        else:
+            # TODO: Log warning or error
+            pass
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-slots-01}
+The slot \texttt{on\_tree\_item\_added} is being added to the scene graph controller's slots.}
+\end{listing}
+
+The implementation of \myverb{on_tree_item_added} is analogous: the
+\myverb{removeRows} method is called by providing the row, the count and
+the parent of the new item. The implementation can be seen in listing
+\ref{lst:app-scenegraph-controller-slots-02}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-slots>+=
+    @QtCore.pyqtSlot(QtCore.QModelIndex)
+    def on_tree_item_removed(self, selected_index):
+        """Remove the currently selected item from the scene graph.
+    
+        :param selected_index: The index of the current selection.
+        :type  selected_index: QtCore.QModelIndex
+        """
+    
+        if selected_index.isValid():
+            row    = selected_index.row()
+            parent = selected_index.parent()
+            self.removeRows(row, 1, parent)
+        else:
+            # TODO: Log warning or error
+            pass
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-slots-02}
+The slot \texttt{on\_tree\_item\_removed} is being added to the scene graph controller's slots.}
+\end{listing}
+
+Having the slots for adding and removing scene graph items implemented, the
+actual methods for these actions are still missing. So, let us implement these
+now.
+
+When inserting a row, the first thing to do is calling
+\myverb{beginInsertRows} by providing the index of the parent item, the
+current row and the last row of insertion (which is the current row plus the
+count minus one). Then a scene model, representing the actual data structure of
+a scene, as well as a scene graph view model is being created, representing the
+very same scene model within the graphical user interface. The transaction is
+then being ended by calling \myverb{endInsertRows}. Finally the view widget
+is being told to redraw itself by emitting the \myverb{layoutChanged} signal
+and the \myverb{scene_added} signal is emitting the newly created domain
+model to inform other components (subscribers) about the creation. This can be
+seen in listing \ref{lst:app-scenegraph-controller-methods-insert-rows}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-methods>+=
+    def insertRows(self, row, count, parent_index=QtCore.QModelIndex()):
+        """ Insert the given number of rows into the scene graph below the given
+        parent.
+    
+        :param row: The row after which the new rows shall be inserted.
+        :type  row: int
+        :param count: The number of rows to insert.
+        :type  count: int
+        :param parent_index: The index of the parent item, under which the rows will
+                             be inserted.
+        :type parent_index:  QtCore.QModelIndex
+    
+        :return: a boolean value. True when the insertion was successful, False otherwise.
+        :rtype:  bool
+        """
+    
+        if parent_index.isValid():
+            self.beginInsertRows(parent_index, row, row + count - 1)
+    
+            # The internal pointer of the parent index returns a scene graph view
+            # model.
+            parent_node = parent_index.internalPointer()
+    
+            domain_scene_model = domain_scene.SceneModel()
+            guidomain_scene.SceneGraphViewModel(
+                row=row,
+                domain_object=domain_scene_model,
+                parent=parent_node
+            )
+    
+            self.endInsertRows()
+    
+            self.layoutChanged.emit()
+            self.scene_added.emit(domain_scene_model)
+        else:
+            return False
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-methods-insert-rows}
+The method \texttt{insertRows} is being added to the scene graph controller's methods.}
+\end{listing}
+
+Removing a row is very similar. Analogous, the first thing to do is calling
+\myverb{beginRemoveRows} by providing the index of the parent item, the
+current row and the last row of insertion (which is the current row plus the
+count minus one).
+The actual removal of the node is then done by getting that node from its parent
+by using the provided row and the parent's column. The node is then removed by
+setting its parent to \texttt{None}. Qt's data model will therefore then remove the
+node. The transaction is then being ended by calling \myverb{endRemoveRows}.
+Finally, again the view widget is being told to redraw itself by emitting the
+\myverb{layoutChanged} signal and the \myverb{scene_removed} signal is
+emitting the linked domain model to inform other components (subscribers) about
+the removal. This can be seen in listing
+\ref{lst:app-scenegraph-controller-methods-remove-rows}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-scenegraph-controller-methods>+=
+    def removeRows(self, row, count, parent_index=QtCore.QModelIndex()):
+        """Remove the given number of rows, lying below the given parent, from the
+        scene graph.
+    
+        :param row: The row which marks the beginning of the removal.
+        :type  row: int
+        :param count: The number of rows to remove starting from the given row.
+        :type  count: int
+        :param parent_index: The index of the parent item, under which the rows will
+                             be removed.
+        :type parent_index:  QtCore.QModelIndex
+    
+        :return: a boolean value. True when the removal was successful, False otherwise.
+        :rtype:  bool
+        """
+    
+        if parent_index.isValid():
+            self.beginRemoveRows(parent_index, row, row + count - 1)
+    
+            node_index = parent_index.child(row, parent_index.column())
+            # The internal pointer of the node index returns a scene graph view
+            # model.
+            node = node_index.internalPointer()
+            node.setParent(None)
+    
+            self.endRemoveRows()
+    
+            self.layoutChanged.emit()
+            self.scene_removed.emit(node.domain_object)
+        else:
+            return False
+\end{minted}
+\caption{\label{lst:app-scenegraph-controller-methods-remove-rows}
+The method \texttt{removeRows} is being added to the scene graph controller's methods.}
+\end{listing}
+
+simplest approaches is a verbose output at various places of the application,
+which may be as simple as using Python's \myverb{print} function. Using the
+\myverb{print} function may allow printing something immediately, but it
+lacks of flexibility and demands each time a bit of effort to format the output
+accordingly (e.g. adding the class and the function name and so on). Python's
+logging facility provides much more functionality while being able to keep
+things simple as well --- if needed. Later on even a widget may be used to
+output the logging messages. So, before implementing the needed
+connections and the needed handling of those signals, logging will be
+implemented and applied to have some feedback at all.
+
+\subsubsection{{\bfseries\sffamily TODO} Logging}
+\label{sec:orgb8063ad}
+
+As logging is a very central and basic functionality, the module is placed in
+the \myverb{foundation} layer.
+
+Logging shall be provided on a class-basis, meaning that each class (who wants
+to log something) needs to instantiate a logger and use a corresponding handler.
+
+Python's logging module uses the basic configuration by default, calling the
+\myverb{basicConfig} whenever something is logged for the first time. This
+creates a stream handler with a basic formatter. However, the logging facility
+may extensively be
+configured\footnote{\url{https://docs.python.org/3/library/logging.html}}.
+
+For example, the logging may be configured by using the ``Configuration API'',
+which offers configuring the logging facility by using a dictionary. A
+dictionary may very easily be created by using a JSON file.
+
+As mentioned before, logging is a central aspect of the application. Therefore
+it is the task of the main application to set up the logging facility which may
+then be used by other classes through a decorator.
+
+The main application shall therefore set up the logging facility as follows:
+
+\begin{itemize}
+\item Use either an external logging configuration or the default logging configuration.
+
+\item When using an external logging configuration
+
+\begin{itemize}
+\item The location of the external logging configuration may be set by the
+environment variable \myverb{QDE_LOG_CFG}.
+
+\item Is no such environment variable set, the configuration file is assumed to be
+named \myverb{logging.json} and to reside in the application's main
+directory.
+\end{itemize}
+
+\item When using no external logging configuration, the default logging configuration
+defined by \myverb{basicConfig} is used.
+
+\begin{itemize}
+\item Always set a level when using no external logging configuration, the default
+being \myverb{INFO}.
+\end{itemize}
+\end{itemize}
+
+This leads to two parameters when setting up the logging configuration: The
+default path of the external logging configuration and the default logging
+level when using no external logging configuration. The implementation of
+setting up the logging facility can be seen in listing
+\ref{lst:app-application-methods-setup-logging}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-application-methods>+=
+   def setup_logging(self,
+                     default_path='logging.json',
+                     default_level=logging.INFO):
+       """Setup logging configuration"""
+   
+       env_key  = 'QDE_LOG_CFG'
+       env_path = os.getenv(env_key, None)
+       path     = env_path or default_path
+   
+       if os.path.exists(path):
+           with open(path, 'rt') as f:
+               config = json.load(f)
+               logging.config.dictConfig(config)
+       else:
+           logging.basicConfig(level=default_level)
+\end{minted}
+\caption{\label{lst:app-application-methods-setup-logging}
+The \texttt{setup\_logging} method is being added to the main application class \texttt{Application}.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-application-constructor>+=
+       self.setup_logging()
+\end{minted}
+\caption{\label{lst:app-application-constructor-call-setup-logging}
+The call of the \texttt{setup\_logging} method is being added to the main application's constructor.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<app-application-system-imports>+=
+    import logging
+    import logging.config
+    import os
+    import json
+\end{minted}
+\caption{\label{lst:app-application-system-imports-logging}
+The \texttt{logging} module is added to the application module's system imports.}
+\end{listing}
+
+For not having only basic logging available, a logging configuration is defined
+and provided by listing \ref{lst:logging-configuration}. The logging configuration
+provides three handlers: a console handler, which logs debug messages to STDOUT,
+a info file handler, which logs informational messages to a file named
+\myverb{info.log}, and a error file handler, which logs errors to a file
+named \myverb{error.log}. The default level is set to debug and all handlers
+are used.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{json}
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+
+        "info_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "info.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": "errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "info_file_handler", "error_file_handler"],
+        "propagate": "no"
+    }
+}
+\end{minted}
+\caption{\label{lst:logging-configuration}
+The configuration of the logging facility in JSON format.}
+\end{listing}
+
+The logging configuration as shown in listing \ref{lst:logging-configuration} allows
+to get an arbitrarily named logger which uses that configuration.
+
+As stated before, logging shall be provided on a class basis. This has the
+consequence, that each class has to instantiate a logging instance. To prevent
+the repetition of the same code fragment over and over, Python's decorator
+pattern is used\footnote{\url{https://www.python.org/dev/peps/pep-0318/}}.
+
+The decorator will be implemented as a method named \myverb{with_logger} in
+the \myverb{common} module. All, that this method does is to set the logger
+name to the name of the module it is in combined with his own name. It then
+attaches a property named \myverb{logger} to the class that calls the method.
+The method has therefore the following functionality.
+
+\begin{itemize}
+\item Provide a name based on the current module and class.
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+logger_name = "{module_name}.{class_name}".format(
+    module_name=cls.__module__,
+    class_name=cls.__name__
+)
+\end{minted}
+\caption{\label{logger-name}
+Setting of the name based on the current module and class name.}
+\end{listing}
+\item Provide an easy to use interface for logging.
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+cls.logger = logging.getLogger(logger_name)
+
+return cls
+\end{minted}
+\caption{\label{logger-return-logger}
+The logger is being attached to the class itself.}
+\end{listing}
+\end{itemize}
+
+This definition of the functionality allows the actual implementation of the
+logging facility which follows in listing \ref{lst:foundation-common}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+import logging
+
+
+# Project imports
+
+
+
+def with_logger(cls):
+    """Add a logger instance (using a stream handler) to the given class.
+
+    :param cls: the class which the logger shall be added to.
+    :type  cls: a class of type cls.
+
+    :return: the class with the logger instance added.
+    :rtype:  a class of type cls.
+    """
+
+    logger_name = "{module_name}.{class_name}".format(
+        module_name=cls.__module__,
+        class_name=cls.__name__
+    )
+    cls.logger = logging.getLogger(logger_name)
+    
+    return cls
+\end{minted}
+\caption{\label{lst:foundation-common}
+Implementation of the logging facility as a method inside the \texttt{common}  module.}
+\end{listing}
+
+The implementation of the \myverb{with_logger} method allows the usage of the
+logging facility as a decorator as shown in the example in listing
+\ref{lst:with-logger-example}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# Project imports
+from qde.editor.foundation import common
+
+@common.with_logger
+def SomeClass(object):
+    """This class provides literally nothing and is used only to demonstrate the
+    usage of the logging decorator."""
+
+    def some_method():
+        """This method does literally nothing and is used only to demonstrate the
+        usage of the logging decorator."""
+
+        self.logger.debug("I am some logging entry used for demonstration
+                           purposes only.")
+\end{minted}
+\caption{\label{lst:with-logger-example}
+The class \texttt{SomeClass} gets annotated by the \texttt{with\_logger} decorator from the \texttt{common} module. All of the class's methods are then able to use the \texttt{logger} property as can be seen in method \texttt{some\_method}.}
+\end{listing}
+
+This brings us back to original intention: log whenever a scene is added or
+removed in the scene graph view. To implement the logging three steps are
+necessary. First, the \myverb{common} module needs to be imported.
+
+\begin{listing}[H]
+\begin{minted}[]{python}
+<gui-scene-project-imports>+=
+    from qde.editor.foundation import common
+\end{minted}
+\caption{\label{lst:gui-scene-project-imports-02}
+The \texttt{common} module is added to the project imports of the \texttt{scene} module residing in the \texttt{gui} layer.}
+\end{listing}
+
+Second, the class needs the \myverb{with_logger} decorator.
+
+\begin{listing}[H]
+\begin{minted}[]{python}
+<gui-scene-graph-class-decorators>=
+    @common.with_logger
+\end{minted}
+\caption{\label{lst:gui-scene-graph-class-decorators-01}
+The \texttt{with\_logger} decorator is added to the scene graph view class's decorators.}
+\end{listing}
+
+And third, the actual logging needs to be added to the corresponding methods.
+
+\begin{listing}[H]
+\begin{minted}[]{python}
+<gui-scene-graph-slots-02>=
+    self.logger.debug("A new scene graph item was added.")
+\end{minted}
+\caption{\label{lst:gui-scene-graph-slots-02-logging}
+A debug message is being logged, whenever a new scene is added to the scene graph within the scene graph view.}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[]{python}
+<gui-scene-graph-slots-03>=
+                self.logger.debug((
+                    "The scene graph item at row {row} "
+                    "and column {column} was removed."
+                ).format(
+                    row=selected_item.row(),
+                    column=selected_item.column()
+                ))
+\end{minted}
+\caption{\label{lst:gui-scene-graph-slots-03-logging}
+A debug message is being logged, whenever an existing scene is removed from the scene graph within the scene graph view.}
+\end{listing}
+
+Whenever the \texttt{a} or the \texttt{delete} key is being pressed now, when the scene graph
+view is focused, the corresponding log messages appear in the standard output,
+hence the console. This behavior can be seen in figure \ref{fig:editor-alpha-04}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=4in]{./images/qde_alpha_04.png}
+\caption{\label{fig:editor-alpha-04}
+The console output when the \texttt{a} and the \texttt{delete} keys are pressed multiple times with the scene graph view being the active widget.}
+\end{figure}
+
 \chapter{Work log}
-\label{sec:org3683453}
+\label{sec:orgb06db17}
 
 \begin{description}
 \item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
@@ -1982,26 +2763,43 @@ the model-view-controller pattern and introduce view models. Explain and
 implement the data- and the view model for scene graph items.
 
 \item[{\textit{<2017-03-08 Wed>}}] Implement the controller for handling the scene graph.
- Allow the semi-automatic creation of an API documentation by introducing
+Allow the semi-automatic creation of an API documentation by introducing
 Sphinx. Introduce new make targets for creating the API documentation as
 RST and as HTML.
 
 \item[{\textit{<2017-03-10 Fri>}}] Implement the scene graph view as widget and integrate it
- into the application. Update the work log. Fix typing errors. Start to
+into the application. Update the work log. Fix typing errors. Start to
 implement missing methods in the scene graph controller for being able to
 use the scene graph widget.
+
+\item[{\textit{<2017-03-13 Mon>}}] Implement the scene view model. Initialize such a model
+within the scene graph view model. Implement the \texttt{headerData} as well as
+the \texttt{data} methods of the scene graph controller. Update the work log. Add
+an image of the editor's current state. Continue implementation of the
+scene graph view model.
+
+\item[{\textit{<2017-03-14 Tue>}}] Continue the implementation of the scene graph view model.
+Implement logging. Implement logging. Implement logging. Implement logging
+functionality. Log whenever a node is added or removed from the scene graph
+view.
+
+\item[{\textit{<2017-03-15 Wed>}}] Move logging further down in structure. Add connections
+between scene graph view and controller. Finish implementing the adding and
+removal of scene graph items. Update the work log.
+
+Next steps: (Re-) Introduce logging. Begin implementing the node graph.
 \end{description}
 
 \chapter{Bibliography}
-\label{sec:org9793d39}
+\label{sec:org4d8d775}
 
 \printbibliography{}
 
 \chapter{Appendix}
-\label{sec:orgdfac0d7}
+\label{sec:orgb1c4a44}
 
 \section{Test cases}
-\label{sec:orge063aa9}
+\label{sec:orge51d7e5}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -2192,10 +2990,10 @@ python -m pytest qde/editor/foundation/test_common.py
 
 
 \section{Meeting minutes}
-\label{sec:org076e6d8}
+\label{sec:org3cf3682}
 
 \subsection{Meeting mintutes 2017-02-23}
-\label{sec:org1fee8b4}
+\label{sec:org3163728}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -2210,7 +3008,7 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 Kick-off meeting for the thesis.
 
 \subsubsection{Presentation and discussion of the current state of work}
-\label{sec:org75781c0}
+\label{sec:org19d2a68}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -2230,7 +3028,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \subsubsection{Further steps / proceedings}
-\label{sec:orgec07163}
+\label{sec:org4e8b72a}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -2258,42 +3056,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \subsubsection{To do for the next meeting}
-\label{sec:org8bd79b6}
+\label{sec:org5ea46aa}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:orgd3c6289}
+\label{sec:orgf40d696}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:org4a66e2c}
+\label{sec:org064df6b}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Dr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:org739d994}
+\label{sec:org14d5726}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgf39b378}
+\label{sec:orgfce8eaf}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Dr. Dubuis (CF)
-\label{sec:org0137f3a}
+\label{sec:org958917d}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org45339d7}
+\label{sec:org80dea6f}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:orgeb49b1d}
+\label{sec:org64cb8b9}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org898121e}
+\label{sec:orgfdbbbdd}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:orgd34ee48}
+\label{sec:orgf30d83c}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:orgfdc0fc6}
+\label{sec:org81d30dc}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -2301,18 +3099,18 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orgf6153b5}
+\label{sec:org84ed79d}
 \end{enumerate}
 
 \subsubsection{Scheduling of the next meeting}
-\label{sec:org87a172b}
+\label{sec:org46b422b}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
 
 \chapter{Glossary}
-\label{sec:orgd2fd131}
+\label{sec:org0a427c7}
 
 \begin{description}
 \item[{animation}] An animation is a composition of scenes. Each animation is
