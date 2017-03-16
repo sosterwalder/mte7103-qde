@@ -12,8 +12,9 @@ clean-cache:
 clear-screen:
 	@clear
 
-htmldoc:
+htmldoc: apidoc
 	make -C doc html
+	open doc/build/html/index.html
 
 pdf:
 	emacs --batch --script $HOME/.spacemacs -l org doc/index.org -f org-latex-export-to-pdf
