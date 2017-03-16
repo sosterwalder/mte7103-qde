@@ -2940,11 +2940,13 @@ necessary. First, the {{{verb(common)}}} module needs to be imported.
 from qde.editor.foundation import common
 #+END_SRC
 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME: gui-scene-project-imports
 #+BEGIN_SRC python :exports none
 <<gui-scene-project-imports-02>>
 #+END_SRC
 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME: lst:gui-scene-project-imports-02
 #+CAPTION: The =common= module is added to the project imports of the =scene= module residing in the =gui= layer.
 #+BEGIN_SRC python :noweb yes
@@ -2966,6 +2968,7 @@ Second, the class needs the {{{verb(with_logger)}}} decorator.
 <<gui-scene-graph-class-decorators-01>>
 #+END_SRC
 
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME: lst:gui-scene-graph-class-decorators-01
 #+CAPTION: The =with_logger= decorator is added to the scene graph view class's decorators.
 #+BEGIN_SRC python :noweb yes
