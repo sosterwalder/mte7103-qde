@@ -2171,8 +2171,8 @@ The actions have to be added to the scene graph view and their
 and {{{verb(on_tree_item_removed)}}} respectively.
 
 The implementation of the addition and removal of tree items within the scene
-graph view is shown in listings [[lst:gui-scene-graph-slots-02]] and
-[[lst:gui-scene-graph-slots-02]].
+graph view is shown in listings [[lst:gui-scene-graph-slots-on-tree-item-added]] and
+[[lst:gui-scene-graph-slots-on-tree-item-added]].
 
 Taking a step back at this point, the (main-) functionality of the editor
 application is as follows. When starting, an instance of the
@@ -2261,7 +2261,7 @@ self.addAction(remove_action)
 :END:
 
 :GUI_SCENE_GRAPH_SLOTS_ON_TREE_ITEM_ADDED:
-#+NAME:      gui-scene-graph-slots-02
+#+NAME:      gui-scene-graph-slots-on-tree-item-added
 #+BEGIN_SRC python :exports none
 @QtCore.pyqtSlot()
 def on_new_tree_item(self):
@@ -2284,20 +2284,20 @@ def on_new_tree_item(self):
 #+NAME:       gui-scene-graph-slots
 #+BEGIN_SRC python :exports none
 
-<<gui-scene-graph-slots-02>>
+<<gui-scene-graph-slots-on-tree-item-added>>
 #+END_SRC
 
-#+NAME:       lst:gui-scene-graph-slots-02
+#+NAME:       lst:gui-scene-graph-slots-on-tree-item-added
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The =on_new_tree_item= slot is added to the scene graph view's slots.
 #+BEGIN_SRC python :noweb yes
 <gui-scene-graph-slots>+=
-    <<gui-scene-graph-slots-02>>
+    <<gui-scene-graph-slots-on-tree-item-added>>
 #+END_SRC
 :END:
 
 :GUI_SCENE_GRAPH_SLOTS_ON_TREE_ITEM_REMOVED:
-#+NAME:      gui-scene-graph-slots-03
+#+NAME:      gui-scene-graph-slots-on-tree-item-removed
 #+BEGIN_SRC python :exports none
 @QtCore.pyqtSlot()
 def on_tree_item_removed(self):
@@ -2323,15 +2323,15 @@ def on_tree_item_removed(self):
 #+NAME:       gui-scene-graph-slots
 #+BEGIN_SRC python :exports none
 
-<<gui-scene-graph-slots-03>>
+<<gui-scene-graph-slots-on-tree-item-removed>>
 #+END_SRC
 
-#+NAME:       lst:gui-scene-graph-slots-03
+#+NAME:       lst:gui-scene-graph-slots-on-tree-item-removed
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    The =on_tree_item_removed= slot is added to the scene graph view's slots.
 #+BEGIN_SRC python :noweb yes
 <gui-scene-graph-slots>+=
-    <<gui-scene-graph-slots-03>>
+    <<gui-scene-graph-slots-on-tree-item-removed>>
 #+END_SRC
 :END:
 
@@ -2953,26 +2953,27 @@ Second, the class needs the {{{verb(with_logger)}}} decorator.
 And third, the actual logging needs to be added to the corresponding methods.
 
 :GUI_SCENE_GRAPH_SLOTS_02_LOGGING:
-#+NAME: gui-scene-graph-slots-02-logging
+#+NAME: gui-scene-graph-slots-on-tree-item-added-logging
 #+BEGIN_SRC python :exports none
 self.logger.debug("A new scene graph item was added.")
 #+END_SRC
 
-#+NAME: gui-scene-graph-slots-02
+#+NAME: gui-scene-graph-slots-on-tree-item-added
 #+BEGIN_SRC python :exports none
-        <<gui-scene-graph-slots-02-logging>>
+        <<gui-scene-graph-slots-on-tree-item-added-logging>>
 #+END_SRC
 
-#+NAME: lst:gui-scene-graph-slots-02-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:gui-scene-graph-slots-on-tree-item-added-logging
 #+CAPTION: A debug message is being logged, whenever a new scene is added to the scene graph within the scene graph view.
 #+BEGIN_SRC python :noweb yes
-<gui-scene-graph-slots-02>=
-    <<gui-scene-graph-slots-02-logging>>
+<gui-scene-graph-slots-on-tree-item-added>+=
+    <<gui-scene-graph-slots-on-tree-item-added-logging>>
 #+END_SRC
 :END:
 
 :GUI_SCENE_GRAPH_SLOTS_03_LOGGING:
-#+NAME: gui-scene-graph-slots-03-logging
+#+NAME: gui-scene-graph-slots-on-tree-item-removed-logging
 #+BEGIN_SRC python :exports none
             self.logger.debug((
                 "The scene graph item at row {row} "
@@ -2983,16 +2984,17 @@ self.logger.debug("A new scene graph item was added.")
             ))
 #+END_SRC
 
-#+NAME: gui-scene-graph-slots-03
+#+NAME: gui-scene-graph-slots-on-tree-item-removed
 #+BEGIN_SRC python :exports none
-<<gui-scene-graph-slots-03-logging>>
+        <<gui-scene-graph-slots-on-tree-item-removed-logging>>
 #+END_SRC
 
-#+NAME: lst:gui-scene-graph-slots-03-logging
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+NAME: lst:gui-scene-graph-slots-on-tree-item-removed-logging
 #+CAPTION: A debug message is being logged, whenever an existing scene is removed from the scene graph within the scene graph view.
 #+BEGIN_SRC python :noweb yes
-<gui-scene-graph-slots-03>=
-    <<gui-scene-graph-slots-03-logging>>
+<gui-scene-graph-slots-on-tree-item-removed>+=
+    <<gui-scene-graph-slots-on-tree-item-removed-logging>>
 #+END_SRC
 :END:
 
