@@ -2608,18 +2608,42 @@ def removeRows(self, row, count, parent_index=QtCore.QModelIndex()):
 #+END_SRC
 :END:
 
-simplest approaches is a verbose output at various places of the application,
-which may be as simple as using Python's {{{verb(print)}}} function. Using the
-{{{verb(print)}}} function may allow printing something immediately, but it
-lacks of flexibility and demands each time a bit of effort to format the output
-accordingly (e.g. adding the class and the function name and so on). Python's
-logging facility provides much more functionality while being able to keep
-things simple as well --- if needed. Later on even a widget may be used to
-output the logging messages. So, before implementing the needed
-connections and the needed handling of those signals, logging will be
-implemented and applied to have some feedback at all.
+The newly added functionality now allows the adding and removal of scenes within
+the scene graph, which can be seen in figure [[fig:editor-alpha-04]]. The scenes are
+added to (or removed from respectively) the graphical user interface as well as
+the data structure.
 
-**** TODO Logging
+#+NAME: fig:editor-alpha-04
+#+ATTR_LATEX: :width 0.5\textwidth :placement [H]
+#+ATTR_ORG: :width 50px
+#+CAPTION: The QDE editor application showing the scene graph widget, containing multiple scenes.
+[[./images/qde_alpha_05.png]]
+
+
+So far the application (or rather the scene graph) seems to be working as
+intended. But how do we ensure, that it really does? Without a doubt, unit and
+integration tests are one of the best instruments to ensure functionality of
+code. As stated before, in section [[Literate programming]], it was an intention of
+this project to develop the application test driven. Due to required amount of
+work for developing test driven, it was abstained from this intention and
+regular unit tests are written instead, which can be found in appendix [[Test
+cases]].
+
+But nevertheless, it would be very handy to have at least some idea what the
+code is doing at certain places and at certain times.
+One of the simplest approaches to achieve this, is a verbose output at various
+places of the application, which may be as simple as using Python's
+{{{verb(print)}}} function. Using the {{{verb(print)}}} function may allow
+printing something immediately, but it lacks of flexibility and demands each
+time a bit of effort to format the output accordingly (e.g. adding the class and
+the function name and so on). Python's logging facility provides much more
+functionality while being able to keep things simple as well --- if needed.
+The usage of the logging facility to log messages throughout the application may
+later even be used to implement a widget which outputs those messages. So
+logging using Python's logging facility will be implemented and applied for
+being able to have feedback when needed.
+
+*** TODO Logging
 
 As logging is a very central and basic functionality, the module is placed in
 the {{{verb(foundation)}}} layer.
@@ -2628,7 +2652,7 @@ the {{{verb(foundation)}}} layer.
 #+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes :exports none
 #+END_SRC
 
-Logging shall be provided on a class-basis, meaning that each class (who wants
+Logging shall be provided on a class-basis, meaning that each class (which wants
 to log something) needs to instantiate a logger and use a corresponding handler.
 
 Python's logging module uses the basic configuration by default, calling the
@@ -2887,7 +2911,7 @@ logging facility as a decorator as shown in the example in listing
 :WITH_LOGGER_EXAMPLE:
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME: lst:with-logger-example
-#+CAPTION: The class =SomeClass= gets annotated by the =with_logger= decorator from the =common= module. All of the class's methods are then able to use the =logger= property as can be seen in method =some_method=.
+#+CAPTION: The class =SomeClass= gets annotated by the =with_logger= decorator from the =common= module. The whole class is then able to use the =logger= property as can be seen in method =some_method=.
 #+BEGIN_SRC python
 # Project imports
 from qde.editor.foundation import common
@@ -2901,8 +2925,8 @@ def SomeClass(object):
         """This method does literally nothing and is used only to demonstrate the
         usage of the logging decorator."""
 
-        self.logger.debug("I am some logging entry used for demonstration
-                           purposes only.")
+        self.logger.debug(("I am some logging entry used for"
+                           "demonstration purposes only."))
  #+END_SRC
  :END:
 
@@ -2975,13 +2999,13 @@ self.logger.debug("A new scene graph item was added.")
 :GUI_SCENE_GRAPH_SLOTS_03_LOGGING:
 #+NAME: gui-scene-graph-slots-on-tree-item-removed-logging
 #+BEGIN_SRC python :exports none
-            self.logger.debug((
-                "The scene graph item at row {row} "
-                "and column {column} was removed."
-            ).format(
-                row=selected_item.row(),
-                column=selected_item.column()
-            ))
+self.logger.debug((
+    "The scene graph item at row {row} "
+    "and column {column} was removed."
+).format(
+    row=selected_item.row(),
+    column=selected_item.column()
+))
 #+END_SRC
 
 #+NAME: gui-scene-graph-slots-on-tree-item-removed
