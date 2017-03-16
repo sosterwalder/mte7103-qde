@@ -3130,7 +3130,7 @@ hence the console. This behavior can be seen in figure [[fig:editor-alpha-04]].
 
 \printbibliography{}
 
-* Appendix
+* TODO Appendix
 
 ** Test cases
 
@@ -3408,7 +3408,7 @@ Kick-off meeting for the thesis.
 
 - To be defined
 
-* Glossary
+* TODO Glossary
 
 - animation :: An animation is a composition of scenes. Each animation is
                defined by a time span, meaning it has a defined start- and
