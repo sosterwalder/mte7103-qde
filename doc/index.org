@@ -911,7 +911,7 @@ at the end of the main application's construction.
 #+END_SRC
 
 #+NAME: fig:editor-alpha-01
-#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_LATEX: :width 0.5\textwidth :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The QDE editor application in a very early stage, containing only a grid layout.
 [[./images/qde_alpha_01.png]]
@@ -1376,7 +1376,7 @@ scene graph widget, the widget appears on the left side of the main window. It
 does not provide any functionality yet.
 
 #+NAME: fig:editor-alpha-02
-#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_LATEX: :width 0.5\textwidth :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The QDE editor application having the scene graph widget added, which is visible as a blank, white rectangle on the left of the window.
 [[./images/qde_alpha_02.png]]
@@ -1984,7 +1984,7 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 :END:
 
 #+NAME: fig:editor-alpha-03
-#+ATTR_LATEX: :width 2in :placement [H]
+#+ATTR_LATEX: :width 0.5\textwidth :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The QDE editor application showing the scene graph widget, containing the root node of the scene graph.
 [[./images/qde_alpha_03.png]]
@@ -3001,7 +3001,7 @@ view is focused, the corresponding log messages appear in the standard output,
 hence the console. This behavior can be seen in figure [[fig:editor-alpha-04]].
 
 #+NAME: fig:editor-alpha-04
-#+ATTR_LATEX: :width 4in :placement [H]
+#+ATTR_LATEX: :width 0.5\textwidth :placement [H]
 #+ATTR_ORG: :width 50px
 #+CAPTION: The console output when the =a= and the =delete= keys are pressed multiple times with the scene graph view being the active widget.
 [[./images/qde_alpha_04.png]]
