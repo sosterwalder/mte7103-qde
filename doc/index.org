@@ -3119,7 +3119,14 @@ hence the console. This behavior can be seen in figure [[fig:editor-alpha-04]].
 
      Next steps: (Re-) Introduce logging. Begin implementing the node graph.
 
-* Bibliography
+-  <2017-03-16 Thu> :: Run sphinx apidoc when creating the HTML documentation.
+     Add an illustration about the state of the editor after finishing the
+     implementation of the scene graph. Change width of the images to be 50% of
+     the text width. Name slots of the scene graph view explicitly to maintain
+     sanity. Re-add logging chapter with a corresponding introduction. Fix display
+     of code listings.
+
+* TODO Bibliography
 
 \printbibliography{}
 
