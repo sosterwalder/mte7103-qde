@@ -71,7 +71,7 @@
    #+INCLUDE: "./implementation/requirements.org"
 ** Name-spaces and project structure
    #+INCLUDE: "./implementation/structure.org"
-** Editor 
+** Editor
    #+INCLUDE: "./implementation/editor.org"
 *** DONE Main application
     CLOSED: [2017-03-16 Thu 10:19]
@@ -102,8 +102,7 @@
 * TODO Appendix
 ** Test cases
    #+INCLUDE: "./appendix/test-cases.org"
-** Meeting minutes 
+** Meeting minutes
    #+INCLUDE: "./appendix/minutes.org"
-   
 * TODO Glossary
   #+INCLUDE: "./glossary.org"

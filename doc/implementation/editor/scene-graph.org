@@ -1,6 +1,3 @@
-*** DONE Scene graph
-    CLOSED: [2017-03-16 Thu 10:19]
-
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
 written in section [[Layering]], each component has a view --- residing in the /gui/
