@@ -1,0 +1,96 @@
+- <2017-02-20 Mon> :: Set up and structure the document initially.
+
+- <2017-02-21 Tue> :: Re-structure the document, add first contents of the
+     implementation. Add first tries to tangle the code.
+
+- <2017-02-22 Wed> :: Provide further content concerning the implementation:
+     Introduce name-spaces/initializers, first steps for a logging facility.
+
+- <2017-02-23 Thu> :: Extend logging facility, provide (unit-) tests.
+     Restructure the documentation.
+
+- <2017-02-24 Fri> :: Adapt document to output LaTeX code as desired, change
+     styling. Begin development of the applications' main routine.
+
+- <2017-02-27 Mon> :: Remove (unit-) tests from main document and put them into
+     appendix instead. Begin explaining literate programming.
+
+- <2017-02-28 Tue> :: Provide a first draft for objectives and limitations.
+     Re-structure the document. Correct LaTeX output.
+
+- <2017-03-01 Wed> :: Remove split files, re-add everything to index, add
+     objectives.
+
+- <2017-03-02 Thu> :: Set up project schedule. Tangle everything instead of
+     doing things manually. Begin changing language to English instead of German.
+     Re-add make targets for cleaning and building the source code.
+
+- <2017-03-03 Fri> :: Keep work log up to date. Revise and finish chapter about
+     name-spaces and the project structure for now.
+
+- <2017-03-04 Sat> :: Finish translating all already written texts from German
+     to English. Describe the main entry point of the application as well as the
+     main application itself.
+
+- <2017-03-05 Sun> :: Finish chapter about the main entry point and the main
+     application for now, start describing the main window and implement its
+     functionality. Keep the work log up to date. Fiddle with references and
+     LaTeX export. Find a bug: main_window needs to be attached to a class, by
+     using the =self= keyword, otherwise the window does not get shown.
+     Introduce new make targets: one to clean Python cache files (*.pyc) and one
+     to run the editor application directly.
+
+- <2017-03-06 Mon> :: Update the work log. Add an image of the editor as well as
+     the project schedule. Add the implementation of the main window's layout.
+     Implement the scene domain model. Move keyPressEvent to its own source
+     block instead of expanding the methods of the main window directly. Add a
+     section about (the architecture's) layers to the principles section. Add
+     Dr. Eric Dubuis as an expert to the involved persons. Introduce the 'verb'
+     macro for having nicer verbatim blocks. Use the given image-width for
+     inline images in org-mode when available.
+
+- <2017-03-07 Tue> :: Expand the layering principles by adding a section about
+     the model-view-controller pattern and introduce view models. Explain and
+     implement the data- and the view model for scene graph items.
+
+- <2017-03-08 Wed> :: Implement the controller for handling the scene graph.
+     Allow the semi-automatic creation of an API documentation by introducing
+     Sphinx. Introduce new make targets for creating the API documentation as
+     RST and as HTML.
+
+- <2017-03-10 Fri> :: Implement the scene graph view as widget and integrate it
+     into the application. Update the work log. Fix typing errors. Start to
+     implement missing methods in the scene graph controller for being able to
+     use the scene graph widget.
+
+- <2017-03-13 Mon> :: Implement the scene view model. Initialize such a model
+     within the scene graph view model. Implement the =headerData= as well as
+     the =data= methods of the scene graph controller. Update the work log. Add
+     an image of the editor's current state. Continue implementation of the
+     scene graph view model.
+
+- <2017-03-14 Tue> :: Continue the implementation of the scene graph view model.
+     Implement logging. Implement logging. Implement logging. Implement logging
+     functionality. Log whenever a node is added or removed from the scene graph
+     view.
+
+- <2017-03-15 Wed> :: Move logging further down in structure. Add connections
+     between scene graph view and controller. Finish implementing the adding and
+     removal of scene graph items. Update the work log.
+
+     Next steps: (Re-) Introduce logging. Begin implementing the node graph.
+
+- <2017-03-16 Thu> :: Run sphinx apidoc when creating the HTML documentation.
+     Add an illustration about the state of the editor after finishing the
+     implementation of the scene graph. Change width of the images to be 50% of
+     the text width. Name slots of the scene graph view explicitly to maintain
+     sanity. Re-add logging chapter with a corresponding introduction. Fix display
+     of code listings. Keep work log up to date. Add missing TODO annotations to
+     headings.
+
+     Next steps: Continue implementing the node graph.
+
+-  <2017-03-17 Fri> :: Change verbatim output to be less intrusive, update to do
+     tags, begin adding references do code fragment definitions, begin implement
+     the node graph. Move chapters into separate org files.
+

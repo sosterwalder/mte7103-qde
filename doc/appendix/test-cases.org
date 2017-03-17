@@ -1,0 +1,188 @@
+** Test cases
+
+Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
+die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
+
+Als erster Schritt wird der Header des Test-Modules definiert.
+
+#+NAME: test-app-header
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Header des Test-Modules, =<<test-app-header>>=.
+#+BEGIN_SRC python
+# -*- coding: utf-8 -*-
+
+"""Module for testing QDE class."""
+#+END_SRC
+
+#+RESULTS: fig:test-app-header
+: None
+
+Dann werden die benötigen Module importiert. Es sind dies das System-Modul
+/sys/ und das Modul /application/, bei welchem es sich um die Applikation
+selbst handelt. Das System-Modul /sys/ wird benötigt um der Applikation ggf.
+Start-Argumente mitzugeben, also zum Beispiel:
+
+#+NAME: fig:impl-python-call-arguments
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Aufruf des Main-Modules mit zwei Argumenten, =argument1= und =argument2=.
+#+BEGIN_SRC bash
+python main.py argument1 argument2
+#+END_SRC
+
+Der Einfachheit halber werden die Importe in zwei Kategorien unterteilt: Importe
+von Pyhton-eigenen Modulen und Importe von selbst verfassten Modulen.
+
+#+NAME: test-app-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Definition der Importe für das Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+# System imports
+<<test-app-system-imports>>
+
+# Project imports
+<<test-app-project-imports>>
+#+END_SRC
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von Python-eigenen Modulen im Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+# System imports
+import sys
+#+END_SRC
+
+#+NAME: test-app-project-imports
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Importe von selbst verfassten Modulen im Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+# Project imports
+from qde.editor.application import application
+#+END_SRC
+
+#+RESULTS: test-app-project-imports
+
+Somit kann schliesslich getestet werden, ob die Applikation startet, indem diese
+instanziert wird und die gesetzten Namen geprüft werden.
+
+#+NAME: test-app-test-constructor
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Methode zum Testen des Konstruktors der Applikation.
+#+BEGIN_SRC python
+def test_constructor():
+    """Test if the QDE application is starting up properly."""
+    app = application.QDE(sys.argv)
+    assert app.applicationName() == "QDE"
+    assert app.applicationDisplayName() == "QDE"
+#+END_SRC
+
+#+RESULTS: test-app-test-constructor
+: None
+
+Finally, one can merge the above defined elements to an executable test-module,
+containing the header, the imports and the test cases (which is in this case
+only a test case for testing the constructor).
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+<<test-app-header>>
+
+<<test-app-imports>>
+
+<<test-app-test-constructor>>
+#+END_SRC
+
+#+RESULTS: test-app-test-cases
+
+Führt man die Testfälle nun aus, schlagen diese erwartungsgemäss fehl, da die
+Klasse, und somit die Applikation, als solche noch nicht existiert. Zum jetzigen
+Zeitpunkt kann noch nicht einmal das Modul importiert werden, da diese noch
+nicht existiert.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: Aufruf zum Testen des Applkations-Modules.
+#+BEGIN_SRC bash
+python -m pytest qde/editor/application/test_application.py
+#+END_SRC
+
+Um sicherzustellen, dass die Protokollierung wie gewünscht funktioniert, wird
+diese durch die entsprechenden Testfälle abgedeckt.
+
+Der einfachste Testfall ist die Standardkonfiguration, also ein Aufruf ohne
+Parameter.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Testfall 1 der Protkollierung der Hauptapplikation: Aufruf ohne Argumente.
+#+NAME:       test-app-test-logging-default
+#+BEGIN_SRC python
+def test_setup_logging_without_arguments():
+    """Test logging of QDE application without arguments."""
+    app = application.QDE(sys.argv)
+    root_logger = logging.root
+    handlers = root_logger.handlers
+    assert len(handlers) == 1
+    handler = handlers[0]
+#+END_SRC
+
+Da obige Testfälle das /logging/-Module benötigen, muss das Importieren der Module
+entsprechend erweitert werden.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Erweiterung des Importes von System-Modulen im Modul zum Testen der Applikation.
+#+NAME: test-app-system-imports
+#+BEGIN_SRC python
+import logging
+#+END_SRC
+
+Und der Testfall muss den Testfällen hinzugefügt werden.
+
+#+NAME: test-app-test-cases
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Hinzufügen des Testfalles 1 zu den bestehenden Testfällen im Modul zum Testen der Applikation.
+#+BEGIN_SRC python
+
+<<test-app-test-logging-default>>
+#+END_SRC
+
+Auch hierfür werden wiederum zuerst die Testfälle verfasst.
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Testfälle der Hilfsmethode zur Protokollierung.
+#+NAME:       fig:editor-common-logging-test
+#+BEGIN_SRC python
+# -*- coding: utf-8 -*-
+
+"""Module for testing common methods class."""
+
+# System imports
+import logging
+
+# Project imports
+from qde.editor.foundation import common
+
+
+@common.with_logger
+class FooClass(object):
+    """Dummy class for testing the logging decorator."""
+
+    def __init__(self):
+        """Constructor."""
+        pass
+
+def test_with_logger():
+    """Test if the @with_logger decorator works correctly."""
+
+    foo_instance = FooClass()
+    logger = foo_instance.logger
+    name = "qde.editor.foundation.test_common.FooClass"
+    assert logger is not None
+    assert len(logger.handlers) == 1
+    handler = logger.handlers[0]
+    assert type(handler) == logging.StreamHandler
+    assert logger.propagate == False
+    assert logger.name == name
+#+END_SRC
+
+#+BEGIN_SRC bash
+python -m pytest qde/editor/foundation/test_common.py
+#+END_SRC
+

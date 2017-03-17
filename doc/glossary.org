@@ -1,0 +1,5 @@
+- animation :: An animation is a composition of scenes. Each animation is
+               defined by a time span, meaning it has a defined start- and
+               end-time. As the name indicates, an animation contains animated
+               elements, being properties of nodes (e.g. the position of a node
+               and so on).

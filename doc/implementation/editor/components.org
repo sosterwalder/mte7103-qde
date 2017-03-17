@@ -1,0 +1,23 @@
+Instead it would be nice to have at least a window shown when starting the
+application, which allows a normal, deterministic and convenient shut down of
+the application, either by a keyboard shortcut or by selecting an appropriate
+option in the applications' menu.
+
+But having only a plain window is not that interesting, so this might be a good
+time to look at the components of the editor, which are defined by
+\citep[p. 29 ff.]{osterwalder_qde_2016} and are the following:
+
+- A scene graph, allowing the creation and deletion of scenes. The scene graph
+  has at least a root scene.
+- A node-based graph structure, allowing the composition of scenes using nodes
+  and connections between the nodes.
+- A parameter window, showing parameters of the currently selected graph node.
+- A rendering window, rendering the currently selected node or scene.
+- A sequencer, allowing a time-based scheduling of defined scenes.
+
+What \cite{osterwalder_qde_2016} does not explicitly mention, is the main
+window, which holds all those components and allows a proper shut down of the
+application.
+
+As a starting point, we shall implement the class {{{verb(MainWindow)}}}
+representing the main window.

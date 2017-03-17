@@ -1,0 +1,120 @@
+The functionality of the node graph is, as its name states, to represent a data
+structure composed of nodes and edges. Each scene from the scene graph is
+represented within the node graph as such a data structure.
+
+The nodes are the building blocks of a real time animation. They represent
+different aspects, such as scenes themselves, time line clips, models, cameras,
+lights materials, generic operators and effects. These aspects are only examples
+(coming from \cite[p. 30 and 31]{osterwalder_qde_2016}) as the node structure
+must be expandable for allowing the addition of new nodes.
+
+The implementation of the scene graph component was relatively straightforward
+partly due to its structure and partly due to the used data model and
+representation. The node graph component however, seems to be a bit more complex.
+
+To get a first overview and to manage its complexity, it might be good to
+identify its sub components first before implementing them.
+When thinking about the implementation of the node graph, one may identify the
+following sub components:
+
+- Nodes
+  - Domain model :: Holds data of a node, like its definition, its inputs and so
+                    on.
+  - Definitions  :: Holds the type and sub type of a node.
+  - Controller   :: Handles the loading of node definitions as well as the
+                    creation of node instances.
+  - View model   :: Represents a node within the graphical user interface.
+- Scenes
+  - Domain model :: Holds the data of a scene, e.g. its nodes.
+  - Controller   :: Handles scene related actions, like when a node is added to
+                    a scene, when the scene was changed or when a node within a
+                    scene was selected.
+  - View model   :: Defines the graphical representation of scene which can be
+                    represented by the corresponding view. Basically the scene
+                    view model is a canvas consisting of nodes.
+  - View         :: Represents scenes in terms of scene view models within the
+                    graphical user interface.
+
+One of the most basic sub components are the definitions of nodes. But what are
+those definitions actually? What do they actually define? There is not only one
+answer to this question, it is simply a matter of how the implementation is
+being done and therefore a set of decisions.
+
+The whole (rendering) system shall not be bound to only one representation of
+nodes, e.g. triangle based meshes. Instead it shall let the user decide, what
+representation is the most fitting for the goal he wants to achieve.
+
+At this point the system shall be able to theoretically support multiple kinds of
+node representations: Images, triangle based meshes and solid modeling through
+function modeling (using signed distance functions for modeling implicit
+surfaces). Whereas triangle based meshes may either be loaded from externally
+defined files (e.g. in the Filmbox (FBX), the Alembic or the Object file format)
+or directly be generated using procedural mesh generation.
+
+Implementing all of the mentioned methodologies for representing nodes is not
+realistic within the time frame of this project, therefore only images and solid
+modeling will be implemented.
+
+For not restricting the user, scenes may use different kinds of rendering at the
+same time. Each node may (theoretically) be rendered using one of the mentioned
+methodologies by selecting its way of being rendered directly on the node.
+
+When implementing the nodes, keep in mind that the nodes are part of a graph,
+hence the name node graph, and are therefore typically connected by edges. This
+means that the graph gets evaluated recursively by its nodes. However, the goal
+is to have OpenGL shading language (GLSL) code at the end, independent of the
+node types.
+
+From this point of view it is theoretically possible to let the user define GLSL
+code directly within a node (definition) and to simply evaluate this code, which
+adds a lot of (creative) freedom. The problem with this approach is though, that
+image and triangle based mesh nodes are not fully implementable by using shader
+code only. Instead they have specific requirements, which are only perform-able
+on the CPU instead of the GPU (e.g. allocating buffer objects).
+
+These thoughts lead to two types of nodes: Nodes which may directly be
+evaluated and nodes which may not directly be evaluated. To ensure a nice user
+experience, it is important to provide the user with predefined nodes to choose
+from --- independent from their type.
+
+To recapitulate, the following node types and definitions are envisaged:
+
+- Nodes, that can be evaluated directly
+  - Solid modeling objects
+    - Sphere
+    - Cube
+    - Plane
+    - ...
+  - Solid modeling operations
+    - Transformation
+    - Scaling
+    - Rotation
+    - Union
+    - Differentiation
+    - ...
+  - Post-processing effects
+    - Blur
+    - Glare
+    - ...
+- Nodes, that cannot be evaluated directly
+  - Procedural generated mesh nodes
+    - Sphere
+    - Cube
+    - Plane
+    - ...
+  - Externally defined meshes
+    - Filmbox (FBX)
+    - Alembic (ABC)
+    - Object file format (OBJ)
+  - Images
+
+As stated before, it would illusive wanting to implement all of these node as
+the time frame of this project is simply too narrow and therefore only nodes,
+that can be evaluated directly, as well as images are considered for
+implementation.
+
+So as not to complicate things, the implementation is kept as simply as
+possible: If a node has a =code= block in its definition, the application
+assumes that is possible to evaluate this node directly. If a node has no such
+block, its type and its sub-type must be implemented within the application,
+otherwise the node will simple be not evaluated.

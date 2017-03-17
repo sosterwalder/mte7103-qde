@@ -1,0 +1,86 @@
+** Meeting minutes
+
+*** Meeting mintutes 2017-02-23
+
+| No.:              | 01                                                                   |
+| Date:             | 2017-02-23 13:00 - 13:30                                             |
+| Place:            | Cafeteria, Main building, Berne University of applied sciences, Biel |
+| Involved persons: | Prof. Claude Fuhrer (CF)                                             |
+|                   | Sven Osterwalder (SO)                                                |
+
+Kick-off meeting for the thesis.
+
+**** Presentation and discussion of the current state of work
+
+- Presentation of the workflow. Emacs and Org-Mode is used to write the
+  documentation as well as the actual code. (SO)
+  - This is a very interesting approach. The question remains if the effort of
+    this method does not prevail the method of developing the application and
+    the documentation in parallel. It is important to reach a certain state of
+    the application. Also the report should not exceed around 80 pages. (CF)
+    - A decision about the used method is made until the end of this week. (SO)
+- The code will unit-tested using py.test and / or hypothesis. (SO)
+- Presentation of the structure of the documentation. It follows the schematics
+  of the preceding documentations. (SO)
+
+**** Further steps / proceedings
+
+- The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
+  documentation. The code of the thesis is respected too, but is clearly not the
+  main aspect. (CF)
+- Mr. Dubuis also puts emphasis on code metrics. Therefore the code needs to be
+  (automatically) tested and a coverage of at least 60 to 70 percent must be
+  reached. (CF)
+- A meeting with Mr. Dubuis shall be scheduled at the end of March or beginning
+  of April 2017. (CF)
+- The administrative aspects as well as the scope should be written until end of
+  March 2017 for being able to present them to Mr. Dubuis. (CF)
+- Mr. Dubuis should be asked if the publicly available access to the whole
+  thesis is enough or if he wishes to receive the particular status right before
+  the meetings. (CF)
+- Regularly meetings will be held, but the frequency is to be defined yet.
+  Further information follows per e-mail. (CF)
+- At the beginning of the studies, a workplace at the Berne University of
+  applied sciences in Biel was offered. Is this possibility still available?
+  (SO)
+  - Yes, that possibility is still available and details will be clarified and
+    follow per e-mail. (CF)
+
+**** To do for the next meeting
+
+***** DONE Create GitHub repository for the thesis. (SO)
+      CLOSED: [2017-03-01 Wed 08:45]
+
+****** DONE Inform Mr. Fuhrer about the creation of the repository. (SO)
+       CLOSED: [2017-03-01 Wed 08:46]
+
+***** DONE Ask Dr. Dubuis by mail how he wants to receive the documentation. (SO)
+      CLOSED: [2017-03-01 Wed 08:46]
+
+****** TODO Await answer of Mr. Dubuis (ED)
+
+***** DONE Set up appointments with Dr. Dubuis (CF)
+      CLOSED: [2017-02-27 Tue 15:21]
+
+****** TODO Await answer of Mr. Dubuis (ED)
+
+***** DONE Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
+      CLOSED: [2017-02-24 Fri 07:49]
+
+****** A workplace was found at the RISIS laboratory and may be used instantly. (CF)
+
+***** DONE Decide about the method used for developing this thesis. (SO)
+      CLOSED: [2017-02-24 Fri 16:29]
+
+****** After discussions with a colleague the method of literate programming is
+       kept. The documentation containing the literate program will although be
+       attached as appendix as it most likely will exceed 80 pages. Instead the
+       method will be introduced in the report and the report will be endowed
+       with examples from the literate program.
+
+***** TODO Describe procedure and set up a time schedule including milestones. (SO)
+      DEADLINE: <2017-03-31 Fri>
+
+**** Scheduling of the next meeting
+
+- To be defined
