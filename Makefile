@@ -29,4 +29,4 @@ src:
 	emacs --batch -l org doc/index.org -f org-babel-tangle
 
 tex:
-	emacs --batch --script $(HOME)/.spacemacs -l org doc/index.org -f org-latex-export-to-latex
+	emacs --batch -l /Users/so/repos/orgmk/lisp/org-latex-classes.el -l org doc/index.org -f org-latex-export-to-latex --kill
