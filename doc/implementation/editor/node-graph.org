@@ -20,7 +20,7 @@ following sub components:
 - Nodes
   - Domain model :: Holds data of a node, like its definition, its inputs and so
                     on.
-  - Definitions  :: Holds the type and sub type of a node.
+  - Definitions  :: Represents a domain model as JSON data structure.
   - Controller   :: Handles the loading of node definitions as well as the
                     creation of node instances.
   - View model   :: Represents a node within the graphical user interface.
@@ -48,16 +48,12 @@ At this point the system shall be able to theoretically support multiple kinds o
 node representations: Images, triangle based meshes and solid modeling through
 function modeling (using signed distance functions for modeling implicit
 surfaces). Whereas triangle based meshes may either be loaded from externally
-defined files (e.g. in the Filmbox (FBX), the Alembic or the Object file format)
-or directly be generated using procedural mesh generation.
+defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
+format (OBJ)) or directly be generated using procedural mesh generation.
 
-Implementing all of the mentioned methodologies for representing nodes is not
-realistic within the time frame of this project, therefore only images and solid
-modeling will be implemented.
-
-For not restricting the user, scenes may use different kinds of rendering at the
-same time. Each node may (theoretically) be rendered using one of the mentioned
-methodologies by selecting its way of being rendered directly on the node.
+# Implementing all of the mentioned methodologies for representing nodes is not
+# realistic within the time frame of this project, therefore only images and solid
+# modeling will be implemented.
 
 When implementing the nodes, keep in mind that the nodes are part of a graph,
 hence the name node graph, and are therefore typically connected by edges. This
@@ -65,17 +61,57 @@ means that the graph gets evaluated recursively by its nodes. However, the goal
 is to have OpenGL shading language (GLSL) code at the end, independent of the
 node types.
 
-From this point of view it is theoretically possible to let the user define GLSL
+From this point of view it is theoretically possible to let the user define shader
 code directly within a node (definition) and to simply evaluate this code, which
 adds a lot of (creative) freedom. The problem with this approach is though, that
 image and triangle based mesh nodes are not fully implementable by using shader
 code only. Instead they have specific requirements, which are only perform-able
 on the CPU instead of the GPU (e.g. allocating buffer objects).
 
-These thoughts lead to two types of nodes: Nodes which may directly be
-evaluated and nodes which may not directly be evaluated. To ensure a nice user
-experience, it is important to provide the user with predefined nodes to choose
-from --- independent from their type.
+When thinking of nodes used for solid modeling however, it may appear, that they
+may be evaluated directly, without the need for pre-processing, as they are
+fully implementable using shader code only. This is kind of misleading however
+as each node has its own definition which has to be added to shader and this
+definition is then used in a mapping function to compose the scene. This would
+mean to add a definition of a node over and over again, when spawning multiple
+instances of the same node type, which results in overhead bloating the shader.
+It is therefore necessary to pre-process solid modeling nodes too, exactly as
+triangle mesh based and image nodes, for being able to use multiple instances of
+the same node type within a scene while having the definition added only once.
+
+All of these thoughts sum up in one central question for the implementation:
+Shall objects be predefined within the code (and therefore only nodes accepted
+whose type and sub type match those of predefined nodes) or shall all objects be
+defined externally using files?
+
+This is a question which is not so easy to answer. Both methods have their
+advantages and disadvantages. Pre-defining nodes within the code minimizes
+unexpected behavior of the application. Only known and well-defined nodes are
+processed.
+
+But what if someone would like to have a new node type which is not yet defined?
+The node type has to be implemented first. As Python is used for the editor
+application, this is not really a problem as the code is interpreted each time
+and is therefore not being compiled. Nevertheless such changes follow a certain
+process, such as making the actual changes, reviewing and checking-in the code
+and so on, which the user normally does not want to be bothered with.
+Furthermore, when thinking about the player application, the problem of the
+necessity to recompile the code is definitively given. The player will be
+implemented in C, as there is the need for performance, which Python may not
+fulfill satisfactorily.
+
+Considering these aspects, the external definition of nodes is chosen. This may
+result in nodes which cannot be evaluated or which have unwanted effects. As it
+is (most likely) in the users best interest to create (for his taste) appealing
+real time animations, it can be assumed, that the user will try avoiding to
+create such nodes or quickly correct faulty nodes or simply does not use such nodes.
+
+- Pre-process
+- Process
+- Post-process
+
+To ensure a enjoyable user experience, it is important to provide the user with
+predefined nodes to choose from --- independent from their type.
 
 To recapitulate, the following node types and definitions are envisaged:
 
@@ -108,13 +144,24 @@ To recapitulate, the following node types and definitions are envisaged:
     - Object file format (OBJ)
   - Images
 
-As stated before, it would illusive wanting to implement all of these node as
+As stated before, it would illusive wanting to implement all of these nodes, as
 the time frame of this project is simply too narrow and therefore only nodes,
 that can be evaluated directly, as well as images are considered for
 implementation.
 
-So as not to complicate things, the implementation is kept as simply as
+As not to complicate things, the implementation is kept as simple as
 possible: If a node has a =code= block in its definition, the application
 assumes that is possible to evaluate this node directly. If a node has no such
 block, its type and its sub-type must be implemented within the application,
-otherwise the node will simple be not evaluated.
+otherwise the node will simply be not evaluated.
+
+To get the node graph implementation started, a sample node definition is
+implemented as well as its defining class.
+
+**** Node definitions
+
+Node definitions are implemented in the
+JSON[fn:9d5e4e40b523c9e:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf]
+format and are placed in the =data/nodes/= sub-directory, seen from the main
+directory. A node definition contains at least a type and a sub type. Optional
+it may contain a source block, which can be evaluated directly.
