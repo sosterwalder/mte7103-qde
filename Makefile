@@ -16,6 +16,9 @@ htmldoc: apidoc
 	make -C doc html
 	open doc/build/html/index.html
 
+ide:
+	emacs doc/index.org &
+
 pdf: tex
 	latexmk --shell-escape -pdf -xelatex doc/index.tex
 
