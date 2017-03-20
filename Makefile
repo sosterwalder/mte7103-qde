@@ -16,8 +16,8 @@ htmldoc: apidoc
 	make -C doc html
 	open doc/build/html/index.html
 
-pdf:
-	emacs --batch --script $HOME/.spacemacs -l org doc/index.org -f org-latex-export-to-pdf
+pdf: tex
+	latexmk --shell-escape -pdf -xelatex doc/index.tex
 
 run-editor: clean-cache clear-screen
 	python src/editor.py
