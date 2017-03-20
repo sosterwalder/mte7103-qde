@@ -1,6 +1,3 @@
-*** DONE Main application
-    CLOSED: [2017-03-16 Thu 10:19]
-
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class =QApplication=. According to
 [fn:7:http://doc.qt.io/Qt-5/qapplication.html] the class may be initialized and

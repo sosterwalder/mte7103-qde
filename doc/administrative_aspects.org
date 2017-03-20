@@ -1,5 +1,3 @@
-* TODO Administrative aspects
-
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
 

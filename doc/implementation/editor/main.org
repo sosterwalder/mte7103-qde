@@ -1,6 +1,3 @@
-*** DONE Main entry point
-    CLOSED: [2017-03-16 Thu 10:19]
-
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no =main= function there is nothing
 else to do, so nothing happens. The execution of the main loop is started when
