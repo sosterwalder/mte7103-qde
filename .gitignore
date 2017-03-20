@@ -1,8 +1,10 @@
 ## Swap files made by Vi
 *.swp
 
-## Swap files amde by Emacs
+## Swap files made by Emacs
 .#*.org
+*.*~
+
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
