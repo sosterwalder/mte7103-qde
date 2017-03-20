@@ -4,7 +4,7 @@ represented within the node graph as such a data structure.
 
 The nodes are the building blocks of a real time animation. They represent
 different aspects, such as scenes themselves, time line clips, models, cameras,
-lights materials, generic operators and effects. These aspects are only examples
+lights, materials, generic operators and effects. These aspects are only examples
 (coming from \cite[p. 30 and 31]{osterwalder_qde_2016}) as the node structure
 must be expandable for allowing the addition of new nodes.
 
