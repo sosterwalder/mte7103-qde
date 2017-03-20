@@ -1,4 +1,4 @@
-% Created 2017-03-17 Fri 16:30
+% Created 2017-03-20 Mon 11:53
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -64,21 +64,18 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:org4851918}
+\label{sec:orga6937dd}
 [Introduction here].
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:orgc916737}
-\section{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org43a7b40}
-
+\label{sec:org1a6079b}
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
 
 The whole documentation uses the male form, whereby both genera are equally
 meant.
 
-\subsection{Involved persons}
-\label{sec:org4363b2f}
+\section{Involved persons}
+\label{sec:orgb6ee70b}
 
 \begin{center}
 \begin{tabular}{lll}
@@ -86,10 +83,10 @@ Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 Expert & Dr. Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org966ccb4}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org61477ce}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{orgb56d9a4}eric.dubuis@comet.ch}
+\end{center}\footnotetext[1]{\label{org613080b}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org88ded23}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org8bf7be8}eric.dubuis@comet.ch}
 
-\subsection{Structure of the documentation}
-\label{sec:org66f88a2}
+\section{Structure of the documentation}
+\label{sec:org74a0f60}
 
 This thesis is structured as follows:
 
@@ -101,40 +98,40 @@ This thesis is structured as follows:
 \item Conclusion
 \end{itemize}
 
-\subsection{Deliverable results}
-\label{sec:org319c3c7}
+\section{Deliverable results}
+\label{sec:orgdd5133c}
 
 \begin{itemize}
 \item Report
 \item Implementation
 \end{itemize}
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgc36d824}
+\label{sec:org32702dd}
 \section{Motivation}
-\label{sec:orgd76e0a4}
+\label{sec:org27936d8}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:orgd018d94}
+\label{sec:org456bef8}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org2ea8683}
+\label{sec:orgdbd73d3}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:org94da795}
+\label{sec:org9344b42}
 
 [New learning contents.]
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org837a250}
+\label{sec:org2988630}
 \section{Organization of work}
-\label{sec:orga2b286b}
+\label{sec:org8c5a695}
 \subsection{Meetings}
-\label{sec:org35efaa7}
+\label{sec:orge886368}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -143,7 +140,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org01154ea}
+\label{sec:org17f1148}
 
 
 \begin{center}
@@ -179,7 +176,7 @@ The project's schedule.}
 Figure \ref{fig:schedule} shows the project's schedule.
 
 \subsection{Literate programming}
-\label{sec:org5f2f7a9}
+\label{sec:org6ce759b}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -218,12 +215,12 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:org1f97866}
+\label{sec:org15c6e60}
 \subsection{Code}
-\label{sec:orga31c13f}
+\label{sec:org5b3cfc7}
 
 \subsubsection{{\bfseries\sffamily TODO} Principles}
-\label{sec:org091fa38}
+\label{sec:orga1f5b9c}
 
 \begin{itemize}
 \item Classes use camel case.
@@ -255,7 +252,7 @@ Additionally controllers are introduced which act as workflow objects of the
 
 \begin{enumerate}
 \item Model-View-Controller
-\label{sec:org900db8b}
+\label{sec:org1911d19}
 
 While models may be instantiated anywhere directly, this would although not
 contribute to having clean code and sane data structures. Instead controllers,
@@ -320,20 +317,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:orge6e23d9}
+\label{sec:orgc68c438}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:org2a3c2ff}
+\label{sec:org64a4ccf}
 
 [Project structure.]
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:org0ebd240}
+\label{sec:org5680f81}
 \section{Requirements}
-\label{sec:org91530d8}
+\label{sec:orgf8ca433}
 \subsection{Requirements}
-\label{sec:orgbeafc3b}
+\label{sec:orgc5c97c8}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -398,7 +395,7 @@ Installation of the projects' required dependencies.}
 All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 \section{Name-spaces and project structure}
-\label{sec:org0a653e7}
+\label{sec:orga940864}
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
 
@@ -428,7 +425,7 @@ The first stage of the project shows the creation of the \emph{editor} component
 it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 \section{Editor}
-\label{sec:orgfac95f1}
+\label{sec:org73dec93}
 This chapter describes the creation of the \emph{editor} component.
 
 The \emph{editor} component shall be placed within the \texttt{editor} directory beneath the
@@ -438,9 +435,7 @@ importable module. This fact and the creation of it is mentioned here for the
 sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 \subsection{{\bfseries\sffamily DONE} Main application}
-\label{sec:org57dd000}
-\subsubsection{{\bfseries\sffamily DONE} Main application}
-\label{sec:orgdb440f9}
+\label{sec:org402e799}
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
 \footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} the class may be initialized and
@@ -474,21 +469,20 @@ therefore as follows.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-"""Main application module for QDE."""
-
-<<app-application-imports>>
-
-<<app-application-class-definition>>
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """Main application module for QDE."""
+    
+    <<app-application-imports>>
+    
+    <<app-application-class-definition>>
 \end{minted}
 \caption{Main application module holding the \texttt{Application} class.}
 \end{listing}
 
-\begin{enumerate}
-\item Imports
-\label{sec:org3721374}
+\subsubsection{Imports}
+\label{sec:orgaeb9846}
 As you can see, the imports of the module are defined by \texttt{<<app-application-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -643,11 +637,8 @@ def __init__(self, arguments):
 \caption{\label{app-application-constructor}
 \texttt{<<app-application-constructor>>}, constructor of the \texttt{Application} class.}
 \end{listing}
-\end{enumerate}
 \subsection{{\bfseries\sffamily DONE} Main entry point}
-\label{sec:orgfffe376}
-\subsubsection{{\bfseries\sffamily DONE} Main entry point}
-\label{sec:org2a4c7a6}
+\label{sec:orge48a7ba}
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
 else to do, so nothing happens. The execution of the main loop is started when
@@ -676,22 +667,22 @@ The main entry script of the editor \texttt{editor.py} is therefore defined as f
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-""" Main entry point for the QDE editor application. """
-
-# System imports
-import sys
-
-# Project imports
-from qde.editor.application import application
-
-
-if __name__ == "__main__":
-    app = application.Application(sys.argv)
-    status = app.exec()
-    sys.exit(status)
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """ Main entry point for the QDE editor application. """
+    
+    # System imports
+    import sys
+    
+    # Project imports
+    from qde.editor.application import application
+    
+    
+    if __name__ == "__main__":
+        app = application.Application(sys.argv)
+        status = app.exec()
+        sys.exit(status)
 \end{minted}
 \caption{\label{main}
 \texttt{<<main>>}, the main entry point for the whole editor application.}
@@ -733,9 +724,9 @@ application.
 As a starting point, we shall implement the class \texttt{MainWindow}
 representing the main window.
 \subsection{{\bfseries\sffamily TODO} Main window}
-\label{sec:org8e1c2da}
+\label{sec:org03af2d4}
 \subsubsection{{\bfseries\sffamily TODO} Main window}
-\label{sec:orgc7b6788}
+\label{sec:org546191d}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -1093,9 +1084,7 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 \subsection{{\bfseries\sffamily DONE} Scene graph}
-\label{sec:org5cb8369}
-\subsubsection{{\bfseries\sffamily DONE} Scene graph}
-\label{sec:org0e05964}
+\label{sec:orgf552132}
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
 written in section \ref{sec:layering}, each component has a view --- residing in the \emph{gui}
@@ -1114,38 +1103,38 @@ dull. It is composed of solely an empty constructor.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-""" Module holding scene related aspects concerning the domain layer. """
-
-# System imports
-<<domain-scene-system-imports>>
-
-# Project imports
-<<domain-scene-project-imports>>
-
-
-class SceneModel(object):
-    """The scene model.
-    It is used as a base class for scene instances within the scene graph.
-    """
-
-    <<domain-scene-signals>>
-
-    <<domain-scene-constructor>>
-
-    <<domain-scene-methods>>
-
-    <<domain-scene-slots>>
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """ Module holding scene related aspects concerning the domain layer. """
+    
+    # System imports
+    <<domain-scene-system-imports>>
+    
+    # Project imports
+    <<domain-scene-project-imports>>
+    
+    
+    class SceneModel(object):
+        """The scene model.
+        It is used as a base class for scene instances within the scene graph.
+        """
+    
+        <<domain-scene-signals>>
+    
+        <<domain-scene-constructor>>
+    
+        <<domain-scene-methods>>
+    
+        <<domain-scene-slots>>
 \end{minted}
 \caption{Scene module inside the \texttt{domain} package, holding the \texttt{SceneModel} class.}
 \end{listing}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-def __init__(self):
-    pass
+    def __init__(self):
+        pass
 \end{minted}
 \caption{\label{domain-scene-constructor}
 Constructor of the scene model class, \texttt{SceneModel}.}
@@ -1220,20 +1209,20 @@ structure, which fits the structure of the scene graph perfectly.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-""" Module holding scene related aspects concerning the gui_domain layer. """
-
-# System imports
-from PyQt5 import Qt
-from PyQt5 import QtCore
-<<guidomain-scene-system-imports>>
-
-# Project imports
-<<guidomain-scene-project-imports>>
-
-<<guidomain-scene-body>>
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """ Module holding scene related aspects concerning the gui_domain layer. """
+    
+    # System imports
+    from PyQt5 import Qt
+    from PyQt5 import QtCore
+    <<guidomain-scene-system-imports>>
+    
+    # Project imports
+    <<guidomain-scene-project-imports>>
+    
+    <<guidomain-scene-body>>
 \end{minted}
 \caption{\label{guidomain-scene}
 Scene module inside the \texttt{gui\_domain} package.}
@@ -1241,44 +1230,44 @@ Scene module inside the \texttt{gui\_domain} package.}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<guidomain-scene-body>=
-    class SceneGraphViewModel(Qt.QObject):
-        """View model representing scene graph items.
-    
-        The SceneGraphViewModel corresponds to an entry within the scene graph. It
-        is used by the QAbstractItemModel class and must therefore at least provide
-        a name and a row.
-        """
-    
-        
-    
-        # .. py:function::
-        def __init__(
-                self,
-                row,
-                domain_object,
-                name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
-                parent=None
-        ):
-            """Constructor.
-        
-            :param row:           The row the view model is in.
-            :type  row:           int
-            :param domain_object: Reference to a scene model.
-            :type  domain_object: qde.editor.domain.scene.SceneModel
-            :param name:          The name of the view model, which will be displayed in
-                                  the scene graph.
-            :type  name:          str
-            :param parent:        The parent of the current view model within the scene
-                                  graph.
-            :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
-            """
-        
-            super(SceneGraphViewModel, self).__init__(parent)
-            self.row  = row
-            self.domain_object = domain_object
-            self.name = name
-            self.scene_view_model = SceneViewModel()
+    <guidomain-scene-body>=
+            class SceneGraphViewModel(Qt.QObject):
+                """View model representing scene graph items.
+            
+                The SceneGraphViewModel corresponds to an entry within the scene graph. It
+                is used by the QAbstractItemModel class and must therefore at least provide
+                a name and a row.
+                """
+            
+                
+            
+                    # .. py:function::
+                    def __init__(
+                            self,
+                            row,
+                            domain_object,
+                            name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
+                            parent=None
+                    ):
+                        """Constructor.
+                    
+                        :param row:           The row the view model is in.
+                        :type  row:           int
+                        :param domain_object: Reference to a scene model.
+                        :type  domain_object: qde.editor.domain.scene.SceneModel
+                        :param name:          The name of the view model, which will be displayed in
+                                              the scene graph.
+                        :type  name:          str
+                        :param parent:        The parent of the current view model within the scene
+                                              graph.
+                        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+                        """
+                    
+                        super(SceneGraphViewModel, self).__init__(parent)
+                        self.row  = row
+                        self.domain_object = domain_object
+                        self.name = name
+                            self.scene_view_model = SceneViewModel()
 \end{minted}
 \caption{\label{lst:guidomain-scene-scenegraphviewmodel}
 Definition of the body of the \texttt{scene} module, which is in the \texttt{gui\_domain} layer.}
@@ -1286,32 +1275,32 @@ Definition of the body of the \texttt{scene} module, which is in the \texttt{gui
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-# .. py:function::
-def __init__(
-        self,
-        row,
-        domain_object,
-        name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
-        parent=None
-):
-    """Constructor.
-
-    :param row:           The row the view model is in.
-    :type  row:           int
-    :param domain_object: Reference to a scene model.
-    :type  domain_object: qde.editor.domain.scene.SceneModel
-    :param name:          The name of the view model, which will be displayed in
-                          the scene graph.
-    :type  name:          str
-    :param parent:        The parent of the current view model within the scene
-                          graph.
-    :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
-    """
-
-    super(SceneGraphViewModel, self).__init__(parent)
-    self.row  = row
-    self.domain_object = domain_object
-    self.name = name
+    # .. py:function::
+    def __init__(
+            self,
+            row,
+            domain_object,
+            name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
+            parent=None
+    ):
+        """Constructor.
+    
+        :param row:           The row the view model is in.
+        :type  row:           int
+        :param domain_object: Reference to a scene model.
+        :type  domain_object: qde.editor.domain.scene.SceneModel
+        :param name:          The name of the view model, which will be displayed in
+                              the scene graph.
+        :type  name:          str
+        :param parent:        The parent of the current view model within the scene
+                              graph.
+        :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
+        """
+    
+        super(SceneGraphViewModel, self).__init__(parent)
+        self.row  = row
+        self.domain_object = domain_object
+        self.name = name
 \end{minted}
 \caption{\label{guidomain-scene-scenegraphviewmodel-constructor}
 Constructor for the scene graph view model, \texttt{SceneGraphViewModel}.}
@@ -1322,59 +1311,59 @@ may finally be implemented.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-""" Module holding scene graph related aspects concerning the application layer.
-"""
-
-# System imports
-from PyQt5 import QtCore
-<<app-scenegraph-system-imports>>
-
-# Project imports
-from qde.editor.domain     import scene as domain_scene
-from qde.editor.gui_domain import scene as guidomain_scene
-<<app-scenegraph-project-imports>>
-
-
-class SceneGraphController(QtCore.QAbstractItemModel):
-    """The scene graph controller.
-    A controller for managing the scene graph by adding, editing and removing
-    scenes.
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """ Module holding scene graph related aspects concerning the application layer.
     """
-
-    scene_added = QtCore.pyqtSignal(domain_scene.SceneModel)
-    scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
-    <<app-scenegraph-controller-signals>>
-
-    def __init__(self, root_node_domain_object, parent=None):
-        """Constructor.
-
-        :param root_node_domain_object: The domain object of the root node of
-                                        the scene graph view model.
-        :type root_node_domain_object:  qde.editor.domain.scene.SceneModel
-        :param parent: The parent of the current view model within the scene
-                       graph.
-        :type parent:  qde.editor.gui_domain.scene.SceneGraphViewModel
+    
+    # System imports
+    from PyQt5 import QtCore
+    <<app-scenegraph-system-imports>>
+    
+    # Project imports
+    from qde.editor.domain     import scene as domain_scene
+    from qde.editor.gui_domain import scene as guidomain_scene
+    <<app-scenegraph-project-imports>>
+    
+    
+    class SceneGraphController(QtCore.QAbstractItemModel):
+        """The scene graph controller.
+        A controller for managing the scene graph by adding, editing and removing
+        scenes.
         """
-
-        super(SceneGraphController, self).__init__(parent)
-        self.header_data = [
-            QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),
-            QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
-        ]
-        self.root_node = guidomain_scene.SceneGraphViewModel(
-            row=0,
-            domain_object=root_node_domain_object,
-            name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
-        )
-        self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
-        <<app-scenegraph-controller-constructor>>
-
-    <<app-scenegraph-controller-methods>>
-
-    <<app-scenegraph-controller-slots>>
+    
+        scene_added = QtCore.pyqtSignal(domain_scene.SceneModel)
+        scene_removed = QtCore.pyqtSignal(domain_scene.SceneModel)
+        <<app-scenegraph-controller-signals>>
+    
+        def __init__(self, root_node_domain_object, parent=None):
+            """Constructor.
+    
+            :param root_node_domain_object: The domain object of the root node of
+                                            the scene graph view model.
+            :type root_node_domain_object:  qde.editor.domain.scene.SceneModel
+            :param parent: The parent of the current view model within the scene
+                           graph.
+            :type parent:  qde.editor.gui_domain.scene.SceneGraphViewModel
+            """
+    
+            super(SceneGraphController, self).__init__(parent)
+            self.header_data = [
+                QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),
+                QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
+            ]
+            self.root_node = guidomain_scene.SceneGraphViewModel(
+                row=0,
+                domain_object=root_node_domain_object,
+                name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
+            )
+            self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
+            <<app-scenegraph-controller-constructor>>
+    
+        <<app-scenegraph-controller-methods>>
+    
+        <<app-scenegraph-controller-slots>>
 \end{minted}
 \caption{\label{lst:app-scenegraph}
 The outline of the \texttt{SceneGraphController} class, inside the \texttt{application} package.}
@@ -1396,43 +1385,43 @@ architecture.''\footnote{\url{http://doc.qt.io/qt-5/qtreeview.html\#details}}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-""" Module holding scene related aspects concerning the graphical user interface layer.
-"""
-
-# System imports
-from PyQt5 import QtWidgets
-<<gui-scene-system-imports>>
-
-# Project imports
-<<gui-scene-project-imports>>
-
-
-<<gui-scene-graph-class-decorators>>
-class SceneGraphView(QtWidgets.QTreeView):
-    """The scene graph view widget.
-    A widget for displaying and managing the scene graph.
+    #!/usr/bin/python
+    # -*- coding: utf-8 -*-
+    
+    """ Module holding scene related aspects concerning the graphical user interface layer.
     """
-
-    # Signals
-    <<gui-scene-graph-signals>>
-
-    def __init__(self, parent=None):
-        """Constructor.
-
-        :param parent:        The parent of the current view widget.
-        :type parent:         QtCore.QObject
+    
+    # System imports
+    from PyQt5 import QtWidgets
+    <<gui-scene-system-imports>>
+    
+    # Project imports
+    <<gui-scene-project-imports>>
+    
+    
+    <<gui-scene-graph-class-decorators>>
+    class SceneGraphView(QtWidgets.QTreeView):
+        """The scene graph view widget.
+        A widget for displaying and managing the scene graph.
         """
-
-        super(SceneGraphView, self).__init__(parent)
-        <<gui-scene-graph-constructor>>
-
-    <<gui-scene-graph-methods>>
-
-    # Slots
-    <<gui-scene-graph-slots>>
+    
+        # Signals
+        <<gui-scene-graph-signals>>
+    
+        def __init__(self, parent=None):
+            """Constructor.
+    
+            :param parent:        The parent of the current view widget.
+            :type parent:         QtCore.QObject
+            """
+    
+            super(SceneGraphView, self).__init__(parent)
+            <<gui-scene-graph-constructor>>
+    
+        <<gui-scene-graph-methods>>
+    
+        # Slots
+        <<gui-scene-graph-slots>>
 \end{minted}
 \caption{\label{fig:gui-scene-graph}
 The outline of the \texttt{SceneGraphView} class, within the \texttt{scene} module of the \texttt{gui} package.}
@@ -1448,7 +1437,7 @@ method.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-from qde.editor.gui import scene as guiscene
+    from qde.editor.gui import scene as guiscene
 \end{minted}
 \caption{\label{main-window-project-imports}
 Import of the \texttt{scene} module from the \texttt{gui} layer.}
@@ -1456,10 +1445,10 @@ Import of the \texttt{scene} module from the \texttt{gui} layer.}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-self.scene_graph_widget = guiscene.SceneGraphView()
-self.scene_graph_widget.setObjectName('scene_graph')
-self.scene_graph_widget.setMaximumWidth(300)
-horizontal_layout.addWidget(self.scene_graph_widget)
+    self.scene_graph_widget = guiscene.SceneGraphView()
+    self.scene_graph_widget.setObjectName('scene_graph')
+    self.scene_graph_widget.setMaximumWidth(300)
+    horizontal_layout.addWidget(self.scene_graph_widget)
 \end{minted}
 \caption{\label{main-window-setupui-scenegraph}
 The scene graph widget is being initialized and added to the horizontal layout.}
@@ -1491,8 +1480,8 @@ providing greater functionality.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-application-methods-setup-connections>=
-    <<app-application-methods-setup-connections-01>>
+    <app-application-methods-setup-connections>=
+        <<app-application-methods-setup-connections-01>>
 \end{minted}
 \caption{\label{lst:app-application-methods-setup-connections-01}
 The method \texttt{setup\_connections} being defined by setting the scene graph widget's model.}
@@ -1513,8 +1502,8 @@ whereas setting the scene graph widget's model will be implemented in the
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-application-methods-setup-components>+=
-    <<app-application-methods-setup-components-01>>
+    <app-application-methods-setup-components>+=
+        <<app-application-methods-setup-components-01>>
 \end{minted}
 \caption{The method \texttt{setup\_components} being expanded by the creation of the root scene as well as the scene graph controller.}
 \end{listing}
@@ -1524,10 +1513,10 @@ application's imports.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-application-project-imports>+=
-    from qde.editor.gui import main_window as qde_main_window
-    from qde.editor.domain import scene
-    from qde.editor.application import scene_graph
+    <app-application-project-imports>+=
+        from qde.editor.gui import main_window as qde_main_window
+            from qde.editor.domain import scene
+            from qde.editor.application import scene_graph
 \end{minted}
 \caption{Expansion of the main application's imports by the necessary packages.}
 \end{listing}
@@ -1539,8 +1528,8 @@ be observed.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-NotImplementedError: QAbstractItemModel.columnCount() is abstract and must be overridden
-NotImplementedError: QAbstractItemModel.rowCount() is abstract and must be overridden
+    NotImplementedError: QAbstractItemModel.columnCount() is abstract and must be overridden
+    NotImplementedError: QAbstractItemModel.rowCount() is abstract and must be overridden
 \end{minted}
 \caption{\label{lst:app-error-01}
 Output (erroneous) when running the editor application.}
@@ -1563,39 +1552,39 @@ the number of nodes it contains. The method \texttt{rowCount} shall return
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>=
-    def columnCount(self, parent):
-        """Return the number of columns for the children of the given parent.
+    <app-scenegraph-controller-methods>=
+            def columnCount(self, parent):
+                """Return the number of columns for the children of the given parent.
+            
+                :param parent: The index of the item in the scene graph, which the
+                                column count shall be returned for.
+                :type  parent: QtCore.QModelIndex
+            
+                :return: the number of columns for the children of the given parent.
+                :rtype:  int
+                """
+            
+                return len(self.header_data)
     
-        :param parent: The index of the item in the scene graph, which the
-                        column count shall be returned for.
-        :type  parent: QtCore.QModelIndex
-    
-        :return: the number of columns for the children of the given parent.
-        :rtype:  int
-        """
-    
-        return len(self.header_data)
-
-    def rowCount(self, parent):
-        """Return the number of rows for the children of the given parent.
-    
-        :param parent: The index of the item in the scene graph, which the
-                        row count shall be returned for.
-        :type  parent: QtCore.QModelIndex
-    
-        :return: the number of rows for the children of the given parent.
-        :rtype:  int
-        """
-    
-        if not parent.isValid():
-            return 1
-    
-        # Get the actual object stored by the parent. In this case it is a
-        # SceneGraphViewModel.
-        node = parent.internalPointer()
-    
-        return len(node.children())
+            def rowCount(self, parent):
+                """Return the number of rows for the children of the given parent.
+            
+                :param parent: The index of the item in the scene graph, which the
+                                row count shall be returned for.
+                :type  parent: QtCore.QModelIndex
+            
+                :return: the number of rows for the children of the given parent.
+                :rtype:  int
+                """
+            
+                if not parent.isValid():
+                    return 1
+            
+                # Get the actual object stored by the parent. In this case it is a
+                # SceneGraphViewModel.
+                node = parent.internalPointer()
+            
+                return len(node.children())
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-01}
 The code block \texttt{<<app-scenegraph-controller-methods>>}, defining the methods \texttt{columnCount} and \texttt{rowCount} within the scene controller.}
@@ -1606,7 +1595,7 @@ new one as can be seen in listing \ref{lst:app-error-02}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-NotImplementedError: QAbstractItemModel.index() is abstract and must be overridden
+    NotImplementedError: QAbstractItemModel.index() is abstract and must be overridden
 \end{minted}
 \caption{\label{lst:app-error-02}
 Output (erroneous) when running the editor application.}
@@ -1632,35 +1621,35 @@ graph's root node is created.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def index(self, row, column, parent=QtCore.QModelIndex()):
-        """Return the index of the item in the model specified by the given row,
-        column and parent index.
-    
-        :param row: The row for which the index shall be returned.
-        :type  row: int
-        :param column: The column for which the index shall be returned.
-        :type column: int
-        :param parent: The parent index of the item in the model. An invalid model
-                       index is given as the default parameter.
-        :type parent: QtQore.QModelIndex
-    
-        :return: the model index based on the given row, column and the parent
-                 index.
-        :rtype: QtCore.QModelIndex
-        """
-    
-        # If the given parent (index) is not valid, create a new index based on the
-        # currently set root node
-        if not parent.isValid():
-            return self.createIndex(row, column, self.root_node)
-    
-        # The internal pointer of the the parent (index) returns a scene graph view
-        # model
-        parent_node = parent.internalPointer()
-        child_nodes = parent_node.children()
-    
-        return self.createIndex(row, column, child_nodes[row])
+    <app-scenegraph-controller-methods>+=
+            def index(self, row, column, parent=QtCore.QModelIndex()):
+                """Return the index of the item in the model specified by the given row,
+                column and parent index.
+            
+                :param row: The row for which the index shall be returned.
+                :type  row: int
+                :param column: The column for which the index shall be returned.
+                :type column: int
+                :param parent: The parent index of the item in the model. An invalid model
+                               index is given as the default parameter.
+                :type parent: QtQore.QModelIndex
+            
+                :return: the model index based on the given row, column and the parent
+                         index.
+                :rtype: QtCore.QModelIndex
+                """
+            
+                # If the given parent (index) is not valid, create a new index based on the
+                # currently set root node
+                if not parent.isValid():
+                    return self.createIndex(row, column, self.root_node)
+            
+                # The internal pointer of the the parent (index) returns a scene graph view
+                # model
+                parent_node = parent.internalPointer()
+                child_nodes = parent_node.children()
+            
+                return self.createIndex(row, column, child_nodes[row])
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-02}
 The code block \texttt{<<app-scenegraph-controller-methods>>}, is expanded by the \texttt{index} method within the scene controller.}
@@ -1671,8 +1660,8 @@ application, there are still error messages, as shown in listing \ref{lst:app-er
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{bash}
-NotImplementedError: QAbstractItemModel.parent() is abstract and must be overridden
-NotImplementedError: QAbstractItemModel.data() is abstract and must be overridden
+    NotImplementedError: QAbstractItemModel.parent() is abstract and must be overridden
+    NotImplementedError: QAbstractItemModel.data() is abstract and must be overridden
 \end{minted}
 \caption{\label{lst:app-error-03}
 Output (erroneous) when running the editor application.}
@@ -1698,29 +1687,29 @@ Those remarks lead to the implementation, that can be seen in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def parent(self, model_index):
-        """Return the parent of the model item with the given index. If the item has
-        no parent, an invalid QModelIndex is returned.
-    
-        :param model_index: The model index which the parent model index shall be
-                            derived for.
-        :type model_index: int
-    
-        :return: the model index of the parent model item for the given model index.
-        :rtype: QtCore.QModelIndex
-        """
-    
-        if not model_index.isValid():
-            return QtCore.QModelIndex()
-    
-        # The internal pointer of the the model index returns a scene graph view
-        # model.
-        node = model_index.internalPointer()
-        if node.parent() is None:
-            return QtCore.QModelIndex()
-        else:
-            return self.createIndex(node.parent().row, 0, node.parent())
+    <app-scenegraph-controller-methods>+=
+            def parent(self, model_index):
+                """Return the parent of the model item with the given index. If the item has
+                no parent, an invalid QModelIndex is returned.
+            
+                :param model_index: The model index which the parent model index shall be
+                                    derived for.
+                :type model_index: int
+            
+                :return: the model index of the parent model item for the given model index.
+                :rtype: QtCore.QModelIndex
+                """
+            
+                if not model_index.isValid():
+                    return QtCore.QModelIndex()
+            
+                # The internal pointer of the the model index returns a scene graph view
+                # model.
+                node = model_index.internalPointer()
+                if node.parent() is None:
+                    return QtCore.QModelIndex()
+                else:
+                    return self.createIndex(node.parent().row, 0, node.parent())
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-03}
 The code block \texttt{<<app-scenegraph-controller-methods>>}, is expanded by the \texttt{parent} method within the scene controller.}
@@ -1748,15 +1737,15 @@ by now, as can be seen in listing \ref{lst:guidomain-scene-sceneviewmodel}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<guidomain-scene-body>+=
-    class SceneViewModel(Qt.QObject):
-        """View model representing a scene.
-    
-        The SceneViewModel corresponds to an SceneGraphViewModel entry within the
-        scene graph.
-        """
-    
-        pass
+    <guidomain-scene-body>+=
+            class SceneViewModel(Qt.QObject):
+                """View model representing a scene.
+            
+                The SceneViewModel corresponds to an SceneGraphViewModel entry within the
+                scene graph.
+                """
+            
+                pass
 \end{minted}
 \caption{\label{lst:guidomain-scene-sceneviewmodel}
 Expansion of the \texttt{scene} module, which is within the \texttt{gui\_domain} layer, by the \texttt{SceneViewModel} class. Note, that the implementation of the class provides no functionality at all at the moment.}
@@ -1768,8 +1757,8 @@ getting the number of nodes a scene contains.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<guidomain-scene-scenegraphviewmodel-constructor>+=
-        self.scene_view_model = SceneViewModel()
+    <guidomain-scene-scenegraphviewmodel-constructor>+=
+                self.scene_view_model = SceneViewModel()
 \end{minted}
 \caption{\label{lst:guidomain-scene-scenegraphviewmodel-constructor-01}
 Expansion of the constructor of the \texttt{SceneGraphViewModel} class by a reference to a scene view model.}
@@ -1787,37 +1776,37 @@ node or the number of nodes its scene holds is returned.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def data(self, model_index, role=QtCore.Qt.DisplayRole):
-        """Return the data stored unter the given role for the item referred by the
-        index.
-    
-        :param model_index: The (data-) model index of the item.
-        :type model_index: int
-        :param role: The role which shall be used for representing the data. The
-                     default (and currently only supported) is displaying the data.
-        :type role:  QtCore.Qt.DisplayRole
-    
-        :return: the data stored under the given role for the item referred by the
-                 given index.
-        :rtype:  str
-        """
-    
-        if not model_index.isValid():
-            return None
-    
-        # The internal pointer of the model index returns a scene graph view
-        # model.
-        node = model_index.internalPointer()
-    
-        if role == QtCore.Qt.DisplayRole:
-            # Return either the name of the scene or its number of nodes.
-            column = model_index.column()
-    
-            if column == 0:
-                return node.name
-            elif column == 1:
-                return node.scene_view_model.graph_node_count
+    <app-scenegraph-controller-methods>+=
+            def data(self, model_index, role=QtCore.Qt.DisplayRole):
+                """Return the data stored unter the given role for the item referred by the
+                index.
+            
+                :param model_index: The (data-) model index of the item.
+                :type model_index: int
+                :param role: The role which shall be used for representing the data. The
+                             default (and currently only supported) is displaying the data.
+                :type role:  QtCore.Qt.DisplayRole
+            
+                :return: the data stored under the given role for the item referred by the
+                         given index.
+                :rtype:  str
+                """
+            
+                if not model_index.isValid():
+                    return None
+            
+                # The internal pointer of the model index returns a scene graph view
+                # model.
+                node = model_index.internalPointer()
+            
+                if role == QtCore.Qt.DisplayRole:
+                    # Return either the name of the scene or its number of nodes.
+                    column = model_index.column()
+            
+                    if column == 0:
+                        return node.name
+                    elif column == 1:
+                        return node.scene_view_model.graph_node_count
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-04}
 The code block \texttt{<<app-scenegraph-controller-methods>>} is expanded by the \texttt{data} method within the scene controller.}
@@ -1835,11 +1824,11 @@ list which leads to the definition of its constructor before implementing the
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<guidomain-scene-sceneviewmodel-constructor>=
-    def __init__(self):
-        """Constructor."""
-    
-        self.graph_nodes = []
+    <guidomain-scene-sceneviewmodel-constructor>=
+            def __init__(self):
+                """Constructor."""
+            
+                self.graph_nodes = []
 \end{minted}
 \caption{\label{lst:guidomain-scene-scenegraphviewmodel-constructor}
 Definition of the constructor of the \texttt{SceneViewModel} class.}
@@ -1851,12 +1840,12 @@ graph node list, as can be seen in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<guidomain-scene-sceneviewmodel-methods>+=
-    @property
-    def graph_node_count(self):
-        """Return the number of graph nodes, that this scene contains."""
-    
-        return len(self.graph_nodes)
+    <guidomain-scene-sceneviewmodel-methods>+=
+            @property
+            def graph_node_count(self):
+                """Return the number of graph nodes, that this scene contains."""
+            
+                return len(self.graph_nodes)
 \end{minted}
 \caption{\label{lst:guidomain-scene-sceneviewmodel-methods-graphnodecount}
 Expansion of the scene view model's methods by adding the \texttt{graph\_node\_count} property.}
@@ -1882,37 +1871,37 @@ listing \ref{lst:app-scenegraph-controller-methods-header-data}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def headerData(self, section, orientation=QtCore.Qt.Horizontal,
-                   role=QtCore.Qt.DisplayRole):
-        """Return the data for the given role and section in the header with the
-        specified orientation.
-    
-        Currently vertical is the only supported orientation. The only supported
-        role is DisplayRole. As the sections correspond to the header, there are
-        only two supported sections: 0 and 1. If one of those parameters is not
-        within the described values, None is returned.
-    
-        :param section: the section in the header. Currently only 0 and 1 are
-                        supported.
-        :type  section: int
-        :param orientation: the orientation of the display. Currently only
-                            Horizontal is supported.
-        :type orientation:  QtCore.Qt.Orientation
-        :param role: The role which shall be used for representing the data. The
-                     default (and currently only supported) is displaying the data.
-        :type role:  QtCore.Qt.DisplayRole
-    
-        :return: the header data for the given section using the given role and orientation.
-        :rtype:  str
-        """
-    
-        if (
-                orientation == QtCore.Qt.Horizontal  and
-                role        == QtCore.Qt.DisplayRole and
-                section     in [0, 1]
-        ):
-            return self.header_data[section]
+    <app-scenegraph-controller-methods>+=
+            def headerData(self, section, orientation=QtCore.Qt.Horizontal,
+                           role=QtCore.Qt.DisplayRole):
+                """Return the data for the given role and section in the header with the
+                specified orientation.
+            
+                Currently vertical is the only supported orientation. The only supported
+                role is DisplayRole. As the sections correspond to the header, there are
+                only two supported sections: 0 and 1. If one of those parameters is not
+                within the described values, None is returned.
+            
+                :param section: the section in the header. Currently only 0 and 1 are
+                                supported.
+                :type  section: int
+                :param orientation: the orientation of the display. Currently only
+                                    Horizontal is supported.
+                :type orientation:  QtCore.Qt.Orientation
+                :param role: The role which shall be used for representing the data. The
+                             default (and currently only supported) is displaying the data.
+                :type role:  QtCore.Qt.DisplayRole
+            
+                :return: the header data for the given section using the given role and orientation.
+                :rtype:  str
+                """
+            
+                if (
+                        orientation == QtCore.Qt.Horizontal  and
+                        role        == QtCore.Qt.DisplayRole and
+                        section     in [0, 1]
+                ):
+                    return self.header_data[section]
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-header-data}
 Expansion of the scene graph controller's methods by adding the \texttt{headerData} method which overwrites the method inherited by \texttt{QAbstractItemModel}.}
@@ -1949,9 +1938,9 @@ can be seen in listings \ref{lst:gui-scene-system-imports-01},
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-system-imports>=
-    from PyQt5 import Qt
-    from PyQt5 import QtCore
+    <gui-scene-system-imports>=
+            from PyQt5 import Qt
+            from PyQt5 import QtCore
 \end{minted}
 \caption{\label{lst:gui-scene-system-imports-01}
 Definition of the necessary system imports for selecting tree items within the view's scene package.}
@@ -1959,8 +1948,8 @@ Definition of the necessary system imports for selecting tree items within the v
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-project-imports>=
-    from qde.editor.gui_domain import scene
+    <gui-scene-project-imports>=
+            from qde.editor.gui_domain import scene
 \end{minted}
 \caption{\label{lst:gui-scene-project-imports-01}
 Definition of the necessary imports for selecting tree items within the view's scene package.}
@@ -1968,8 +1957,8 @@ Definition of the necessary imports for selecting tree items within the view's s
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-signals>=
-    tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
+    <gui-scene-graph-signals>=
+            tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
 \end{minted}
 \caption{\label{lst:gui-scene-graph-signals-01}
 Definition of the signal in case tree items are selected.}
@@ -1977,25 +1966,25 @@ Definition of the signal in case tree items are selected.}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-methods>+=
-    def setModel(self, model):
-        """Set the model for the view to present.
-    
-        This method is only used for being able to use the selection model's
-        selectionChanged method and setting the current selection to the root node.
-    
-        :param model: The item model which the view shall present.
-        :type  model: QtCore.QAbstractItemModel
-        """
-    
-        super(SceneGraphView, self).setModel(model)
-    
-        selection_model = self.selectionModel()
-        selection_model.selectionChanged.connect(
-            self.on_tree_item_selected
-        )
-    
-        self.setCurrentIndex(model.index(0, 0))
+    <gui-scene-graph-methods>+=
+            def setModel(self, model):
+                """Set the model for the view to present.
+            
+                This method is only used for being able to use the selection model's
+                selectionChanged method and setting the current selection to the root node.
+            
+                :param model: The item model which the view shall present.
+                :type  model: QtCore.QAbstractItemModel
+                """
+            
+                super(SceneGraphView, self).setModel(model)
+            
+                selection_model = self.selectionModel()
+                selection_model.selectionChanged.connect(
+                    self.on_tree_item_selected
+                )
+            
+                self.setCurrentIndex(model.index(0, 0))
 \end{minted}
 \caption{\label{lst:gui-scene-graph-methods-set-model}
 The overridden \texttt{setModel} method coming from \texttt{QTreeView} being added to the methods of the scene graph view class.}
@@ -2003,27 +1992,27 @@ The overridden \texttt{setModel} method coming from \texttt{QTreeView} being add
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-slots>+=
-    @QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)
-    def on_tree_item_selected(self, selected, deselected):
-        """Slot which is called when the selection within the scene graph view is
-        changed.
-    
-        The previous selection (which may be empty) is specified by the deselected
-        parameter, the new selection is specified by the selected paramater.
-    
-        This method emits the selected scene graph item as scene graph view model.
-    
-        :param selected: The new selection of scenes.
-        :type  selected: QtCore.QModelIndex
-        :param deselected: The previous selected scenes.
-        :type  deselected: QtCore.QModelIndex
-        """
-    
-        selected_item = selected.first()
-        selected_index = selected_item.indexes()[0]
-        selected_scene_graph_view_model = selected_index.internalPointer()
-        self.tree_item_selected.emit(selected_scene_graph_view_model)
+    <gui-scene-graph-slots>+=
+            @QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)
+            def on_tree_item_selected(self, selected, deselected):
+                """Slot which is called when the selection within the scene graph view is
+                changed.
+            
+                The previous selection (which may be empty) is specified by the deselected
+                parameter, the new selection is specified by the selected paramater.
+            
+                This method emits the selected scene graph item as scene graph view model.
+            
+                :param selected: The new selection of scenes.
+                :type  selected: QtCore.QModelIndex
+                :param deselected: The previous selected scenes.
+                :type  deselected: QtCore.QModelIndex
+                """
+            
+                selected_item = selected.first()
+                selected_index = selected_item.indexes()[0]
+                selected_scene_graph_view_model = selected_index.internalPointer()
+                self.tree_item_selected.emit(selected_scene_graph_view_model)
 \end{minted}
 \caption{\label{lst:gui-scene-graph-slots-01}
 Definition of the slot which gets called in case tree items are selected.}
@@ -2059,16 +2048,16 @@ providing it with the root scene.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-signals>+=
-    tree_item_added = QtCore.pyqtSignal(QtCore.QModelIndex)
+    <gui-scene-graph-signals>+=
+            tree_item_added = QtCore.pyqtSignal(QtCore.QModelIndex)
 \end{minted}
 \caption{\label{lst:gui-scene-graph-signals-tree-item-removed}
 The signal in case a tree item is added gets appended to the scene graph widget's signals.}
 \end{listing}
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-signals>+=
-    tree_item_removed = QtCore.pyqtSignal(QtCore.QModelIndex)
+    <gui-scene-graph-signals>+=
+            tree_item_removed = QtCore.pyqtSignal(QtCore.QModelIndex)
 \end{minted}
 \caption{\label{lst:gui-scene-graph-signals-tree-item-removed}
 The signal in case a tree item is removed gets appended to the scene graph widget's signals.}
@@ -2076,24 +2065,24 @@ The signal in case a tree item is removed gets appended to the scene graph widge
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-constructor>+=
-    new_action_label = QtCore.QCoreApplication.translate(
-        __class__.__name__, 'New scene'
-    )
-    new_action = QtWidgets.QAction(new_action_label, self)
-    new_action.setShortcut(Qt.QKeySequence('a'))
-    new_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
-    new_action.triggered.connect(self.on_new_tree_item)
-    self.addAction(new_action)
-    
-    remove_action_label = QtCore.QCoreApplication.translate(
-        __class__.__name__, 'Remove selected scene(s)'
-    )
-    remove_action = QtWidgets.QAction(remove_action_label, self)
-    remove_action.setShortcut(Qt.QKeySequence('Delete'))
-    remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
-    remove_action.triggered.connect(self.on_tree_item_removed)
-    self.addAction(remove_action)
+    <gui-scene-graph-constructor>+=
+            new_action_label = QtCore.QCoreApplication.translate(
+                __class__.__name__, 'New scene'
+            )
+            new_action = QtWidgets.QAction(new_action_label, self)
+            new_action.setShortcut(Qt.QKeySequence('a'))
+            new_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+            new_action.triggered.connect(self.on_new_tree_item)
+            self.addAction(new_action)
+            
+            remove_action_label = QtCore.QCoreApplication.translate(
+                __class__.__name__, 'Remove selected scene(s)'
+            )
+            remove_action = QtWidgets.QAction(remove_action_label, self)
+            remove_action.setShortcut(Qt.QKeySequence('Delete'))
+            remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+            remove_action.triggered.connect(self.on_tree_item_removed)
+            self.addAction(remove_action)
 \end{minted}
 \caption{\label{lst:gui-scene-graph-constructor-01}
 The actions to add a new scene and to remove existing scenes are added to the constructor of the scene graph view.}
@@ -2101,23 +2090,23 @@ The actions to add a new scene and to remove existing scenes are added to the co
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-slots>+=
-    @QtCore.pyqtSlot()
-    def on_new_tree_item(self):
-        """Slot which is called when a new tree item was added by the scene graph
-        view.
-    
-        This method emits the selected scene graph item as new tree item in form of
-        a scene graph view model.
-        """
-    
-        selected_indexes = self.selectedIndexes()
-    
-        # Sanity check: is actually an item selected?
-        if len(selected_indexes) > 0:
-            selected_item = selected_indexes[0]
-            self.tree_item_added.emit(selected_item)
-                    self.logger.debug("A new scene graph item was added.")
+    <gui-scene-graph-slots>+=
+            @QtCore.pyqtSlot()
+            def on_new_tree_item(self):
+                """Slot which is called when a new tree item was added by the scene graph
+                view.
+            
+                This method emits the selected scene graph item as new tree item in form of
+                a scene graph view model.
+                """
+            
+                selected_indexes = self.selectedIndexes()
+            
+                # Sanity check: is actually an item selected?
+                if len(selected_indexes) > 0:
+                    selected_item = selected_indexes[0]
+                    self.tree_item_added.emit(selected_item)
+                        self.logger.debug("A new scene graph item was added.")
 \end{minted}
 \caption{\label{lst:gui-scene-graph-slots-on-tree-item-added}
 The \texttt{on\_new\_tree\_item} slot is added to the scene graph view's slots.}
@@ -2125,32 +2114,32 @@ The \texttt{on\_new\_tree\_item} slot is added to the scene graph view's slots.}
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<gui-scene-graph-slots>+=
-    @QtCore.pyqtSlot()
-    def on_tree_item_removed(self):
-        """Slot which is called when a one or multiple tree items were removed by
-        the scene graph view.
-    
-        This method emits the removed scene graph item in form of scene graph view
-        models.
-        """
-    
-        selected_indexes = self.selectedIndexes()
-    
-        # Sanity check: is actually an item selected? And has that item a parent?
-        # We only allow removal of items with a valid parent, as we do not want to
-        # have the root item removed.
-        if len(selected_indexes) > 0:
-            selected_item = selected_indexes[0]
-            if selected_item.parent().isValid():
-                self.tree_item_removed.emit(selected_item)
-                    self.logger.debug((
-                        "The scene graph item at row {row} "
-                        "and column {column} was removed."
-                    ).format(
-                        row=selected_item.row(),
-                        column=selected_item.column()
-                    ))
+    <gui-scene-graph-slots>+=
+            @QtCore.pyqtSlot()
+            def on_tree_item_removed(self):
+                """Slot which is called when a one or multiple tree items were removed by
+                the scene graph view.
+            
+                This method emits the removed scene graph item in form of scene graph view
+                models.
+                """
+            
+                selected_indexes = self.selectedIndexes()
+            
+                # Sanity check: is actually an item selected? And has that item a parent?
+                # We only allow removal of items with a valid parent, as we do not want to
+                # have the root item removed.
+                if len(selected_indexes) > 0:
+                    selected_item = selected_indexes[0]
+                    if selected_item.parent().isValid():
+                        self.tree_item_removed.emit(selected_item)
+                        self.logger.debug((
+                            "The scene graph item at row {row} "
+                            "and column {column} was removed."
+                        ).format(
+                            row=selected_item.row(),
+                            column=selected_item.column()
+                        ))
 \end{minted}
 \caption{\label{lst:gui-scene-graph-slots-on-tree-item-removed}
 The \texttt{on\_tree\_item\_removed} slot is added to the scene graph view's slots.}
@@ -2172,13 +2161,13 @@ implementation of the connections is shown in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-application-methods-setup-connections>+=
-    self.main_window.scene_graph_widget.tree_item_added.connect(
-        self.scene_graph_controller.on_tree_item_added
-    )
-    self.main_window.scene_graph_widget.tree_item_removed.connect(
-        self.scene_graph_controller.on_tree_item_removed
-    )
+    <app-application-methods-setup-connections>+=
+            self.main_window.scene_graph_widget.tree_item_added.connect(
+                self.scene_graph_controller.on_tree_item_added
+            )
+            self.main_window.scene_graph_widget.tree_item_removed.connect(
+                self.scene_graph_controller.on_tree_item_removed
+            )
 \end{minted}
 \caption{\label{lst:app-application-methods-setup-connections-02}
 Connections between the scene graph view and the scene graph controller are added to the \texttt{setup\_connections} method of the main application.}
@@ -2206,20 +2195,20 @@ implementation can be seen in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-slots>+=
-    @QtCore.pyqtSlot(QtCore.QModelIndex)
-    def on_tree_item_added(self, parent_index):
-        """Add a new row under the given parent.
-    
-        :param parent_index: The index of the parent item.
-        :type  parent_index: QtCore.QModelIndex
-        """
-    
-        if parent_index.isValid():
-            self.insertRows(0, 1, parent_index)
-        else:
-            # TODO: Log warning or error
-            pass
+    <app-scenegraph-controller-slots>+=
+            @QtCore.pyqtSlot(QtCore.QModelIndex)
+            def on_tree_item_added(self, parent_index):
+                """Add a new row under the given parent.
+            
+                :param parent_index: The index of the parent item.
+                :type  parent_index: QtCore.QModelIndex
+                """
+            
+                if parent_index.isValid():
+                    self.insertRows(0, 1, parent_index)
+                else:
+                    # TODO: Log warning or error
+                    pass
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-slots-01}
 The slot \texttt{on\_tree\_item\_added} is being added to the scene graph controller's slots.}
@@ -2232,22 +2221,22 @@ the parent of the new item. The implementation can be seen in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-slots>+=
-    @QtCore.pyqtSlot(QtCore.QModelIndex)
-    def on_tree_item_removed(self, selected_index):
-        """Remove the currently selected item from the scene graph.
-    
-        :param selected_index: The index of the current selection.
-        :type  selected_index: QtCore.QModelIndex
-        """
-    
-        if selected_index.isValid():
-            row    = selected_index.row()
-            parent = selected_index.parent()
-            self.removeRows(row, 1, parent)
-        else:
-            # TODO: Log warning or error
-            pass
+    <app-scenegraph-controller-slots>+=
+            @QtCore.pyqtSlot(QtCore.QModelIndex)
+            def on_tree_item_removed(self, selected_index):
+                """Remove the currently selected item from the scene graph.
+            
+                :param selected_index: The index of the current selection.
+                :type  selected_index: QtCore.QModelIndex
+                """
+            
+                if selected_index.isValid():
+                    row    = selected_index.row()
+                    parent = selected_index.parent()
+                    self.removeRows(row, 1, parent)
+                else:
+                    # TODO: Log warning or error
+                    pass
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-slots-02}
 The slot \texttt{on\_tree\_item\_removed} is being added to the scene graph controller's slots.}
@@ -2271,43 +2260,43 @@ seen in listing \ref{lst:app-scenegraph-controller-methods-insert-rows}.
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def insertRows(self, row, count, parent_index=QtCore.QModelIndex()):
-        """ Insert the given number of rows into the scene graph below the given
-        parent.
-    
-        :param row: The row after which the new rows shall be inserted.
-        :type  row: int
-        :param count: The number of rows to insert.
-        :type  count: int
-        :param parent_index: The index of the parent item, under which the rows will
-                             be inserted.
-        :type parent_index:  QtCore.QModelIndex
-    
-        :return: a boolean value. True when the insertion was successful, False otherwise.
-        :rtype:  bool
-        """
-    
-        if parent_index.isValid():
-            self.beginInsertRows(parent_index, row, row + count - 1)
-    
-            # The internal pointer of the parent index returns a scene graph view
-            # model.
-            parent_node = parent_index.internalPointer()
-    
-            domain_scene_model = domain_scene.SceneModel()
-            guidomain_scene.SceneGraphViewModel(
-                row=row,
-                domain_object=domain_scene_model,
-                parent=parent_node
-            )
-    
-            self.endInsertRows()
-    
-            self.layoutChanged.emit()
-            self.scene_added.emit(domain_scene_model)
-        else:
-            return False
+    <app-scenegraph-controller-methods>+=
+            def insertRows(self, row, count, parent_index=QtCore.QModelIndex()):
+                """ Insert the given number of rows into the scene graph below the given
+                parent.
+            
+                :param row: The row after which the new rows shall be inserted.
+                :type  row: int
+                :param count: The number of rows to insert.
+                :type  count: int
+                :param parent_index: The index of the parent item, under which the rows will
+                                     be inserted.
+                :type parent_index:  QtCore.QModelIndex
+            
+                :return: a boolean value. True when the insertion was successful, False otherwise.
+                :rtype:  bool
+                """
+            
+                if parent_index.isValid():
+                    self.beginInsertRows(parent_index, row, row + count - 1)
+            
+                    # The internal pointer of the parent index returns a scene graph view
+                    # model.
+                    parent_node = parent_index.internalPointer()
+            
+                    domain_scene_model = domain_scene.SceneModel()
+                    guidomain_scene.SceneGraphViewModel(
+                        row=row,
+                        domain_object=domain_scene_model,
+                        parent=parent_node
+                    )
+            
+                    self.endInsertRows()
+            
+                    self.layoutChanged.emit()
+                    self.scene_added.emit(domain_scene_model)
+                else:
+                    return False
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-insert-rows}
 The method \texttt{insertRows} is being added to the scene graph controller's methods.}
@@ -2329,38 +2318,38 @@ the removal. This can be seen in listing
 
 \begin{listing}[H]
 \begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
-<app-scenegraph-controller-methods>+=
-    def removeRows(self, row, count, parent_index=QtCore.QModelIndex()):
-        """Remove the given number of rows, lying below the given parent, from the
-        scene graph.
-    
-        :param row: The row which marks the beginning of the removal.
-        :type  row: int
-        :param count: The number of rows to remove starting from the given row.
-        :type  count: int
-        :param parent_index: The index of the parent item, under which the rows will
-                             be removed.
-        :type parent_index:  QtCore.QModelIndex
-    
-        :return: a boolean value. True when the removal was successful, False otherwise.
-        :rtype:  bool
-        """
-    
-        if parent_index.isValid():
-            self.beginRemoveRows(parent_index, row, row + count - 1)
-    
-            node_index = parent_index.child(row, parent_index.column())
-            # The internal pointer of the node index returns a scene graph view
-            # model.
-            node = node_index.internalPointer()
-            node.setParent(None)
-    
-            self.endRemoveRows()
-    
-            self.layoutChanged.emit()
-            self.scene_removed.emit(node.domain_object)
-        else:
-            return False
+    <app-scenegraph-controller-methods>+=
+            def removeRows(self, row, count, parent_index=QtCore.QModelIndex()):
+                """Remove the given number of rows, lying below the given parent, from the
+                scene graph.
+            
+                :param row: The row which marks the beginning of the removal.
+                :type  row: int
+                :param count: The number of rows to remove starting from the given row.
+                :type  count: int
+                :param parent_index: The index of the parent item, under which the rows will
+                                     be removed.
+                :type parent_index:  QtCore.QModelIndex
+            
+                :return: a boolean value. True when the removal was successful, False otherwise.
+                :rtype:  bool
+                """
+            
+                if parent_index.isValid():
+                    self.beginRemoveRows(parent_index, row, row + count - 1)
+            
+                    node_index = parent_index.child(row, parent_index.column())
+                    # The internal pointer of the node index returns a scene graph view
+                    # model.
+                    node = node_index.internalPointer()
+                    node.setParent(None)
+            
+                    self.endRemoveRows()
+            
+                    self.layoutChanged.emit()
+                    self.scene_removed.emit(node.domain_object)
+                else:
+                    return False
 \end{minted}
 \caption{\label{lst:app-scenegraph-controller-methods-remove-rows}
 The method \texttt{removeRows} is being added to the scene graph controller's methods.}
@@ -2382,10 +2371,10 @@ The QDE editor application showing the scene graph widget, containing multiple s
 So far the application (or rather the scene graph) seems to be working as
 intended. But how do we ensure, that it really does? Without a doubt, unit and
 integration tests are one of the best instruments to ensure functionality of
-code. As stated before, in section \ref{sec:org5f2f7a9}, it was an intention of
+code. As stated before, in section \ref{sec:org6ce759b}, it was an intention of
 this project to develop the application test driven. Due to required amount of
 work for developing test driven, it was abstained from this intention and
-regular unit tests are written instead, which can be found in appendix \ref{sec:org6048ce6}.
+regular unit tests are written instead, which can be found in appendix \ref{sec:org0c1598a}.
 
 But nevertheless, it would be very handy to have at least some idea what the
 code is doing at certain places and at certain times.
@@ -2401,7 +2390,7 @@ later even be used to implement a widget which outputs those messages. So
 logging using Python's logging facility will be implemented and applied for
 being able to have feedback when needed.
 \subsection{{\bfseries\sffamily DONE} Logging}
-\label{sec:orge818cb4}
+\label{sec:orgdb9442d}
 As logging is a very central and basic functionality, the module is placed in
 the \texttt{foundation} layer.
 
@@ -2726,9 +2715,197 @@ render something, there actually needs to exist something to render: nodes.
 Nodes are being represented within the node graph. So this is a good point to
 begin with the implementation of the node graph.
 \subsection{{\bfseries\sffamily TODO} Node graph}
-\label{sec:org8f3d3a2}
+\label{sec:org36c6f0f}
+The functionality of the node graph is, as its name states, to represent a data
+structure composed of nodes and edges. Each scene from the scene graph is
+represented within the node graph as such a data structure.
+
+The nodes are the building blocks of a real time animation. They represent
+different aspects, such as scenes themselves, time line clips, models, cameras,
+lights, materials, generic operators and effects. These aspects are only examples
+(coming from \cite[p. 30 and 31]{osterwalder_qde_2016}) as the node structure
+must be expandable for allowing the addition of new nodes.
+
+The implementation of the scene graph component was relatively straightforward
+partly due to its structure and partly due to the used data model and
+representation. The node graph component however, seems to be a bit more complex.
+
+To get a first overview and to manage its complexity, it might be good to
+identify its sub components first before implementing them.
+When thinking about the implementation of the node graph, one may identify the
+following sub components:
+
+\begin{itemize}
+\item Nodes
+\begin{description}
+\item[{Domain model}] Holds data of a node, like its definition, its inputs and so
+on.
+\item[{Definitions }] Represents a domain model as JSON data structure.
+\item[{Controller  }] Handles the loading of node definitions as well as the
+creation of node instances.
+\item[{View model  }] Represents a node within the graphical user interface.
+\end{description}
+\item Scenes
+\begin{description}
+\item[{Domain model}] Holds the data of a scene, e.g. its nodes.
+\item[{Controller  }] Handles scene related actions, like when a node is added to
+a scene, when the scene was changed or when a node within a
+scene was selected.
+\item[{View model  }] Defines the graphical representation of scene which can be
+represented by the corresponding view. Basically the scene
+view model is a canvas consisting of nodes.
+\item[{View        }] Represents scenes in terms of scene view models within the
+graphical user interface.
+\end{description}
+\end{itemize}
+
+One of the most basic sub components are the definitions of nodes. But what are
+those definitions actually? What do they actually define? There is not only one
+answer to this question, it is simply a matter of how the implementation is
+being done and therefore a set of decisions.
+
+The whole (rendering) system shall not be bound to only one representation of
+nodes, e.g. triangle based meshes. Instead it shall let the user decide, what
+representation is the most fitting for the goal he wants to achieve.
+
+At this point the system shall be able to theoretically support multiple kinds of
+node representations: Images, triangle based meshes and solid modeling through
+function modeling (using signed distance functions for modeling implicit
+surfaces). Whereas triangle based meshes may either be loaded from externally
+defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
+format (OBJ)) or directly be generated using procedural mesh generation.
+
+When implementing the nodes, keep in mind that the nodes are part of a graph,
+hence the name node graph, and are therefore typically connected by edges. This
+means that the graph gets evaluated recursively by its nodes. However, the goal
+is to have OpenGL shading language (GLSL) code at the end, independent of the
+node types.
+
+From this point of view it is theoretically possible to let the user define shader
+code directly within a node (definition) and to simply evaluate this code, which
+adds a lot of (creative) freedom. The problem with this approach is though, that
+image and triangle based mesh nodes are not fully implementable by using shader
+code only. Instead they have specific requirements, which are only perform-able
+on the CPU instead of the GPU (e.g. allocating buffer objects).
+
+When thinking of nodes used for solid modeling however, it may appear, that they
+may be evaluated directly, without the need for pre-processing, as they are
+fully implementable using shader code only. This is kind of misleading however
+as each node has its own definition which has to be added to shader and this
+definition is then used in a mapping function to compose the scene. This would
+mean to add a definition of a node over and over again, when spawning multiple
+instances of the same node type, which results in overhead bloating the shader.
+It is therefore necessary to pre-process solid modeling nodes too, exactly as
+triangle mesh based and image nodes, for being able to use multiple instances of
+the same node type within a scene while having the definition added only once.
+
+All of these thoughts sum up in one central question for the implementation:
+Shall objects be predefined within the code (and therefore only nodes accepted
+whose type and sub type match those of predefined nodes) or shall all objects be
+defined externally using files?
+
+This is a question which is not so easy to answer. Both methods have their
+advantages and disadvantages. Pre-defining nodes within the code minimizes
+unexpected behavior of the application. Only known and well-defined nodes are
+processed.
+
+But what if someone would like to have a new node type which is not yet defined?
+The node type has to be implemented first. As Python is used for the editor
+application, this is not really a problem as the code is interpreted each time
+and is therefore not being compiled. Nevertheless such changes follow a certain
+process, such as making the actual changes, reviewing and checking-in the code
+and so on, which the user normally does not want to be bothered with.
+Furthermore, when thinking about the player application, the problem of the
+necessity to recompile the code is definitively given. The player will be
+implemented in C, as there is the need for performance, which Python may not
+fulfill satisfactorily.
+
+Considering these aspects, the external definition of nodes is chosen. This may
+result in nodes which cannot be evaluated or which have unwanted effects. As it
+is (most likely) in the users best interest to create (for his taste) appealing
+real time animations, it can be assumed, that the user will try avoiding to
+create such nodes or quickly correct faulty nodes or simply does not use such nodes.
+
+\begin{itemize}
+\item Pre-process
+\item Process
+\item Post-process
+\end{itemize}
+
+To ensure a enjoyable user experience, it is important to provide the user with
+predefined nodes to choose from --- independent from their type.
+
+To recapitulate, the following node types and definitions are envisaged:
+
+\begin{itemize}
+\item Nodes, that can be evaluated directly
+\begin{itemize}
+\item Solid modeling objects
+\begin{itemize}
+\item Sphere
+\item Cube
+\item Plane
+\item \ldots{}
+\end{itemize}
+\item Solid modeling operations
+\begin{itemize}
+\item Transformation
+\item Scaling
+\item Rotation
+\item Union
+\item Differentiation
+\item \ldots{}
+\end{itemize}
+\item Post-processing effects
+\begin{itemize}
+\item Blur
+\item Glare
+\item \ldots{}
+\end{itemize}
+\end{itemize}
+\item Nodes, that cannot be evaluated directly
+\begin{itemize}
+\item Procedural generated mesh nodes
+\begin{itemize}
+\item Sphere
+\item Cube
+\item Plane
+\item \ldots{}
+\end{itemize}
+\item Externally defined meshes
+\begin{itemize}
+\item Filmbox (FBX)
+\item Alembic (ABC)
+\item Object file format (OBJ)
+\end{itemize}
+\item Images
+\end{itemize}
+\end{itemize}
+
+As stated before, it would illusive wanting to implement all of these nodes, as
+the time frame of this project is simply too narrow and therefore only nodes,
+that can be evaluated directly, as well as images are considered for
+implementation.
+
+As not to complicate things, the implementation is kept as simple as
+possible: If a node has a \texttt{code} block in its definition, the application
+assumes that is possible to evaluate this node directly. If a node has no such
+block, its type and its sub-type must be implemented within the application,
+otherwise the node will simply be not evaluated.
+
+To get the node graph implementation started, a sample node definition is
+implemented as well as its defining class.
+
+\subsubsection{Node definitions}
+\label{sec:orgb8191fd}
+
+Node definitions are implemented in the
+JSON\footnote{\url{http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf}}
+format and are placed in the \texttt{data/nodes/} sub-directory, seen from the main
+directory. A node definition contains at least a type and a sub type. Optional
+it may contain a source block, which can be evaluated directly.
 \chapter{Work log}
-\label{sec:orgb2cb4f2}
+\label{sec:org544f6e2}
 \begin{description}
 \item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
 
@@ -2827,14 +3004,14 @@ tags, begin adding references do code fragment definitions, begin implement
 the node graph. Move chapters into separate org files.
 \end{description}
 \chapter{{\bfseries\sffamily TODO} Bibliography}
-\label{sec:org20d33d4}
+\label{sec:org6039ead}
 \printbibliography{}
 \chapter{{\bfseries\sffamily TODO} Appendix}
-\label{sec:org065d257}
+\label{sec:orgc665fc1}
 \section{Test cases}
-\label{sec:org6048ce6}
+\label{sec:org0c1598a}
 \subsection{Test cases}
-\label{sec:org6d0449e}
+\label{sec:org08e93bd}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -3023,12 +3200,12 @@ Testfälle der Hilfsmethode zur Protokollierung.}
 python -m pytest qde/editor/foundation/test_common.py
 \end{minted}
 \section{Meeting minutes}
-\label{sec:org7f0075c}
+\label{sec:org678e9cc}
 \subsection{Meeting minutes}
-\label{sec:org32af344}
+\label{sec:org52b6b0d}
 
 \subsubsection{Meeting mintutes 2017-02-23}
-\label{sec:orgeec77e7}
+\label{sec:orgea7470a}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -3044,7 +3221,7 @@ Kick-off meeting for the thesis.
 
 \begin{enumerate}
 \item Presentation and discussion of the current state of work
-\label{sec:orgfd5814f}
+\label{sec:orgf63f0c6}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -3064,7 +3241,7 @@ of the preceding documentations. (SO)
 \end{itemize}
 
 \item Further steps / proceedings
-\label{sec:orgfd2250c}
+\label{sec:org6048c8b}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -3092,42 +3269,42 @@ follow per e-mail. (CF)
 \end{itemize}
 
 \item To do for the next meeting
-\label{sec:org89daca3}
+\label{sec:org418238c}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:org5723e55}
+\label{sec:orgc492c1b}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:orgd9b9f0c}
+\label{sec:org944400b}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Dr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:orga140c88}
+\label{sec:org80c98c4}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgf3ea869}
+\label{sec:orgc72064a}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Dr. Dubuis (CF)
-\label{sec:orgf59c6d6}
+\label{sec:orgc459654}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgea2705d}
+\label{sec:orgea6972f}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:org3ade508}
+\label{sec:org119f54f}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:org91b08bd}
+\label{sec:org7102365}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org71f3f1a}
+\label{sec:org1857dee}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:orge2d1bc6}
+\label{sec:org294d347}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -3135,19 +3312,18 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:org3229ea2}
+\label{sec:org07a64d5}
 \end{enumerate}
 
 \item Scheduling of the next meeting
-\label{sec:org0c84d0a}
+\label{sec:org09b27df}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
 \end{enumerate}
-
 \chapter{{\bfseries\sffamily TODO} Glossary}
-\label{sec:org2e012c7}
+\label{sec:org2b76065}
 \begin{description}
 \item[{animation}] An animation is a composition of scenes. Each animation is
 defined by a time span, meaning it has a defined start- and
