@@ -94,7 +94,7 @@
     CLOSED: [2017-03-16 Thu 10:19]
     #+INCLUDE: "./implementation/editor/logging.org"
 *** TODO Node graph
-    #+INLCUDE: "./implementation/editor/node-graph.org"
+    #+INCLUDE: "./implementation/editor/node-graph.org"
 * Work log
   #+INCLUDE: "./work_log.org"
 * TODO Bibliography
