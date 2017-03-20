@@ -94,3 +94,8 @@
      tags, begin adding references do code fragment definitions, begin implement
      the node graph. Move chapters into separate org files.
 
+-  <2017-03-20 Mon> :: Re-think how to implement node definitions and revise
+     therefore the chapter about the node graph component, fix various
+     typographic errors, expand and change the Makefile, keep the work log up
+     to date.
+
