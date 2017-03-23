@@ -35,6 +35,8 @@ following sub components:
   - View         :: Represents scenes in terms of scene view models within the
                     graphical user interface.
 
+**** Nodes
+
 One of the most basic sub components are the definitions of nodes. But what are
 those definitions actually? What do they actually define? There is not only one
 answer to this question, it is simply a matter of how the implementation is
@@ -50,10 +52,6 @@ function modeling (using signed distance functions for modeling implicit
 surfaces). Whereas triangle based meshes may either be loaded from externally
 defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
 format (OBJ)) or directly be generated using procedural mesh generation.
-
-# Implementing all of the mentioned methodologies for representing nodes is not
-# realistic within the time frame of this project, therefore only images and solid
-# modeling will be implemented.
 
 When implementing the nodes, keep in mind that the nodes are part of a graph,
 hence the name node graph, and are therefore typically connected by edges. This
@@ -84,7 +82,7 @@ Shall objects be predefined within the code (and therefore only nodes accepted
 whose type and sub type match those of predefined nodes) or shall all objects be
 defined externally using files?
 
-This is a question which is not so easy to answer. Both methods have their
+This is a question which is not that easy to answer. Both methods have their
 advantages and disadvantages. Pre-defining nodes within the code minimizes
 unexpected behavior of the application. Only known and well-defined nodes are
 processed.
@@ -104,56 +102,61 @@ Considering these aspects, the external definition of nodes is chosen. This may
 result in nodes which cannot be evaluated or which have unwanted effects. As it
 is (most likely) in the users best interest to create (for his taste) appealing
 real time animations, it can be assumed, that the user will try avoiding to
-create such nodes or quickly correct faulty nodes or simply does not use such nodes.
+create such nodes or quickly correct faulty nodes or simply does not use such
+nodes.
 
-- Pre-process
-- Process
-- Post-process
+Now, having chosen how to implement nodes, let us define what a node actually
+is. A node is essentially composed by the following elements:
 
-To ensure a enjoyable user experience, it is important to provide the user with
-predefined nodes to choose from --- independent from their type.
+- ID          :: A global unique identifier (UUID
+                 [fn:7745e3126d80f1a:https://docs.python.org/3/library/uuid.html])
+- Name        :: The name of the node, e.g. "Cube".
+- Inputs      :: A list of the nodes inputs. The inputs may either be parameters
+                 (which are atomic types such as float values or text input)
+                 or references to other nodes.
+- Outputs     :: A list of the nodes outputs. The outputs may also either be
+                 parameters or references to other nodes.
+- Parts       :: Defines parts that may be evaluated when evaluating the node.
+                 Contains code which can be interpreted directly.
+- Nodes       :: The children a node has (child nodes). These entries are
+                 references to other nodes only.
+- Connections :: A list of connections between the input and output of the node.
+                 Each input and output is composed by two parts: A reference to
+                 another node and a reference to that nodes output or input
+                 respectively.
+                 Input: Reference to a node X + Reference to /output/ A of node X.
+                 Output: Reference to a node Y + Reference to /input/ B of node Y.
 
-To recapitulate, the following node types and definitions are envisaged:
+As can be derived from the above thoughts, each of the mentioned node
+representations need some effort in terms of allocating buffers or render
+targets before they may be used for rendering a frame. They may as well want to
+free or release some of their made allocations when not being used anymore.
 
-- Nodes, that can be evaluated directly
-  - Solid modeling objects
-    - Sphere
-    - Cube
-    - Plane
-    - ...
-  - Solid modeling operations
-    - Transformation
-    - Scaling
-    - Rotation
-    - Union
-    - Differentiation
-    - ...
-  - Post-processing effects
-    - Blur
-    - Glare
-    - ...
-- Nodes, that cannot be evaluated directly
-  - Procedural generated mesh nodes
-    - Sphere
-    - Cube
-    - Plane
-    - ...
-  - Externally defined meshes
-    - Filmbox (FBX)
-    - Alembic (ABC)
-    - Object file format (OBJ)
-  - Images
+In other words, every node will be pre-processed before being processed and
+post-processed after being processed.
 
-As stated before, it would illusive wanting to implement all of these nodes, as
-the time frame of this project is simply too narrow and therefore only nodes,
-that can be evaluated directly, as well as images are considered for
-implementation.
+To keep the learning curve at a decent level when using the editor application,
+it is important to provide the user with predefined nodes to choose from ---
+independent from their type --- otherwise users could get easily frustrated at
+the beginning. The following nodes are envisaged:
 
-As not to complicate things, the implementation is kept as simple as
-possible: If a node has a =code= block in its definition, the application
-assumes that is possible to evaluate this node directly. If a node has no such
-block, its type and its sub-type must be implemented within the application,
-otherwise the node will simply be not evaluated.
+- Solid modeling objects
+  - Sphere
+  - Cube
+  - Plane
+  - ...
+- Solid modeling operations
+  - Transformation
+  - Scaling
+  - Rotation
+  - Union
+  - Differentiation
+  - ...
+- Post-processing effects
+  - Blur
+  - Glare
+  - ...
+- Images
 
 To get the node graph implementation started, a sample node definition is
 implemented as well as its defining class.
@@ -163,5 +166,32 @@ implemented as well as its defining class.
 Node definitions are implemented in the
 JSON[fn:9d5e4e40b523c9e:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf]
 format and are placed in the =data/nodes/= sub-directory, seen from the main
-directory. A node definition contains at least a type and a sub type. Optional
-it may contain a source block, which can be evaluated directly.
+directory.
+
+:THOUGHTS_BEGIN:
+ParameterID defines a globally unique ID and is used for inputs and outputs.
+It may however come from the ID of an actual node, then the input is another node.
+If it does not come from another node, the input is a basic type.
+
+An input defines a parameter and may be referenced as output as well.
+
+Every input and output receives a ParameterInstanceID, which is globally unique
+as well. Such an ID is used for making connections between nodes and/or parts of
+nodes. Parts = Code?
+
+A node may contain other nodes as well, those are references however.
+
+A few node types are pre-defined however. Those can be selected as input and as
+output as well. The pre-defined types are:
+
+- Generic
+- Float (value)
+- Text
+- Scene
+- Image
+- Dynamic (value)
+- Mesh
+
+Connections are actually parts.
+We need a context. Nodes get processed using this (global) context.
+:END:
