@@ -99,3 +99,10 @@
      typographic errors, expand and change the Makefile, keep the work log up
      to date.
 
+- <2017-03-21 Tue> :: Re-think how to implement node definitions.
+
+- <2017-03-22 Wed> :: Re-think how to implement node definitions and nodes. Begin adding
+     notes about how to implement nodes.
+
+- <2017-03-23 Thu> :: Expand notes about the node implementation, begin writing
+     the actual node implementation down, keep the work log up to date.
