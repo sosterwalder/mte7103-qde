@@ -37,7 +37,8 @@
 #+LATEX_HEADER: \usepackage{parskip}
 #+LATEX_HEADER: \restylefloat{listing}
 #+LATEX_HEADER: \tcbuselibrary{minted,skins}
-#+LATEX_HEADER: \definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
+#+LATEX_HEADER: \usemintedstyle{tango}
+#+LATEX_HEADER: \definecolor{bashcodebg}{rgb}{0.97255, 0.97255, 0.97255}
 #+LATEX_HEADER: \addbibresource{bibliography.bib}
 :END:
 
