@@ -5,9 +5,6 @@
 # End:
 :END:
 
-:HOOKS:
-:END:
-
 :LATEX_STUFF:
 #+BIBLIOGRAPHY: bibliography ieee
 #+LATEX_CLASS: scrreprt
