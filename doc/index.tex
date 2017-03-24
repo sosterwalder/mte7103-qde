@@ -1,4 +1,4 @@
-% Created 2017-03-23 Thu 11:18
+% Created 2017-03-24 Fri 17:16
 % Intended LaTeX compiler: pdflatex
 \documentclass[10pt, openright, notitlepage]{scrreprt}
 \usepackage[utf8]{inputenc}
@@ -43,7 +43,8 @@
 \usepackage{parskip}
 \restylefloat{listing}
 \tcbuselibrary{minted,skins}
-\definecolor{bashcodebg}{rgb}{0.85,0.85,0.85}
+\usemintedstyle{tango}
+\definecolor{bashcodebg}{rgb}{0.97255, 0.97255, 0.97255}
 \addbibresource{bibliography.bib}
 \author{Sven Osterwalder\thanks{sven.osterwalder@students.bfh.ch}}
 \date{February 20, 2017}
@@ -64,10 +65,10 @@
 
 
 \chapter{{\bfseries\sffamily TODO} Introduction}
-\label{sec:org1747f9a}
+\label{sec:org7adb082}
 [Introduction here].
 \chapter{{\bfseries\sffamily TODO} Administrative aspects}
-\label{sec:org014c4b7}
+\label{sec:orgb46da58}
 Some administrative aspects of this thesis are covered, while they are not
 required for the understanding of the result.
 
@@ -75,7 +76,7 @@ The whole documentation uses the male form, whereby both genera are equally
 meant.
 
 \section{Involved persons}
-\label{sec:org23927f5}
+\label{sec:org7e01d04}
 
 \begin{center}
 \begin{tabular}{lll}
@@ -83,10 +84,10 @@ Author & Sven Osterwalder\footnotemark & \\
 Supervisor & Prof. Claude Fuhrer\footnotemark & \emph{Supervises the student doing the thesis}\\
 Expert & Dr. Eric Dubuis\footnotemark & \emph{Provides expertise concerning the thesis' subject, monitors and grades the thesis}\\
 \end{tabular}
-\end{center}\footnotetext[1]{\label{org0cb098e}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{org8b7ee8b}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{orgec6f1d0}eric.dubuis@comet.ch}
+\end{center}\footnotetext[1]{\label{org1fb512e}sven.osterwalder@students.bfh.ch}\footnotetext[2]{\label{orgb4c1bc6}claude.fuhrer@bfh.ch}\footnotetext[3]{\label{org6ee0df5}eric.dubuis@comet.ch}
 
 \section{Structure of the documentation}
-\label{sec:org8984915}
+\label{sec:org74d5fda}
 
 This thesis is structured as follows:
 
@@ -99,39 +100,39 @@ This thesis is structured as follows:
 \end{itemize}
 
 \section{Deliverable results}
-\label{sec:orgf24162b}
+\label{sec:orgaf9d5ff}
 
 \begin{itemize}
 \item Report
 \item Implementation
 \end{itemize}
 \chapter{{\bfseries\sffamily TODO} Scope}
-\label{sec:orgb557890}
+\label{sec:orgddb6105}
 \section{Motivation}
-\label{sec:org4089e31}
+\label{sec:org1605619}
 
 [Motivation.]
 
 \section{Objectives and limitations}
-\label{sec:org0b9dd93}
+\label{sec:org00254d7}
 
 [Objectives and limitations.]
 
 \section{Preliminary activities}
-\label{sec:org418a553}
+\label{sec:orgc4ff316}
 
 [Preliminary activities.]
 
 \section{New learning contents}
-\label{sec:orgad813e1}
+\label{sec:org4b7bed7}
 
 [New learning contents.]
 \chapter{{\bfseries\sffamily TODO} Procedure}
-\label{sec:org965700d}
+\label{sec:org1b840f1}
 \section{Organization of work}
-\label{sec:org7f85e27}
+\label{sec:org665981c}
 \subsection{Meetings}
-\label{sec:orgbef9e37}
+\label{sec:org58a44c1}
 
 Various meetings with the supervising professor, Mr. Claude Fuhrer, helped
 reaching the defined goals and preventing erroneous directions of the thesis.
@@ -140,7 +141,7 @@ throughout the held meetings. The minutes of the meetings may be found under
 \label{Meeting minutes}.
 
 \subsection{Phases of the project and milestones}
-\label{sec:org8cb7f12}
+\label{sec:orgff06059}
 
 
 \begin{center}
@@ -176,7 +177,7 @@ The project's schedule.}
 Figure \ref{fig:schedule} shows the project's schedule.
 
 \subsection{Literate programming}
-\label{sec:org53d7b37}
+\label{sec:org35a28a0}
 
 This thesis' implementation is done by a procedure named ``literate
 programming'', invented by Donald Knuth. What this means, is that the
@@ -215,12 +216,12 @@ too, and may be found in the appendix.
 \end{center}
 
 \section{Standards and principles}
-\label{sec:org52d6f49}
+\label{sec:orge767fb5}
 \subsection{Code}
-\label{sec:orgbea6dc2}
+\label{sec:org993edea}
 
 \subsubsection{{\bfseries\sffamily TODO} Principles}
-\label{sec:org5215809}
+\label{sec:org03dd602}
 
 \begin{itemize}
 \item Classes use camel case.
@@ -250,9 +251,8 @@ hold and control that data. Instead models and model-view separation are used.
 Additionally controllers are introduced which act as workflow objects of the
 \texttt{application} layer and interfere between the model and its view.
 
-\begin{enumerate}
-\item Model-View-Controller
-\label{sec:org73004fc}
+\paragraph{Model-View-Controller}
+\label{sec:org96ab0ab}
 
 While models may be instantiated anywhere directly, this would although not
 contribute to having clean code and sane data structures. Instead controllers,
@@ -295,7 +295,6 @@ ViewModel, Controller and Model.
 To avoid coupling and therefore dependencies, signals and
 slots\footnote{\url{http://doc.qt.io/qt-5/signalsandslots.html}} are used in terms of the
 observer pattern to allow inter-object and inter-layer communication.
-\end{enumerate}
 
 \subsubsection{Framework for implementation}
 \label{sec:framework-for-implementation}
@@ -317,20 +316,20 @@ corresponding methods.
 \end{enumerate}
 
 \subsection{Diagrams}
-\label{sec:orgff4e8e8}
+\label{sec:org02f48bb}
 
 [Diagrams.]
 
 \subsection{Project structure}
-\label{sec:org403f110}
+\label{sec:org38111d2}
 
 [Project structure.]
 \chapter{{\bfseries\sffamily TODO} Implementation}
-\label{sec:orga80cd2c}
+\label{sec:org3c2bb21}
 \section{Requirements}
-\label{sec:org8e973ca}
+\label{sec:orgeaeebc9}
 \subsection{Requirements}
-\label{sec:orgb9f22db}
+\label{sec:org1dc849a}
 
 This chapter describes the requirements to extract the source code out of this
 documentation using \emph{tangling}.
@@ -395,7 +394,7 @@ Installation of the projects' required dependencies.}
 All requirements and dependencies are now met and the actual implementation of
 the project may begin now.
 \section{Name-spaces and project structure}
-\label{sec:orgd9864a1}
+\label{sec:org8b9ac01}
 This chapter describes the planned directory structure as well as how the usage
 of name-spaces is intended.
 
@@ -425,7 +424,7 @@ The first stage of the project shows the creation of the \emph{editor} component
 it provides the possibility of creating and editing real-time animations which
 may then be played back by the \emph{player} component\cite[p. 29]{osterwalder_qde_2016}.
 \section{Editor}
-\label{sec:org98eaa9d}
+\label{sec:org36222e4}
 This chapter describes the creation of the \emph{editor} component.
 
 The \emph{editor} component shall be placed within the \texttt{editor} directory beneath the
@@ -435,7 +434,7 @@ importable module. This fact and the creation of it is mentioned here for the
 sake of completeness. Later on it will be assumed as given and only the source
 code blocks for the creation of the \texttt{\_\_init\_\_.py} files are provided.
 \subsection{{\bfseries\sffamily DONE} Main application}
-\label{sec:orgf8f4e85}
+\label{sec:org0a41b22}
 The main class of a Qt application using a graphical user interface (GUI)
 is provided by the class \texttt{QApplication}. According to
 \footnote{\url{http://doc.qt.io/Qt-5/qapplication.html}} the class may be initialized and
@@ -482,7 +481,7 @@ therefore as follows.
 \end{listing}
 
 \subsubsection{Imports}
-\label{sec:orgc25c0b8}
+\label{sec:orgb88c9f1}
 As you can see, the imports of the module are defined by \texttt{<<app-application-imports>>}. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -638,7 +637,7 @@ def __init__(self, arguments):
 \texttt{<<app-application-constructor>>}, constructor of the \texttt{Application} class.}
 \end{listing}
 \subsection{{\bfseries\sffamily DONE} Main entry point}
-\label{sec:org9a22778}
+\label{sec:org4e18fc1}
 If you run the application at this point nothing happens. Python is able to
 resolve all dependencies but as there is no \texttt{main} function there is nothing
 else to do, so nothing happens. The execution of the main loop is started when
@@ -724,9 +723,9 @@ application.
 As a starting point, we shall implement the class \texttt{MainWindow}
 representing the main window.
 \subsection{{\bfseries\sffamily TODO} Main window}
-\label{sec:org6adccfa}
+\label{sec:orgd288c53}
 \subsubsection{{\bfseries\sffamily TODO} Main window}
-\label{sec:org38ea219}
+\label{sec:org5f83b41}
 
 Before implementing the features of the main window, its features will be
 described. The main window is the central aspect of the graphical user interface
@@ -1084,7 +1083,7 @@ components are implemented yet.
 The most straight-forward component to implement may be scene graph, so this is
 a good starting point for the implementation of the remaining components.
 \subsection{{\bfseries\sffamily DONE} Scene graph}
-\label{sec:org7aa7822}
+\label{sec:org1655195}
 The scene graph component does, as also the other components do, have two
 aspects to consider: A graphical aspect as well as its data structure. As
 written in section \ref{sec:layering}, each component has a view --- residing in the \emph{gui}
@@ -2371,10 +2370,10 @@ The QDE editor application showing the scene graph widget, containing multiple s
 So far the application (or rather the scene graph) seems to be working as
 intended. But how do we ensure, that it really does? Without a doubt, unit and
 integration tests are one of the best instruments to ensure functionality of
-code. As stated before, in section \ref{sec:org53d7b37}, it was an intention of
+code. As stated before, in section \ref{sec:org35a28a0}, it was an intention of
 this project to develop the application test driven. Due to required amount of
 work for developing test driven, it was abstained from this intention and
-regular unit tests are written instead, which can be found in appendix \ref{sec:org3e32dc3}.
+regular unit tests are written instead, which can be found in appendix \ref{sec:org9bd27e4}.
 
 But nevertheless, it would be very handy to have at least some idea what the
 code is doing at certain places and at certain times.
@@ -2390,7 +2389,7 @@ later even be used to implement a widget which outputs those messages. So
 logging using Python's logging facility will be implemented and applied for
 being able to have feedback when needed.
 \subsection{{\bfseries\sffamily DONE} Logging}
-\label{sec:orgff63c3b}
+\label{sec:org396ed03}
 As logging is a very central and basic functionality, the module is placed in
 the \texttt{foundation} layer.
 
@@ -2715,7 +2714,7 @@ render something, there actually needs to exist something to render: nodes.
 Nodes are being represented within the node graph. So this is a good point to
 begin with the implementation of the node graph.
 \subsection{{\bfseries\sffamily TODO} Node graph}
-\label{sec:orgf9aafc1}
+\label{sec:orgeefd185}
 The functionality of the node graph is, as its name states, to represent a data
 structure composed of nodes and edges. Each scene from the scene graph is
 represented within the node graph as such a data structure.
@@ -2723,8 +2722,9 @@ represented within the node graph as such a data structure.
 The nodes are the building blocks of a real time animation. They represent
 different aspects, such as scenes themselves, time line clips, models, cameras,
 lights, materials, generic operators and effects. These aspects are only examples
-(coming from \cite[p. 30 and 31]{osterwalder_qde_2016}) as the node structure
-must be expandable for allowing the addition of new nodes.
+(coming from "QDE - a visual animation system. Software Architektur."
+\cite[p. 30 and 31]{osterwalder_qde_2016}) as the node structure will be
+expandable for allowing the addition of new nodes.
 
 The implementation of the scene graph component was relatively straightforward
 partly due to its structure and partly due to the used data model and
@@ -2735,8 +2735,8 @@ identify its sub components first before implementing them.
 When thinking about the implementation of the node graph, one may identify the
 following sub components:
 
-\begin{itemize}
-\item Nodes
+\begin{description}
+\item[{Nodes}] Building blocks of a real time animation.
 \begin{description}
 \item[{Domain model}] Holds data of a node, like its definition, its inputs and so
 on.
@@ -2745,7 +2745,8 @@ on.
 creation of node instances.
 \item[{View model  }] Represents a node within the graphical user interface.
 \end{description}
-\item Scenes
+
+\item[{Scenes}] A composition of nodes, connected by edges.
 \begin{description}
 \item[{Domain model}] Holds the data of a scene, e.g. its nodes.
 \item[{Controller  }] Handles scene related actions, like when a node is added to
@@ -2757,39 +2758,38 @@ view model is a canvas consisting of nodes.
 \item[{View        }] Represents scenes in terms of scene view models within the
 graphical user interface.
 \end{description}
-\end{itemize}
+\end{description}
 
 \subsubsection{Nodes}
-\label{sec:org0bc1b09}
+\label{sec:orgb5a6626}
 
-One of the most basic sub components are the definitions of nodes. But what are
-those definitions actually? What do they actually define? There is not only one
-answer to this question, it is simply a matter of how the implementation is
-being done and therefore a set of decisions.
+As mentioned before, nodes are the building blocks of a real time animation. But
+what are those definitions actually? What do they actually define? There is not
+only one answer to this question, it is simply a matter of how the
+implementation is being done and therefore a set of decisions.
 
 The whole (rendering) system shall not be bound to only one representation of
 nodes, e.g. triangle based meshes. Instead it shall let the user decide, what
 representation is the most fitting for the goal he wants to achieve.
 
-At this point the system shall be able to theoretically support multiple kinds of
-node representations: Images, triangle based meshes and solid modeling through
+Therefore the system shall be able to support multiple kinds of node
+representations: Images, triangle based meshes and solid modeling through
 function modeling (using signed distance functions for modeling implicit
 surfaces). Whereas triangle based meshes may either be loaded from externally
 defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
 format (OBJ)) or directly be generated using procedural mesh generation.
 
-When implementing the nodes, keep in mind that the nodes are part of a graph,
-hence the name node graph, and are therefore typically connected by edges. This
-means that the graph gets evaluated recursively by its nodes. However, the goal
-is to have OpenGL shading language (GLSL) code at the end, independent of the
-node types.
+The nodes are always part of a graph, hence the name node graph, and are
+therefore typically connected by edges. This means that the graph gets evaluated
+recursively by its nodes, starting with the root node within the root scene.
+However, the goal is to have OpenGL shading language (GLSL) code at the end, independent of the node types.
 
-From this point of view it is theoretically possible to let the user define shader
+From this point of view it would make sense to let the user define shader
 code directly within a node (definition) and to simply evaluate this code, which
 adds a lot of (creative) freedom. The problem with this approach is though, that
 image and triangle based mesh nodes are not fully implementable by using shader
 code only. Instead they have specific requirements, which are only perform-able
-on the CPU instead of the GPU (e.g. allocating buffer objects).
+on the CPU (e.g. allocating buffer objects).
 
 When thinking of nodes used for solid modeling however, it may appear, that they
 may be evaluated directly, without the need for pre-processing, as they are
@@ -2816,12 +2816,12 @@ But what if someone would like to have a new node type which is not yet defined?
 The node type has to be implemented first. As Python is used for the editor
 application, this is not really a problem as the code is interpreted each time
 and is therefore not being compiled. Nevertheless such changes follow a certain
-process, such as making the actual changes, reviewing and checking-in the code
-and so on, which the user normally does not want to be bothered with.
-Furthermore, when thinking about the player application, the problem of the
-necessity to recompile the code is definitively given. The player will be
-implemented in C, as there is the need for performance, which Python may not
-fulfill satisfactorily.
+process, such as making the actual changes within the code, reviewing and
+checking-in the code and so on, which the user normally does not want to be
+bothered with. Furthermore, when thinking about the player application, the
+problem of the necessity to recompile the code is definitively given. The player
+will be implemented in C, as there is the need for performance, which Python may
+not fulfill satisfactorily.
 
 Considering these aspects, the external definition of nodes is chosen. This may
 result in nodes which cannot be evaluated or which have unwanted effects. As it
@@ -2831,108 +2831,218 @@ create such nodes or quickly correct faulty nodes or simply does not use such
 nodes.
 
 Now, having chosen how to implement nodes, let us define what a node actually
-is. A node is essentially composed by the following elements:
+is. As a node may be reference by other nodes, it must be uniquely identifiable
+and must therefore have a globally unique identifier. Concerning the visual
+representation, a node shall have a name as well as a description.
 
-\begin{description}
-\item[{ID         }] A global unique identifier (UUID
-\footnote{\url{https://docs.python.org/3/library/uuid.html}})
-\item[{Name       }] The name of the node, e.g. "Cube".
-\item[{Inputs     }] A list of the nodes inputs. The inputs may either be parameters
-(which are atomic types such as float values or text input)
-or references to other nodes.
-\item[{Outputs    }] A list of the nodes outputs. The outputs may also either be
-parameters or references to other nodes.
-\item[{Parts      }] Defines parts that may be evaluated when evaluating the node.
-Contains code which can be interpreted directly.
-\item[{Nodes      }] The children a node has (child nodes). These entries are
-references to other nodes only.
-\item[{Connections}] A list of connections between the input and output of the node.
-Each input and output is composed by two parts: A reference to
-another node and a reference to that nodes output or input
-respectively.
-Input: Reference to a node X + Reference to \emph{output} A of node X.
-Output: Reference to a node Y + Reference to \emph{input} B of node Y.
-\end{description}
+Each node can have multiple inputs and at least one output. The inputs may be
+either be atomic types (which have to be defined) or references to other nodes.
+The same applies to the outputs.
 
-As can be derived from the above thoughts, each of the mentioned node
-representations need some effort in terms of allocating buffers or render
-targets before they may be used for rendering a frame. They may as well want to
-free or release some of their made allocations when not being used anymore.
+A node shall be able to have one or more parts. A part typically contains the
+"body" of the node in terms of code and represents therefore the code-wise
+implementation of the node. A part can be processed when evaluating the node.
 
-In other words, every node will be pre-processed before being processed and
-post-processed after being processed.
+Furthermore a node may contain children, child-nodes, which are actually
+references to other nodes combined with properties such as a name, states and so
+on.
 
-To keep the learning curve at a decent level when using the editor application,
-it is important to provide the user with predefined nodes to choose from ---
-independent from their type --- otherwise users could get easily frustrated at
-the beginning. The following nodes are envisaged:
+Each node can have multiple connections. A connection is composed of an input
+plus a reference to a part of that input as well as an output and a reference to
+a part of that output. The input respectively the output may be zero, what means
+that the part of the input or output is internal. Or, a bit more formal:
 
-\begin{itemize}
-\item Solid modeling objects
-\begin{itemize}
-\item Sphere
-\item Cube
-\item Plane
-\item \ldots{}
-\end{itemize}
-\item Solid modeling operations
-\begin{itemize}
-\item Transformation
-\item Scaling
-\item Rotation
-\item Union
-\item Differentiation
-\item \ldots{}
-\end{itemize}
-\item Post-processing effects
-\begin{itemize}
-\item Blur
-\item Glare
-\item \ldots{}
-\end{itemize}
-\item Images
-\end{itemize}
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{ebnf}
+input = internal input | external input
+internal input = zero reference, part reference
+external input = node reference, part reference
+zero reference = "0"
+node reference = "uuid4"
+part reference = "uuid4"
+\end{minted}
+\caption{\label{node-connections-ebnf}
+The definition of the connections of a node in EBNF notation.}
+\end{listing}
 
-To get the node graph implementation started, a sample node definition is
-implemented as well as its defining class.
+Recapitulating the above made thoughts, a node is essentially composed by the
+following elements:
 
-\subsubsection{Node definitions}
-\label{sec:org8d22ff7}
 
-Node definitions are implemented in the
-JSON\footnote{\url{http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf}}
-format and are placed in the \texttt{data/nodes/} sub-directory, seen from the main
-directory.
+\begin{center}
+\begin{tabular}{ll}
+ID & A global unique identifier (UUID\\
+ & \footnotemark)\\
+\hline
+Name & The name of the node, e.g. "Cube".\\
+\hline
+Inputs & A list of the node's inputs. The inputs may either be parameters\\
+ & (which are atomic types such as float values or text input) or\\
+ & references to other nodes.\\
+\hline
+Outputs & A list of the node's outputs. The outputs may also either be\\
+ & parameters or references to other nodes.\\
+\hline
+Parts & Defines parts that may be processed when evaluating the node.\\
+ & Contains code which can be interpreted directly.\\
+\hline
+Nodes & The children a node has (child nodes). These entries are\\
+ & references to other nodes only.\\
+\hline
+Connections & A list of connections of the node's inputs and outputs.\\
+ & \\
+ & Each connection is composed by two parts: A reference to another\\
+ & node and a reference to an input or an output of that node. Is\\
+ & the reference not set, that is, its value is zero, this means\\
+ & that the connection is internal.\\
+ & \\
+\end{tabular}
+\end{center}\footnotetext[32]{\label{org8e78a4f}\url{https://docs.python.org/3/library/uuid.html}}
 
-ParameterID defines a globally unique ID and is used for inputs and outputs.
-It may however come from the ID of an actual node, then the input is another node.
-If it does not come from another node, the input is a basic type.
-
-An input defines a parameter and may be referenced as output as well.
-
-Every input and output receives a ParameterInstanceID, which is globally unique
-as well. Such an ID is used for making connections between nodes and/or parts of
-nodes. Parts = Code?
-
-A node may contain other nodes as well, those are references however.
-
-A few node types are pre-defined however. Those can be selected as input and as
-output as well. The pre-defined types are:
+The inputs and outputs may be parameters of an atomic type, as stated above. This
+seems like a good point to define the atomic types the system will have, these
+are:
 
 \begin{itemize}
 \item Generic
-\item Float (value)
+\item Float
 \item Text
 \item Scene
 \item Image
-\item Dynamic (value)
+\item Dynamic
 \item Mesh
 \end{itemize}
 
-Connections are actually parts.
-We need a context. Nodes get processed using this (global) context.
+As these atomic types are the foundation of all other nodes, the system must
+ensure, that they are initialized before all other nodes. Before being able to
+create the atomic types there must be classes defining them.
+
+Being the foundation of all other nodes, the atomic types are implemented in the
+\emph{foundation} layer. First we will define an enumerator for being able to
+identify and use the various types directly. Python provides the \texttt{enum} module,
+which provides a convenient interface for using
+enumerations\footnote{\url{https://docs.python.org/3/library/enum.html}}.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+<foundation-types-nodetype-class>=
+    class NodeType(enum.Enum):
+        """Atomic types which a parameter may be made of."""
+    
+        GENERIC = 0
+        FLOAT   = 1
+        TEXT    = 2
+        SCENE   = 3
+        IMAGE   = 4
+        DYNAMIC = 5
+        MESH    = 6
+\end{minted}
+\caption{\label{lst:foundation-types-nodetype-class}
+Implementation of the atomic types which build the foundation for nodes.}
+\end{listing}
+
+Each parameter contains one or multiple parts which are processed whenever a
+parameter is being evaluated. These parts are then used to define the atomic
+types or parameters respectively. Hence we will first define the \texttt{ParameterPart}
+class within the \emph{domain} layer.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# -*- coding: utf-8 -*-
+
+"""Parameter module"""
+
+# System imports
+import uuid
+
+# Project imports
+from qde.foundation import types
+
+
+class ParameterPart(object):
+    """TODO."""
+
+    def __init__(self, id):
+        """Constructor.
+
+        :param id: the identifier of the parameter.
+        :type  id: uuid
+        """
+
+        self.id = id
+        self.has_script_changed = False
+        self.script = None
+\end{minted}
+\caption{\label{lst:domain-parameter-parameterpart}
+Implementation of the \texttt{ParameterPart} class within the \emph{domain} layer.}
+\end{listing}
+
+In the very same manner as the parts of a parameter are defined, the parts of a
+node are defined.
+
+\begin{listing}[H]
+\begin{minted}[,fontsize=\footnotesize,linenos,bgcolor=bashcodebg]{python}
+# -*- coding: utf-8 -*-
+
+"""Node module."""
+
+# System imports
+import enum
+import uuid
+
+# Project imports
+from qde.foundation import types
+
+
+class NodePart(object):
+    """TODO."""
+
+
+    class ChangedType(enum.Enum):
+        NOTHING = 0
+        VALUE   = 1
+        SUBTREE = 2
+
+
+    class Function(object):
+        """TODO."""
+
+        def __init__(self):
+            """Constructor."""
+
+            self.was_changed = True
+            self.what_changed = ChangedType.VALUE | ChangedType.SUBTREE
+
+    def __init__(self, id, default_function):
+        """Constructor.
+
+        :param id: the identifier of the parameter.
+        :type  id: uuid
+        :param default_function: the default function of the node.
+        :type  default_function: Function
+        """
+
+        self.id_ = id
+        self.connections = []
+        self.current_function = default_function
+        self.default_function = default_function
+        self.is_disabled = False
+        self.process_callback = None
+
+    def process(self, context):
+        if self.is_disabled:
+            return context
+
+        if self.process_callback is not None:
+            self.process_callback()
+
+        return self.current_function.process(context, self.connections)
+\end{minted}
+\caption{\label{lst:domain-parameter-parameterpart}
+Implementation of the \texttt{NodePart} class within the \emph{domain} layer.}
+\end{listing}
 \chapter{Work log}
-\label{sec:orgbd54dff}
+\label{sec:org5580417}
 \begin{description}
 \item[{\textit{<2017-02-20 Mon>}}] Set up and structure the document initially.
 
@@ -3042,16 +3152,20 @@ notes about how to implement nodes.
 
 \item[{\textit{<2017-03-23 Thu>}}] Expand notes about the node implementation, begin writing
 the actual node implementation down, keep the work log up to date.
+
+\item[{\textit{<2017-03-24 Fri>}}] Attend a meeting with Prof. Fuhrer, change and expand the
+chapter about node implementation according to the before made thoughts,
+begin implementing the node graph structure, keep the work log up to date.
 \end{description}
 \chapter{{\bfseries\sffamily TODO} Bibliography}
-\label{sec:orga9443b8}
+\label{sec:org69e8f5a}
 \printbibliography{}
 \chapter{{\bfseries\sffamily TODO} Appendix}
-\label{sec:org2892e9e}
+\label{sec:org763efd2}
 \section{Test cases}
-\label{sec:org3e32dc3}
+\label{sec:org9bd27e4}
 \subsection{Test cases}
-\label{sec:org78b7941}
+\label{sec:orgb68d405}
 
 Zunächst wird jedoch der entsprechende Unit-Test definiert. Dieser instanziert
 die Klasse und stellt sicher, dass sie ordnungsgemäss gestartet werden kann.
@@ -3240,12 +3354,12 @@ Testfälle der Hilfsmethode zur Protokollierung.}
 python -m pytest qde/editor/foundation/test_common.py
 \end{minted}
 \section{Meeting minutes}
-\label{sec:org1e08a01}
+\label{sec:org31519ce}
 \subsection{Meeting minutes}
-\label{sec:org8fccf4d}
+\label{sec:org3ae94ed}
 
-\subsubsection{Meeting mintutes 2017-02-23}
-\label{sec:orgc4510c6}
+\subsubsection{Meeting minutes 2017-02-23}
+\label{sec:org091389e}
 
 \begin{center}
 \begin{tabular}{ll}
@@ -3259,9 +3373,8 @@ Involved persons: & Prof. Claude Fuhrer (CF)\\
 
 Kick-off meeting for the thesis.
 
-\begin{enumerate}
-\item Presentation and discussion of the current state of work
-\label{sec:orgbdbdc59}
+\paragraph{Presentation and discussion of the current state of work}
+\label{sec:org08cff3d}
 
 \begin{itemize}
 \item Presentation of the workflow. Emacs and Org-Mode is used to write the
@@ -3280,8 +3393,8 @@ the application. Also the report should not exceed around 80 pages. (CF)
 of the preceding documentations. (SO)
 \end{itemize}
 
-\item Further steps / proceedings
-\label{sec:org92ef6fe}
+\paragraph{Further steps / proceedings}
+\label{sec:org738d997}
 
 \begin{itemize}
 \item The expert of the thesis, Mr. Dubuis, puts mainly emphasis on the
@@ -3308,43 +3421,43 @@ follow per e-mail. (CF)
 \end{itemize}
 \end{itemize}
 
-\item To do for the next meeting
-\label{sec:org7605b40}
+\paragraph{To do for the next meeting}
+\label{sec:orgc81c64b}
 
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Create GitHub repository for the thesis. (SO)
-\label{sec:orgddae69d}
+\label{sec:orga192737}
 \begin{enumerate}
 \item {\bfseries\sffamily DONE} Inform Mr. Fuhrer about the creation of the repository. (SO)
-\label{sec:orgc5e9ccd}
+\label{sec:org1e1c202}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Ask Dr. Dubuis by mail how he wants to receive the documentation. (SO)
-\label{sec:orgcf95dd3}
+\label{sec:orgb2dac62}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:org4cf4465}
+\label{sec:org0ac7d38}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Set up appointments with Dr. Dubuis (CF)
-\label{sec:org57bd9e1}
+\label{sec:org9701bcf}
 \begin{enumerate}
 \item {\bfseries\sffamily TODO} Await answer of Mr. Dubuis (ED)
-\label{sec:orgd20a35b}
+\label{sec:orgc39741c}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Clarify possibility of a workplace at Berne University of applied sciences in Biel. (CF)
-\label{sec:orgaf9dc15}
+\label{sec:orged7716c}
 \begin{enumerate}
 \item A workplace was found at the RISIS laboratory and may be used instantly. (CF)
-\label{sec:orgef2c484}
+\label{sec:orge60a5f6}
 \end{enumerate}
 
 \item {\bfseries\sffamily DONE} Decide about the method used for developing this thesis. (SO)
-\label{sec:org0035806}
+\label{sec:orgc540eae}
 \begin{enumerate}
 \item After discussions with a colleague the method of literate programming is
-\label{sec:org158b2b2}
+\label{sec:org89e8ed6}
 kept. The documentation containing the literate program will although be
 attached as appendix as it most likely will exceed 80 pages. Instead the
 method will be introduced in the report and the report will be endowed
@@ -3352,18 +3465,51 @@ with examples from the literate program.
 \end{enumerate}
 
 \item {\bfseries\sffamily TODO} Describe procedure and set up a time schedule including milestones. (SO)
-\label{sec:orgb4950c2}
+\label{sec:orgf224fdb}
 \end{enumerate}
 
-\item Scheduling of the next meeting
-\label{sec:orgf3014bd}
+\paragraph{Scheduling of the next meeting}
+\label{sec:org324e7db}
 
 \begin{itemize}
 \item To be defined
 \end{itemize}
-\end{enumerate}
+\subsubsection{Meeting minutes 2017-03-24}
+\label{sec:org22eb13e}
+
+\begin{center}
+\begin{tabular}{ll}
+No.: & 02\\
+Date: & 2017-03-24 09:15 - 09:45\\
+Place: & Office of Prof. Fuhrer, N 373,\\
+ & Berne University of applied sciences, Biel\\
+Involved persons: & Prof. Claude Fuhrer (CF)\\
+ & Sven Osterwalder (SO)\\
+\end{tabular}
+\end{center}
+
+Second meeting.
+
+\paragraph{Presentation and discussion of the current state of work}
+\label{sec:orge924335}
+
+Prof. Fuhrer read the thesis at its current state and made various remarks and
+corrections.
+
+\paragraph{Further steps / proceedings}
+\label{sec:org78cd703}
+
+\paragraph{To do for the next meeting}
+\label{sec:org148b771}
+
+\paragraph{Scheduling of the next meeting}
+\label{sec:orga78451e}
+
+\begin{itemize}
+\item To be defined
+\end{itemize}
 \chapter{{\bfseries\sffamily TODO} Glossary}
-\label{sec:orgb6d7a8a}
+\label{sec:org4140a4a}
 \begin{description}
 \item[{animation}] An animation is a composition of scenes. Each animation is
 defined by a time span, meaning it has a defined start- and
