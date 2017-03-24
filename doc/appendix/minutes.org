@@ -1,6 +1,6 @@
 ** Meeting minutes
 
-*** Meeting mintutes 2017-02-23
+*** Meeting minutes 2017-02-23
 
 | No.:              | 01                                                                   |
 | Date:             | 2017-02-23 13:00 - 13:30                                             |
@@ -80,6 +80,29 @@ Kick-off meeting for the thesis.
 
 ***** TODO Describe procedure and set up a time schedule including milestones. (SO)
       DEADLINE: <2017-03-31 Fri>
+
+**** Scheduling of the next meeting
+
+- To be defined
+*** Meeting minutes 2017-03-24
+
+| No.:              | 02                                         |
+| Date:             | 2017-03-24 09:15 - 09:45                   |
+| Place:            | Office of Prof. Fuhrer, N 373,             |
+|                   | Berne University of applied sciences, Biel |
+| Involved persons: | Prof. Claude Fuhrer (CF)                   |
+|                   | Sven Osterwalder (SO)                      |
+
+Second meeting.
+
+**** Presentation and discussion of the current state of work
+
+Prof. Fuhrer read the thesis at its current state and made various remarks and
+corrections.
+
+**** Further steps / proceedings
+
+**** To do for the next meeting
 
 **** Scheduling of the next meeting
 
