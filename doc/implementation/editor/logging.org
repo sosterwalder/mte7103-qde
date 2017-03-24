@@ -2,7 +2,7 @@ As logging is a very central and basic functionality, the module is placed in
 the {{{verb(foundation)}}} layer.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes :exports none
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/__init__.py :noweb tangle :comments link :mkdirp yes :exports none
 #+END_SRC
 
 Logging shall be provided on a class-basis, meaning that each class (which wants
@@ -140,7 +140,7 @@ are used.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:    lst:logging-configuration
 #+CAPTION: The configuration of the logging facility in JSON format.
-#+BEGIN_SRC json :tangle ../logging.json :noweb tangle
+#+BEGIN_SRC json :tangle ../../../logging.json :noweb tangle
 {
     "version": 1,
     "disable_existing_loggers": false,
@@ -229,7 +229,7 @@ logging facility which follows in listing [[lst:foundation-common]].
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Implementation of the logging facility as a method inside the =common=  module.
 #+NAME:       lst:foundation-common
-#+BEGIN_SRC python :tangle ../src/qde/editor/foundation/common.py :noweb yes :comments link :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/common.py :noweb yes :comments link :mkdirp yes
 # -*- coding: utf-8 -*-
 
 """Module holding common helper methods."""

@@ -16,12 +16,12 @@ dull. It is composed of solely an empty constructor.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation of the =domain= name space and initialization of the name space as module.
-#+BEGIN_SRC python :tangle ../src/qde/editor/domain/__init__.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Scene module inside the =domain= package, holding the =SceneModel= class.
-#+BEGIN_SRC python :tangle ../src/qde/editor/domain/scene.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -125,13 +125,13 @@ structure, which fits the structure of the scene graph perfectly.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation of the =gui_domain= name space and initialization of the name space as module.
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/__init__.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/gui_domain/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Scene module inside the =gui_domain= package.
 #+NAME:       guidomain-scene
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui_domain/scene.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/gui_domain/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -220,7 +220,7 @@ may finally be implemented.
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME:       lst:app-scenegraph
 #+CAPTION:    The outline of the =SceneGraphController= class, inside the =application= package.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/scene_graph.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/application/scene_graph.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -295,7 +295,7 @@ architecture.''[fn:f377826acb87691:http://doc.qt.io/qt-5/qtreeview.html#details]
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+NAME: fig:gui-scene-graph
 #+CAPTION:    The outline of the =SceneGraphView= class, within the =scene= module of the =gui= package.
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui/scene.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/gui/scene.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 

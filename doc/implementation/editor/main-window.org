@@ -6,7 +6,7 @@ and is hence part of the {{{verb(gui)}}} package.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation of the =gui= name space and initialization of the name space as module.
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui/__init__.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/gui/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 
@@ -29,7 +29,7 @@ First, the outline of =MainWindow= is defined.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Module holding the main application window class, =MainWindow=.
-#+BEGIN_SRC python :tangle ../src/qde/editor/gui/main_window.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/gui/main_window.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 

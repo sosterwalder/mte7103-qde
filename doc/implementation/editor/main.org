@@ -27,7 +27,7 @@ The main entry script of the editor =editor.py= is therefore defined as follows.
 #+NAME: main
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    =<<main>>=, the main entry point for the whole editor application.
-#+BEGIN_SRC python :tangle ../src/editor.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/editor.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 

@@ -7,7 +7,7 @@ nevertheless as this provides higher flexibility. Therefore the class
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Creation and initialization of the =application= name-space.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/__init__.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/application/__init__.py :noweb tangle :mkdirp yes
 #+END_SRC
 
 At this point it is necessary to think about the functionality of the class
@@ -36,7 +36,7 @@ therefore as follows.
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
 #+CAPTION:    Main application module holding the =Application= class.
-#+BEGIN_SRC python :tangle ../src/qde/editor/application/application.py :noweb tangle :mkdirp yes
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/application/application.py :noweb tangle :mkdirp yes
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
