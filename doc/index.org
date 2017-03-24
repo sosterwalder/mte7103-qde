@@ -54,7 +54,7 @@
 #+AUTHOR: Sven Osterwalder
 #+EMAIL: sven.osterwalder@students.bfh.ch
 #+DATE: February 20, 2017
-#+OPTIONS: author:t date:t email:t ^:nil H:5
+#+OPTIONS: author:t date:t email:t ^:nil H:10 d:(not "THOUGHTS")
 
 * TODO Introduction
   #+INCLUDE: "./introduction.org"
