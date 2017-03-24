@@ -18,14 +18,15 @@ identify its sub components first before implementing them.
 When thinking about the implementation of the node graph, one may identify the
 following sub components:
 
-- Nodes
+- Nodes :: Building blocks of a real time animation.
   - Domain model :: Holds data of a node, like its definition, its inputs and so
                     on.
   - Definitions  :: Represents a domain model as JSON data structure.
   - Controller   :: Handles the loading of node definitions as well as the
                     creation of node instances.
   - View model   :: Represents a node within the graphical user interface.
-- Scenes
+
+- Scenes :: A composition of nodes, connected by edges.
   - Domain model :: Holds the data of a scene, e.g. its nodes.
   - Controller   :: Handles scene related actions, like when a node is added to
                     a scene, when the scene was changed or when a node within a
@@ -38,34 +39,33 @@ following sub components:
 
 **** Nodes
 
-One of the most basic sub components are the definitions of nodes. But what are
-those definitions actually? What do they actually define? There is not only one
-answer to this question, it is simply a matter of how the implementation is
-being done and therefore a set of decisions.
+As mentioned before, nodes are the building blocks of a real time animation. But
+what are those definitions actually? What do they actually define? There is not
+only one answer to this question, it is simply a matter of how the
+implementation is being done and therefore a set of decisions.
 
 The whole (rendering) system shall not be bound to only one representation of
 nodes, e.g. triangle based meshes. Instead it shall let the user decide, what
 representation is the most fitting for the goal he wants to achieve.
 
-At this point the system shall be able to theoretically support multiple kinds of
-node representations: Images, triangle based meshes and solid modeling through
+Therefore the system shall be able to support multiple kinds of node
+representations: Images, triangle based meshes and solid modeling through
 function modeling (using signed distance functions for modeling implicit
 surfaces). Whereas triangle based meshes may either be loaded from externally
 defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
 format (OBJ)) or directly be generated using procedural mesh generation.
 
-When implementing the nodes, keep in mind that the nodes are part of a graph,
-hence the name node graph, and are therefore typically connected by edges. This
-means that the graph gets evaluated recursively by its nodes. However, the goal
-is to have OpenGL shading language (GLSL) code at the end, independent of the
-node types.
+The nodes are always part of a graph, hence the name node graph, and are
+therefore typically connected by edges. This means that the graph gets evaluated
+recursively by its nodes, starting with the root node within the root scene.
+However, the goal is to have OpenGL shading language (GLSL) code at the end, independent of the node types.
 
-From this point of view it is theoretically possible to let the user define shader
+From this point of view it would make sense to let the user define shader
 code directly within a node (definition) and to simply evaluate this code, which
 adds a lot of (creative) freedom. The problem with this approach is though, that
 image and triangle based mesh nodes are not fully implementable by using shader
 code only. Instead they have specific requirements, which are only perform-able
-on the CPU instead of the GPU (e.g. allocating buffer objects).
+on the CPU (e.g. allocating buffer objects).
 
 When thinking of nodes used for solid modeling however, it may appear, that they
 may be evaluated directly, without the need for pre-processing, as they are
@@ -92,12 +92,12 @@ But what if someone would like to have a new node type which is not yet defined?
 The node type has to be implemented first. As Python is used for the editor
 application, this is not really a problem as the code is interpreted each time
 and is therefore not being compiled. Nevertheless such changes follow a certain
-process, such as making the actual changes, reviewing and checking-in the code
-and so on, which the user normally does not want to be bothered with.
-Furthermore, when thinking about the player application, the problem of the
-necessity to recompile the code is definitively given. The player will be
-implemented in C, as there is the need for performance, which Python may not
-fulfill satisfactorily.
+process, such as making the actual changes within the code, reviewing and
+checking-in the code and so on, which the user normally does not want to be
+bothered with. Furthermore, when thinking about the player application, the
+problem of the necessity to recompile the code is definitively given. The player
+will be implemented in C, as there is the need for performance, which Python may
+not fulfill satisfactorily.
 
 Considering these aspects, the external definition of nodes is chosen. This may
 result in nodes which cannot be evaluated or which have unwanted effects. As it
@@ -107,26 +107,390 @@ create such nodes or quickly correct faulty nodes or simply does not use such
 nodes.
 
 Now, having chosen how to implement nodes, let us define what a node actually
-is. A node is essentially composed by the following elements:
+is. As a node may be reference by other nodes, it must be uniquely identifiable
+and must therefore have a globally unique identifier. Concerning the visual
+representation, a node shall have a name as well as a description.
 
-- ID          :: A global unique identifier (UUID
-                 [fn:7745e3126d80f1a:https://docs.python.org/3/library/uuid.html])
-- Name        :: The name of the node, e.g. "Cube".
-- Inputs      :: A list of the nodes inputs. The inputs may either be parameters
-                 (which are atomic types such as float values or text input)
-                 or references to other nodes.
-- Outputs     :: A list of the nodes outputs. The outputs may also either be
-                 parameters or references to other nodes.
-- Parts       :: Defines parts that may be evaluated when evaluating the node.
-                 Contains code which can be interpreted directly.
-- Nodes       :: The children a node has (child nodes). These entries are
-                 references to other nodes only.
-- Connections :: A list of connections between the input and output of the node.
-                 Each input and output is composed by two parts: A reference to
-                 another node and a reference to that nodes output or input
-                 respectively.
-                 Input: Reference to a node X + Reference to /output/ A of node X.
-                 Output: Reference to a node Y + Reference to /input/ B of node Y.
+Each node can have multiple inputs and at least one output. The inputs may be
+either be atomic types (which have to be defined) or references to other nodes.
+The same applies to the outputs.
+
+A node shall be able to have one or more parts. A part typically contains the
+"body" of the node in terms of code and represents therefore the code-wise
+implementation of the node. A part can be processed when evaluating the node.
+
+Furthermore a node may contain children, child-nodes, which are actually
+references to other nodes combined with properties such as a name, states and so
+on.
+
+Each node can have multiple connections. A connection is composed of an input
+plus a reference to a part of that input as well as an output and a reference to
+a part of that output. The input respectively the output may be zero, what means
+that the part of the input or output is internal. Or, a bit more formal:
+
+#+NAME: node-connections-ebnf
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION: The definition of the connections of a node in EBNF notation.
+#+BEGIN_SRC ebnf
+input = internal input | external input
+internal input = zero reference, part reference
+external input = node reference, part reference
+zero reference = "0"
+node reference = "uuid4"
+part reference = "uuid4"
+#+END_SRC
+# Reference to a node X + Reference to /output/ A of node X.
+# or
+# No reference to another node + Reference to an /input/ of the current node.
+#
+# Output:
+# Reference to a node Y + Reference to /input/ B of node Y.
+# or
+# No reference to another node + Reference to an /output/ or to /part/ of the current node.
+
+Recapitulating the above made thoughts, a node is essentially composed by the
+following elements:
+
+
+| ID          | A global unique identifier (UUID                                                          |
+|             | [fn:7745e3126d80f1a:https://docs.python.org/3/library/uuid.html])                         |
+|-------------+-------------------------------------------------------------------------------------------|
+| Name        | The name of the node, e.g. "Cube".                                                        |
+|-------------+-------------------------------------------------------------------------------------------|
+| Inputs      | A list of the node's inputs. The inputs may either be parameters                          |
+|             | (which are atomic types such as float values or text input) or                            |
+|             | references to other nodes.                                                                |
+|-------------+-------------------------------------------------------------------------------------------|
+| Outputs     | A list of the node's outputs. The outputs may also either be                              |
+|             | parameters or references to other nodes.                                                  |
+|-------------+-------------------------------------------------------------------------------------------|
+| Parts       | Defines parts that may be processed when evaluating the node.                             |
+|             | Contains code which can be interpreted directly.                                          |
+|-------------+-------------------------------------------------------------------------------------------|
+| Nodes       | The children a node has (child nodes). These entries are                                  |
+|             | references to other nodes only.                                                           |
+|-------------+-------------------------------------------------------------------------------------------|
+| Connections | A list of connections of the node's inputs and outputs.                                   |
+|             |                                                                                           |
+|             | Each connection is composed by two parts: A reference to another                          |
+|             | node and a reference to an input or an output of that node. Is                            |
+|             | the reference not set, that is, its value is zero, this means                             |
+|             | that the connection is internal.                                                          |
+|             |                                                                                           |
+
+The inputs and outputs may be parameters of an atomic type, as stated above. This
+seems like a good point to define the atomic types the system will have, these
+are:
+
+- Generic
+- Float
+- Text
+- Scene
+- Image
+- Dynamic
+- Mesh
+
+As these atomic types are the foundation of all other nodes, the system must
+ensure, that they are initialized before all other nodes. Before being able to
+create the atomic types there must be classes defining them.
+
+Being the foundation of all other nodes, the atomic types are implemented in the
+/foundation/ layer. First we will define an enumerator for being able to
+identify and use the various types directly. Python provides the =enum= module,
+which provides a convenient interface for using
+enumerations[fn:f6df5401240554a:https://docs.python.org/3/library/enum.html].
+
+:FOUNDATION_TYPES:
+#+NAME: foundation-types
+#+BEGIN_SRC python :exports none
+# -*- coding: utf-8 -*-
+
+# System imports
+<<foundation-types-system-imports>>
+
+# Project imports
+<<foundation-types-project-imports>>
+
+
+<<foundation-types-classes>>
+
+#+END_SRC
+
+#+NAME: foundation-types-nodetype-class
+#+BEGIN_SRC python :exports none
+class NodeType(enum.Enum):
+    """Atomic types which a parameter may be made of."""
+
+    GENERIC = 0
+    FLOAT   = 1
+    TEXT    = 2
+    SCENE   = 3
+    IMAGE   = 4
+    DYNAMIC = 5
+    MESH    = 6
+#+END_SRC
+
+#+NAME: foundation-types-nodetype
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/types.py :noweb tangle :comments link :mkdirp yes :exports none
+<<foundation-types-classes>>
+#+END_SRC
+:END:
+
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the atomic types which build the foundation for nodes.
+#+NAME:       lst:foundation-types-nodetype-class
+#+BEGIN_SRC python :noweb yes
+<foundation-types-nodetype-class>=
+    <<foundation-types-nodetype-class>>
+#+END_SRC
+
+Each parameter contains one or multiple parts which are processed whenever a
+parameter is being evaluated. These parts are then used to define the atomic
+types or parameters respectively. Hence we will first define the =ParameterPart=
+class within the /domain/ layer.
+
+:DOMAIN_PARAMETER_PARAMETERPART:
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the =ParameterPart= class within the /domain/ layer.
+#+NAME:       lst:domain-parameter-parameterpart
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/parameter.py :noweb yes :comments link :mkdirp yes
+# -*- coding: utf-8 -*-
+
+"""Parameter module"""
+
+# System imports
+import uuid
+
+# Project imports
+from qde.foundation import types
+
+
+class ParameterPart(object):
+    """TODO."""
+
+    def __init__(self, id):
+        """Constructor.
+
+        :param id: the identifier of the parameter.
+        :type  id: uuid
+        """
+
+        self.id = id
+        self.has_script_changed = False
+        self.script = None
+ #+END_SRC
+:END:
+
+In the very same manner as the parts of a parameter are defined, the parts of a
+node are defined.
+
+:DOMAIN_NODE_NODEPART:
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the =NodePart= class within the /domain/ layer.
+#+NAME:       lst:domain-parameter-parameterpart
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/node.py :noweb yes :comments link :mkdirp yes
+# -*- coding: utf-8 -*-
+
+"""Node module."""
+
+# System imports
+import enum
+import uuid
+
+# Project imports
+from qde.foundation import types
+
+
+class NodePart(object):
+    """TODO."""
+
+
+    class ChangedType(enum.Enum):
+        NOTHING = 0
+        VALUE   = 1
+        SUBTREE = 2
+
+
+    class Function(object):
+        """TODO."""
+
+        def __init__(self):
+            """Constructor."""
+
+            self.was_changed = True
+            self.what_changed = ChangedType.VALUE | ChangedType.SUBTREE
+
+    def __init__(self, id, default_function):
+        """Constructor.
+
+        :param id: the identifier of the parameter.
+        :type  id: uuid
+        :param default_function: the default function of the node.
+        :type  default_function: Function
+        """
+
+        self.id_ = id
+        self.connections = []
+        self.current_function = default_function
+        self.default_function = default_function
+        self.is_disabled = False
+        self.process_callback = None
+
+    def process(self, context):
+        if self.is_disabled:
+            return context
+
+        if self.process_callback is not None:
+            self.process_callback()
+
+        return self.current_function.process(context, self.connections)
+
+ #+END_SRC
+:END:
+
+:THOUGHTS:
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/types.py :noweb yes :comments link :mkdirp yes
+class Type(object):
+    """Interface for typed nodes."""
+
+    def __init__(self, type_):
+        """Constructor.
+
+        :param type_: the type that the type shall take.
+        :type  type_: NodeType
+        """
+
+        super(Type, self).__init__()
+        self.type_ = type_
+
+
+class Value(Type):
+    """Interface for types using values."""
+
+    def __init__(self, type_, value):
+        """Constructor.
+
+        :param type_: the type that the type shall take.
+        :type  type_: NodeType
+        :param value: the value that the type shall take.
+        :type  value: object
+        """
+
+        super(Value, self).__init__(type_)
+        self.value = value
+
+    def set_value_in_context(self, context):
+        """TODO: Document method."""
+
+        raise NotImplementedError(
+            "{0} must be implemented in child class.".format(
+                set_value_in_context.__name__
+            )
+        )
+
+    def get_value_from_context(self, context):
+        """TODO: Document method."""
+
+        raise NotImplementedError(
+            "{0} must be implemented in child class.".format(
+                set_value_in_context.__name__
+            )
+        )
+
+
+class Generic(Type):
+    """Generic node type."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(Generic, self).__init__(NodeType.GENERIC)
+class Float(Value):
+    """Node type holding float values."""
+
+    def __init__(self, float_value):
+        """Constructor.
+
+        :param float_value: the float value that the node type takes.
+        :type  float_value: float
+        """
+
+        assert float_value is float
+        super(Float, self).__init__(NodeType.FLOAT, float_value)
+
+    def set_value_in_context(self, context):
+        """TODO: Document method."""
+
+        context.value = self.value
+
+        return context
+
+    def get_value_from_context(self, context):
+        """TODO: Document method."""
+
+        self.value = context.value
+
+
+class Text(Value):
+    """Node type holding text values."""
+
+    def __init__(self, text_value):
+        """Constructor.
+
+        :param text_value: the text value that the node type takes.
+        :type  text_value: str
+        """
+
+        assert text_value is str
+        super(Text, self).__init__(NodeType.TEXT, text_value)
+
+    def set_value_in_context(self, context):
+        """TODO: Document method."""
+
+        context.text = self.value
+
+        return context
+
+    def get_value_from_context(self, context):
+        """TODO: Document method."""
+
+        self.text = context.value
+class Scene(Type):
+    """Scene node type."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(Scene, self).__init__(NodeType.SCENE)
+
+
+class Image(Type):
+    """Image node type."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(Image, self).__init__(NodeType.IMAGE)
+
+
+class Dynamic(Type):
+    """Dynamic node type."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(Dynamic, self).__init__(NodeType.DYNAMIC)
+
+
+class Mesh(Type):
+    """Mesh node type."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(Mesh, self).__init__(NodeType.MESH)
+#+END_SRC
+
 
 As can be derived from the above thoughts, each of the mentioned node
 representations need some effort in terms of allocating buffers or render
@@ -162,14 +526,11 @@ the beginning. The following nodes are envisaged:
 To get the node graph implementation started, a sample node definition is
 implemented as well as its defining class.
 
-**** Node definitions
-
 Node definitions are implemented in the
 JSON[fn:9d5e4e40b523c9e:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf]
 format and are placed in the =data/nodes/= sub-directory, seen from the main
 directory.
 
-:THOUGHTS_BEGIN:
 ParameterID defines a globally unique ID and is used for inputs and outputs.
 It may however come from the ID of an actual node, then the input is another node.
 If it does not come from another node, the input is a basic type.
