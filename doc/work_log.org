@@ -90,14 +90,14 @@
 
      Next steps: Continue implementing the node graph.
 
--  <2017-03-17 Fri> :: Change verbatim output to be less intrusive, update to do
-     tags, begin adding references do code fragment definitions, begin implement
-     the node graph. Move chapters into separate org files.
+- <2017-03-17 Fri> :: Change verbatim output to be less intrusive, update to do
+    tags, begin adding references do code fragment definitions, begin implement
+    the node graph. Move chapters into separate org files.
 
--  <2017-03-20 Mon> :: Re-think how to implement node definitions and revise
-     therefore the chapter about the node graph component, fix various
-     typographic errors, expand and change the Makefile, keep the work log up
-     to date.
+- <2017-03-20 Mon> :: Re-think how to implement node definitions and revise
+    therefore the chapter about the node graph component, fix various
+    typographic errors, expand and change the Makefile, keep the work log up
+    to date.
 
 - <2017-03-21 Tue> :: Re-think how to implement node definitions.
 
@@ -106,3 +106,7 @@
 
 - <2017-03-23 Thu> :: Expand notes about the node implementation, begin writing
      the actual node implementation down, keep the work log up to date.
+
+- <2017-03-24 Fri> :: Attend a meeting with Prof. Fuhrer, change and expand the
+     chapter about node implementation according to the before made thoughts,
+     begin implementing the node graph structure, keep the work log up to date.
