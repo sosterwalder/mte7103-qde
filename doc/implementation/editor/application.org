@@ -49,7 +49,7 @@ therefore as follows.
 
 #+RESULTS:
 
-**** Imports
+**** TODO Imports
 As you can see, the imports of the module are defined by =<<app-application-imports>>=. For
 achieving better readability, the imports are split up into system imports,
 meaning modules provided by the Python library itself or external modules, and
@@ -164,6 +164,8 @@ def setup_connections(self):
 
 <<app-application-methods>>
 #+END_SRC
+
+[[file:scene-graph.org::app-application-methods-setup-components-01][file:~/projects/mte7103-qde/doc/implementation/editor/scene-graph.org::app-application-methods-setup-components-01]]
 
 When looking at the constructor of the =QApplication=
 class[fn:10:https://doc.qt.io/qt-5/qapplication.html#QApplication] (as the

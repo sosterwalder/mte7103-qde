@@ -3,6 +3,11 @@
 # org-image-actual-width: nil
 # org-babel-use-quick-and-dirty-noweb-expansion: t
 # End:
+# (org-export-expand-include-keyword)
+#+BEGIN_SRC emacs-lisp
+  (org-mode)
+  (org-export-expand-include-keyword)
+#+END_SRC
 :END:
 
 :LATEX_STUFF:

@@ -37,7 +37,8 @@ following sub components:
   - View         :: Represents scenes in terms of scene view models within the
                     graphical user interface.
 
-**** Nodes
+**** DONE Nodes
+     CLOSED: [2017-03-27 Mon 10:36]
 
 As mentioned before, nodes are the building blocks of a real time animation. But
 what are those definitions actually? What do they actually define? There is not
@@ -195,28 +196,29 @@ ensure, that they are initialized before all other nodes. Before being able to
 create the atomic types there must be classes defining them.
 
 Being the foundation of all other nodes, the atomic types are implemented in the
-/foundation/ layer. First we will define an enumerator for being able to
-identify and use the various types directly. Python provides the =enum= module,
-which provides a convenient interface for using
+/foundation/ layer.
+
+First we will define an enumerator for being able to identify and use the
+various types directly. Python provides the =enum= module, which provides a
+convenient interface for using
 enumerations[fn:f6df5401240554a:https://docs.python.org/3/library/enum.html].
 
-:FOUNDATION_TYPES:
-#+NAME: foundation-types
+:FOUNDATION_TYPE:
+#+NAME: foundation-type
 #+BEGIN_SRC python :exports none
 # -*- coding: utf-8 -*-
 
 # System imports
-<<foundation-types-system-imports>>
+<<foundation-type-system-imports>>
 
 # Project imports
-<<foundation-types-project-imports>>
+<<foundation-type-project-imports>>
 
 
-<<foundation-types-classes>>
-
+<<foundation-type-classes>>
 #+END_SRC
 
-#+NAME: foundation-types-nodetype-class
+#+NAME: foundation-type-nodetype-class
 #+BEGIN_SRC python :exports none
 class NodeType(enum.Enum):
     """Atomic types which a parameter may be made of."""
@@ -230,330 +232,396 @@ class NodeType(enum.Enum):
     MESH    = 6
 #+END_SRC
 
-#+NAME: foundation-types-nodetype
-#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/types.py :noweb tangle :comments link :mkdirp yes :exports none
-<<foundation-types-classes>>
+#+NAME: foundation-type-nodetype
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/type.py :noweb tangle :comments link :mkdirp yes :exports none
+<<foundation-type-classes>>
 #+END_SRC
-:END:
 
 #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Implementation of the atomic types which build the foundation for nodes.
-#+NAME:       lst:foundation-types-nodetype-class
+#+CAPTION:    Implementation of the atomic types as enumerator which may be used to identify node types.
+#+NAME:       lst:foundation-type-nodetype-class
 #+BEGIN_SRC python :noweb yes
-<foundation-types-nodetype-class>=
-    <<foundation-types-nodetype-class>>
+<foundation-type-nodetype-class>=
+    <<foundation-type-nodetype-class>>
+#+END_SRC
+:END:
+
+Now, having identifiers for the atomic types available, we can implement the
+atomic types themselves. The atomic types will be used for defining various
+properties of a node and are therefore its parameters.
+
+Each node may contain one or more parameters as inputs and one parameter as
+output. Each parameter will lead back to its atomic type by referencing the
+unique identifier of the atomic type. For being able to distinguish multiple
+parameters using the same atomic type, it is necessary that each instance of an
+atomic type gas its own identifier in form of an instance identifier
+(instance ID).
+
+As the word atomic in atomic type indicates, these types are atomic, meaning
+there may only exist one explicit instance of an atomic type. As an atomic type
+is a data structure, it will be implemented within the /domain/ layer. As it is
+part respectively the foundation of a parameter, the atomic types will be
+implemented within the /parameter/ module.
+
+:DOMAIN_PARAMETER_ATOMICTYPE:
+#+NAME: domain-parameter
+#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/parameter.py :noweb tangle :comments link :mkdirp yes :exports none
+#+BEGIN_SRC python :exports none
+# -*- coding: utf-8 -*-
+
+# System imports
+<<domain-parameter-system-imports>>
+
+# Project imports
+from qde.editor.foundation import type as node_type
+<<domain-parameter-project-imports>>
+
+
+<<domain-parameter-classes>>
 #+END_SRC
 
-Each parameter contains one or multiple parts which are processed whenever a
-parameter is being evaluated. These parts are then used to define the atomic
-types or parameters respectively. Hence we will first define the =ParameterPart=
-class within the /domain/ layer.
+#+NAME: domain-parameter-atomictype-class
+#+BEGIN_SRC python :exports none
+class AtomicType(object):
+    """Represents an atomic type and is the basis for each node."""
 
-:DOMAIN_PARAMETER_PARAMETERPART:
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Implementation of the =ParameterPart= class within the /domain/ layer.
-#+NAME:       lst:domain-parameter-parameterpart
-#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/parameter.py :noweb yes :comments link :mkdirp yes
-# -*- coding: utf-8 -*-
-
-"""Parameter module"""
-
-# System imports
-import uuid
-
-# Project imports
-from qde.foundation import types
-
-
-class ParameterPart(object):
-    """TODO."""
-
-    def __init__(self, id):
+    def __init__(self, id_, type, name):
         """Constructor.
 
-        :param id: the identifier of the parameter.
-        :type  id: uuid
+        :param id_: the globally unique identifier of the atomic type.
+        :type  id_: uuid.uuid4
+        :param type_: the type of the atomic type, e.g. "float".
+        :type  type_: node_types.NodeType
         """
 
-        self.id = id
-        self.has_script_changed = False
-        self.script = None
- #+END_SRC
-:END:
-
-In the very same manner as the parts of a parameter are defined, the parts of a
-node are defined.
-
-:DOMAIN_NODE_NODEPART:
-#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
-#+CAPTION:    Implementation of the =NodePart= class within the /domain/ layer.
-#+NAME:       lst:domain-parameter-parameterpart
-#+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/node.py :noweb yes :comments link :mkdirp yes
-# -*- coding: utf-8 -*-
-
-"""Node module."""
-
-# System imports
-import enum
-import uuid
-
-# Project imports
-from qde.foundation import types
-
-
-class NodePart(object):
-    """TODO."""
-
-
-    class ChangedType(enum.Enum):
-        NOTHING = 0
-        VALUE   = 1
-        SUBTREE = 2
-
-
-    class Function(object):
-        """TODO."""
-
-        def __init__(self):
-            """Constructor."""
-
-            self.was_changed = True
-            self.what_changed = ChangedType.VALUE | ChangedType.SUBTREE
-
-    def __init__(self, id, default_function):
-        """Constructor.
-
-        :param id: the identifier of the parameter.
-        :type  id: uuid
-        :param default_function: the default function of the node.
-        :type  default_function: Function
-        """
-
-        self.id_ = id
-        self.connections = []
-        self.current_function = default_function
-        self.default_function = default_function
-        self.is_disabled = False
-        self.process_callback = None
-
-    def process(self, context):
-        if self.is_disabled:
-            return context
-
-        if self.process_callback is not None:
-            self.process_callback()
-
-        return self.current_function.process(context, self.connections)
-
- #+END_SRC
-:END:
-
-:THOUGHTS:
-#+BEGIN_SRC python :tangle ../../../src/qde/editor/foundation/types.py :noweb yes :comments link :mkdirp yes
-class Type(object):
-    """Interface for typed nodes."""
-
-    def __init__(self, type_):
-        """Constructor.
-
-        :param type_: the type that the type shall take.
-        :type  type_: NodeType
-        """
-
-        super(Type, self).__init__()
+        self.id_   = id_
         self.type_ = type_
 
 
-class Value(Type):
-    """Interface for types using values."""
+class AtomicTypes(object):
+    """Creates and holds all atomic types of the system."""
 
-    def __init__(self, type_, value):
-        """Constructor.
-
-        :param type_: the type that the type shall take.
-        :type  type_: NodeType
-        :param value: the value that the type shall take.
-        :type  value: object
-        """
-
-        super(Value, self).__init__(type_)
-        self.value = value
-
-    def set_value_in_context(self, context):
-        """TODO: Document method."""
-
-        raise NotImplementedError(
-            "{0} must be implemented in child class.".format(
-                set_value_in_context.__name__
-            )
-        )
-
-    def get_value_from_context(self, context):
-        """TODO: Document method."""
-
-        raise NotImplementedError(
-            "{0} must be implemented in child class.".format(
-                set_value_in_context.__name__
-            )
-        )
-
-
-class Generic(Type):
-    """Generic node type."""
-
-    def __init__(self):
-        """Constructor."""
-
-        super(Generic, self).__init__(NodeType.GENERIC)
-class Float(Value):
-    """Node type holding float values."""
-
-    def __init__(self, float_value):
-        """Constructor.
-
-        :param float_value: the float value that the node type takes.
-        :type  float_value: float
-        """
-
-        assert float_value is float
-        super(Float, self).__init__(NodeType.FLOAT, float_value)
-
-    def set_value_in_context(self, context):
-        """TODO: Document method."""
-
-        context.value = self.value
-
-        return context
-
-    def get_value_from_context(self, context):
-        """TODO: Document method."""
-
-        self.value = context.value
-
-
-class Text(Value):
-    """Node type holding text values."""
-
-    def __init__(self, text_value):
-        """Constructor.
-
-        :param text_value: the text value that the node type takes.
-        :type  text_value: str
-        """
-
-        assert text_value is str
-        super(Text, self).__init__(NodeType.TEXT, text_value)
-
-    def set_value_in_context(self, context):
-        """TODO: Document method."""
-
-        context.text = self.value
-
-        return context
-
-    def get_value_from_context(self, context):
-        """TODO: Document method."""
-
-        self.text = context.value
-class Scene(Type):
-    """Scene node type."""
-
-    def __init__(self):
-        """Constructor."""
-
-        super(Scene, self).__init__(NodeType.SCENE)
-
-
-class Image(Type):
-    """Image node type."""
-
-    def __init__(self):
-        """Constructor."""
-
-        super(Image, self).__init__(NodeType.IMAGE)
-
-
-class Dynamic(Type):
-    """Dynamic node type."""
-
-    def __init__(self):
-        """Constructor."""
-
-        super(Dynamic, self).__init__(NodeType.DYNAMIC)
-
-
-class Mesh(Type):
-    """Mesh node type."""
-
-    def __init__(self):
-        """Constructor."""
-
-        super(Mesh, self).__init__(NodeType.MESH)
+    generic = AtomicType(
+        id_="54b20acc-5867-4535-861e-f461bdbf3bf3",
+        type_=node_types.generic
+    )
 #+END_SRC
 
+#+NAME:domain-parameter-classes
+#+BEGIN_SRC python :exports none
+<<domain-parameter-atomictype-class>>
+#+END_SRC
 
-As can be derived from the above thoughts, each of the mentioned node
-representations need some effort in terms of allocating buffers or render
-targets before they may be used for rendering a frame. They may as well want to
-free or release some of their made allocations when not being used anymore.
+#+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+#+CAPTION:    Implementation of the atomic types which build the foundation for nodes.
+#+NAME:       lst:domain-parameter-atomictype-class
+#+BEGIN_SRC python :noweb yes
+<domain-parameter-atomictype-class>=
+    <<domain-parameter-atomictype-class>>
+#+END_SRC
+:END:
 
-In other words, every node will be pre-processed before being processed and
-post-processed after being processed.
-
-To keep the learning curve at a decent level when using the editor application,
-it is important to provide the user with predefined nodes to choose from ---
-independent from their type --- otherwise users could get easily frustrated at
-the beginning. The following nodes are envisaged:
-
-- Solid modeling objects
-  - Sphere
-  - Cube
-  - Plane
-  - ...
-- Solid modeling operations
-  - Transformation
-  - Scaling
-  - Rotation
-  - Union
-  - Differentiation
-  - ...
-- Post-processing effects
-  - Blur
-  - Glare
-  - ...
-- Images
-
-To get the node graph implementation started, a sample node definition is
-implemented as well as its defining class.
-
-Node definitions are implemented in the
-JSON[fn:9d5e4e40b523c9e:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf]
-format and are placed in the =data/nodes/= sub-directory, seen from the main
-directory.
-
-ParameterID defines a globally unique ID and is used for inputs and outputs.
-It may however come from the ID of an actual node, then the input is another node.
-If it does not come from another node, the input is a basic type.
-
-An input defines a parameter and may be referenced as output as well.
-
-Every input and output receives a ParameterInstanceID, which is globally unique
-as well. Such an ID is used for making connections between nodes and/or parts of
-nodes. Parts = Code?
-
-A node may contain other nodes as well, those are references however.
-
-A few node types are pre-defined however. Those can be selected as input and as
-output as well. The pre-defined types are:
-
-- Generic
-- Float (value)
-- Text
-- Scene
-- Image
-- Dynamic (value)
-- Mesh
-
-Connections are actually parts.
-We need a context. Nodes get processed using this (global) context.
+:thoughts:
+#
+# #+ATTR_LaTeX: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+# #+CAPTION:    Implementation of the =ParameterPart= class within the /domain/ layer.
+# #+NAME:       lst:domain-parameter-parameterpart
+# #+BEGIN_SRC python :tangle ../../../src/qde/editor/domain/parameter.py :noweb yes :comments link :mkdirp yes
+# # -*- coding: utf-8 -*-
+# 
+# """Parameter module"""
+# 
+# # System imports
+# import uuid
+# 
+# # Project imports
+# from qde.foundation import types
+# 
+# 
+# class ParameterPart(object):
+#     """TODO."""
+# 
+#     def __init__(self, id):
+#         """Constructor.
+# 
+#         :param id: the identifier of the parameter.
+#         :type  id: uuid
+#         """
+# 
+#         self.id = id
+#         self.has_script_changed = False
+#         self.script = None
+#  #+END_SRC
+# 
+# in the very same manner as the parts of a parameter are defined, the parts of a
+# node are defined.
+# 
+# #+attr_latex: :options fontsize=\footnotesize,linenos,bgcolor=bashcodebg
+# #+caption:    implementation of the =nodepart= class within the /domain/ layer.
+# #+name:       lst:domain-parameter-parameterpart
+# #+begin_src python :tangle ../../../src/qde/editor/domain/node.py :noweb yes :comments link :mkdirp yes
+# # -*- coding: utf-8 -*-
+# 
+# """node module."""
+# 
+# # system imports
+# import enum
+# import uuid
+# 
+# # project imports
+# from qde.foundation import types
+# 
+# 
+# class nodepart(object):
+#     """todo."""
+# 
+# 
+#     class changedtype(enum.enum):
+#         nothing = 0
+#         value   = 1
+#         subtree = 2
+# 
+# 
+#     class function(object):
+#         """todo."""
+# 
+#         def __init__(self):
+#             """constructor."""
+# 
+#             self.was_changed = true
+#             self.what_changed = changedtype.value | changedtype.subtree
+# 
+#     def __init__(self, id, default_function):
+#         """constructor.
+# 
+#         :param id: the identifier of the parameter.
+#         :type  id: uuid
+#         :param default_function: the default function of the node.
+#         :type  default_function: function
+#         """
+# 
+#         self.id_ = id
+#         self.connections = []
+#         self.current_function = default_function
+#         self.default_function = default_function
+#         self.is_disabled = false
+#         self.process_callback = none
+# 
+#     def process(self, context):
+#         if self.is_disabled:
+#             return context
+# 
+#         if self.process_callback is not none:
+#             self.process_callback()
+# 
+#         return self.current_function.process(context, self.connections)
+# 
+#  #+end_src
+# #+begin_src python :tangle ../../../src/qde/editor/foundation/types.py :noweb yes :comments link :mkdirp yes
+# class type(object):
+#     """interface for typed nodes."""
+# 
+#     def __init__(self, type_):
+#         """Constructor.
+# 
+#         :param type_: the type that the type shall take.
+#         :type  type_: NodeType
+#         """
+# 
+#         super(Type, self).__init__()
+#         self.type_ = type_
+# 
+# 
+# class Value(Type):
+#     """Interface for types using values."""
+# 
+#     def __init__(self, type_, value):
+#         """Constructor.
+# 
+#         :param type_: the type that the type shall take.
+#         :type  type_: NodeType
+#         :param value: the value that the type shall take.
+#         :type  value: object
+#         """
+# 
+#         super(Value, self).__init__(type_)
+#         self.value = value
+# 
+#     def set_value_in_context(self, context):
+#         """TODO: Document method."""
+# 
+#         raise NotImplementedError(
+#             "{0} must be implemented in child class.".format(
+#                 set_value_in_context.__name__
+#             )
+#         )
+# 
+#     def get_value_from_context(self, context):
+#         """TODO: Document method."""
+# 
+#         raise NotImplementedError(
+#             "{0} must be implemented in child class.".format(
+#                 set_value_in_context.__name__
+#             )
+#         )
+# 
+# 
+# class Generic(Type):
+#     """Generic node type."""
+# 
+#     def __init__(self):
+#         """Constructor."""
+# 
+#         super(Generic, self).__init__(NodeType.GENERIC)
+# class Float(Value):
+#     """Node type holding float values."""
+# 
+#     def __init__(self, float_value):
+#         """Constructor.
+# 
+#         :param float_value: the float value that the node type takes.
+#         :type  float_value: float
+#         """
+# 
+#         assert float_value is float
+#         super(Float, self).__init__(NodeType.FLOAT, float_value)
+# 
+#     def set_value_in_context(self, context):
+#         """TODO: Document method."""
+# 
+#         context.value = self.value
+# 
+#         return context
+# 
+#     def get_value_from_context(self, context):
+#         """TODO: Document method."""
+# 
+#         self.value = context.value
+# 
+# 
+# class Text(Value):
+#     """Node type holding text values."""
+# 
+#     def __init__(self, text_value):
+#         """Constructor.
+# 
+#         :param text_value: the text value that the node type takes.
+#         :type  text_value: str
+#         """
+# 
+#         assert text_value is str
+#         super(Text, self).__init__(NodeType.TEXT, text_value)
+# 
+#     def set_value_in_context(self, context):
+#         """TODO: Document method."""
+# 
+#         context.text = self.value
+# 
+#         return context
+# 
+#     def get_value_from_context(self, context):
+#         """TODO: Document method."""
+# 
+#         self.text = context.value
+# class Scene(Type):
+#     """Scene node type."""
+# 
+#     def __init__(self):
+#         """Constructor."""
+# 
+#         super(Scene, self).__init__(NodeType.SCENE)
+# 
+# 
+# class Image(Type):
+#     """Image node type."""
+# 
+#     def __init__(self):
+#         """Constructor."""
+# 
+#         super(Image, self).__init__(NodeType.IMAGE)
+# 
+# 
+# class Dynamic(Type):
+#     """Dynamic node type."""
+# 
+#     def __init__(self):
+#         """Constructor."""
+# 
+#         super(Dynamic, self).__init__(NodeType.DYNAMIC)
+# 
+# 
+# class Mesh(Type):
+#     """Mesh node type."""
+# 
+#     def __init__(self):
+#         """Constructor."""
+# 
+#         super(Mesh, self).__init__(NodeType.MESH)
+# #+END_SRC
+# 
+# 
+# As can be derived from the above thoughts, each of the mentioned node
+# representations need some effort in terms of allocating buffers or render
+# targets before they may be used for rendering a frame. They may as well want to
+# free or release some of their made allocations when not being used anymore.
+# 
+# In other words, every node will be pre-processed before being processed and
+# post-processed after being processed.
+# 
+# To keep the learning curve at a decent level when using the editor application,
+# it is important to provide the user with predefined nodes to choose from ---
+# independent from their type --- otherwise users could get easily frustrated at
+# the beginning. The following nodes are envisaged:
+# 
+# - Solid modeling objects
+#   - Sphere
+#   - Cube
+#   - Plane
+#   - ...
+# - Solid modeling operations
+#   - Transformation
+#   - Scaling
+#   - Rotation
+#   - Union
+#   - Differentiation
+#   - ...
+# - Post-processing effects
+#   - Blur
+#   - Glare
+#   - ...
+# - Images
+# 
+# To get the node graph implementation started, a sample node definition is
+# implemented as well as its defining class.
+# 
+# Node definitions are implemented in the
+# JSON[fn:9d5e4e40b523c9e:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf]
+# format and are placed in the =data/nodes/= sub-directory, seen from the main
+# directory.
+# 
+# ParameterID defines a globally unique ID and is used for inputs and outputs.
+# It may however come from the ID of an actual node, then the input is another node.
+# If it does not come from another node, the input is a basic type.
+# 
+# An input defines a parameter and may be referenced as output as well.
+# 
+# Every input and output receives a ParameterInstanceID, which is globally unique
+# as well. Such an ID is used for making connections between nodes and/or parts of
+# nodes. Parts = Code?
+# 
+# A node may contain other nodes as well, those are references however.
+# 
+# A few node types are pre-defined however. Those can be selected as input and as
+# output as well. The pre-defined types are:
+# 
+# - Generic
+# - Float (value)
+# - Text
+# - Scene
+# - Image
+# - Dynamic (value)
+# - Mesh
+# 
+# Connections are actually parts.
+# We need a context. Nodes get processed using this (global) context.
 :END:
