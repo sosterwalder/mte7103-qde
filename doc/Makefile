@@ -23,6 +23,15 @@ OS           := $(shell uname)
 
 .PHONY: all build-doc build-doc-fast clean-doc clean-doc-fast doc src watch-build-doc watch-build-doc-fast watch-doc
 
+.build-bibliography:
+	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
+
+.build-glossary:
+	makeglossaries $(JOB) ${TEX_VERBOSE}
+
+.build-pdflatex:
+	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+
 .set-build-to-build-doc-fast:
 	$(eval BUILD_COMMAND = build-doc-fast)
 
@@ -41,20 +50,14 @@ endif
 
 all: clean-doc build-doc
 
-build-doc: clean-doc doc
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
-	# $(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	makeglossaries $(JOB) ${TEX_VERBOSE}
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	# $(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+build-doc: clean-doc doc .build-pdflatex doc .build-pdflatex .build-bibliography .build-pdflatex .build-glossary .build-pdflatex
 
 build-doc-fast: doc
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
 
 clean-doc:
-	@rm -f *{$(CLEAN_EXT)}
-	@rm -f inc/*{$(CLEAN_EXT)}
+	rm -f *{$(CLEAN_EXT)}
+	rm -f inc/*{$(CLEAN_EXT)}
 
 clean-doc-dist: clean
 	@rm -f *.pdf
