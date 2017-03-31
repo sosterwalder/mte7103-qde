@@ -180,7 +180,7 @@
 % Glossary Package
 %---------------------------------------------------------------------------
 \usepackage[nonumberlist,nomain]{glossaries}
-\input{inc/glossary}
+@i inc/glossary.w
 \makeglossaries{}
 
 % Fancyrb package
