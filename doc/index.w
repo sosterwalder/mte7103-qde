@@ -104,24 +104,11 @@
 % which provides source code formatting
 %---------------------------------------------------------------------------
 \usepackage{listings}
-% \usepackage{glslListings}
-% Make sure Umlauts are getting displayed correctly.
-\lstset{literate=%
-    {Ö}{\textcolor{black}{\"O}}1
-    {Ä}{{\"A}}1
-    {Ü}{{\"U}}1
-    {ß}{{\ss}}1
-    {ü}{{\"u}}1
-    {ä}{{\textcolor{black}{\"a}}}1
-    {ö}{{\textcolor{black}{\"o}}}1
-    {~}{{\textasciitilde}}1
-    {?}{{\textcolor{black}{?}}}1
-}
-% Define a list style for Python programming language
-\lstset{language=Python,
+\lstdefinestyle{python}{%
+    language=Python,
     basicstyle=\ttm\ttfamily\linespread{1.15},
     backgroundcolor = \color{syntaxBackground},
-    columns=fullflexible,
+    % columns=fullflexible,
     commentstyle=\color{green},
     emphstyle=\ttb\color{red},
     escapechar=§,
@@ -133,16 +120,16 @@
     numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
     identifierstyle=\color{black},
     keywordstyle=\ttb\color{blue},
-    otherkeywords={self},
+    otherkeywords={self, param},
     % procnamekeys={def,class},
     showspaces=false,
     showstringspaces=false,
     showtabs=false,
+    stringstyle=\color{syntaxComment},
     tab=\rightarrowfill,
     xleftmargin=0.7cm,
 }
-%---------------------------------------------------------------------------
-
+\lstset{style=python}
 % Hyperref Package (Create links in a pdf)
 %---------------------------------------------------------------------------
 \usepackage[
