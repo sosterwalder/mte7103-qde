@@ -26,6 +26,28 @@ too, and may be found in the appendix.\todo[inline]{Insert reference/link to tes
 \section{Standards and principles}
 \label{sec:standards-principles}
 
+\subsection{Requirements}
+\label{subsec:requirements}
+
+The requirements are defined by the preceding project work,~\enquote{QDE --- a
+  visual animation system, software architecture}~\citep[p. 8
+ff.]{osterwalder_qde_2016}, and are still valid.
+
+For the editor application however, Python is used as a programming language.
+This decision is made as the author of the thesis has several years of
+experience concerning Python and as the performance of the editor is not
+a critical factor. By performance all aspects are concerned, e.g. the evaluation
+of the node graph or rendering itself.
+
+As Python provides no direct bindings to Qt, an additional library is needed,
+which provides those bindings. Currently there exist two Python bindings for Qt:
+PySide and PyQt. As Qt version 5 is used, the bindings need to provide access to
+version 5 too. Currently this is only achieved by PyQt5 in a stable and complete
+way. PySide2 supports Qt version 5 too, is although under heavy development and
+far from being complete and stable.
+
+Therefore PyQt5 is an additional requirement.
+
 \subsection{Code}
 \label{subsec:code}
 
@@ -88,8 +110,3 @@ Controller and Model.}
 To avoid coupling and therefore dependencies, signals and
 slots[fn:16:http://doc.qt.io/qt-5/signalsandslots.html] are used in terms of the
 observer pattern to allow inter-object and inter-layer communication.
-
-\subsection{Diagrams}
-\label{subsec:diagrams}
-
-\todo[inline]{Add principles for diagrams.}
