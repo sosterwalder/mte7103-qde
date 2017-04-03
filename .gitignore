@@ -149,5 +149,5 @@ sympy-plots-for-*.tex/
 src/
 doc/_minted-index/
 doc/build/
-doc/auto/
+doc/**/auto/
 doc/source/*.rst
