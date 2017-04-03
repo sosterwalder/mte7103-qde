@@ -97,3 +97,54 @@ of name-spaces is intended.
 % The first stage of the project shows the creation of the /editor/ component, as
 % it provides the possibility of creating and editing real-time animations which
 % may then be played back by the /player/ component\cite[p. 29]{osterwalder_qde_2016}.
+
+\section{Code fragments}
+\label{sec:code-fragments}
+
+@o ../src/editor.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Main entry point for the QDE editor application. """
+
+# System imports
+import sys
+
+# Project imports
+from qde.editor.application import application
+
+@<Main entry point@>
+@}
+
+@o ../src/qde/editor/application/application.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Main application module for the QDE editor."""
+
+# System imports
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.gui import main_window as qde_main_window
+
+
+@<Main application declarations@>
+@}
+
+@o ../src/qde/editor/gui/main_window.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding the main application window. """
+
+# System imports
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+
+# Project imports
+
+
+@<Main window declarations@>
+@}
