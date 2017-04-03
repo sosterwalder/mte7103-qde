@@ -119,24 +119,11 @@
 % which provides source code formatting
 %---------------------------------------------------------------------------
 \usepackage{listings}
-% \usepackage{glslListings}
-% Make sure Umlauts are getting displayed correctly.
-\lstset{literate=%
-    {Ö}{\textcolor{black}{\"O}}1
-    {Ä}{{\"A}}1
-    {Ü}{{\"U}}1
-    {ß}{{\ss}}1
-    {ü}{{\"u}}1
-    {ä}{{\textcolor{black}{\"a}}}1
-    {ö}{{\textcolor{black}{\"o}}}1
-    {~}{{\textasciitilde}}1
-    {?}{{\textcolor{black}{?}}}1
-}
-% Define a list style for Python programming language
-\lstset{language=Python,
+\lstdefinestyle{python}{%
+    language=Python,
     basicstyle=\ttm\ttfamily\linespread{1.15},
     backgroundcolor = \color{syntaxBackground},
-    columns=fullflexible,
+    % columns=fullflexible,
     commentstyle=\color{green},
     emphstyle=\ttb\color{red},
     escapechar=§,
@@ -148,16 +135,16 @@
     numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
     identifierstyle=\color{black},
     keywordstyle=\ttb\color{blue},
-    otherkeywords={self},
+    otherkeywords={self, param},
     % procnamekeys={def,class},
     showspaces=false,
     showstringspaces=false,
     showtabs=false,
+    stringstyle=\color{syntaxComment},
     tab=\rightarrowfill,
     xleftmargin=0.7cm,
 }
-%---------------------------------------------------------------------------
-
+\lstset{style=python}
 % Hyperref Package (Create links in a pdf)
 %---------------------------------------------------------------------------
 \usepackage[
@@ -547,6 +534,28 @@ too, and may be found in the appendix.\todo[inline]{Insert reference/link to tes
 \section{Standards and principles}
 \label{sec:standards-principles}
 
+\subsection{Requirements}
+\label{subsec:requirements}
+
+The requirements are defined by the preceding project work,~\enquote{QDE --- a
+  visual animation system, software architecture}~\citep[p. 8
+ff.]{osterwalder_qde_2016}, and are still valid.
+
+For the editor application however, Python is used as a programming language.
+This decision is made as the author of the thesis has several years of
+experience concerning Python and as the performance of the editor is not
+a critical factor. By performance all aspects are concerned, e.g. the evaluation
+of the node graph or rendering itself.
+
+As Python provides no direct bindings to Qt, an additional library is needed,
+which provides those bindings. Currently there exist two Python bindings for Qt:
+PySide and PyQt. As Qt version 5 is used, the bindings need to provide access to
+version 5 too. Currently this is only achieved by PyQt5 in a stable and complete
+way. PySide2 supports Qt version 5 too, is although under heavy development and
+far from being complete and stable.
+
+Therefore PyQt5 is an additional requirement.
+
 \subsection{Code}
 \label{subsec:code}
 
@@ -608,12 +617,7 @@ Controller and Model.}
 
 To avoid coupling and therefore dependencies, signals and
 slots[fn:16:http://doc.qt.io/qt-5/signalsandslots.html] are used in terms of the
-observer pattern to allow inter-object and inter-layer communication.
-
-\subsection{Diagrams}
-\label{subsec:diagrams}
-
-\todo[inline]{Add principles for diagrams.}% -*- mode: latex; coding: utf-8 -*-
+observer pattern to allow inter-object and inter-layer communication.% -*- mode: latex; coding: utf-8 -*-
 
 \chapter{Implementation}
 \label{chap:implementation}
@@ -695,6 +699,11 @@ The thoughts to reach this goal were already developed
 in~\autoref{chap:procedure}, \enquote{\nameref{chap:procedure}}, and will
 therefore not be repeated again.
 
+As stated in~\autoref{chap:procedure}, literate programming is used to implement
+the components. To maintain readability only relevant code fragments are shown
+in place. The whole code fragments, which are needed for tangling, are found
+at~\autoref{sec:code-fragments}.
+
 First, the implementation of the editor component is described, as it is the
 basis for the whole project and also contains many concepts, that are re-used by
 the player component. Before starting with the implementation it is necessary to
@@ -775,8 +784,12 @@ directly.~\footnote{\url{https://www.python.org/dev/peps/pep-0020/}}. As defined
 by the coding style,~\autoref{subsec:appendix-implementation-coding-style},
 imports are done by the \verb+from Foo import Bar+ syntax.
 
-\subsection{Framework for implementation}
-\label{subsec:appendix-implementation-framework}
+The imported modules are always split up: first the system modules are imported,
+modules which are provided by Python itself or by external libraries, then
+project-related modules are imported.
+
+\subsubsection{Framework for implementation}
+\label{ssubsec:appendix-implementation-framework}
 
 For also staying consistent when implementing classes and methods, it make sense
 to define a rough framework for implementation, which is as follows:
@@ -803,60 +816,450 @@ begin.
 \subsection{Editor}
 \label{subsec:editor}
 
-Each application needs an entry point, a point where an application starts.
+Before diving right into the implementation of the editor, it may be good to
+reconsider what shall actually be implemented, therefore what the main
+functionality of the editor is and what its components are.
+
+The quintessence of the editor application is to output a structure, be it in
+the JSON format or even in bytecode, which defines an animation.
+
+An animation is simply a composition of scenes which run in a sequential order
+within a time span. A scene is at the end of its evaluation nothing else as
+shader specific code which gets executed on the GPU.
+
+To achieve this overall goal while providing the user a user-friendly
+experience, several components are needed. These are the following, being
+defined in~\citetitle[pp. 29 ff.]{osterwalder_qde_2016}
+
+\begin{itemize}
+\item A scene graph, allowing the creation and deletion of scenes. The scene graph
+      has at least a root scene.
+\item A node-based graph structure, allowing the composition of scenes using nodes
+      and connections between the nodes. There exists at least a root node at
+      the root scene of the scene graph.
+\item A parameter window, showing parameters of the currently selected graph node.
+\item A rendering window, rendering the currently selected node or scene.
+\item A sequencer, allowing a time-based scheduling of defined scenes.
+\end{itemize}
+
+However, the above list is not quite complete. It is somehow intuitively clear,
+that there needs to be some main component, which holds all the mentioned
+components and allows a proper handling of the application. As the whole
+architecture uses layers and the MVC principle (see~\autoref{subsec:code}
+and~\autoref{ssubsec:mvc}), the main component is composed of a view and a
+controller. A model is (at least at this point) not necessary. The view
+component shall be called~\textit{main window} and its controller shall be
+called~\textit{main application}.
+
+Before implementing any of these components, the editor application needs an
+entry point, that is a point where the application starts when being called.
+
 Python does this by evaluating a special variable called~\verb+__name__+. This
 value is set to \verb+'__main__'+ if the module is~\enquote{read from standard
 input, a script, or from an interactive
 prompt.}~\footnote{\url{https://docs.python.org/3/library/__main__.html}}
 
-So, when thinking about the main entry point for the editor, the module holding
-this main entry point could easily be extended to hold a whole class
-representing the actual editor application. Instead it is more intuitive to have
-only a minimal entry point. All that entry point needs to do, is spawning the
-editor application, execute it and exit again.
+All that the entry point needs to do in case of the editor application, is
+spawning the editor application, execute it and exit again, as can be seen below.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap1}\raggedright\small
-\NWtarget{nuweb14a}{} $\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize {14a}}$\,\rangle\equiv$
+\NWtarget{nuweb14}{} $\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize {14}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
-\mbox{}\verb@#!/usr/bin/python@\\
-\mbox{}\verb@# -*- coding: utf-8 -*-@\\
-\mbox{}\verb@@\\
-\mbox{}\verb@""" Main entry point for the QDE editor application. """@\\
-\mbox{}\verb@@\\
-\mbox{}\verb@# System imports@\\
-\mbox{}\verb@import sys@\\
-\mbox{}\verb@@\\
-\mbox{}\verb@# Project imports@\\
-\mbox{}\verb@from qde.editor.application import application@\\
-\mbox{}\verb@@\\
-\mbox{}\verb@@\\
-\mbox{}\verb@if __name__ == "__main__":@\\
-\mbox{}\verb@    app = application.Application(sys.argv)@\\
-\mbox{}\verb@    status = app.exec()@\\
-\mbox{}\verb@    sys.exit(status)@\\
-\mbox{}\verb@}@{\NWsep}
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@if __name__ == "__main__":@\\
+\mbox{}\lstinline@  app = application.Application(sys.argv)@\\
+\mbox{}\lstinline@  status = app.exec()@\\
+\mbox{}\lstinline@  sys.exit(status)@\\
+\mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb14b}{14b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb21a}{21a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+But where to place this entry point? A very direct approach would be to
+implement that main entry point within the main application controller. But when
+running the editor application by calling it from the command line, calling a
+controller directly may rather be confusing. Instead it is more intuitive to
+have only a minimal entry point which is clearly visible as such.
+
+Although a main entry point is defined by now, the editor application cannot be
+started as there is no such thing as an editor application yet.
+
+
+As stated in the requirements, see~\autoref{subsec:requirements}, Qt version 5
+is used through the PyQt5 wrapper. Therefore all functionality of Qt 5 may be
+used. Qt already offers a main application class, which can be used as a
+controller. The class is called~\verb+QApplication+.
+
+But what does such a main application class actually do? What is its
+functionality? Very roughly sketched, such a type of application initializes
+resources, enters a main loop where it stays until told to shut down. At the end
+it frees resources again.
+
+As the main application initializes resources, it act as central node between the
+various layers of the architecture, initializing them and connecting them using
+signals.\cite[pp. 37 --- 38]{osterwalder_qde_2016}
+
+Due to the usage of \verb+QApplication+ as super class it is not necessary to
+implement a main (event-) loop, as such is provided by Qt
+itself~\footnote{http://doc.qt.io/Qt-5/qapplication.html\#exec}.
+
+As stated above, the main application acts as entry point and as a central node
+between the various layers. Therefore it needs to do at least three things:
+initialize itself, set up components and connect components. This all happens
+when the main application is being initialized.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap2}\raggedright\small
+\NWtarget{nuweb15a}{} $\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize {15a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@class Application(QtWidgets.QApplication):@\\
+\mbox{}\lstinline@    """Main application for QDE."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize \NWlink{nuweb15b}{15b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb21b}{21b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap2}\raggedright\small
-\NWtarget{nuweb14b}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {14b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap3}\raggedright\small
+\NWtarget{nuweb15b}{} $\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize {15b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
-\mbox{}\verb@@\hbox{$\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize \NWlink{nuweb14a}{14a}}$\,\rangle$}\verb@@{\NWsep}
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize \NWlink{nuweb15c}{15c}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb15a}{15a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap4}\raggedright\small
+\NWtarget{nuweb15c}{} $\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize {15c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def __init__(self, arguments):@\\
+\mbox{}\lstinline@    """Constructor.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param arguments: a (variable) list of arguments, that are@\\
+\mbox{}\lstinline@                      passed when calling this class.@\\
+\mbox{}\lstinline@    :type  argv:      list@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize \NWlink{nuweb16a}{16a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize \NWlink{nuweb17d}{17d}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Connect components for main application}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb15c}{15c}\NWlink{nuweb18c}{, 18c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb15b}{15b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Setting up the internals is straight forward: Passing any given arguments
+directly to~\verb+QApplication+, setting an application icon, a name as well as
+a display name.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap5}\raggedright\small
+\NWtarget{nuweb16a}{} $\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize {16a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@super(Application, self).__init__(arguments)@\\
+\mbox{}\lstinline@self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))@\\
+\mbox{}\lstinline@self.setApplicationName("QDE")@\\
+\mbox{}\lstinline@self.setApplicationDisplayName("QDE")@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb15c}{15c}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Having the main application as a very basic implementation, the view component
+of the main application, the main window, can now be implemented and then be set
+up by the main application.
+
+The main functionality of the main window is to set up the actual user
+interface, containing all the views of the components. Qt offers the class
+\verb+QMainWindow+ from which \verb=MainWindow= may inherit.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap6}\raggedright\small
+\NWtarget{nuweb16b}{} $\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize {16b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@class MainWindow(QtWidgets.QMainWindow):@\\
+\mbox{}\lstinline@    """The main window class.@\\
+\mbox{}\lstinline@    Acts as main view for the QDE editor application.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize \NWlink{nuweb16c}{16c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize \NWlink{nuweb17a}{17a}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window slots}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb21c}{21c}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+For being able to shut down the application the main application and therefore
+the main window need to react to a request for shutting down, either by a
+keyboard shortcut or a menu command. However, \verb=MainWindow= is not able to
+force \verb=Application= to quit by itself. It would be possible to pass
+\verb=MainWindow= a reference to \verb=Application= but that would lead to tight
+coupling and is therefore not considered as an option. Signals and slots allow
+exactly such cross-layer communication without coupling components tightly.
+
+To avoid tight coupling a signal within the main window is introduced, which
+tells the main application to shut down. A fitting name for the signal might be
+\verb=do_close=.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap7}\raggedright\small
+\NWtarget{nuweb16c}{} $\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize {16c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@do_close = QtCore.pyqtSignal()@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Now, that the signal for closing the window and the application is defined, two
+additional things need to be considered: The emission of the signal by
+\verb=MainWindow= itself as well as the consumption of the signal by a slot of
+other classes.
+
+The signal shall be emitted when the escape key on the keyboard is pressed or
+when the corresponding menu item was selected. As there is no menu at the
+moment, only the key pressed event is implemented by now.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap8}\raggedright\small
+\NWtarget{nuweb17a}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {17a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize \NWlink{nuweb17b}{17b}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window key press event}\nobreak\ {\footnotesize \NWlink{nuweb17c}{17c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17a}{17a}\NWlink{nuweb18a}{, 18a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
+\NWtarget{nuweb17b}{} $\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize {17b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def __init__(self):@\\
+\mbox{}\lstinline@    """Constructor."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    super(MainWindow, self).__init__()@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb18b}{, 18b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
+\NWtarget{nuweb17c}{} $\langle\,${\itshape Main window key press event}\nobreak\ {\footnotesize {17c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def keyPressEvent(self, event):@\\
+\mbox{}\lstinline@    """Gets triggered when a key press event is raised.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param event: holds the triggered event.@\\
+\mbox{}\lstinline@    :type  event: QKeyEvent@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if event.key() == QtCore.Qt.Key_Escape:@\\
+\mbox{}\lstinline@        self.do_close.emit()@\\
+\mbox{}\lstinline@    else:@\\
+\mbox{}\lstinline@        super(MainWindow, self).keyPressEvent(event)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% For emitting the signal when selecting a menu entry, an action needs to be
+% defined which is then attached to the menu entry. The action emits a signal as
+% soon as the menu entry was clicked. It is however not possible to trigger the
+% defined \verb+do_close+ signal using the actions signal. There a slot needs to
+% be defined which then in its turn triggers \verb+do_close+.
+
+The main window can now be set up by the main application controller, which also
+listens to the \verb=do_close= signal through the inherited \verb=quit= slot.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap11}\raggedright\small
+\NWtarget{nuweb17d}{} $\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize {17d}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.main_window = qde_main_window.MainWindow()@\\
+\mbox{}\lstinline@self.main_window.do_close.connect(self.quit)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb15c}{15c}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The used view component for the main window, \verb+QMainWindow+, needs at least
+a central widget with a layout for being
+rendered.~\footnote{http://doc.qt.io/qt-5/qmainwindow.html\#creating-main-window-components}
+
+As the main window will set up and hold the whole layout for the application
+through multiple view components, a method \verb+setup_ui+ is introduced, which
+sets up the whole layout.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap12}\raggedright\small
+\NWtarget{nuweb18a}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {18a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def setup_ui(self):@\\
+\mbox{}\lstinline@    """Sets up the user interface specific components."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.setObjectName('MainWindow')@\\
+\mbox{}\lstinline@    self.setWindowTitle('QDE')@\\
+\mbox{}\lstinline@    self.resize(1024, 768)@\\
+\mbox{}\lstinline@    self.move(100, 100)@\\
+\mbox{}\lstinline@    # Ensure that the window is not hidden behind other windows@\\
+\mbox{}\lstinline@    self.activateWindow()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    central_widget = QtWidgets.QWidget(self)@\\
+\mbox{}\lstinline@    central_widget.setObjectName('central_widget')@\\
+\mbox{}\lstinline@    grid_layout = QtWidgets.QGridLayout(central_widget)@\\
+\mbox{}\lstinline@    central_widget.setLayout(grid_layout)@\\
+\mbox{}\lstinline@    self.setCentralWidget(central_widget)@\\
+\mbox{}\lstinline@    self.statusBar().showMessage('Ready.')@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17a}{17a}\NWlink{nuweb18a}{, 18a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap13}\raggedright\small
+\NWtarget{nuweb18b}{} $\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize {18b}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.setup_ui()@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb18b}{, 18b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The main window can now be shown by the main application controller.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap14}\raggedright\small
+\NWtarget{nuweb18c}{} $\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize {18c}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.main_window.show()@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb15c}{15c}\NWlink{nuweb18c}{, 18c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb15b}{15b}.
 
 \item{}
 \end{list}
@@ -1121,4 +1524,92 @@ of name-spaces is intended.
 % The first stage of the project shows the creation of the /editor/ component, as
 % it provides the possibility of creating and editing real-time animations which
 % may then be played back by the /player/ component\cite[p. 29]{osterwalder_qde_2016}.
+
+\section{Code fragments}
+\label{sec:code-fragments}
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap15}\raggedright\small
+\NWtarget{nuweb21a}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {21a}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Main entry point for the QDE editor application. """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@import sys@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.application import application@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize \NWlink{nuweb14}{14}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap16}\raggedright\small
+\NWtarget{nuweb21b}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {21b}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@"""Main application module for the QDE editor."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import QtGui@\\
+\mbox{}\lstinline@from PyQt5 import QtWidgets@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.gui import main_window as qde_main_window@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize \NWlink{nuweb15a}{15a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap17}\raggedright\small
+\NWtarget{nuweb21c}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {21c}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Module holding the main application window. """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@from PyQt5 import QtWidgets@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize \NWlink{nuweb16b}{16b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 \end{document}
