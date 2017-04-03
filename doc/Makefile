@@ -2,11 +2,11 @@
 # vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=make
 
 ifdef QDE_DEBUG
-NUWEB = nuweb -v -r
+NUWEB = nuweb -v -r -l
 TEX_VERBOSE =
 QDE_DEBUG = QDE_DEBUG=1
 else
-NUWEB = nuweb -r
+NUWEB = nuweb -r -l
 TEX_VERBOSE = 1> /dev/null
 QDE_DEBUG =
 endif
@@ -51,9 +51,20 @@ endif
 all: clean-doc build-doc
 
 build-doc: clean-doc doc .build-pdflatex doc .build-pdflatex .build-bibliography .build-pdflatex .build-glossary .build-pdflatex
-
-build-doc-fast: doc
+	rm -f *{$(CLEAN_EXT)}
+	rm -f inc/*{$(CLEAN_EXT)}
+	${NUWEB} -o $(JOB).$(NUWEB_EXT)
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+	${NUWEB} -o $(JOB).$(NUWEB_EXT)
+	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
+	makeglossaries $(JOB) ${TEX_VERBOSE}
+	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+
+build-doc-fast:
+	${NUWEB} -o $(JOB).$(NUWEB_EXT)
+	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+	${NUWEB} -o $(JOB).$(NUWEB_EXT)
 
 clean-doc:
 	rm -f *{$(CLEAN_EXT)}
