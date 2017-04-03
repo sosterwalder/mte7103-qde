@@ -15,6 +15,11 @@ The thoughts to reach this goal were already developed
 in~\autoref{chap:procedure}, \enquote{\nameref{chap:procedure}}, and will
 therefore not be repeated again.
 
+As stated in~\autoref{chap:procedure}, literate programming is used to implement
+the components. To maintain readability only relevant code fragments are shown
+in place. The whole code fragments, which are needed for tangling, are found
+at~\autoref{sec:code-fragments}.
+
 First, the implementation of the editor component is described, as it is the
 basis for the whole project and also contains many concepts, that are re-used by
 the player component. Before starting with the implementation it is necessary to
@@ -95,8 +100,12 @@ directly.~\footnote{\url{https://www.python.org/dev/peps/pep-0020/}}. As defined
 by the coding style,~\autoref{subsec:appendix-implementation-coding-style},
 imports are done by the \verb+from Foo import Bar+ syntax.
 
-\subsection{Framework for implementation}
-\label{subsec:appendix-implementation-framework}
+The imported modules are always split up: first the system modules are imported,
+modules which are provided by Python itself or by external libraries, then
+project-related modules are imported.
+
+\subsubsection{Framework for implementation}
+\label{ssubsec:appendix-implementation-framework}
 
 For also staying consistent when implementing classes and methods, it make sense
 to define a rough framework for implementation, which is as follows:
