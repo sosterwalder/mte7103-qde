@@ -3,7 +3,9 @@
 apidoc:
 	sphinx-apidoc -f -o doc/source/ src/
 
-clean:
+clean: clean-src
+
+clean-src:
 	@rm -rf src/
 
 clean-cache:
@@ -26,7 +28,7 @@ run-editor: clean-cache clear-screen
 	python src/editor.py
 
 src:
-	emacs --batch -l org doc/index.org -f org-babel-tangle
+	make -C doc src
 
 tex:
 	emacs --batch -l /Users/so/repos/orgmk/lisp/org-latex-classes.el -l org doc/index.org -f org-latex-export-to-latex --kill
