@@ -6,6 +6,11 @@
 @i inc/appendix/implementation.w
 @i inc/appendix/work-log.w
 
+\section{Test cases}
+\label{sec:test-cases}
+
+\blindtext{}
+
 \section{Requirements}
 \label{sec:requirements}
 % 
@@ -123,11 +128,16 @@ from qde.editor.application import application
 """Main application module for the QDE editor."""
 
 # System imports
+import logging
+import logging.config
+import os
+import json
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 # Project imports
 from qde.editor.gui import main_window as qde_main_window
+from qde.editor.application import scene_graph
 
 
 @<Main application declarations@>
@@ -144,7 +154,170 @@ from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 
 # Project imports
+from qde.editor.gui import scene as guiscene
 
 
 @<Main window declarations@>
+@}
+
+@o ../src/qde/editor/domain/scene.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+
+
+@<Scene model declarations@>
+@}
+
+@o ../src/qde/editor/gui_domain/scene.py
+@{
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the gui_domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+
+@<Scene view model declarations@>
+@<Scene graph view model declarations@>
+@}
+
+@o ../src/qde/editor/application/scene_graph.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene graph related aspects concerning the application layer.
+"""
+
+# System imports
+from PyQt5 import QtCore
+
+# Project imports
+from qde.editor.domain     import scene as domain_scene
+from qde.editor.gui_domain import scene as guidomain_scene
+
+@<Scene graph controller declarations@>
+@}
+
+@o ../src/qde/editor/gui/scene.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the graphical user interface layer.
+"""
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.gui_domain import scene
+
+@<Scene graph view declarations@>
+@}
+
+@o ../logging.json
+@{{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+
+        "info_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "info.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": "errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "info_file_handler", "error_file_handler"],
+        "propagate": "no"
+    }
+}@}
+
+@o ../src/qde/editor/foundation/common.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.gui_domain import scene
+
+
+def with_logger(cls):
+    """Add a logger instance (using a stream handler) to the given class.
+
+    :param cls: the class which the logger shall be added to.
+    :type  cls: a class of type cls.
+
+    :return: the class with the logger instance added.
+    :rtype:  a class of type cls.
+    """
+
+    @<Set logger name@>
+    @<Logger interface@>
+@}
+
+@d Scene graph view decorators
+@{
+@@common.with_logger
+@}
+
+@o ../src/qde/editor/foundation/type.py
+@{# -*- coding: utf-8 -*-
+"""Module for type-specific aspects."""
+
+# System imports
+import enum
+
+# Project imports
+
+
+@<Node type declarations@>
 @}

@@ -9,7 +9,7 @@ which lead to the fulfillment of that goal.
 
 The main goal is to have a visual animation system, which allows the creation
 and rendering of visually appealing scenes, using a graphical user interface for
-creation and a ray tracing based algorithm for rendering.
+creation, and a ray tracing based algorithm for rendering.
 
 The thoughts to reach this goal were already developed
 in~\autoref{chap:procedure}, \enquote{\nameref{chap:procedure}}, and will
@@ -73,8 +73,8 @@ is applied which is defined as follows.
 
 \begin{itemize}
 \item Classes use camel case, e.g. \verb+class SomeClassName+.
-\item Folders respectively name-spaces use only small letters, e.g.
-  \textit{foo/bar/baz}.
+\item Folders respectively name spaces use only small letters, e.g.
+  \textit{foo.bar.baz}.
 \item Methods are all small caps and use underscores as spaces, e.g. \verb+some_method_name+.
 \item Signals are methods, which are prefixed by the word \enquote{do}, e.g. \verb+do_something+.
 \item Slots are methods, which are prefixed by the word \enquote{on}, e.g. \verb+on_something+.

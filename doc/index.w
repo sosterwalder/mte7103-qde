@@ -25,6 +25,7 @@
 \usepackage{textcomp}                    % additional symbols
 \usepackage{float}                       % floating objects
 \usepackage{booktabs,tabularx}           % package for nicer tables
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \usepackage{tocvsec2}                    % provides means of controlling the sectional numbering
 \usepackage{pgfgantt}                    % Provides GANTT charts
 \usepackage[owncaptions]{vhistory}       % Provides framework for creating history outline
@@ -32,6 +33,7 @@
 \usepackage{csquotes}                    % Quotes
 \usepackage{nameref}                     % Allows referencing of names
 \usepackage{blindtext}                   % Dummy text
+\usepackage{standalone}                  % Combine documents
 %---------------------------------------------------------------------------
 
 % Environments
@@ -132,20 +134,21 @@
 \lstset{style=python}
 % Hyperref Package (Create links in a pdf)
 %---------------------------------------------------------------------------
-\usepackage[
-    ngerman,bookmarks,plainpages=false,pdfpagelabels,
-    backref = {false},                                        % No index backreference
-    colorlinks = {true},                                      % Color links in a PDF
-    hypertexnames = {true},                                   % no failures "same page(i)"
-    bookmarksopen = {true},                                   % opens the bar on the left side
-    bookmarksopenlevel = {0},                                 % depth of opened bookmarks
-    pdftitle = {QDE --- A visual animation system},           % PDF-property
-    pdfauthor = {Sven Osterwalder},                           % PDF-property
-    pdfsubject = {QDE},                                       % PDF-property
-    linkcolor = {linkcolor},                                  % Color of Links
-    citecolor = {linkcolor},                                  % Color of Cite-Links
-    urlcolor = {linkcolor},                                   % Color of URLs
-]{hyperref}
+\usepackage{hyperref}
+% \usepackage[
+%     ngerman,bookmarks,plainpages=false,pdfpagelabels,
+%     backref = {false},                                        % No index backreference
+%     colorlinks = {true},                                      % Color links in a PDF
+%     hypertexnames = {true},                                   % no failures "same page(i)"
+%     bookmarksopen = {true},                                   % opens the bar on the left side
+%     bookmarksopenlevel = {0},                                 % depth of opened bookmarks
+%     pdftitle = {QDE --- A visual animation system},           % PDF-property
+%     pdfauthor = {Sven Osterwalder},                           % PDF-property
+%     pdfsubject = {QDE},                                       % PDF-property
+%     linkcolor = {linkcolor},                                  % Color of Links
+%     citecolor = {linkcolor},                                  % Color of Cite-Links
+%     urlcolor = {linkcolor},                                   % Color of URLs
+% ]{hyperref}
 
 % Geometry package: Set up page dimension
 %---------------------------------------------------------------------------
