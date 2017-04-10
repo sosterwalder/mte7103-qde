@@ -50,15 +50,16 @@ endif
 
 all: clean-doc build-doc
 
-build-doc: clean-doc doc .build-pdflatex doc .build-pdflatex .build-bibliography .build-pdflatex .build-glossary .build-pdflatex
+build-doc:
 	rm -f *{$(CLEAN_EXT)}
 	rm -f inc/*{$(CLEAN_EXT)}
+	rm -rf `$(BIBLIOGRAPHY) --cache`
 	${NUWEB} -o $(JOB).$(NUWEB_EXT)
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
 	${NUWEB} -o $(JOB).$(NUWEB_EXT)
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
 	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
-	makeglossaries $(JOB) ${TEX_VERBOSE}
+	# makeglossaries $(JOB) ${TEX_VERBOSE}
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
 
 build-doc-fast:
@@ -79,7 +80,7 @@ doc:
 
 src:
 	# -t suppresses the generation of tex files
-	${NUWEB} -t $(JOB).$(NUWEB_EXT)
+	${NUWEB} -t -S $(JOB).$(NUWEB_EXT)
 
 watch-build-doc: .set-build-to-build-doc .watch-build-command
 
