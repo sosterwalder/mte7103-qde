@@ -40,6 +40,7 @@
 \usepackage{textcomp}                    % additional symbols
 \usepackage{float}                       % floating objects
 \usepackage{booktabs,tabularx}           % package for nicer tables
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \usepackage{tocvsec2}                    % provides means of controlling the sectional numbering
 \usepackage{pgfgantt}                    % Provides GANTT charts
 \usepackage[owncaptions]{vhistory}       % Provides framework for creating history outline
@@ -47,6 +48,7 @@
 \usepackage{csquotes}                    % Quotes
 \usepackage{nameref}                     % Allows referencing of names
 \usepackage{blindtext}                   % Dummy text
+\usepackage{standalone}                  % Combine documents
 %---------------------------------------------------------------------------
 
 % Environments
@@ -147,20 +149,21 @@
 \lstset{style=python}
 % Hyperref Package (Create links in a pdf)
 %---------------------------------------------------------------------------
-\usepackage[
-    ngerman,bookmarks,plainpages=false,pdfpagelabels,
-    backref = {false},                                        % No index backreference
-    colorlinks = {true},                                      % Color links in a PDF
-    hypertexnames = {true},                                   % no failures "same page(i)"
-    bookmarksopen = {true},                                   % opens the bar on the left side
-    bookmarksopenlevel = {0},                                 % depth of opened bookmarks
-    pdftitle = {QDE --- A visual animation system},           % PDF-property
-    pdfauthor = {Sven Osterwalder},                           % PDF-property
-    pdfsubject = {QDE},                                       % PDF-property
-    linkcolor = {linkcolor},                                  % Color of Links
-    citecolor = {linkcolor},                                  % Color of Cite-Links
-    urlcolor = {linkcolor},                                   % Color of URLs
-]{hyperref}
+\usepackage{hyperref}
+% \usepackage[
+%     ngerman,bookmarks,plainpages=false,pdfpagelabels,
+%     backref = {false},                                        % No index backreference
+%     colorlinks = {true},                                      % Color links in a PDF
+%     hypertexnames = {true},                                   % no failures "same page(i)"
+%     bookmarksopen = {true},                                   % opens the bar on the left side
+%     bookmarksopenlevel = {0},                                 % depth of opened bookmarks
+%     pdftitle = {QDE --- A visual animation system},           % PDF-property
+%     pdfauthor = {Sven Osterwalder},                           % PDF-property
+%     pdfsubject = {QDE},                                       % PDF-property
+%     linkcolor = {linkcolor},                                  % Color of Links
+%     citecolor = {linkcolor},                                  % Color of Cite-Links
+%     urlcolor = {linkcolor},                                   % Color of URLs
+% ]{hyperref}
 
 % Geometry package: Set up page dimension
 %---------------------------------------------------------------------------
@@ -693,7 +696,7 @@ which lead to the fulfillment of that goal.
 
 The main goal is to have a visual animation system, which allows the creation
 and rendering of visually appealing scenes, using a graphical user interface for
-creation and a ray tracing based algorithm for rendering.
+creation, and a ray tracing based algorithm for rendering.
 
 The thoughts to reach this goal were already developed
 in~\autoref{chap:procedure}, \enquote{\nameref{chap:procedure}}, and will
@@ -757,8 +760,8 @@ is applied which is defined as follows.
 
 \begin{itemize}
 \item Classes use camel case, e.g. \verb+class SomeClassName+.
-\item Folders respectively name-spaces use only small letters, e.g.
-  \textit{foo/bar/baz}.
+\item Folders respectively name spaces use only small letters, e.g.
+  \textit{foo.bar.baz}.
 \item Methods are all small caps and use underscores as spaces, e.g. \verb+some_method_name+.
 \item Signals are methods, which are prefixed by the word \enquote{do}, e.g. \verb+do_something+.
 \item Slots are methods, which are prefixed by the word \enquote{on}, e.g. \verb+on_something+.
@@ -824,8 +827,11 @@ The quintessence of the editor application is to output a structure, be it in
 the JSON format or even in bytecode, which defines an animation.
 
 An animation is simply a composition of scenes which run in a sequential order
-within a time span. A scene is at the end of its evaluation nothing else as
-shader specific code which gets executed on the GPU.
+within a time span. A scene is then a composition of nodes, which are at the end
+of their evaluation nothing else as shader specific code which gets executed on
+the GPU.
+
+\todo[inline]{Scene: Composition of nodes. Define scene already here.}
 
 To achieve this overall goal while providing the user a user-friendly
 experience, several components are needed. These are the following, being
@@ -842,21 +848,28 @@ defined in~\citetitle[pp. 29 ff.]{osterwalder_qde_2016}
 \item A sequencer, allowing a time-based scheduling of defined scenes.
 \end{itemize}
 
-However, the above list is not quite complete. It is somehow intuitively clear,
-that there needs to be some main component, which holds all the mentioned
-components and allows a proper handling of the application. As the whole
-architecture uses layers and the MVC principle (see~\autoref{subsec:code}
-and~\autoref{ssubsec:mvc}), the main component is composed of a view and a
-controller. A model is (at least at this point) not necessary. The view
-component shall be called~\textit{main window} and its controller shall be
-called~\textit{main application}.
+However, the above list is not complete. It is somehow intuitively clear, that
+there needs to be some main component, which holds all the mentioned components
+and allows a proper handling of the application (like managing resources,
+shutting down properly and so on).
+
+As the whole architecture uses layers and the MVC principle
+(see~\autoref{ssubsec:layering} and~\autoref{ssubsec:mvc}), the main component is
+composed of a view and a controller. A model is (at least at this point) not
+necessary. The view component shall be called~\textit{main window} and its
+controller shall be called~\textit{main application}.
+
+\todo[inline]{Fix references to subsection (they are displaying section atm)}
+
+\subsubsection{Main entry point}
+\label{ssubsec:main-entry-point}
 
 Before implementing any of these components, the editor application needs an
 entry point, that is a point where the application starts when being called.
 
-Python does this by evaluating a special variable called~\verb+__name__+. This
-value is set to \verb+'__main__'+ if the module is~\enquote{read from standard
-input, a script, or from an interactive
+Python does this by evaluating a special variable within a module,
+called~\verb+__name__+. Its value is set to \verb+'__main__'+ if the module
+is~\enquote{read from standard input, a script, or from an interactive
 prompt.}~\footnote{\url{https://docs.python.org/3/library/__main__.html}}
 
 All that the entry point needs to do in case of the editor application, is
@@ -864,20 +877,20 @@ spawning the editor application, execute it and exit again, as can be seen below
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap1}\raggedright\small
-\NWtarget{nuweb14}{} $\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize {14}}$\,\rangle\equiv$
+\NWtarget{nuweb15a}{} $\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize {15a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
-\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Python@\\
 \mbox{}\lstinline@if __name__ == "__main__":@\\
-\mbox{}\lstinline@  app = application.Application(sys.argv)@\\
-\mbox{}\lstinline@  status = app.exec()@\\
-\mbox{}\lstinline@  sys.exit(status)@\\
+\mbox{}\lstinline@    app = application.Application(sys.argv)@\\
+\mbox{}\lstinline@    status = app.exec()@\\
+\mbox{}\lstinline@    sys.exit(status)@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb21a}{21a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb44}{44}.
 
 \item{}
 \end{list}
@@ -887,11 +900,16 @@ But where to place this entry point? A very direct approach would be to
 implement that main entry point within the main application controller. But when
 running the editor application by calling it from the command line, calling a
 controller directly may rather be confusing. Instead it is more intuitive to
-have only a minimal entry point which is clearly visible as such.
+have only a minimal entry point which is clearly visible as such. Therefore the
+main entry point will be put in a file called \textit{editor.py} which is at the
+top level of the \textit{src} directory.
+
+\subsubsection{Main application}
+\label{ssubsec:main-application}
 
 Although a main entry point is defined by now, the editor application cannot be
-started as there is no such thing as an editor application yet.
-
+started as there is no such thing as an editor application yet. Therefore a main
+application needs to be implemented.
 
 As stated in the requirements, see~\autoref{subsec:requirements}, Qt version 5
 is used through the PyQt5 wrapper. Therefore all functionality of Qt 5 may be
@@ -900,38 +918,37 @@ controller. The class is called~\verb+QApplication+.
 
 But what does such a main application class actually do? What is its
 functionality? Very roughly sketched, such a type of application initializes
-resources, enters a main loop where it stays until told to shut down. At the end
-it frees resources again.
-
-As the main application initializes resources, it act as central node between the
-various layers of the architecture, initializing them and connecting them using
-signals.\cite[pp. 37 --- 38]{osterwalder_qde_2016}
+resources, enters a main loop, where it stays until told to shut down, and at
+the end it frees the allocated resources again.
 
 Due to the usage of \verb+QApplication+ as super class it is not necessary to
 implement a main (event-) loop, as such is provided by Qt
 itself~\footnote{http://doc.qt.io/Qt-5/qapplication.html\#exec}.
 
-As stated above, the main application acts as entry point and as a central node
-between the various layers. Therefore it needs to do at least three things:
-initialize itself, set up components and connect components. This all happens
-when the main application is being initialized.
+As the main application initializes resources, it act as central node between the
+various layers of the architecture, initializing them and connecting them using
+signals.\cite[pp. 37 --- 38]{osterwalder_qde_2016}
+
+Therefore it needs to do at least three things: initialize itself, set up
+components and connect components. This all happens when the main application is
+being initialized.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap2}\raggedright\small
-\NWtarget{nuweb15a}{} $\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize {15a}}$\,\rangle\equiv$
+\NWtarget{nuweb15b}{} $\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize {15b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@class Application(QtWidgets.QApplication):@\\
 \mbox{}\lstinline@    """Main application for QDE."""@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize \NWlink{nuweb15b}{15b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize \NWlink{nuweb16a}{16a}, \ldots\ }$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb21b}{21b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb45a}{45a}.
 
 \item{}
 \end{list}
@@ -939,25 +956,7 @@ when the main application is being initialized.
 \end{flushleft}
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap3}\raggedright\small
-\NWtarget{nuweb15b}{} $\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize {15b}}$\,\rangle\equiv$
-\vspace{-1ex}
-\begin{list}{}{} \item
-\mbox{}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize \NWlink{nuweb15c}{15c}, \ldots\ }$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@@{\NWsep}
-\end{list}
-\vspace{-1.5ex}
-\footnotesize
-\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb15a}{15a}.
-
-\item{}
-\end{list}
-\end{minipage}\vspace{4ex}
-\end{flushleft}
-\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap4}\raggedright\small
-\NWtarget{nuweb15c}{} $\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize {15c}}$\,\rangle\equiv$
+\NWtarget{nuweb16a}{} $\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize {16a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -969,15 +968,17 @@ when the main application is being initialized.
 \mbox{}\lstinline@    :type  argv:      list@\\
 \mbox{}\lstinline@    """@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize \NWlink{nuweb16a}{16a}}$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize \NWlink{nuweb17d}{17d}}$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Connect components for main application}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize \NWlink{nuweb16b}{16b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize \NWlink{nuweb17c}{17c}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Connect components for main application}\nobreak\ {\footnotesize \NWlink{nuweb30a}{30a}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.main_window.show()@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb15c}{15c}\NWlink{nuweb18c}{, 18c}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb16a}{16a}\NWlink{nuweb37a}{, 37a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb15b}{15b}.
 
 \item{}
@@ -989,8 +990,8 @@ directly to~\verb+QApplication+, setting an application icon, a name as well as
 a display name.
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap5}\raggedright\small
-\NWtarget{nuweb16a}{} $\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize {16a}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap4}\raggedright\small
+\NWtarget{nuweb16b}{} $\langle\,${\itshape Set up internals for main application}\nobreak\ {\footnotesize {16b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -1003,23 +1004,31 @@ a display name.
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb15c}{15c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16a}{16a}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
-Having the main application as a very basic implementation, the view component
-of the main application, the main window, can now be implemented and then be set
-up by the main application.
+The other two steps, setting up the components and connecting them can however
+not be done at this point, as there simply are no components available. A
+component to start with is the view component of the main application, the main
+window.
+
+\subsubsection{Main window}
+\label{ssubsec:main-window}
+
+Having a very basic implementation of the main application, its view component,
+the main window, can now be implemented and then be set up by the main
+application.
 
 The main functionality of the main window is to set up the actual user
 interface, containing all the views of the components. Qt offers the class
 \verb+QMainWindow+ from which \verb=MainWindow= may inherit.
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap6}\raggedright\small
-\NWtarget{nuweb16b}{} $\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize {16b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap5}\raggedright\small
+\NWtarget{nuweb16c}{} $\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize {16c}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -1028,37 +1037,37 @@ interface, containing all the views of the components. Qt offers the class
 \mbox{}\lstinline@    Acts as main view for the QDE editor application.@\\
 \mbox{}\lstinline@    """@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize \NWlink{nuweb16c}{16c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize \NWlink{nuweb17a}{17a}}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize \NWlink{nuweb17a}{17a}, \ldots\ }$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@@\\
-\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window slots}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize \NWlink{nuweb17b}{17b}, \ldots\ }$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb21c}{21c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb45b}{45b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
-For being able to shut down the application the main application and therefore
-the main window need to react to a request for shutting down, either by a
-keyboard shortcut or a menu command. However, \verb=MainWindow= is not able to
-force \verb=Application= to quit by itself. It would be possible to pass
-\verb=MainWindow= a reference to \verb=Application= but that would lead to tight
-coupling and is therefore not considered as an option. Signals and slots allow
-exactly such cross-layer communication without coupling components tightly.
+% 
+
+For being able to shut down the main application and therefore the main window,
+they need to react to a request for shutting down, either by a keyboard shortcut
+or a menu command. However, the main window is not able to force the main
+application to quit by itself. It would be possible to pass the main window a
+reference to the application, but that would lead to tight coupling and is
+therefore not considered as an option. Signals and slots allow exactly such
+cross-layer communication without coupling components tightly.
 
 To avoid tight coupling a signal within the main window is introduced, which
 tells the main application to shut down. A fitting name for the signal might be
 \verb=do_close=.
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap7}\raggedright\small
-\NWtarget{nuweb16c}{} $\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize {16c}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap6}\raggedright\small
+\NWtarget{nuweb17a}{} $\langle\,${\itshape Main window signals}\nobreak\ {\footnotesize {17a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -1068,7 +1077,7 @@ tells the main application to shut down. A fitting name for the signal might be
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16c}{16c}.
 
 \item{}
 \end{list}
@@ -1076,7 +1085,7 @@ tells the main application to shut down. A fitting name for the signal might be
 \end{flushleft}
 Now, that the signal for closing the window and the application is defined, two
 additional things need to be considered: The emission of the signal by
-\verb=MainWindow= itself as well as the consumption of the signal by a slot of
+the main window itself as well as the consumption of the signal by a slot of
 other classes.
 
 The signal shall be emitted when the escape key on the keyboard is pressed or
@@ -1084,52 +1093,16 @@ when the corresponding menu item was selected. As there is no menu at the
 moment, only the key pressed event is implemented by now.
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap8}\raggedright\small
-\NWtarget{nuweb17a}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {17a}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap7}\raggedright\small
+\NWtarget{nuweb17b}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {17b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize \NWlink{nuweb17b}{17b}, \ldots\ }$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window key press event}\nobreak\ {\footnotesize \NWlink{nuweb17c}{17c}}$\,\rangle$}\lstinline@@\\
-\mbox{}\lstinline@@{\NWsep}
-\end{list}
-\vspace{-1.5ex}
-\footnotesize
-\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb17a}{17a}\NWlink{nuweb18a}{, 18a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
-
-\item{}
-\end{list}
-\end{minipage}\vspace{4ex}
-\end{flushleft}
-\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
-\NWtarget{nuweb17b}{} $\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize {17b}}$\,\rangle\equiv$
-\vspace{-1ex}
-\begin{list}{}{} \item
-\mbox{}\lstinline@@\\
-\mbox{}\lstinline@def __init__(self):@\\
+\mbox{}\lstinline@def __init__(self, parent=None):@\\
 \mbox{}\lstinline@    """Constructor."""@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@    super(MainWindow, self).__init__()@\\
-\mbox{}\lstinline@@{\NWsep}
-\end{list}
-\vspace{-1.5ex}
-\footnotesize
-\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb18b}{, 18b}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
-
-\item{}
-\end{list}
-\end{minipage}\vspace{4ex}
-\end{flushleft}
-\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
-\NWtarget{nuweb17c}{} $\langle\,${\itshape Main window key press event}\nobreak\ {\footnotesize {17c}}$\,\rangle\equiv$
-\vspace{-1ex}
-\begin{list}{}{} \item
+\mbox{}\lstinline@    super(MainWindow, self).__init__(parent)@\\
+\mbox{}\lstinline@    self.setup_ui()@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@def keyPressEvent(self, event):@\\
 \mbox{}\lstinline@    """Gets triggered when a key press event is raised.@\\
@@ -1142,13 +1115,13 @@ moment, only the key pressed event is implemented by now.
 \mbox{}\lstinline@        self.do_close.emit()@\\
 \mbox{}\lstinline@    else:@\\
 \mbox{}\lstinline@        super(MainWindow, self).keyPressEvent(event)@\\
-\mbox{}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb19}{, 19}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16c}{16c}.
 
 \item{}
 \end{list}
@@ -1164,8 +1137,8 @@ The main window can now be set up by the main application controller, which also
 listens to the \verb=do_close= signal through the inherited \verb=quit= slot.
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap11}\raggedright\small
-\NWtarget{nuweb17d}{} $\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize {17d}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap8}\raggedright\small
+\NWtarget{nuweb17c}{} $\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize {17c}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -1176,7 +1149,8 @@ listens to the \verb=do_close= signal through the inherited \verb=quit= slot.
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb15c}{15c}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17c}{17c}\NWlink{nuweb29a}{, 29a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16a}{16a}.
 
 \item{}
 \end{list}
@@ -1188,11 +1162,38 @@ rendered.~\footnote{http://doc.qt.io/qt-5/qmainwindow.html\#creating-main-window
 
 As the main window will set up and hold the whole layout for the application
 through multiple view components, a method \verb+setup_ui+ is introduced, which
-sets up the whole layout.
+sets up the whole layout. The method creates a central widget containing a grid
+layout.
+
+As the main window holds all other view components and a look as proposed
+in~\citetitle[p. 9]{osterwalder_qde_2016} is targeted, a simple grid layout does
+not provide enough possibilities. Instead a horizontal box layout in combination
+with splitters is used.
+
+Recalling the components, the following layout is approached:
+
+\begin{itemize}
+\item{%
+    A scene graph, on the left of the window, covering the whole height.}
+\item{%
+    A node graph on the right of the scene graph, covering as much height as
+    possible.}
+\item{%
+    A view for showing the properties (and therefore parameters) of the selected
+    node on the right of the node graph, covering as much height as possible.}
+\item{%
+    A display for rendering the selected node, on the right of the properties
+    view, covering as much height as possible}
+\item{%
+    A sequencer at the right of the scene graph and below the other components
+    at the bottom of the window, covering as much width as possible}
+\end{itemize}
+
+\todo[inline]{Provide a picture of the layout here.}
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap12}\raggedright\small
-\NWtarget{nuweb18a}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {18a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
+\NWtarget{nuweb19}{} $\langle\,${\itshape Main window methods}\nobreak\ {\footnotesize {19}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
@@ -1212,59 +1213,1794 @@ sets up the whole layout.
 \mbox{}\lstinline@    central_widget.setLayout(grid_layout)@\\
 \mbox{}\lstinline@    self.setCentralWidget(central_widget)@\\
 \mbox{}\lstinline@    self.statusBar().showMessage('Ready.')@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    horizontal_layout_widget = QtWidgets.QWidget(central_widget)@\\
+\mbox{}\lstinline@    horizontal_layout_widget.setObjectName('horizontal_layout_widget')@\\
+\mbox{}\lstinline@    horizontal_layout_widget.setGeometry(QtCore.QRect(12, 12, 781, 541))@\\
+\mbox{}\lstinline@    horizontal_layout_widget.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,@\\
+\mbox{}\lstinline@    QtWidgets.QSizePolicy.MinimumExpanding)@\\
+\mbox{}\lstinline@    grid_layout.addWidget(horizontal_layout_widget, 0, 0)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    horizontal_layout = QtWidgets.QHBoxLayout(horizontal_layout_widget)@\\
+\mbox{}\lstinline@    horizontal_layout.setObjectName('horizontal_layout')@\\
+\mbox{}\lstinline@    horizontal_layout.setContentsMargins(0, 0, 0, 0)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.scene_graph_widget = guiscene.SceneGraphView()@\\
+\mbox{}\lstinline@    self.scene_graph_widget.setObjectName('scene_graph')@\\
+\mbox{}\lstinline@    self.scene_graph_widget.setMaximumWidth(300)@\\
+\mbox{}\lstinline@    horizontal_layout.addWidget(self.scene_graph_widget)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up node graph view in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up parameter view in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set up render view in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@     horizontal_splitter = QtWidgets.QSplitter()@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Add render view to horizontal splitter in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Add parameter view to horizontal splitter in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@     vertical_splitter = QtWidgets.QSplitter()@\\
+\mbox{}\lstinline@    vertical_splitter.setOrientation(QtCore.Qt.Vertical)@\\
+\mbox{}\lstinline@    vertical_splitter.addWidget(horizontal_splitter)@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Add node graph to vertical splitter in main window}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@     horizontal_layout.addWidget(vertical_splitter)@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb17a}{17a}\NWlink{nuweb18a}{, 18a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb16b}{16b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb19}{, 19}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16c}{16c}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
+All the above taken actions to lay out the main window change nothing in the
+window's yet plain appearance. This is quite obvious, as none of the actual
+components are implemented yet.
+
+The most straight-forward component to implement may be scene graph, so this is
+a good starting point for the implementation of the remaining components.
+
+\subsubsection{Scene graph}
+\label{ssubsec:scene-graph}
+
+As mentioned in~\autoref{subsec:editor}, the scene graph has also two aspects to
+consider: a graphical aspect as well as its data structure.
+
+\todo[inline]{Define what a scene is by prose and code.}
+
+As described in~\autoref{chap:procedure}, two kinds of models are used. A domain
+model, containing the actual data and a view model, which holds a reference to
+its corresponding domain model.
+
+% \todo[inline]{Check whether to move into procedure.}
+% Both models are managed by the same controller. View models are displayed by views,
+% e.g. node view models in the node graph view.
+% 
+% Therefore the controller of the scene graph will manage instances of scene
+% domain models whereas the view of the scene graph will display a tree of scene
+% view models.
+
+As the domain model builds the basis for the whole (data-) structure, it is
+implemented first.
+
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap13}\raggedright\small
-\NWtarget{nuweb18b}{} $\langle\,${\itshape Main window constructor}\nobreak\ {\footnotesize {18b}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
+\NWtarget{nuweb20a}{} $\langle\,${\itshape Scene model declarations}\nobreak\ {\footnotesize {20a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@self.setup_ui()@\\
+\mbox{}\lstinline@class SceneModel(object):@\\
+\mbox{}\lstinline@    """The scene model.@\\
+\mbox{}\lstinline@    It is used as a base class for scene instances within the whole system.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene model methods}\nobreak\ {\footnotesize \NWlink{nuweb20b}{20b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene model slots}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb17b}{17b}\NWlink{nuweb18b}{, 18b}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb17a}{17a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb45c}{45c}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
-The main window can now be shown by the main application controller.
+At this point the only known fact is, that a scene is a composition of nodes,
+and therefore it holds its nodes as a list.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap11}\raggedright\small
+\NWtarget{nuweb20b}{} $\langle\,${\itshape Scene model methods}\nobreak\ {\footnotesize {20b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@# Python@\\
+\mbox{}\lstinline@def __init__(self):@\\
+\mbox{}\lstinline@    """Constructor."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.nodes = []@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb20a}{20a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The counter part of the domain model is the view model. View models are used to
+visually represent something within the graphical user interface and they
+provide an interface to the \verb+domain+ layer. To this point, a simple
+reference in terms of an attribute is used as interface, which may be changed
+later on.
+
+Concerning the user interface, a view model must fulfill the requirements posed
+by the user interface's corresponding component. In this case, the scene graph
+view model inherits from \verb+QObject+ as this base class already provides a
+tree structure, which fits the structure of the scene graph perfectly and
+therefore fulfills (part of) the requirements posed by the view.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap12}\raggedright\small
+\NWtarget{nuweb21a}{} $\langle\,${\itshape Scene view model declarations}\nobreak\ {\footnotesize {21a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@class SceneViewModel(QtCore.QObject):@\\
+\mbox{}\lstinline@    """View model representing scene graph items.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    The SceneViewModel corresponds to an entry within the scene graph. It@\\
+\mbox{}\lstinline@    is used by the QAbstractItemModel class and must therefore at least provide@\\
+\mbox{}\lstinline@    a name and a row.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene view model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene view model constructor}\nobreak\ {\footnotesize \NWlink{nuweb21b}{21b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize \NWlink{nuweb28b}{28b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene view model slots}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb46a}{46a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+In terms of the scene graph, the view model must provide at least a name and a
+row. In addition, as written above, it holds a reference to the domain model.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap13}\raggedright\small
+\NWtarget{nuweb21b}{} $\langle\,${\itshape Scene view model constructor}\nobreak\ {\footnotesize {21b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def __init__(@\\
+\mbox{}\lstinline@        self,@\\
+\mbox{}\lstinline@        row,@\\
+\mbox{}\lstinline@        domain_object,@\\
+\mbox{}\lstinline@        name=QtCore.QCoreApplication.translate('SceneViewModel', 'New scene'),@\\
+\mbox{}\lstinline@        parent=None@\\
+\mbox{}\lstinline@):@\\
+\mbox{}\lstinline@    """Constructor.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param row:           The row the view model is in.@\\
+\mbox{}\lstinline@    :type  row:           int@\\
+\mbox{}\lstinline@    :param domain_object: Reference to a scene model.@\\
+\mbox{}\lstinline@    :type  domain_object: qde.editor.domain.scene.SceneModel@\\
+\mbox{}\lstinline@    :param name:          The name of the view model, which will be displayed in@\\
+\mbox{}\lstinline@                          the scene graph.@\\
+\mbox{}\lstinline@    :type  name:          str@\\
+\mbox{}\lstinline@    :param parent:        The parent of the current view model within the scene@\\
+\mbox{}\lstinline@                          graph.@\\
+\mbox{}\lstinline@    :type parent:         qde.editor.gui_domain.scene.SceneViewModel@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    super(SceneViewModel, self).__init__(parent)@\\
+\mbox{}\lstinline@    self.row  = row@\\
+\mbox{}\lstinline@    self.domain_object = domain_object@\\
+\mbox{}\lstinline@    self.name = name@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb21a}{21a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Scenes may now be instantiated, it is although necessary to manage scenes in a
+controlled manner. Therefore the class \verb+SceneGraphController+ will now be
+implemented, for being able to manage scenes.
+
+As the scene graph shall be built as a tree structure, an appropriate data
+structure is needed. Qt provides the \verb+QTreeWidget+ class, but that
+class is in this case not suitable, as it does not separate the data from its
+representation, as stated by Qt:~\enquote{Developers who do not need the flexibility of
+the Model/View framework can use this class to create simple hierarchical lists
+very easily. A more flexible approach involves combining a QTreeView with a
+standard item model. This allows the storage of data to be separated from its
+representation.}\footnote{http://doc.qt.io/qt-5/qtreewidget.html\#details}
+
+Such a standard item model is
+\verb+QAbstractItemModel+\footnote{\label{footnote:qabstractitemmodel}
+http://doc.qt.io/qt-5/qabstractitemmodel.html}, which is used as a base class
+for the scene graph controller.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap14}\raggedright\small
-\NWtarget{nuweb18c}{} $\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize {18c}}$\,\rangle+\equiv$
+\NWtarget{nuweb22a}{} $\langle\,${\itshape Scene graph controller declarations}\nobreak\ {\footnotesize {22a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@@\\
+\mbox{}\lstinline@class SceneGraphController(QtCore.QAbstractItemModel):@\\
+\mbox{}\lstinline@    """The scene graph controller.@\\
+\mbox{}\lstinline@    A controller for managing the scene graph by adding, editing and removing@\\
+\mbox{}\lstinline@    scenes.@\\
+\mbox{}\lstinline@    """@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@self.main_window.show()@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph controller signals}\nobreak\ {\footnotesize \NWlink{nuweb35c}{35c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize \NWlink{nuweb22b}{22b}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph controller slots}\nobreak\ {\footnotesize \NWlink{nuweb34a}{34a}}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb15c}{15c}\NWlink{nuweb18c}{, 18c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb46b}{46b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As at this point the functionality of the scene graph controller is not fully
+known, the constructor simply initializes its parent class.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap15}\raggedright\small
+\NWtarget{nuweb22b}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {22b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def __init__(self, parent=None):@\\
+\mbox{}\lstinline@    """Constructor.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param parent: The parent of the current view model within the scene@\\
+\mbox{}\lstinline@                    graph.@\\
+\mbox{}\lstinline@    :type parent:  qde.editor.gui_domain.scene.SceneViewModel@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    super(SceneGraphController, self).__init__(parent)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As the scene graph controller holds and manages the data, it needs to have at
+least a root node. As the controller manages both, domain models and the view
+models, it needs to create both models.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap16}\raggedright\small
+\NWtarget{nuweb22c}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {22c}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.root_node = domain_scene.SceneModel()@\\
+\mbox{}\lstinline@    self.view_root_node = guidomain_scene.SceneViewModel(@\\
+\mbox{}\lstinline@        row=0,@\\
+\mbox{}\lstinline@        domain_object=self.root_node,@\\
+\mbox{}\lstinline@        name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')@\\
+\mbox{}\lstinline@    )@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Whenever a scene is added, the item model needs to be informed for
+updating the view. This happens by emitting the \verb+rowsInserted+ signal,
+which is already given by the \verb+QAbstractItemModel+ class. Therefore the
+signal must also be emitted when the root node is added.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap17}\raggedright\small
+\NWtarget{nuweb23a}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {23a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% TODO: Add signal to inform scene graph controller about newly created root
+%       scene.
+
+The scene graph controller must also provide the header data, which is used to
+display the header within the view (due to the usage of the Qt view
+model\todo{Add reference to Qts view model}). As header data the name of the
+scenes as well as the number of nodes a scene contains shall be displayed.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap18}\raggedright\small
+\NWtarget{nuweb23b}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {23b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.header_data = [@\\
+\mbox{}\lstinline@        QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),@\\
+\mbox{}\lstinline@        QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')@\\
+\mbox{}\lstinline@    ]@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% TODO: Check if needed
+% Before implementing the actual methods, it is important to think about the
+% attributes, that the scene graph controller will have, as attributes define and
+% influence the methods.
+
+As \verb+QAbstractItemModel+ is used as a basis for the scene graph controller,
+some methods must be implemented at very least:~\enquote{When subclassing
+QAbstractItemModel, at the very least you must implement index(), parent(),
+rowCount(), columnCount(), and data(). These functions are used in all read-only
+models, and form the basis of editable
+models.}\footref{footnote:qabstractitemmodel}
+
+The method \verb+index+ returns the position of an item in the (data-) model for
+a given row and column below a parent item.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap19}\raggedright\small
+\NWtarget{nuweb24}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {24}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def index(self, row, column, parent=QtCore.QModelIndex()):@\\
+\mbox{}\lstinline@    """Return the index of the item in the model specified by the given row,@\\
+\mbox{}\lstinline@    column and parent index.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param row: The row for which the index shall be returned.@\\
+\mbox{}\lstinline@    :type  row: int@\\
+\mbox{}\lstinline@    :param column: The column for which the index shall be returned.@\\
+\mbox{}\lstinline@    :type column: int@\\
+\mbox{}\lstinline@    :param parent: The parent index of the item in the model. An invalid model@\\
+\mbox{}\lstinline@                   index is given as the default parameter.@\\
+\mbox{}\lstinline@    :type parent: QtQore.QModelIndex@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the model index based on the given row, column and the parent@\\
+\mbox{}\lstinline@             index.@\\
+\mbox{}\lstinline@    :rtype: QtCore.QModelIndex@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # If the given parent (index) is not valid, create a new index based on the@\\
+\mbox{}\lstinline@    # currently set root node@\\
+\mbox{}\lstinline@    if not parent.isValid():@\\
+\mbox{}\lstinline@        return self.createIndex(row, column, self.view_root_node)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # The internal pointer of the the parent (index) returns a scene graph view@\\
+\mbox{}\lstinline@    # model@\\
+\mbox{}\lstinline@    parent_node = parent.internalPointer()@\\
+\mbox{}\lstinline@    child_nodes = parent_node.children()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return self.createIndex(row, column, child_nodes[row])@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The method \verb+parent+ returns the parent item of an item identified by a
+provided index. If that index is invalid, an invalid index is returned as well.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap20}\raggedright\small
+\NWtarget{nuweb25a}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {25a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def parent(self, model_index):@\\
+\mbox{}\lstinline@    """Return the parent of the model item with the given index. If the item has@\\
+\mbox{}\lstinline@    no parent, an invalid QModelIndex is returned.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param model_index: The model index which the parent model index shall be@\\
+\mbox{}\lstinline@                        derived for.@\\
+\mbox{}\lstinline@    :type model_index: int@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the model index of the parent model item for the given model index.@\\
+\mbox{}\lstinline@    :rtype: QtCore.QModelIndex@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if not model_index.isValid():@\\
+\mbox{}\lstinline@        return QtCore.QModelIndex()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # The internal pointer of the the model index returns a scene graph view@\\
+\mbox{}\lstinline@    # model.@\\
+\mbox{}\lstinline@    node = model_index.internalPointer()@\\
+\mbox{}\lstinline@    if node.parent() is None:@\\
+\mbox{}\lstinline@        return QtCore.QModelIndex()@\\
+\mbox{}\lstinline@    else:@\\
+\mbox{}\lstinline@        return self.createIndex(node.parent().row, 0, node.parent())@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Implementing the \verb+columnCount+ and \verb+rowCount+ methods is straight
+forward. The former returns simply the number of columns, in this case the
+number of headers, therefore 2.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap21}\raggedright\small
+\NWtarget{nuweb25b}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {25b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def columnCount(self, parent):@\\
+\mbox{}\lstinline@    """Return the number of columns for the children of the given parent.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param parent: The index of the item in the scene graph, which the@\\
+\mbox{}\lstinline@                    column count shall be returned for.@\\
+\mbox{}\lstinline@    :type  parent: QtCore.QModelIndex@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the number of columns for the children of the given parent.@\\
+\mbox{}\lstinline@    :rtype:  int@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return len(self.header_data)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The method \verb+rowCount+ returns the number of children for a given parent
+item (identified by its index within the data model).
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap22}\raggedright\small
+\NWtarget{nuweb26}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {26}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def rowCount(self, parent):@\\
+\mbox{}\lstinline@    """Return the number of rows for the children of the given parent.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param parent: The index of the item in the scene graph, which the@\\
+\mbox{}\lstinline@                    row count shall be returned for.@\\
+\mbox{}\lstinline@    :type  parent: QtCore.QModelIndex@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the number of rows for the children of the given parent.@\\
+\mbox{}\lstinline@    :rtype:  int@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if not parent.isValid():@\\
+\mbox{}\lstinline@        return 1@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # Get the actual object stored by the parent. In this case it is a@\\
+\mbox{}\lstinline@    # SceneViewModel.@\\
+\mbox{}\lstinline@    node = parent.internalPointer()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return len(node.children())@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The last method, that has to be implemented due to the usage of
+\verb+QAbstractItemModel+, is the \verb+data+ method. It returns the data for an
+item identified by the given index for the given role.
+
+A role indicates what type of data is provided. Currently the only role
+considered is the display of models (further information may be found
+at~\url{http://doc.qt.io/qt-5/qt.html#ItemDataRole-enum}).
+
+Depending on the column of the model index, the method returns either the name
+of the scene graph node or the number of nodes a scene contains.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap23}\raggedright\small
+\NWtarget{nuweb27}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {27}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def data(self, model_index, role=QtCore.Qt.DisplayRole):@\\
+\mbox{}\lstinline@    """Return the data stored under the given role for the item referred by the@\\
+\mbox{}\lstinline@    index.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param model_index: The (data-) model index of the item.@\\
+\mbox{}\lstinline@    :type model_index: int@\\
+\mbox{}\lstinline@    :param role: The role which shall be used for representing the data. The@\\
+\mbox{}\lstinline@                 default (and currently only supported) is displaying the data.@\\
+\mbox{}\lstinline@    :type role:  QtCore.Qt.DisplayRole@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the data stored under the given role for the item referred by the@\\
+\mbox{}\lstinline@             given index.@\\
+\mbox{}\lstinline@    :rtype:  str@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if not model_index.isValid():@\\
+\mbox{}\lstinline@        return None@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # The internal pointer of the model index returns a scene view model.@\\
+\mbox{}\lstinline@    node = model_index.internalPointer()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if role == QtCore.Qt.DisplayRole:@\\
+\mbox{}\lstinline@        # Return either the name of the scene or its number of nodes.@\\
+\mbox{}\lstinline@        column = model_index.column()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@        if column == 0:@\\
+\mbox{}\lstinline@            return node.name@\\
+\mbox{}\lstinline@        elif column == 1:@\\
+\mbox{}\lstinline@            return node.node_count@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+In addition to the above mentioned methods, the \verb+QAbstractItemModel+ offers
+the method \verb+headerData+, which~\enquote{returns the data for the given role
+and section in the header with the specified orientation.}\footnote{http://doc.qt.io/qt-5/qabstractitemmodel.html\#headerData}
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap24}\raggedright\small
+\NWtarget{nuweb28a}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {28a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def headerData(self, section, orientation=QtCore.Qt.Horizontal,@\\
+\mbox{}\lstinline@               role=QtCore.Qt.DisplayRole):@\\
+\mbox{}\lstinline@    """Return the data for the given role and section in the header with the@\\
+\mbox{}\lstinline@    specified orientation.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    Currently vertical is the only supported orientation. The only supported@\\
+\mbox{}\lstinline@    role is DisplayRole. As the sections correspond to the header, there are@\\
+\mbox{}\lstinline@    only two supported sections: 0 and 1. If one of those parameters is not@\\
+\mbox{}\lstinline@    within the described values, None is returned.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param section: the section in the header. Currently only 0 and 1 are@\\
+\mbox{}\lstinline@                    supported.@\\
+\mbox{}\lstinline@    :type  section: int@\\
+\mbox{}\lstinline@    :param orientation: the orientation of the display. Currently only@\\
+\mbox{}\lstinline@                        Horizontal is supported.@\\
+\mbox{}\lstinline@    :type orientation:  QtCore.Qt.Orientation@\\
+\mbox{}\lstinline@    :param role: The role which shall be used for representing the data. The@\\
+\mbox{}\lstinline@                 default (and currently only supported) is displaying the data.@\\
+\mbox{}\lstinline@    :type role:  QtCore.Qt.DisplayRole@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the header data for the given section using the given role and@\\
+\mbox{}\lstinline@             orientation.@\\
+\mbox{}\lstinline@    :rtype:  str@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if (@\\
+\mbox{}\lstinline@            orientation == QtCore.Qt.Horizontal  and@\\
+\mbox{}\lstinline@            role        == QtCore.Qt.DisplayRole and@\\
+\mbox{}\lstinline@            section     in [0, 1]@\\
+\mbox{}\lstinline@    ):@\\
+\mbox{}\lstinline@        return self.header_data[section]@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+One thing, that may stand out, is, that the above defined \verb+data+ method
+returns the number of graph nodes within a scene by accessing the
+\verb+node_count+ property of the \textit{scene view model}.
+
+The \textit{scene view model} does therefore need to keep track of the nodes it
+contains, in form of a list, analogous to the domain model.
+
+It does not make sense however to use the list of nodes from the domain model,
+as the view model will hold references to graphical objects where as the domain
+model holds only pure data objects.
+
+Due to the inheritance from \verb+QObject+, it is not necessary to explicitly
+implement the nodes of a scene as a list, instead it is already given by the \verb+children+ method.
+
+The method \verb+node_count+ then simply returns the length of the node list.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap25}\raggedright\small
+\NWtarget{nuweb28b}{} $\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize {28b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@property@\\
+\mbox{}\lstinline@def node_count(self):@\\
+\mbox{}\lstinline@    """Return the number of nodes, that this scene contains."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return len(self.children())@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb21a}{21a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% The object \verb+node+ is in this case a scene graph view model, which holds a
+% reference to scene view model. This may be confusing at first, as they seem very
+% similar. But as stated before, view models are used to visually represent
+% something within the graphical user interface. Therefore the \textit{scene graph
+% view model} stands for an entry within the scene graph where as the
+% \textit{scene view model} represents a
+
+
+The scene graph controller can now be set up by the main application controller.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap26}\raggedright\small
+\NWtarget{nuweb29a}{} $\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize {29a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.scene_graph_controller = scene_graph.SceneGraphController(self)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb17c}{17c}\NWlink{nuweb29a}{, 29a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16a}{16a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+At this point data structures in terms of a (data-) model and a view model
+concerning the scene graph are implemented. Further a controller for handling
+the flow of the data for both models is implemented. What is still missing, is
+the actual representation of the scene graph in terms of a view.
+
+Qt offers a plethora of widgets for implementing views. One such widget is
+\verb+QTreeView+, which~\enquote{implements a tree representation of items from
+a model. This class is used to provide standard hierarchical lists that were
+previously provided by the QListView class, but using the more flexible approach
+provided by Qt's model/view
+architecture.}~\footnote{fn:f377826acb87691:http://doc.qt.io/qt-5/qtreeview.html\#details}
+Therefore \verb+QTreeView+ is used as basis for the scene graph view.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap27}\raggedright\small
+\NWtarget{nuweb29b}{} $\langle\,${\itshape Scene graph view declarations}\nobreak\ {\footnotesize {29b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize \NWlink{nuweb48b}{48b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@class SceneGraphView(QtWidgets.QTreeView):@\\
+\mbox{}\lstinline@    """The scene graph view widget.@\\
+\mbox{}\lstinline@    A widget for displaying and managing the scene graph.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph view signals}\nobreak\ {\footnotesize \NWlink{nuweb31b}{31b}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph view constructor}\nobreak\ {\footnotesize \NWlink{nuweb29c}{29c}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph view methods}\nobreak\ {\footnotesize \NWlink{nuweb31a}{31a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Scene graph view slots}\nobreak\ {\footnotesize \NWlink{nuweb30b}{30b}, \ldots\ }$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb46c}{46c}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As at this point the functionality of the scene graph view is not fully
+known, the constructor simply initializes its parent class.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap28}\raggedright\small
+\NWtarget{nuweb29c}{} $\langle\,${\itshape Scene graph view constructor}\nobreak\ {\footnotesize {29c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def __init__(self, parent=None):@\\
+\mbox{}\lstinline@    """Constructor.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param parent:        The parent of the current view widget.@\\
+\mbox{}\lstinline@    :type parent:         QtCore.QObject@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    super(SceneGraphView, self).__init__(parent)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb29c}{29c}\NWlink{nuweb32a}{, 32a}\NWlink{nuweb32b}{b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+For being able to display anything, the scene graph view needs a controller to
+work with. In terms of Qt, the controller is called a model, as due its
+model/view architecture.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap29}\raggedright\small
+\NWtarget{nuweb30a}{} $\langle\,${\itshape Connect components for main application}\nobreak\ {\footnotesize {30a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.main_window.scene_graph_widget.setModel(@\\
+\mbox{}\lstinline@    self.scene_graph_controller@\\
+\mbox{}\lstinline@)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb30a}{30a}\NWlink{nuweb35b}{, 35b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16a}{16a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+But scenes shall not only be displayed, instead it shall be possible to work
+with them. What shall be achieved, are three things: Adding and removing scenes,
+renaming scenes and switching scenes.
+
+To switch between scenes it is necessary to emit what scene was selected. This
+is needed to tell the other components, such as the node graph for example, that
+the scene has changed.
+
+Through the \verb+selectionChanged+ signal the scene graph view already provides
+a possibility to detect if another scene was selected. This signal emits an item
+selection in terms of model indices although. As this is very view- and
+model-specific, it would be easier for other components if the selected scene is
+emitted directly in terms of a view model.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap30}\raggedright\small
+\NWtarget{nuweb30b}{} $\langle\,${\itshape Scene graph view slots}\nobreak\ {\footnotesize {30b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)@\\
+\mbox{}\lstinline@def on_tree_item_selected(self, selected, deselected):@\\
+\mbox{}\lstinline@    """Slot which is called when the selection within the scene graph view is@\\
+\mbox{}\lstinline@    changed.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    The previous selection (which may be empty) is specified by the deselected@\\
+\mbox{}\lstinline@    parameter, the new selection is specified by the selected paramater.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    This method emits the selected scene graph item as scene view model.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param selected: The new selection of scenes.@\\
+\mbox{}\lstinline@    :type  selected: QtCore.QModelIndex@\\
+\mbox{}\lstinline@    :param deselected: The previous selected scenes.@\\
+\mbox{}\lstinline@    :type  deselected: QtCore.QModelIndex@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    selected_item = selected.first()@\\
+\mbox{}\lstinline@    selected_index = selected_item.indexes()[0]@\\
+\mbox{}\lstinline@    selected_scene_graph_view_model = selected_index.internalPointer()@\\
+\mbox{}\lstinline@    self.tree_item_selected.emit(selected_scene_graph_view_model)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb30b}{30b}\NWlink{nuweb33}{, 33}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+But the \verb+on_tree_item_selected+ slot needs to be triggered as soon as the
+selection is changed. This is done by connecting the slot with the signal.
+
+The \verb+selectionChanged+ signal is however not directly accessible, it is
+only accessible through the selection model of scene graph view (which is given
+by the usage of \verb+QTreeView+). The selection model can although only be
+accessed when setting the data model of the view, which needs therefore to be
+expanded.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap31}\raggedright\small
+\NWtarget{nuweb31a}{} $\langle\,${\itshape Scene graph view methods}\nobreak\ {\footnotesize {31a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def setModel(self, model):@\\
+\mbox{}\lstinline@    """Set the model for the view to present.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    This method is only used for being able to use the selection model's@\\
+\mbox{}\lstinline@    selectionChanged method and setting the current selection to the root node.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param model: The item model which the view shall present.@\\
+\mbox{}\lstinline@    :type  model: QtCore.QAbstractItemModel@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    super(SceneGraphView, self).setModel(model)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # Use a slot to emit the selected scene view model upon the selection of a@\\
+\mbox{}\lstinline@    # tree item@\\
+\mbox{}\lstinline@    selection_model = self.selectionModel()@\\
+\mbox{}\lstinline@    selection_model.selectionChanged.connect(@\\
+\mbox{}\lstinline@        self.on_tree_item_selected@\\
+\mbox{}\lstinline@    )@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # Set the index to the first node of the model@\\
+\mbox{}\lstinline@    self.setCurrentIndex(model.index(0, 0))@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As stated above, \verb+on_tree_item_selected+ emits another signal containing a
+reference to a scene view model.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap32}\raggedright\small
+\NWtarget{nuweb31b}{} $\langle\,${\itshape Scene graph view signals}\nobreak\ {\footnotesize {31b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb31b}{31b}\NWlink{nuweb31c}{c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+In the same manner as the selection of an item was implemented, the adding and
+removal of a scene are implemented. However, the tree widget does not provide
+direct signals for those cases as it is the case when selecting a tree item,
+instead own signals, slots and actions have to be used.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap33}\raggedright\small
+\NWtarget{nuweb31c}{} $\langle\,${\itshape Scene graph view signals}\nobreak\ {\footnotesize {31c}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@do_add_item = QtCore.pyqtSignal(QtCore.QModelIndex)@\\
+\mbox{}\lstinline@do_remove_item = QtCore.pyqtSignal(QtCore.QModelIndex)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb31b}{31b}\NWlink{nuweb31c}{c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+An action gets triggered, typically by hovering over some item (in terms of a
+context menu for example) or by pressing a defined keyboard shortcut. For the
+adding and the removal, a keyboard shortcut will be used.
+
+Adding of a scene item shall happen when pressing the \verb=a= key on the
+keyboard.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap34}\raggedright\small
+\NWtarget{nuweb32a}{} $\langle\,${\itshape Scene graph view constructor}\nobreak\ {\footnotesize {32a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    new_action_label = QtCore.QCoreApplication.translate(@\\
+\mbox{}\lstinline@        __class__.__name__, 'New scene'@\\
+\mbox{}\lstinline@    )@\\
+\mbox{}\lstinline@    new_action = QtWidgets.QAction(new_action_label, self)@\\
+\mbox{}\lstinline@    new_action.setShortcut(Qt.QKeySequence('a'))@\\
+\mbox{}\lstinline@    new_action.setShortcutContext(QtCore.Qt.WidgetShortcut)@\\
+\mbox{}\lstinline@    new_action.triggered.connect(self.on_new_tree_item)@\\
+\mbox{}\lstinline@    self.addAction(new_action)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb29c}{29c}\NWlink{nuweb32a}{, 32a}\NWlink{nuweb32b}{b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Removal of a selected node shall be triggered upon the press of the
+\verb=delete= key on the keyboard.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap35}\raggedright\small
+\NWtarget{nuweb32b}{} $\langle\,${\itshape Scene graph view constructor}\nobreak\ {\footnotesize {32b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    remove_action_label = QtCore.QCoreApplication.translate(@\\
+\mbox{}\lstinline@        __class__.__name__, 'Remove selected scene(s)'@\\
+\mbox{}\lstinline@    )@\\
+\mbox{}\lstinline@    remove_action = QtWidgets.QAction(remove_action_label, self)@\\
+\mbox{}\lstinline@    remove_action.setShortcut(Qt.QKeySequence('Delete'))@\\
+\mbox{}\lstinline@    remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)@\\
+\mbox{}\lstinline@    remove_action.triggered.connect(self.on_tree_item_removed)@\\
+\mbox{}\lstinline@    self.addAction(remove_action)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb29c}{29c}\NWlink{nuweb32a}{, 32a}\NWlink{nuweb32b}{b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As can be seen in the two above listings, the \verb+triggered+ signals are
+connected with a corresponding slot. All these slots do is emitting another
+signal, but this time it contains a scene view model, which may be used by
+other components, instead of a model index.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap36}\raggedright\small
+\NWtarget{nuweb33}{} $\langle\,${\itshape Scene graph view slots}\nobreak\ {\footnotesize {33}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@QtCore.pyqtSlot()@\\
+\mbox{}\lstinline@def on_new_tree_item(self):@\\
+\mbox{}\lstinline@    """Slot which is called when a new tree item was added by the scene graph@\\
+\mbox{}\lstinline@    view.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    This method emits the selected scene graph item as new tree item in form of@\\
+\mbox{}\lstinline@    a scene view model.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    selected_indexes = self.selectedIndexes()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # Sanity check: is actually an item selected?@\\
+\mbox{}\lstinline@    if len(selected_indexes) > 0:@\\
+\mbox{}\lstinline@        selected_item = selected_indexes[0]@\\
+\mbox{}\lstinline@        self.do_add_item.emit(selected_item)@\\
+\mbox{}\lstinline@        @\hbox{$\langle\,${\itshape Scene graph view log tree item added}\nobreak\ {\footnotesize \NWlink{nuweb38b}{38b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@QtCore.pyqtSlot()@\\
+\mbox{}\lstinline@def on_tree_item_removed(self):@\\
+\mbox{}\lstinline@    """Slot which is called when a one or multiple tree items were removed by@\\
+\mbox{}\lstinline@    the scene graph view.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    This method emits the removed scene graph item in form of scene graph view@\\
+\mbox{}\lstinline@    models.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    selected_indexes = self.selectedIndexes()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    # Sanity check: is actually an item selected? And has that item a parent?@\\
+\mbox{}\lstinline@    # We only allow removal of items with a valid parent, as we do not want to@\\
+\mbox{}\lstinline@    # have the root item removed.@\\
+\mbox{}\lstinline@    if len(selected_indexes) > 0:@\\
+\mbox{}\lstinline@        selected_item = selected_indexes[0]@\\
+\mbox{}\lstinline@        if selected_item.parent().isValid():@\\
+\mbox{}\lstinline@            self.do_remove_item.emit(selected_item)@\\
+\mbox{}\lstinline@            @\hbox{$\langle\,${\itshape Scene graph view log tree item removed}\nobreak\ {\footnotesize \NWlink{nuweb38c}{38c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@        else:@\\
+\mbox{}\lstinline@            print('Not removing root scene')@\\
+\mbox{}\lstinline@    else:@\\
+\mbox{}\lstinline@        print('No item selected')@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb30b}{30b}\NWlink{nuweb33}{, 33}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+One of the mentioned other components is the scene graph controller. He needs to
+be informed, so that he is able to manage the data model correspondingly.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap37}\raggedright\small
+\NWtarget{nuweb34a}{} $\langle\,${\itshape Scene graph controller slots}\nobreak\ {\footnotesize {34a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@QtCore.pyqtSlot(QtCore.QModelIndex)@\\
+\mbox{}\lstinline@def on_tree_item_added(self, selected_item):@\\
+\mbox{}\lstinline@    self.insertRows(0, 1, selected_item)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@QtCore.pyqtSlot(QtCore.QModelIndex)@\\
+\mbox{}\lstinline@def on_tree_item_removed(self, selected_item):@\\
+\mbox{}\lstinline@    if not selected_item.isValid():@\\
+\mbox{}\lstinline@        print('selected scene not valid, not removing')@\\
+\mbox{}\lstinline@        return False@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    row = selected_item.row()@\\
+\mbox{}\lstinline@    parent = selected_item.parent()@\\
+\mbox{}\lstinline@    self.removeRows(row, 1, parent)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Having the slots for adding and removing scene graph items implemented, the
+actual methods for these actions are still missing.
+
+When inserting a new scene graph item, actually a row must be inserted, as the
+data model (Qt's) is using rows to represent the data. At the same time the
+controller has to create and keep track of the domain model.
+
+As can be seen in the implementation below, it is not necessary to add the
+created view model instance to a list of nodes, the usage of
+\verb+QAbstractItemModel+ keeps already track of this.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap38}\raggedright\small
+\NWtarget{nuweb34b}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {34b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def insertRows(self, row, count, parent=QtCore.QModelIndex()):@\\
+\mbox{}\lstinline@    # TODO: Document method.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if not parent.isValid():@\\
+\mbox{}\lstinline@        return False@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    parent_node = parent.internalPointer()@\\
+\mbox{}\lstinline@    self.beginInsertRows(parent, row, row + count - 1)@\\
+\mbox{}\lstinline@    domain_model  = domain_scene.SceneModel()@\\
+\mbox{}\lstinline@    view_model = guidomain_scene.SceneViewModel(@\\
+\mbox{}\lstinline@        row=row,@\\
+\mbox{}\lstinline@        domain_object=domain_model,@\\
+\mbox{}\lstinline@        parent=parent_node@\\
+\mbox{}\lstinline@    )@\\
+\mbox{}\lstinline@    self.endInsertRows()@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.layoutChanged.emit()@\\
+\mbox{}\lstinline@    self.do_add_scene.emit(domain_model)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return True@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The same logic applies when removing a scene.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap39}\raggedright\small
+\NWtarget{nuweb35a}{} $\langle\,${\itshape Scene graph controller methods}\nobreak\ {\footnotesize {35a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def removeRows(self, row, count, parent=QtCore.QModelIndex()):@\\
+\mbox{}\lstinline@    # TODO: Document method.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if not parent.isValid():@\\
+\mbox{}\lstinline@        return False@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.beginRemoveRows(parent, row, row + count - 1)@\\
+\mbox{}\lstinline@    node_index = parent.child(row, parent.column())@\\
+\mbox{}\lstinline@    node       = node_index.internalPointer()@\\
+\mbox{}\lstinline@    node.setParent(None)@\\
+\mbox{}\lstinline@    # TODO: Still needed? parent_node.child_nodes.remove(node)@\\
+\mbox{}\lstinline@    self.endRemoveRows()@\\
+\mbox{}\lstinline@    print('Remove rows')@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    self.layoutChanged.emit()@\\
+\mbox{}\lstinline@    self.do_remove_scene.emit(domain_model)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    return True@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb22b}{22b}\NWlink{nuweb22c}{c}\NWlink{nuweb23a}{, 23a}\NWlink{nuweb23b}{b}\NWlink{nuweb24}{, 24}\NWlink{nuweb25a}{, 25a}\NWlink{nuweb25b}{b}\NWlink{nuweb26}{, 26}\NWlink{nuweb27}{, 27}\NWlink{nuweb28a}{, 28a}\NWlink{nuweb34b}{, 34b}\NWlink{nuweb35a}{, 35a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+As before, the main application needs connect the components, in this case the
+scene graph view with the controller.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap40}\raggedright\small
+\NWtarget{nuweb35b}{} $\langle\,${\itshape Connect components for main application}\nobreak\ {\footnotesize {35b}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.main_window.scene_graph_widget.do_add_item.connect(@\\
+\mbox{}\lstinline@    self.scene_graph_controller.on_tree_item_added@\\
+\mbox{}\lstinline@)@\\
+\mbox{}\lstinline@self.main_window.scene_graph_widget.do_remove_item.connect(@\\
+\mbox{}\lstinline@    self.scene_graph_controller.on_tree_item_removed@\\
+\mbox{}\lstinline@)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb30a}{30a}\NWlink{nuweb35b}{, 35b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb16a}{16a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+To inform other components, such as the node graph for example, the scene graph
+controller emits signals when a scene is being added or removed respectively.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap41}\raggedright\small
+\NWtarget{nuweb35c}{} $\langle\,${\itshape Scene graph controller signals}\nobreak\ {\footnotesize {35c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@do_add_scene    = QtCore.pyqtSignal(domain_scene.SceneModel)@\\
+\mbox{}\lstinline@do_remove_scene = QtCore.pyqtSignal(domain_scene.SceneModel)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb22a}{22a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% TODO: EDIT MODELS
+% For being able edit the nodes of the scene graph and to have a custom header
+% displayed, further methods have to be implemented: ``To enable editing in your
+% model, you must also implement setData(), and reimplement flags() to ensure that
+% ItemIsEditable is returned. You can also reimplement headerData() and
+% setHeaderData() to control the way the headers for your model are presented.''
+
+
+At this point it is possible to manage scenes in terms of adding and removing
+them. The scenes are added to (or removed from respectively) the graphical user
+interface as well as the data structure.
+
+So far the application (or rather the scene graph) seems to be working as
+intended. But how does one ensure, that it really does? Without a doubt, unit
+and integration tests are one of the best instruments to ensure functionality of
+code.
+
+As stated before, in~\autoref{subsec:literate-programming}, it was an intention
+of this project to develop the application test driven. Due to required amount
+of work for developing test driven, it was abstained from this intention and
+regular unit tests are written instead, which can be found in
+appendix,~\autoref{sec:test-cases}.
+
+But nevertheless, it would be very handy to have at least some idea what the
+code is doing at certain places and at certain times.
+
+One of the simplest approaches to achieve this, is a verbose output at various
+places of the application, which may be as simple as using Python's
+\verb+print+ function. Using the \verb+print+ function may allow
+printing something immediately, but it lacks of flexibility and demands each
+time a bit of effort to format the output accordingly (e.g. adding the class and
+the function name and so on).
+
+Python's logging facility provides much more functionality while being able to
+keep things simple as well --- if needed. The usage of the logging facility to
+log messages throughout the application may later even be used to implement a
+widget which outputs those messages. So logging using Python's logging facility
+will be implemented and applied for being able to have feedback when needed.
+
+\subsubsection{Logging}
+\label{ssubsec:logging}
+
+It is always very useful to have a facility which allows tracing of errors or
+even just the flow of an application. Logging does allow such aspects by
+outputting text messages to a defined output, such as STDERR, STDOUT, streams or
+files.
+
+Logging shall be provided on a class-basis, meaning that each class (which wants
+to log something) needs to instantiate a logger and use a corresponding handler.
+
+As logging is a very central aspect of the application, it is the task of the
+main application to set up the logging facility which may then be used by other
+classes through a decorator.
+
+The main application shall therefore set up the logging facility as follows:
+\begin{itemize}
+  \item Use either an external logging configuration or the default logging
+        configuration.
+  \item When using an external logging configuration
+    \begin{itemize}
+      \item The location of the external logging configuration may be set by the
+            environment variable \verb+QDE_LOG_CFG+.
+      \item Is no such environment variable set, the configuration file is
+            assumed to be named \verb+logging.json+ and to reside in the
+            application's main directory.
+    \end{itemize}
+  \item When using no external logging configuration, the default logging
+        configuration defined by \verb+basicConfig+ is used.
+  \item Always set a level when using no external logging configuration, the
+        default being \verb+INFO+.
+\end{itemize}
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap42}\raggedright\small
+\NWtarget{nuweb37a}{} $\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize {37a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def setup_logging(self,@\\
+\mbox{}\lstinline@                  default_path='logging.json',@\\
+\mbox{}\lstinline@                  default_level=logging.INFO):@\\
+\mbox{}\lstinline@    """Setup logging configuration"""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    env_key  = 'QDE_LOG_CFG'@\\
+\mbox{}\lstinline@    env_path = os.getenv(env_key, None)@\\
+\mbox{}\lstinline@    path     = env_path or default_path@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    if os.path.exists(path):@\\
+\mbox{}\lstinline@        with open(path, 'rt') as f:@\\
+\mbox{}\lstinline@            config = json.load(f)@\\
+\mbox{}\lstinline@            logging.config.dictConfig(config)@\\
+\mbox{}\lstinline@    else:@\\
+\mbox{}\lstinline@        logging.basicConfig(level=default_level)@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb16a}{16a}\NWlink{nuweb37a}{, 37a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb15b}{15b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
+For not having only basic logging available, a logging configuration is defined.
+The logging configuration provides three handlers: a console handler, which logs
+debug messages to STDOUT, a info file handler, which logs informational messages
+to a file named \verb+info.log+, and a error file handler, which logs errors to
+a file named \verb+error.log+. The default level is set to debug and all
+handlers are used.
+
+This configuration allows to get an arbitrarily named logger which uses that
+configuration.
+
+As stated before, logging shall be provided on a class basis. This has the
+consequence, that each class has to instantiate a logging instance. To prevent
+the repetition of the same code fragment over and over, Python's decorator
+pattern is used~\footnote{https://www.python.org/dev/peps/pep-0318/}.
+
+The decorator will be available as a method named \verb+with_logger+.
+The method has the following functionality.
+
+\begin{itemize}
+  \item Provide a name based on the current module and class.
+    \begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap43}\raggedright\small
+\NWtarget{nuweb37b}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {37b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@logger_name = "{module_name}.{class_name}".format(@\\
+\mbox{}\lstinline@    module_name=cls.__module__,@\\
+\mbox{}\lstinline@    class_name=cls.__name__@\\
+\mbox{}\lstinline@)@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb48a}{48a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\item Provide an easy to use interface for logging.
+    \begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap44}\raggedright\small
+\NWtarget{nuweb37c}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {37c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@cls.logger = logging.getLogger(logger_name)@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@return cls@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb48a}{48a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\end{itemize}
+
+The implementation of the \verb+with_logger+ method allows the usage of the
+logging facility as a decorator, as shown in the example in the following
+listing.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap45}\raggedright\small
+\NWtarget{nuweb38a}{} $\langle\,${\itshape With logger example}\nobreak\ {\footnotesize {38a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@from qde.editor.foundation import common@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@common.with_logger@\\
+\mbox{}\lstinline@def SomeClass(object):@\\
+\mbox{}\lstinline@    """This class provides literally nothing and is used only to demonstrate the@\\
+\mbox{}\lstinline@    usage of the logging decorator."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    def some_method():@\\
+\mbox{}\lstinline@        """This method does literally nothing and is used only to demonstrate the@\\
+\mbox{}\lstinline@        usage of the logging decorator."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@        self.logger.debug(("I am some logging entry used for"@\\
+\mbox{}\lstinline@                           "demonstration purposes only."))@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+The logging facility may now be used wherever it is useful to log something.
+Such a place is for example the adding and removal of scenes in the scene graph
+view.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap46}\raggedright\small
+\NWtarget{nuweb38b}{} $\langle\,${\itshape Scene graph view log tree item added}\nobreak\ {\footnotesize {38b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.logger.debug("A new scene graph item was added.")@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb33}{33}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap47}\raggedright\small
+\NWtarget{nuweb38c}{} $\langle\,${\itshape Scene graph view log tree item removed}\nobreak\ {\footnotesize {38c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@self.logger.debug((@\\
+\mbox{}\lstinline@    "The scene graph item at row {row} "@\\
+\mbox{}\lstinline@    "and column {column} was removed."@\\
+\mbox{}\lstinline@).format(@\\
+\mbox{}\lstinline@    row=selected_item.row(),@\\
+\mbox{}\lstinline@    column=selected_item.column()@\\
+\mbox{}\lstinline@))@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb33}{33}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Whenever the \textit{a} or the \textit{delete} key is being pressed now, when the scene graph
+view is focused, the corresponding log messages appear in the standard output,
+hence the console.
+
+Now, having the scene graph component as well as an interface to log messages
+throughout the application implemented, the next component may be approached. A
+very interesting aspect to face would be the rendering. But for being able to
+render something, there actually needs to exist something to render: nodes.
+Nodes are being represented within the node graph. So this is a good point to
+begin with the implementation of the node graph.
+
+\subsection{Node graph}
+\label{subsec:node-graph}
+
+The functionality of the node graph is, as its name states, to represent a data
+structure composed of nodes and edges. Each scene from the scene graph is
+represented within the node graph as such a data structure.
+
+The nodes are the building blocks of a real time animation. They represent
+different aspects, such as scenes themselves, time line clips, models, cameras,
+lights, materials, generic operators and effects. These aspects are only examples
+(coming from~\citetitle[p. 30 and 31]{osterwalder_qde_2016}) as the node
+structure will be expandable for allowing the addition of new nodes.
+
+The implementation of the scene graph component was relatively straightforward
+partly due to its structure and partly due to the used data model and
+representation. The node graph component however, seems to be a bit more complex.
+
+To get a first overview and to manage its complexity, it might be good to
+identify its sub components first before implementing them.
+When thinking about the implementation of the node graph, one may identify the
+following sub components:
+
+\begin{description}
+\item[Nodes] Building blocks of a real time animation.
+  \begin{description}
+    \item[Domain model] Holds data of a node, like its definition, its inputs
+                        and so on.
+    \item[Definitions]  Represents a domain model as JSON data structure.
+    \item[Controller]   Handles the loading of node definitions as well as the
+                        creation of node instances.
+    \item[View model]   Represents a node within the graphical user interface.
+  \end{description}
+\end{description}
+
+\begin{description}
+\item[Scenes] A composition of nodes, connected by edges.
+  \begin{description}
+    \item[Domain model] Holds the data of a scene, e.g. its nodes.
+    \item[Controller]   Handles scene related actions, like when a node is added
+                        to a scene, when the scene was changed or when a node
+                        within a scene was selected.
+    \item[View model]   Defines the graphical representation of scene which can
+                        be represented by the corresponding view. Basically the
+                        scene view model is a canvas consisting of nodes.
+    \item[View]         Represents scenes in terms of scene view models within the
+                        graphical user interface.
+  \end{description}
+\end{description}
+
+\subsubsection{Nodes}
+\label{ssubsec:nodes}
+
+As mentioned before, nodes are the building blocks of a real time animation. But
+what are those definitions actually? What do they actually define? There is not
+only one answer to this question, it is simply a matter of how the
+implementation is being done and therefore a set of decisions.
+
+The whole (rendering) system shall not be bound to only one representation of
+nodes, e.g. triangle based meshes. Instead it shall let the user decide, what
+representation is the most fitting for the goal he wants to achieve.
+
+Therefore the system shall be able to support multiple kinds of node
+representations: Images, triangle based meshes and solid modeling through
+function modeling (using signed distance functions for modeling implicit
+surfaces). Whereas triangle based meshes may either be loaded from externally
+defined files (e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file
+format (OBJ)) or directly be generated using procedural mesh generation.
+
+The nodes are always part of a graph, hence the name node graph, and are
+therefore typically connected by edges. This means that the graph gets evaluated
+recursively by its nodes, starting with the root node within the root scene.
+However, the goal is to have OpenGL shading language (GLSL) code at the end, independent of the node types.
+
+From this point of view it would make sense to let the user define shader
+code directly within a node (definition) and to simply evaluate this code, which
+adds a lot of (creative) freedom. The problem with this approach is though, that
+image and triangle based mesh nodes are not fully implementable by using shader
+code only. Instead they have specific requirements, which are only perform-able
+on the CPU (e.g. allocating buffer objects).
+
+When thinking of nodes used for solid modeling however, it may appear, that they
+may be evaluated directly, without the need for pre-processing, as they are
+fully implementable using shader code only. This is kind of misleading however
+as each node has its own definition which has to be added to shader and this
+definition is then used in a mapping function to compose the scene. This would
+mean to add a definition of a node over and over again, when spawning multiple
+instances of the same node type, which results in overhead bloating the shader.
+It is therefore necessary to pre-process solid modeling nodes too, exactly as
+triangle mesh based and image nodes, for being able to use multiple instances of
+the same node type within a scene while having the definition added only once.
+
+All of these thoughts sum up in one central question for the implementation:
+Shall objects be predefined within the code (and therefore only nodes accepted
+whose type and sub type match those of predefined nodes) or shall all objects be
+defined externally using files?
+
+This is a question which is not that easy to answer. Both methods have their
+advantages and disadvantages. Pre-defining nodes within the code minimizes
+unexpected behavior of the application. Only known and well-defined nodes are
+processed.
+
+But what if someone would like to have a new node type which is not yet defined?
+The node type has to be implemented first. As Python is used for the editor
+application, this is not really a problem as the code is interpreted each time
+and is therefore not being compiled. Nevertheless such changes follow a certain
+process, such as making the actual changes within the code, reviewing and
+checking-in the code and so on, which the user normally does not want to be
+bothered with. Furthermore, when thinking about the player application, the
+problem of the necessity to recompile the code is definitively given. The player
+will be implemented in C, as there is the need for performance, which Python may
+not fulfill satisfactorily.
+
+Considering these aspects, the external definition of nodes is chosen. This may
+result in nodes which cannot be evaluated or which have unwanted effects. As it
+is (most likely) in the users best interest to create (for his taste) appealing
+real time animations, it can be assumed, that the user will try avoiding to
+create such nodes or quickly correct faulty nodes or simply does not use such
+nodes.
+
+Now, having chosen how to implement nodes, let us define what a node actually
+is. As a node may be reference by other nodes, it must be uniquely identifiable
+and must therefore have a globally unique identifier. Concerning the visual
+representation, a node shall have a name as well as a description.
+
+Each node can have multiple inputs and at least one output. The inputs may be
+either be atomic types (which have to be defined) or references to other nodes.
+The same applies to the outputs.
+
+A node shall be able to have one or more parts. A part typically contains the
+"body" of the node in terms of code and represents therefore the code-wise
+implementation of the node. A part can be processed when evaluating the node.
+
+Furthermore a node may contain children, child-nodes, which are actually
+references to other nodes combined with properties such as a name, states and so
+on.
+
+Each node can have multiple connections. A connection is composed of an input
+plus a reference to a part of that input as well as an output and a reference to
+a part of that output. The input respectively the output may be zero, what means
+that the part of the input or output is internal. Or, a bit more formal:
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap48}\raggedright\small
+\NWtarget{nuweb40}{} $\langle\,${\itshape Connections between nodes in EBNF notation}\nobreak\ {\footnotesize {40}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@input = internal input | external input@\\
+\mbox{}\lstinline@internal input = zero reference, part reference@\\
+\mbox{}\lstinline@external input = node reference, part reference@\\
+\mbox{}\lstinline@zero reference = "0"@\\
+\mbox{}\lstinline@node reference = "uuid4"@\\
+\mbox{}\lstinline@part reference = "uuid4"@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+% Reference to a node X + Reference to /output/ A of node X.
+% or
+% No reference to another node + Reference to an /input/ of the current node.
+%
+% Output:
+% Reference to a node Y + Reference to /input/ B of node Y.
+% or
+% No reference to another node + Reference to an /output/ or to /part/ of the
+% current node.
+
+Recapitulating the above made thoughts, a node is essentially composed by the
+following elements:
+
+\begin{table*}\centering
+  \ra{1.3}
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \toprule
+    Component & Description \\
+    \hline
+    ID & A global unique identifier
+         (UUID~\footnote{https://docs.python.org/3/library/uuid.html}) \\
+    Name & The name of the node, e.g. "Cube". \\
+    Description & A description of the node's purpose. \\
+    Inputs & A list of the node's inputs. The inputs may either be parameters
+             (which are atomic types such as float values or text input) or
+             references to other nodes. \\
+    Outputs & A list of the node's outputs. The outputs may also either be
+              parameters or references to other nodes. \\
+    Parts & Defines parts that may be processed when evaluating the node.
+            Contains code which can be interpreted directly. \\
+    Nodes & The children a node has (child nodes). These entries are
+            references to other nodes only. \\
+    Connections & A list of connections of the node's inputs and outputs.
+
+                  Each connection is composed by two parts: A reference to another
+                  node and a reference to an input or an output of that node. Is
+                  the reference not set, that is, its value is zero, this means
+                  that the connection is internal. \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}
+
+The inputs and outputs may be parameters of an atomic type, as stated above. This
+seems like a good point to define the atomic types the system will have:
+
+\begin{itemize}
+  \item{Generic}
+  \item{Float}
+  \item{Text}
+  \item{Scene}
+  \item{Image}
+  \item{Dynamic}
+  \item{Mesh}
+\end{itemize}
+
+As these atomic types are the foundation of all other nodes, the system must
+ensure, that they are initialized before all other nodes. Before being able to
+create the atomic types there must be classes defining them.
+
+For identification of the atomic types, an enumerator is used. Python provides
+the \verb+enum+ module, which provides a convenient interface for using
+enumerations\footnote{https://docs.python.org/3/library/enum.html}.
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap49}\raggedright\small
+\NWtarget{nuweb41}{} $\langle\,${\itshape Node type declarations}\nobreak\ {\footnotesize {41}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@class NodeType(enum.Enum):@\\
+\mbox{}\lstinline@    """Atomic types which a parameter may be made of."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    GENERIC = 0@\\
+\mbox{}\lstinline@    FLOAT   = 1@\\
+\mbox{}\lstinline@    TEXT    = 2@\\
+\mbox{}\lstinline@    SCENE   = 3@\\
+\mbox{}\lstinline@    IMAGE   = 4@\\
+\mbox{}\lstinline@    DYNAMIC = 5@\\
+\mbox{}\lstinline@    MESH    = 6@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb48c}{48c}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+Now, having identifiers for the atomic types available, the atomic types
+themselves can be implemented. The atomic types will be used for defining
+various properties of a node and are therefore its parameters.
+
+Each node may contain one or more parameters as inputs and one parameter as
+output. Each parameter will lead back to its atomic type by referencing the
+unique identifier of the atomic type. For being able to distinguish multiple
+parameters using the same atomic type, it is necessary that each instance of an
+atomic type has its own identifier in form of an instance identifier
+(instance ID).
+
+As the word atomic in atomic type indicates, these types are atomic, meaning
+there only exists one explicit instance per atomic type.
 % -*- mode: latex; coding: utf-8 -*-
 
 \section{Work log}
@@ -1433,6 +3169,11 @@ development of the applications' main routine.
   chapter about node implementation according to the before made thoughts,
   begin implementing the node graph structure, keep the work log up to date.
 \end{loggentry}
+\section{Test cases}
+\label{sec:test-cases}
+
+\blindtext{}
+
 \section{Requirements}
 \label{sec:requirements}
 % 
@@ -1529,8 +3270,8 @@ of name-spaces is intended.
 \label{sec:code-fragments}
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap15}\raggedright\small
-\NWtarget{nuweb21a}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {21a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap50}\raggedright\small
+\NWtarget{nuweb44}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {44}}$\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@#!/usr/bin/python@\\
@@ -1544,7 +3285,7 @@ of name-spaces is intended.
 \mbox{}\lstinline@# Project imports@\\
 \mbox{}\lstinline@from qde.editor.application import application@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize \NWlink{nuweb14}{14}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize \NWlink{nuweb15a}{15a}}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -1556,8 +3297,8 @@ of name-spaces is intended.
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap16}\raggedright\small
-\NWtarget{nuweb21b}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {21b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap51}\raggedright\small
+\NWtarget{nuweb45a}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {45a}}$\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@#!/usr/bin/python@\\
@@ -1566,14 +3307,19 @@ of name-spaces is intended.
 \mbox{}\lstinline@"""Main application module for the QDE editor."""@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@import logging@\\
+\mbox{}\lstinline@import logging.config@\\
+\mbox{}\lstinline@import os@\\
+\mbox{}\lstinline@import json@\\
 \mbox{}\lstinline@from PyQt5 import QtGui@\\
 \mbox{}\lstinline@from PyQt5 import QtWidgets@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@# Project imports@\\
 \mbox{}\lstinline@from qde.editor.gui import main_window as qde_main_window@\\
+\mbox{}\lstinline@from qde.editor.application import scene_graph@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize \NWlink{nuweb15a}{15a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize \NWlink{nuweb15b}{15b}}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -1585,8 +3331,8 @@ of name-spaces is intended.
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap17}\raggedright\small
-\NWtarget{nuweb21c}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {21c}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap52}\raggedright\small
+\NWtarget{nuweb45b}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {45b}}$\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 \mbox{}\lstinline@#!/usr/bin/python@\\
@@ -1599,9 +3345,269 @@ of name-spaces is intended.
 \mbox{}\lstinline@from PyQt5 import QtWidgets@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.gui import scene as guiscene@\\
 \mbox{}\lstinline@@\\
 \mbox{}\lstinline@@\\
-\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize \NWlink{nuweb16b}{16b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize \NWlink{nuweb16c}{16c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap53}\raggedright\small
+\NWtarget{nuweb45c}{} \verb@"../src/qde/editor/domain/scene.py"@\nobreak\ {\footnotesize {45c}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Module holding scene related aspects concerning the domain layer. """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import Qt@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene model declarations}\nobreak\ {\footnotesize \NWlink{nuweb20a}{20a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap54}\raggedright\small
+\NWtarget{nuweb46a}{} \verb@"../src/qde/editor/gui_domain/scene.py"@\nobreak\ {\footnotesize {46a}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Module holding scene related aspects concerning the gui_domain layer. """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import Qt@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene view model declarations}\nobreak\ {\footnotesize \NWlink{nuweb21a}{21a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene graph view model declarations}\nobreak\ {\footnotesize ?}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap55}\raggedright\small
+\NWtarget{nuweb46b}{} \verb@"../src/qde/editor/application/scene_graph.py"@\nobreak\ {\footnotesize {46b}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Module holding scene graph related aspects concerning the application layer.@\\
+\mbox{}\lstinline@"""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.domain     import scene as domain_scene@\\
+\mbox{}\lstinline@from qde.editor.gui_domain import scene as guidomain_scene@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene graph controller declarations}\nobreak\ {\footnotesize \NWlink{nuweb22a}{22a}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap56}\raggedright\small
+\NWtarget{nuweb46c}{} \verb@"../src/qde/editor/gui/scene.py"@\nobreak\ {\footnotesize {46c}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@""" Module holding scene related aspects concerning the graphical user interface layer.@\\
+\mbox{}\lstinline@"""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import Qt@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@from PyQt5 import QtWidgets@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.foundation import common@\\
+\mbox{}\lstinline@from qde.editor.gui_domain import scene@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Scene graph view declarations}\nobreak\ {\footnotesize \NWlink{nuweb29b}{29b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
+\NWtarget{nuweb47}{} \verb@"../logging.json"@\nobreak\ {\footnotesize {47}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@{@\\
+\mbox{}\lstinline@    "version": 1,@\\
+\mbox{}\lstinline@    "disable_existing_loggers": false,@\\
+\mbox{}\lstinline@    "formatters": {@\\
+\mbox{}\lstinline@        "simple": {@\\
+\mbox{}\lstinline@            "format": "%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s"@\\
+\mbox{}\lstinline@        }@\\
+\mbox{}\lstinline@    },@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    "handlers": {@\\
+\mbox{}\lstinline@        "console": {@\\
+\mbox{}\lstinline@            "class": "logging.StreamHandler",@\\
+\mbox{}\lstinline@            "level": "DEBUG",@\\
+\mbox{}\lstinline@            "formatter": "simple",@\\
+\mbox{}\lstinline@            "stream": "ext://sys.stdout"@\\
+\mbox{}\lstinline@        },@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@        "info_file_handler": {@\\
+\mbox{}\lstinline@            "class": "logging.handlers.RotatingFileHandler",@\\
+\mbox{}\lstinline@            "level": "INFO",@\\
+\mbox{}\lstinline@            "formatter": "simple",@\\
+\mbox{}\lstinline@            "filename": "info.log",@\\
+\mbox{}\lstinline@            "maxBytes": 10485760,@\\
+\mbox{}\lstinline@            "backupCount": 20,@\\
+\mbox{}\lstinline@            "encoding": "utf8"@\\
+\mbox{}\lstinline@        },@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@        "error_file_handler": {@\\
+\mbox{}\lstinline@            "class": "logging.handlers.RotatingFileHandler",@\\
+\mbox{}\lstinline@            "level": "ERROR",@\\
+\mbox{}\lstinline@            "formatter": "simple",@\\
+\mbox{}\lstinline@            "filename": "errors.log",@\\
+\mbox{}\lstinline@            "maxBytes": 10485760,@\\
+\mbox{}\lstinline@            "backupCount": 20,@\\
+\mbox{}\lstinline@            "encoding": "utf8"@\\
+\mbox{}\lstinline@        }@\\
+\mbox{}\lstinline@    },@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    "root": {@\\
+\mbox{}\lstinline@        "level": "DEBUG",@\\
+\mbox{}\lstinline@        "handlers": ["console", "info_file_handler", "error_file_handler"],@\\
+\mbox{}\lstinline@        "propagate": "no"@\\
+\mbox{}\lstinline@    }@\\
+\mbox{}\lstinline@}@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
+\NWtarget{nuweb48a}{} \verb@"../src/qde/editor/foundation/common.py"@\nobreak\ {\footnotesize {48a}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@#!/usr/bin/python@\\
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@"""Module holding common helper methods."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@from PyQt5 import Qt@\\
+\mbox{}\lstinline@from PyQt5 import QtCore@\\
+\mbox{}\lstinline@from PyQt5 import QtWidgets@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@from qde.editor.gui_domain import scene@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@def with_logger(cls):@\\
+\mbox{}\lstinline@    """Add a logger instance (using a stream handler) to the given class.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :param cls: the class which the logger shall be added to.@\\
+\mbox{}\lstinline@    :type  cls: a class of type cls.@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    :return: the class with the logger instance added.@\\
+\mbox{}\lstinline@    :rtype:  a class of type cls.@\\
+\mbox{}\lstinline@    """@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize \NWlink{nuweb37b}{37b}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@    @\hbox{$\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize \NWlink{nuweb37c}{37c}}$\,\rangle$}\lstinline@@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap59}\raggedright\small
+\NWtarget{nuweb48b}{} $\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize {48b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@{\tt @}\lstinline@common.with_logger@\\
+\mbox{}\lstinline@@{\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb29b}{29b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap60}\raggedright\small
+\NWtarget{nuweb48c}{} \verb@"../src/qde/editor/foundation/type.py"@\nobreak\ {\footnotesize {48c}}$\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+\mbox{}\lstinline@# -*- coding: utf-8 -*-@\\
+\mbox{}\lstinline@"""Module for type-specific aspects."""@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# System imports@\\
+\mbox{}\lstinline@import enum@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@# Project imports@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\\
+\mbox{}\lstinline@@\hbox{$\langle\,${\itshape Node type declarations}\nobreak\ {\footnotesize \NWlink{nuweb41}{41}}$\,\rangle$}\lstinline@@\\
 \mbox{}\lstinline@@{\NWsep}
 \end{list}
 \vspace{-1.5ex}
