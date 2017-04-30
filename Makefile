@@ -24,8 +24,8 @@ htmldoc: apidoc
 ide:
 	emacs doc/index.org &
 
-pdf: tex
-	latexmk --shell-escape -pdf -xelatex doc/index.tex
+pdf:
+	make -C doc/ build-doc
 
 run-editor: clean-cache clear-screen
 	python src/editor.py
