@@ -1,4 +1,4 @@
-.PHONY: apidoc clean clean-cache htmldoc pdf run-editor src tex
+.PHONY: apidoc clean clean-cache doc htmldoc pdf run-editor src tex
 
 apidoc:
 	sphinx-apidoc -f -o doc/source/ src/
@@ -13,6 +13,9 @@ clean-cache:
 
 clear-screen:
 	@clear
+
+doc:
+	make -C doc/ build-doc
 
 htmldoc: apidoc
 	make -C doc html
@@ -31,4 +34,4 @@ src:
 	make -C doc src
 
 tex:
-	emacs --batch -l /Users/so/repos/orgmk/lisp/org-latex-classes.el -l org doc/index.org -f org-latex-export-to-latex --kill
+	make -C doc/ doc
