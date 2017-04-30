@@ -15,6 +15,27 @@ within a time span. A scene is then a composition of nodes, which are at the end
 of their evaluation nothing else as shader specific code which gets executed on
 the GPU.
 
+As this definition is rather abstract, it may be easier to define what shall be
+achieved in terms of content and then work towards this definition.
+
+A very basic definition of what shall be achieved is the following.
+
+It shall be possible to create an animated scene using the editor application.
+The scene shall be composed of two objects, a sphere and a cube. Additionally it
+shall have a camera as well as a point light.
+
+The camera shall be placed 5 units in height and 10 units in front of the center
+of the scene. The cube shall be placed in the middle of the scene, the sphere
+shall have an offset of 5 units to the right and 2 units in depth. The point
+light shall be placed 10 units above the center.
+
+Both objects shall have different materials: the cube shall have a dull surface
+of any color whereas the sphere shall have a glossy surface of any color.
+
+There shall be an animation of ten seconds duration. During this animation the
+sphere shall move towards the cube and they shall merge into a blob-like object.
+The camera shall move 5 units towards the two objects during this time.
+
 \todo[inline]{Scene: Composition of nodes. Define scene already here.}
 
 To achieve this overall goal while providing the user a user-friendly
@@ -106,13 +127,15 @@ being initialized.
 
 @d Main application declarations
 @{
+@@common.with_logger
 class Application(QtWidgets.QApplication):
     """Main application for QDE."""
 
+    @<Main application constructor@>
     @<Main application methods@>
 @}
 
-@d Main application methods
+@d Main application constructor
 @{
 def __init__(self, arguments):
     """Constructor.
@@ -124,8 +147,8 @@ def __init__(self, arguments):
 
     @<Set up internals for main application@>
     @<Set up components for main application@>
-    @<Connect components for main application@>
-
+    @<Add root node for main application@>
+    @<Set model for scene graph view@>
     self.main_window.show()
 @}
 
@@ -138,8 +161,7 @@ a display name.
 super(Application, self).__init__(arguments)
 self.setWindowIcon(QtGui.QIcon("assets/icons/im.png"))
 self.setApplicationName("QDE")
-self.setApplicationDisplayName("QDE")
-@}
+self.setApplicationDisplayName("QDE")@}
 
 The other two steps, setting up the components and connecting them can however
 not be done at this point, as there simply are no components available. A
@@ -159,6 +181,7 @@ interface, containing all the views of the components. Qt offers the class
 
 @d Main window declarations
 @{
+@@common.with_logger
 class MainWindow(QtWidgets.QMainWindow):
     """The main window class.
     Acts as main view for the QDE editor application.
@@ -227,10 +250,18 @@ The main window can now be set up by the main application controller, which also
 listens to the \verb=do_close= signal through the inherited \verb=quit= slot.
 
 @d Set up components for main application
+@{@<Set up controllers for main application@>
+@<Connect controllers for main application@>
+@<Set up main window for main application@>@}
+
+@d Set up main window for main application
 @{
 self.main_window = qde_main_window.MainWindow()
-self.main_window.do_close.connect(self.quit)
-@}
+@<Connect main window components@>@}
+
+@d Connect main window components
+@{
+self.main_window.do_close.connect(self.quit)@}
 
 The used view component for the main window, \verb+QMainWindow+, needs at least
 a central widget with a layout for being
@@ -297,12 +328,12 @@ def setup_ui(self):
     horizontal_layout.setObjectName('horizontal_layout')
     horizontal_layout.setContentsMargins(0, 0, 0, 0)
 
-    self.scene_graph_widget = guiscene.SceneGraphView()
-    self.scene_graph_widget.setObjectName('scene_graph')
-    self.scene_graph_widget.setMaximumWidth(300)
-    horizontal_layout.addWidget(self.scene_graph_widget)
+    self.scene_graph_view = guiscene.SceneGraphView()
+    self.scene_graph_view.setObjectName('scene_graph_view')
+    self.scene_graph_view.setMaximumWidth(300)
+    horizontal_layout.addWidget(self.scene_graph_view)
 
-    @<Set up node graph view in main window@>
+    @<Set up scene view in main window@>
     @<Set up parameter view in main window@>
     @<Set up render view in main window@>
 
@@ -313,9 +344,9 @@ def setup_ui(self):
      vertical_splitter = QtWidgets.QSplitter()
     vertical_splitter.setOrientation(QtCore.Qt.Vertical)
     vertical_splitter.addWidget(horizontal_splitter)
-    @<Add node graph to vertical splitter in main window@>
+    @<Add scene view to vertical splitter in main window@>
 
-     horizontal_layout.addWidget(vertical_splitter)
+    horizontal_layout.addWidget(vertical_splitter)
 @}
 
 All the above taken actions to lay out the main window change nothing in the
@@ -363,14 +394,22 @@ class SceneModel(object):
 @}
 
 At this point the only known fact is, that a scene is a composition of nodes,
-and therefore it holds its nodes as a list.
+and therefore it holds its nodes as a list. Additionally it holds a reference to
+its parent.
 
 @d Scene model methods
-@{# Python
-def __init__(self):
-    """Constructor."""
+@{
+def __init__(self, parent=None):
+    """Constructor.
 
+    :param parent: the parent scene of this scene. The parent is None if the
+                   current scene is the root scene.
+    :type parent: SceneModel
+    """
+
+    self.id_ = uuid.uuid4()
     self.nodes = []
+    self.parent = parent
 @}
 
 The counter part of the domain model is the view model. View models are used to
@@ -380,40 +419,45 @@ reference in terms of an attribute is used as interface, which may be changed
 later on.
 
 Concerning the user interface, a view model must fulfill the requirements posed
-by the user interface's corresponding component. In this case, the scene graph
-view model inherits from \verb+QObject+ as this base class already provides a
-tree structure, which fits the structure of the scene graph perfectly and
-therefore fulfills (part of) the requirements posed by the view.
+by the user interface's corresponding component. In this case, this are actually
+two components: the scene graph view as well as the scene view.
 
-@d Scene view model declarations
+It would therefore make sense the use one view model for both components, but
+this is not possible as the view model of the scene view, \verb+QGraphicsScene+,
+uses its own data model.
+
+Therefore \verb+QObject+ will be used for the scene graph view model and
+\verb+QGraphicsScene+ will be used for the scene view model.
+
+@d Scene graph view model declarations
 @{
-class SceneViewModel(QtCore.QObject):
+class SceneGraphViewModel(Qt.QObject):
     """View model representing scene graph items.
 
-    The SceneViewModel corresponds to an entry within the scene graph. It
-    is used by the QAbstractItemModel class and must therefore at least provide
-    a name and a row.
+    The SceneGraphViewModel corresponds to an entry within the scene graph. It is
+    used by the QAbstractItemModel class and must therefore at least provide a
+    name and a row.
     """
 
-    @<Scene view model signals@>
+    @<Scene graph view model signals@>
 
-    @<Scene view model constructor@>
+    @<Scene graph view model constructor@>
 
-    @<Scene view model methods@>
+    @<Scene graph view model methods@>
 
-    @<Scene view model slots@>
+    @<Scene graph view model slots@>
 @}
 
 In terms of the scene graph, the view model must provide at least a name and a
 row. In addition, as written above, it holds a reference to the domain model.
 
-@d Scene view model constructor
+@d Scene graph view model constructor
 @{
 def __init__(
         self,
         row,
         domain_object,
-        name=QtCore.QCoreApplication.translate('SceneViewModel', 'New scene'),
+        name=QtCore.QCoreApplication.translate('SceneGraphViewModel', 'New scene'),
         parent=None
 ):
     """Constructor.
@@ -427,10 +471,12 @@ def __init__(
     :type  name:          str
     :param parent:        The parent of the current view model within the scene
                           graph.
-    :type parent:         qde.editor.gui_domain.scene.SceneViewModel
+    :type parent:         qde.editor.gui_domain.scene.SceneGraphViewModel
     """
 
-    super(SceneViewModel, self).__init__(parent)
+    super(SceneGraphViewModel, self).__init__(parent)
+
+    self.id_ = domain_object.id_
     self.row  = row
     self.domain_object = domain_object
     self.name = name
@@ -456,6 +502,7 @@ for the scene graph controller.
 
 @d Scene graph controller declarations
 @{
+@@common.with_logger
 class SceneGraphController(QtCore.QAbstractItemModel):
     """The scene graph controller.
     A controller for managing the scene graph by adding, editing and removing
@@ -464,22 +511,24 @@ class SceneGraphController(QtCore.QAbstractItemModel):
 
     @<Scene graph controller signals@>
 
+    @<Scene graph controller constructor@>
     @<Scene graph controller methods@>
 
     @<Scene graph controller slots@>
 @}
 
 As at this point the functionality of the scene graph controller is not fully
-known, the constructor simply initializes its parent class.
+known, the constructor simply initializes its parent class and an empty list of
+scenes.
 
-@d Scene graph controller methods
+@d Scene graph controller constructor
 @{
 def __init__(self, parent=None):
     """Constructor.
 
     :param parent: The parent of the current view model within the scene
                     graph.
-    :type parent:  qde.editor.gui_domain.scene.SceneViewModel
+    :type parent:  qde.editor.gui_domain.scene.SceneGraphViewModel
     """
 
     super(SceneGraphController, self).__init__(parent)
@@ -489,40 +538,55 @@ As the scene graph controller holds and manages the data, it needs to have at
 least a root node. As the controller manages both, domain models and the view
 models, it needs to create both models.
 
+Due to the dependencies of other components this cannot be done within the
+constructor, as components dependening on the scene graph controller may not be
+listening to its signals at this point. Therefore this is done in a separate
+method called \verb+add_root_node+.
+
+@d Scene graph controller add root node
+@{
+def add_root_node(self):
+    """Add a root node to the data structure.
+    """
+
+    if self.root_node is None:
+        root_node = domain_scene.SceneModel()
+        self.view_root_node = guidomain_scene.SceneGraphViewModel(
+            row=0,
+            domain_object=root_node,
+            name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
+        )
+        self.do_add_scene.emit(root_node)
+        self.layoutChanged.emit()
+        self.logger.debug("Added root node")
+    else:
+        self.logger.warn("Not (re-) adding root node, already present!")
+@}
 @d Scene graph controller methods
 @{
-    self.root_node = domain_scene.SceneModel()
-    self.view_root_node = guidomain_scene.SceneViewModel(
-        row=0,
-        domain_object=self.root_node,
-        name=QtCore.QCoreApplication.translate(__class__.__name__, 'Root scene')
-    )
+@<Scene graph controller add root node@>
 @}
 
-Whenever a scene is added, the item model needs to be informed for
-updating the view. This happens by emitting the \verb+rowsInserted+ signal,
-which is already given by the \verb+QAbstractItemModel+ class. Therefore the
-signal must also be emitted when the root node is added.
+% TODO
+The root scene can then be added by the main application, when all components
+are set up properly.
 
-@d Scene graph controller methods
-@{
-    self.rowsInserted.emit(QtCore.QModelIndex(), 0, 1)
-@}
-
-% TODO: Add signal to inform scene graph controller about newly created root
-%       scene.
+@d Add root node for main application
+@{self.scene_graph_controller.add_root_node()@}
 
 The scene graph controller must also provide the header data, which is used to
 display the header within the view (due to the usage of the Qt view
 model\todo{Add reference to Qts view model}). As header data the name of the
 scenes as well as the number of nodes a scene contains shall be displayed.
 
-@d Scene graph controller methods
+@d Scene graph controller constructor
 @{
     self.header_data = [
         QtCore.QCoreApplication.translate(__class__.__name__, 'Name'),
         QtCore.QCoreApplication.translate(__class__.__name__, '# Nodes')
     ]
+    self.root_node = None
+    self.view_root_node = None
 @}
 
 % TODO: Check if needed
@@ -559,18 +623,27 @@ def index(self, row, column, parent=QtCore.QModelIndex()):
     :rtype: QtCore.QModelIndex
     """
 
-    # If the given parent (index) is not valid, create a new index based on the
-    # currently set root node
     if not parent.isValid():
+        self.logger.debug((
+            "Getting index for row {0}, col {1}, root node"
+        ).format(row, column))
         return self.createIndex(row, column, self.view_root_node)
 
-    # The internal pointer of the the parent (index) returns a scene graph view
-    # model
     parent_node = parent.internalPointer()
+    self.logger.debug((
+        "Getting index for row {0}, col {1}, parent {2}. Children: {3}"
+    ).format(row, column, parent_node, len(parent_node.children())))
     child_nodes = parent_node.children()
 
-    return self.createIndex(row, column, child_nodes[row])
-@}
+    # It may happen, that the index is called at the same time as a node is
+    # being deleted respectively was deleted. In this case an invalid index is
+    # returned.
+    try:
+        child_node  = child_nodes[row]
+        return self.createIndex(row, column, child_node)
+
+    except IndexError:
+        return QtCore.QModelIndex()@}
 
 The method \verb+parent+ returns the parent item of an item identified by a
 provided index. If that index is invalid, an invalid index is returned as well.
@@ -589,16 +662,21 @@ def parent(self, model_index):
     :rtype: QtCore.QModelIndex
     """
 
+    # self.logger.debug("Getting parent")
+
     if not model_index.isValid():
+        # self.logger.debug("No valid index for parent")
         return QtCore.QModelIndex()
 
     # The internal pointer of the the model index returns a scene graph view
     # model.
     node = model_index.internalPointer()
-    if node.parent() is None:
-        return QtCore.QModelIndex()
-    else:
+    if node and node.parent() is not None:
+        # self.logger.debug("Index for parent")
         return self.createIndex(node.parent().row, 0, node.parent())
+    else:
+        # self.logger.debug("Index for root")
+        return QtCore.QModelIndex()
 @}
 
 Implementing the \verb+columnCount+ and \verb+rowCount+ methods is straight
@@ -618,10 +696,13 @@ def columnCount(self, parent):
     :rtype:  int
     """
 
-    return len(self.header_data)
+    column_count = len(self.header_data) - 1
+    self.logger.debug("Getting column count: %s", column_count)
+
+    return column_count
 @}
 
-The method \verb+rowCount+ returns the number of children for a given parent
+The method \verb+rowCount+ returns the number of nodes for a given parent
 item (identified by its index within the data model).
 
 @d Scene graph controller methods
@@ -638,13 +719,21 @@ def rowCount(self, parent):
     """
 
     if not parent.isValid():
-        return 1
+        self.logger.debug("Parent is not valid")
+        row_count = 1
+    else:
+        # Get the actual object stored by the parent. In this case it is a
+        # SceneGraphViewModel.
+        node = parent.internalPointer()
 
-    # Get the actual object stored by the parent. In this case it is a
-    # SceneViewModel.
-    node = parent.internalPointer()
+        if node is None:
+            self.logger.debug("Parent (node) is not valid")
+            row_count = 1
+        else:
+            row_count = len(node.children())
 
-    return len(node.children())
+    self.logger.debug("Getting row count: %s", row_count)
+    return row_count
 @}
 
 The last method, that has to be implemented due to the usage of
@@ -676,10 +765,15 @@ def data(self, model_index, role=QtCore.Qt.DisplayRole):
     """
 
     if not model_index.isValid():
+        self.logger.debug("Model index is not valid")
         return None
 
-    # The internal pointer of the model index returns a scene view model.
+    # The internal pointer of the model index returns a scene graph view model.
     node = model_index.internalPointer()
+
+    if node is None:
+        self.logger.debug("Node is not valid")
+        return None
 
     if role == QtCore.Qt.DisplayRole:
         # Return either the name of the scene or its number of nodes.
@@ -733,44 +827,44 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
 
 One thing, that may stand out, is, that the above defined \verb+data+ method
 returns the number of graph nodes within a scene by accessing the
-\verb+node_count+ property of the \textit{scene view model}.
+\verb+node_count+ property of the \textit{scene graph view model}.
 
-The \textit{scene view model} does therefore need to keep track of the nodes it
+The \textit{scene graph view model} does therefore need to keep track of the nodes it
 contains, in form of a list, analogous to the domain model.
 
 It does not make sense however to use the list of nodes from the domain model,
 as the view model will hold references to graphical objects where as the domain
-model holds only pure data objects.
+model holds only pure data objects. Therefore it is necessary, that the scene
+view model keeps track of its nodes separately.
 
-Due to the inheritance from \verb+QObject+, it is not necessary to explicitly
-implement the nodes of a scene as a list, instead it is already given by the \verb+children+ method.
+@d Scene graph view model constructor
+@{
+    self.nodes = []
+@}
 
 The method \verb+node_count+ then simply returns the length of the node list.
 
-@d Scene view model methods
+@d Scene graph view model methods
 @{
 @@property
 def node_count(self):
-    """Return the number of nodes, that this scene contains."""
+    """Return the number of nodes that this scene contains."""
 
-    return len(self.children())
+    return len(self.nodes)
 @}
 
-
 % The object \verb+node+ is in this case a scene graph view model, which holds a
-% reference to scene view model. This may be confusing at first, as they seem very
+% reference to scene graph view model. This may be confusing at first, as they seem very
 % similar. But as stated before, view models are used to visually represent
 % something within the graphical user interface. Therefore the \textit{scene graph
 % view model} stands for an entry within the scene graph where as the
-% \textit{scene view model} represents a
-
+% \textit{scene graph view model} represents a
 
 The scene graph controller can now be set up by the main application controller.
 
-@d Set up components for main application
+@d Set up controllers for main application
 @{
-self.scene_graph_controller = scene_graph.SceneGraphController(self)
-@}
+self.scene_graph_controller = scene.SceneGraphController(self)@}
 
 At this point data structures in terms of a (data-) model and a view model
 concerning the scene graph are implemented. Further a controller for handling
@@ -819,14 +913,14 @@ def __init__(self, parent=None):
 
 For being able to display anything, the scene graph view needs a controller to
 work with. In terms of Qt, the controller is called a model, as due its
-model/view architecture.
+model/view architecture. This model may although not be set too early, as
+otherwise problems arise. It may only then be added, when the depending
+components are properly initialized, e.g. when the root node has been added.
 
-@d Connect components for main application
-@{
-self.main_window.scene_graph_widget.setModel(
+@d Set model for scene graph view
+@{self.main_window.scene_graph_view.setModel(
     self.scene_graph_controller
-)
-@}
+)@}
 
 But scenes shall not only be displayed, instead it shall be possible to work
 with them. What shall be achieved, are three things: Adding and removing scenes,
@@ -838,9 +932,12 @@ the scene has changed.
 
 Through the \verb+selectionChanged+ signal the scene graph view already provides
 a possibility to detect if another scene was selected. This signal emits an item
-selection in terms of model indices although. As this is very view- and
-model-specific, it would be easier for other components if the selected scene is
-emitted directly in terms of a view model.
+selection in terms of model indices although.
+
+As this is very view- and model-specific, it would be easier for other
+components if the selected scene is emitted directly. To emit the selected
+index of the currently selected scene directly, the slot
+\verb+on_tree_item_selected+ is introduced.
 
 @d Scene graph view slots
 @{
@@ -852,7 +949,7 @@ def on_tree_item_selected(self, selected, deselected):
     The previous selection (which may be empty) is specified by the deselected
     parameter, the new selection is specified by the selected paramater.
 
-    This method emits the selected scene graph item as scene view model.
+    This method emits the selected scene graph item as scene graph view model.
 
     :param selected: The new selection of scenes.
     :type  selected: QtCore.QModelIndex
@@ -862,18 +959,16 @@ def on_tree_item_selected(self, selected, deselected):
 
     selected_item = selected.first()
     selected_index = selected_item.indexes()[0]
-    selected_scene_graph_view_model = selected_index.internalPointer()
-    self.tree_item_selected.emit(selected_scene_graph_view_model)
-@}
+    self.do_select_item.emit(selected_index)
+    self.logger.debug("Tree item was selected: %s" % selected_index)@}
 
-But the \verb+on_tree_item_selected+ slot needs to be triggered as soon as the
-selection is changed. This is done by connecting the slot with the signal.
-
-The \verb+selectionChanged+ signal is however not directly accessible, it is
-only accessible through the selection model of scene graph view (which is given
-by the usage of \verb+QTreeView+). The selection model can although only be
-accessed when setting the data model of the view, which needs therefore to be
-expanded.
+The \verb+on_tree_item_selected+ slot needs to be triggered as soon as the
+selection is changed. This is done by connecting the slot with the
+\verb+selectionChanged+ signal. The \verb+selectionChanged+ signal is however
+not directly accessible, it is only accessible through the selection model of
+the scene graph view (which is given by the usage of \verb+QTreeView+). The
+selection model can although only be accessed when setting the data model of the
+view, which needs therefore to be expanded.
 
 @d Scene graph view methods
 @{
@@ -889,7 +984,7 @@ def setModel(self, model):
 
     super(SceneGraphView, self).setModel(model)
 
-    # Use a slot to emit the selected scene view model upon the selection of a
+    # Use a slot to emit the selected scene graph view model upon the selection of a
     # tree item
     selection_model = self.selectionModel()
     selection_model.selectionChanged.connect(
@@ -898,14 +993,14 @@ def setModel(self, model):
 
     # Set the index to the first node of the model
     self.setCurrentIndex(model.index(0, 0))
-@}
+    self.logger.debug("Root node selected")@}
 
-As stated above, \verb+on_tree_item_selected+ emits another signal containing a
-reference to a scene view model.
+As stated in the above code fragment, \verb+on_tree_item_selected+ emits another
+signal containing a reference to the currently selected scene.
 
 @d Scene graph view signals
 @{
-tree_item_selected = QtCore.pyqtSignal(scene.SceneViewModel)
+do_select_item = QtCore.pyqtSignal(QtCore.QModelIndex)
 @}
 
 In the same manner as the selection of an item was implemented, the adding and
@@ -939,7 +1034,7 @@ keyboard.
 @}
 
 Removal of a selected node shall be triggered upon the press of the
-\verb=delete= key on the keyboard.
+\verb+delete+ and the \verb+backspace+ key on the keyboard.
 
 @d Scene graph view constructor
 @{
@@ -948,6 +1043,7 @@ Removal of a selected node shall be triggered upon the press of the
     )
     remove_action = QtWidgets.QAction(remove_action_label, self)
     remove_action.setShortcut(Qt.QKeySequence('Delete'))
+    remove_action.setShortcut(Qt.QKeySequence('Backspace'))
     remove_action.setShortcutContext(QtCore.Qt.WidgetShortcut)
     remove_action.triggered.connect(self.on_tree_item_removed)
     self.addAction(remove_action)
@@ -955,7 +1051,7 @@ Removal of a selected node shall be triggered upon the press of the
 
 As can be seen in the two above listings, the \verb+triggered+ signals are
 connected with a corresponding slot. All these slots do is emitting another
-signal, but this time it contains a scene view model, which may be used by
+signal, but this time it contains a scene graph view model, which may be used by
 other components, instead of a model index.
 
 @d Scene graph view slots
@@ -966,7 +1062,7 @@ def on_new_tree_item(self):
     view.
 
     This method emits the selected scene graph item as new tree item in form of
-    a scene view model.
+    a scene graph view model.
     """
 
     selected_indexes = self.selectedIndexes()
@@ -997,40 +1093,58 @@ def on_tree_item_removed(self):
             self.do_remove_item.emit(selected_item)
             @<Scene graph view log tree item removed@>
         else:
-            print('Not removing root scene')
+            self.logger.warn("Root scene cannot be deleted")
     else:
-        print('No item selected')
+        self.logger.warn('No item selected for removal')
 @}
 
 One of the mentioned other components is the scene graph controller. He needs to
-be informed, so that he is able to manage the data model correspondingly.
+be informed whenever a scene was added, removed or selected, so that he is able to
+manage his data model correspondingly.
 
 @d Scene graph controller slots
 @{
 @@QtCore.pyqtSlot(QtCore.QModelIndex)
 def on_tree_item_added(self, selected_item):
+    # TODO: Document method.
+
     self.insertRows(0, 1, selected_item)
+    self.logger.debug("Added new scene")
 
 @@QtCore.pyqtSlot(QtCore.QModelIndex)
 def on_tree_item_removed(self, selected_item):
+    # TODO: Document method.
+
     if not selected_item.isValid():
-        print('selected scene not valid, not removing')
+        self.logger.warn("Selected scene is not valid, note removing")
         return False
 
     row = selected_item.row()
     parent = selected_item.parent()
     self.removeRows(row, 1, parent)
-@}
 
-Having the slots for adding and removing scene graph items implemented, the
-actual methods for these actions are still missing.
+@@QtCore.pyqtSlot(QtCore.QModelIndex)
+def on_tree_item_selected(self, selected_item):
+    # TODO: Document method.
+
+    if not selected_item.isValid():
+        self.logger.warn("Selected scene is not valid")
+        return False
+
+    selected_scene_view_model = selected_item.internalPointer()
+    selected_scene_domain_model  = selected_scene_view_model.domain_object
+    self.do_select_scene.emit(selected_scene_domain_model)@}
+
+Having the slots for adding, removing and selecting scene graph items
+implemented, the actual methods for adding and removing scenes,
+\verb+on_tree_item_added+ and \verb+on_tree_item_removed+, are still missing.
 
 When inserting a new scene graph item, actually a row must be inserted, as the
 data model (Qt's) is using rows to represent the data. At the same time the
-controller has to create and keep track of the domain model.
+controller has to keep track of the domain model.
 
 As can be seen in the implementation below, it is not necessary to add the
-created view model instance to a list of nodes, the usage of
+created model instances to a list of nodes, the usage of
 \verb+QAbstractItemModel+ keeps already track of this.
 
 @d Scene graph controller methods
@@ -1043,8 +1157,8 @@ def insertRows(self, row, count, parent=QtCore.QModelIndex()):
 
     parent_node = parent.internalPointer()
     self.beginInsertRows(parent, row, row + count - 1)
-    domain_model  = domain_scene.SceneModel()
-    view_model = guidomain_scene.SceneViewModel(
+    domain_model  = domain_scene.SceneModel(parent_node.domain_object)
+    view_model = guidomain_scene.SceneGraphViewModel(
         row=row,
         domain_object=domain_model,
         parent=parent_node
@@ -1065,42 +1179,52 @@ def removeRows(self, row, count, parent=QtCore.QModelIndex()):
     # TODO: Document method.
 
     if not parent.isValid():
+        self.logger.warn("Cannot remove rows, parent is invalid")
         return False
 
     self.beginRemoveRows(parent, row, row + count - 1)
+    parent_node = parent.internalPointer()
     node_index = parent.child(row, parent.column())
     node       = node_index.internalPointer()
     node.setParent(None)
-    # TODO: Still needed? parent_node.child_nodes.remove(node)
+    # TODO: parent_node.child_nodes.remove(node)
     self.endRemoveRows()
-    print('Remove rows')
+    self.logger.debug(
+        "Removed {0} rows starting from {1} for parent {2}. Children: {3}".format(
+            count, row, parent_node, len(parent_node.children())
+        )
+    )
 
     self.layoutChanged.emit()
-    self.do_remove_scene.emit(domain_model)
+    self.do_remove_scene.emit(node.domain_object)
 
     return True
 @}
 
 As before, the main application needs connect the components, in this case the
-scene graph view with the controller.
+scene graph view with the scene graph controller.
 
-@d Connect components for main application
+@d Connect main window components
 @{
-self.main_window.scene_graph_widget.do_add_item.connect(
+self.main_window.scene_graph_view.do_add_item.connect(
     self.scene_graph_controller.on_tree_item_added
 )
-self.main_window.scene_graph_widget.do_remove_item.connect(
+self.main_window.scene_graph_view.do_remove_item.connect(
     self.scene_graph_controller.on_tree_item_removed
 )
-@}
+self.main_window.scene_graph_view.do_select_item.connect(
+    self.scene_graph_controller.on_tree_item_selected
+)@}
 
 To inform other components, such as the node graph for example, the scene graph
-controller emits signals when a scene is being added or removed respectively.
+controller emits signals when a scene is being added, removed or selected
+respectively.
 
 @d Scene graph controller signals
 @{
 do_add_scene    = QtCore.pyqtSignal(domain_scene.SceneModel)
 do_remove_scene = QtCore.pyqtSignal(domain_scene.SceneModel)
+do_select_scene = QtCore.pyqtSignal(domain_scene.SceneModel)
 @}
 
 % TODO: EDIT MODELS
@@ -1109,7 +1233,6 @@ do_remove_scene = QtCore.pyqtSignal(domain_scene.SceneModel)
 % model, you must also implement setData(), and reimplement flags() to ensure that
 % ItemIsEditable is returned. You can also reimplement headerData() and
 % setHeaderData() to control the way the headers for your model are presented.''
-
 
 At this point it is possible to manage scenes in terms of adding and removing
 them. The scenes are added to (or removed from respectively) the graphical user
@@ -1191,8 +1314,7 @@ def setup_logging(self,
             config = json.load(f)
             logging.config.dictConfig(config)
     else:
-        logging.basicConfig(level=default_level)
-@}
+        logging.basicConfig(level=default_level)@}
 
 For not having only basic logging available, a logging configuration is defined.
 The logging configuration provides three handlers: a console handler, which logs
@@ -1203,6 +1325,11 @@ handlers are used.
 
 This configuration allows to get an arbitrarily named logger which uses that
 configuration.
+
+@d Set up internals for main application
+@{
+
+self.setup_logging()@}
 
 As stated before, logging shall be provided on a class basis. This has the
 consequence, that each class has to instantiate a logging instance. To prevent
@@ -1268,16 +1395,15 @@ self.logger.debug((
 ))
 @}
 
-Whenever the \textit{a} or the \textit{delete} key is being pressed now, when the scene graph
-view is focused, the corresponding log messages appear in the standard output,
-hence the console.
+Whenever the \textit{a} or the \textit{delete} key is being pressed now, when
+the scene graph view is focused, the corresponding log messages appear in the
+standard output, hence the console.
 
 Now, having the scene graph component as well as an interface to log messages
-throughout the application implemented, the next component may be approached. A
-very interesting aspect to face would be the rendering. But for being able to
-render something, there actually needs to exist something to render: nodes.
-Nodes are being represented within the node graph. So this is a good point to
-begin with the implementation of the node graph.
+throughout the application implemented, the next component may be approached.
+
+Scenes build the basis for the scene graph and the node graph as well. This is a
+good point to begin with the implementation of the node graph.
 
 \subsection{Node graph}
 \label{subsec:node-graph}
@@ -1350,7 +1476,8 @@ format (OBJ)) or directly be generated using procedural mesh generation.
 The nodes are always part of a graph, hence the name node graph, and are
 therefore typically connected by edges. This means that the graph gets evaluated
 recursively by its nodes, starting with the root node within the root scene.
-However, the goal is to have OpenGL shading language (GLSL) code at the end, independent of the node types.
+However, the goal is to have OpenGL shading language (GLSL) code at the end,
+independent of the node types.
 
 From this point of view it would make sense to let the user define shader
 code directly within a node (definition) and to simply evaluate this code, which
@@ -1361,7 +1488,7 @@ on the CPU (e.g. allocating buffer objects).
 
 When thinking of nodes used for solid modeling however, it may appear, that they
 may be evaluated directly, without the need for pre-processing, as they are
-fully implementable using shader code only. This is kind of misleading however
+fully implementable using shader code only. This is kind of misleading however,
 as each node has its own definition which has to be added to shader and this
 definition is then used in a mapping function to compose the scene. This would
 mean to add a definition of a node over and over again, when spawning multiple
@@ -1398,27 +1525,41 @@ real time animations, it can be assumed, that the user will try avoiding to
 create such nodes or quickly correct faulty nodes or simply does not use such
 nodes.
 
-Now, having chosen how to implement nodes, let us define what a node actually
-is. As a node may be reference by other nodes, it must be uniquely identifiable
-and must therefore have a globally unique identifier. Concerning the visual
-representation, a node shall have a name as well as a description.
+Now, having chosen how to implement nodes, it is important to define what a node
+actually is. As a node may be referenced by other nodes, it must be uniquely
+identifiable and must therefore have a globally unique identifier. Concerning
+the visual representation, a node shall have a name as well as a description.
 
 Each node can have multiple inputs and at least one output. The inputs may be
 either be atomic types (which have to be defined) or references to other nodes.
 The same applies to the outputs.
 
+A node consists also of a definition. In terms of implicit surfaces this
+section contains the actual definition of a node in terms of the implicit
+function. In terms of triangle based meshes this is the part where the mesh and
+all its prerequisites as vertex array buffers and vertex array objects are set
+up or used from a given context.
+
+In addition to a definition, a node contains an invocation part, which is the
+call of its defining function (coming from the definition mentioned just
+before) while respecing the parameters.
+
 A node shall be able to have one or more parts. A part typically contains the
-"body" of the node in terms of code and represents therefore the code-wise
+\enquote{body} of the node in terms of code and represents therefore the code-wise
 implementation of the node. A part can be processed when evaluating the node.
+This part of the node is mainly about evaluating inputs and passing them on to
+a shader.
 
 Furthermore a node may contain children, child-nodes, which are actually
 references to other nodes combined with properties such as a name, states and so
 on.
 
 Each node can have multiple connections. A connection is composed of an input
-plus a reference to a part of that input as well as an output and a reference to
-a part of that output. The input respectively the output may be zero, what means
-that the part of the input or output is internal. Or, a bit more formal:
+and an output plus a reference to a part.
+The input respectively the output may be zero, what means that the part of the
+input or output is internal.
+
+Or, a bit more formal:
 
 @d Connections between nodes in EBNF notation
 @{
@@ -1458,6 +1599,11 @@ following elements:
              references to other nodes. \\
     Outputs & A list of the node's outputs. The outputs may also either be
               parameters or references to other nodes. \\
+    Definitions & A list of the node's definitions. This may be an actual
+                 definition by a (shader-) function in terms of an implicit
+                 surface or prerequisites as vertex array buffers in terms of a
+                 triangle based mesh. \\
+    Invocation & A list of the node's invocations or calls respectively.\\
     Parts & Defines parts that may be processed when evaluating the node.
             Contains code which can be interpreted directly. \\
     Nodes & The children a node has (child nodes). These entries are
@@ -1487,7 +1633,7 @@ seems like a good point to define the atomic types the system will have:
 
 As these atomic types are the foundation of all other nodes, the system must
 ensure, that they are initialized before all other nodes. Before being able to
-create the atomic types there must be classes defining them.
+create instances of atomic types, there must be classes defining them.
 
 For identification of the atomic types, an enumerator is used. Python provides
 the \verb+enum+ module, which provides a convenient interface for using
@@ -1498,25 +1644,922 @@ enumerations\footnote{https://docs.python.org/3/library/enum.html}.
 class NodeType(enum.Enum):
     """Atomic types which a parameter may be made of."""
 
-    GENERIC = 0
-    FLOAT   = 1
-    TEXT    = 2
-    SCENE   = 3
-    IMAGE   = 4
-    DYNAMIC = 5
-    MESH    = 6
+    GENERIC  = 0
+    FLOAT    = 1
+    TEXT     = 2
+    SCENE    = 3
+    IMAGE    = 4
+    DYNAMIC  = 5
+    MESH     = 6
+    IMPLICIT = 7
 @}
 
 Now, having identifiers for the atomic types available, the atomic types
 themselves can be implemented. The atomic types will be used for defining
 various properties of a node and are therefore its parameters.
 
-Each node may contain one or more parameters as inputs and one parameter as
-output. Each parameter will lead back to its atomic type by referencing the
-unique identifier of the atomic type. For being able to distinguish multiple
-parameters using the same atomic type, it is necessary that each instance of an
-atomic type has its own identifier in form of an instance identifier
-(instance ID).
+Each node may contain one or more parameters as inputs and at least one
+parameter as output. Each parameter will lead back to its atomic type by
+referencing the unique identifier of the atomic type. For being able to
+distinguish multiple parameters using the same atomic type, it is necessary that
+each instance of an atomic type has its own identifier in form of an instance
+identifier (instance ID).
 
-As the word atomic in atomic type indicates, these types are atomic, meaning
-there only exists one explicit instance per atomic type.
+@d Parameter declarations
+@{
+class AtomicType(object):
+    """Represents an atomic type and is the basis for each node."""
+
+    def __init__(self, id_, type_):
+        """Constructor.
+
+        :param id_: the globally unique identifier of the atomic type.
+        :type  id_: uuid.uuid4
+        :param type_: the type of the atomic type, e.g. "float".
+        :type  type_: types.NodeType
+        """
+
+        self.id_   = id_
+        self.type_ = type_
+@}
+
+As the word atomic indicates, these types are atomic, meaning there only exists
+one explicit instance per type, which is therefore static.
+
+@d Parameter declarations
+@{
+class AtomicTypes(object):
+    """Creates and holds all atomic types of the system."""
+
+    Generic = AtomicType(
+        id_="54b20acc-5867-4535-861e-f461bdbf3bf3",
+        type_=types.NodeType.GENERIC
+    )
+@}
+
+Having the atomic types defined, nodes may now be defined.
+
+@d Node domain model declarations
+@{
+class Node(object):
+    """Represents a node."""
+
+    # Signals
+    @<Node domain model signals@>
+
+    @<Node domain model constructor@>
+
+    @<Node domain model methods@>
+@}
+
+@d Node domain model constructor
+@{
+def __init__(self, id_, name="New node"):
+    """Constructor.
+
+    :param id_: the globally unique identifier of the node.
+    :type  id_: uuid.uuid4
+    :param name: the name of the node.
+    :type  name: str
+    """
+
+    self.id_   = id_
+    self.name = name
+
+    self.definition = None
+    self.description = ""
+    self.parent = None
+    self.inupts = []
+    self.outputs = []
+    self.parts = []
+    self.nodes = []
+    self.connections = []
+@}
+
+While the details of a node are rather unclear at the moment, it is clear that
+a node needs to have a view model, which renders a node within a scene of the
+node graph.
+
+As Qt does not offer a graph view by default, it is necessary to implement such
+a graph view.
+
+The most obvious choice for this implementation is the
+\verb+QGraphicsView+ component, which displays the contents of a
+\verb+QGraphicsScene+, whereas \verb+QGraphicsScene+ manages \verb+QGraphicsObject+
+components.
+
+It is therefore obvious to use the \verb+QGraphicsObject+ component
+for representing graph nodes through a view model.
+
+@d Node view model declarations
+@{
+class NodeViewModel(Qt.QGraphicsObject):
+    """Class representing a single node within GUI."""
+
+    # Constants
+    WIDTH = 20
+    HEIGHT = 17
+
+    # Signals
+    @<Node view model signals@>
+
+    @<Node view model constructor@>
+
+    @<Node view model methods@>
+@}
+
+@d Node view model constructor
+@{
+def __init__(self, id_, domain_object, parent=None):
+    """Constructor.
+
+    :param id_: the globally unique identifier of the atomic type.
+    :type  id_: uuid.uuid4
+    :param domain_object: Reference to a scene model.
+    :type  domain_object: qde.editor.domain.scene.SceneModel
+    :param parent: The parent of the current view widget.
+    :type parent:  QtCore.QObject
+    """
+
+    super(NodeViewModel, self).__init__(parent)
+    self.id_ = id_
+    self.domain_object = domain_object
+
+    self.position = QPoint(0, 0)
+    self.width = 4
+@}
+
+To distinguish nodes, the name and the type of a node is used. It makes sense to
+access both attributes directly via the domain model instead of duplicating them.
+
+@d Node view model methods
+@{
+@@property
+def type_(self):
+    """Return the type of the node, determined by its domain model.
+
+    :return: the type of the node.
+    :rtype: types.NodeType
+    """
+
+    return self.domain_model.type_
+@}
+
+@d Node view model methods
+@{
+@@property
+def name(self):
+    """Return the name of the node, determined by its domain model.
+
+    :return: the name of the node.
+    :rtype: str
+    """
+
+    return self.domain_model.name
+@}
+
+However, the domain model does not provide access to its type at the moment. The
+type is directly derived from the primary output of a node. If a node has no
+outputs at all, its type is assumed to be generic.
+
+@d Node domain model methods
+@{
+    @@property
+    def type_(self):
+        """Return the type of the node, determined by its primary output.
+        If no primary output is given, it is assumed that the node is of
+        generic type."""
+
+        type_ = types.NodeType.GENERIC
+
+        if len(self.outputs) > 0:
+            type_ = self.outputs[0].type_
+
+        return type_
+@}
+
+Concerning the drawing of nodes (or painting, as Qt calls it) , each node type
+may be used multiple times. But instead of re-creating the same image
+representation over and over again, it makes sense to create it only once per
+node type. Qt provides \verb+QtPixmap+ and \verb+QtPixmapCache+ for this use case.
+
+@d Node view model methods
+@{
+def paint(self, painter, option, widget):
+    """Paint the node.
+
+    First a pixmap is loaded from cache if available, otherwise
+    a new pixmap gets created. If the current node is selected a
+    rectangle gets additionally drawn on it. Finally the name, the type
+    as well as the subtype gets written on the node.
+    """
+
+    @<Node view model methods paint@>
+@}
+
+Each node has a cache key assigned, which is used to identify that node.
+
+@d Node view model constructor
+@{
+    self.cache_key = None
+@}
+
+The cache key is composed of the type of the node, its status and whether it is
+selected or not.
+
+@d Node view model methods
+@{
+def create_cache_key(self):
+    """Create an attribute based cache key for finding and creating
+    pixmaps."""
+
+    return "{type_name}{status}{selected}".format(
+        type_name=self.type_,
+        status=self.status,
+        selected=self.isSelected(),
+    )
+@}
+
+As can be seen in the above code fragment, the status property of the node is
+used to create a cache key, but currently nodes do not have a status.
+
+It may make sense although to provide a status for each node, which allows to
+output eventual problems like a node not having required connections and so on.
+
+This status is added to the constructor of the domain model of a node.
+
+@d Node domain model constructor
+@{
+    self.status = flag.NodeStatus.OK
+@}
+
+Concerning the view model, again the status of the domain model is used as
+otherwise different states between user interface and domain model would be
+possible in the worst case.
+
+@d Node view model methods
+@{
+@@property
+def status(self):
+    """Return the current status of the node.
+
+    :return: the current status of the node.
+    :rtype: flag.NodeStatus
+    """
+
+    return self.domain_object.status
+@}
+
+Therefore it can now be checked, whether a node has a cache key or not. If it
+has no cache key, a new cache key is created.
+
+@d Node view model methods paint
+@{
+    if self.cache_key is None:
+        self.cache_key = self.create_cache_key()
+@}
+
+The cache key itself is then used to find a corresponding pixmap.
+
+@d Node view model methods paint
+@{
+    pixmap = Qt.QPixMapCache.find(self.cache_key)
+@}
+
+If no pixmap with the given cache key exists, a new pixmap is being created and
+added to the cache using the cache key created before.
+
+@d Node view model methods paint
+@{
+    if pixmap is None:
+        pixmap = self.create_pixmap()
+        Qt.QPixmapCache.insert(self.cache_key, pixmap)
+@}
+
+For actually displaying the nodes, another component is necessary: the scene
+view which is a graph consisting the nodes and edges.
+
+@d Scene view declarations
+@{
+@@common.with_logger
+class SceneView(Qt.QGraphicsView):
+    """Scene view widget.
+    A widget for displaying and managing scenes including their nodes and
+    connections between nodes."""
+
+    # Signals
+    @<Scene view signals@>
+
+    @<Scene view constructor@>
+    @<Scene view methods@>
+    @<Scene view slots@>
+@}
+
+@d Scene view constructor
+@{
+def __init__(self, parent=None):
+    """Constructor.
+
+    :param parent: the parent of this scene view.
+    :type parent: Qt.QObject
+    """
+
+    super(SceneView, self).__init__(parent)
+@}
+
+The scene view can now be set up by the main window and is then added to its
+vertical splitter.
+
+@d Set up scene view in main window
+@{
+self.scene_view = guiscene.SceneView()
+self.scene_view.setObjectName('scene_view')
+size_policy = QtWidgets.QSizePolicy(
+    QtWidgets.QSizePolicy.Expanding,
+    QtWidgets.QSizePolicy.Expanding
+)
+size_policy.setHorizontalStretch(2)
+size_policy.setVerticalStretch(0)
+size_policy.setHeightForWidth(self.scene_view.sizePolicy().hasHeightForWidth())
+self.scene_view.setSizePolicy(size_policy)
+self.scene_view.setMinimumSize(Qt.QSize(0, 0))
+self.scene_view.setAutoFillBackground(False)
+self.scene_view.setFrameShape(QtWidgets.QFrame.StyledPanel)
+self.scene_view.setFrameShadow(QtWidgets.QFrame.Sunken)
+self.scene_view.setLineWidth(1)
+self.scene_view.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+self.scene_view.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+brush = QtGui.QBrush(Qt.QColor(0, 0, 0, 255))
+brush.setStyle(QtCore.Qt.NoBrush)
+self.scene_view.setBackgroundBrush(brush)
+self.scene_view.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+self.scene_view.setDragMode(QtWidgets.QGraphicsView.RubberBandDrag)
+self.scene_view.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
+self.scene_view.setOptimizationFlags(QtWidgets.QGraphicsView.DontAdjustForAntialiasing)
+@}
+
+@d Add scene view to vertical splitter in main window
+@{
+vertical_splitter.addWidget(self.scene_view)
+@}
+
+At this point the scene view does not react whenever the scene is changed by the
+scene graph view. As before, the main application needs connect the components.
+
+As the scene graph view and the scene view have use both different view models,
+it would not make much sense to connect them directly. Instead it makes sense to
+connect the \verb+do_select_scene+ signal of the scene graph controller with the
+\verb+on_scene_changed+ slot of the scene controller as they both use the
+domain model of the scene.
+
+@d Connect controllers for main application
+@{self.scene_graph_controller.do_select_scene.connect(
+    self.scene_controller.on_scene_changed
+)@}
+
+The scene controller does not manage scene models directly, as the scene graph
+controller does. Instead it reacts on signals sent by the latter and manages
+its own scene view models.
+
+@d Connect controllers for main application
+@{
+self.scene_graph_controller.do_add_scene.connect(
+    self.scene_controller.on_scene_added
+)
+self.scene_graph_controller.do_remove_scene.connect(
+    self.scene_controller.on_scene_removed
+)@}
+
+@d Scene controller declarations
+@{
+@@common.with_logger
+class SceneController(Qt.QObject):
+    """The scene controller.
+
+    A controller for switching scenes and managing the nodes of a scene by
+    adding, editing and removing nodes to / from a scene.
+    """
+
+    # Signals
+    @<Scene controller signals@>
+
+    @<Scene controller constructor@>
+    @<Scene controller methods@>
+
+    @<Scene controller slots@>
+@}
+
+@d Set up controllers for main application
+@{
+self.scene_controller = scene.SceneController(self)@}
+
+The scene view models are of type \verb+QGraphicsScene+ and are used to manage
+nodes. They represent a certain scene of the scene graph and hold the nodes of
+that scene.
+
+@d Scene view model declarations
+@{
+@@common.with_logger
+class SceneViewModel(Qt.QGraphicsScene):
+    """Scene view model.
+    Represents a certain scene from the scene graph and is used to manage the
+    nodes of that scene."""
+
+    # Constants
+    WIDTH = 15
+    HEIGHT = 15
+
+    # Signals
+    @<Scene view model signals@>
+
+    @<Scene view model constructor@>
+    @<Scene view model methods@>
+@}
+
+@d Scene view model constructor
+@{
+def __init__(self, domain_object, parent=None):
+   """Constructor.
+
+   :param domain_object: Reference to a scene model.
+   :type  domain_object: qde.editor.domain.scene.SceneModel
+   :param parent:        The parent of the current view model.
+   :type parent:         qde.editor.gui_domain.scene.SceneViewModel
+   """
+
+   super(SceneViewModel, self).__init__(parent)
+
+   self.id_ = domain_object.id_
+   self.nodes = []
+
+   self.width = SceneViewModel.WIDTH * 20
+   self.height = SceneViewModel.HEIGHT * 17
+
+   self.setSceneRect(0, 0, self.width, self.height)
+   self.setItemIndexMethod(self.NoIndex)
+@}
+
+For being able to distinguish different scenes, their identifier will be drawn
+at the top left position.
+
+@d Scene view model methods
+@{def drawBackground(self, painter, rect):
+    # io = Qt.QGraphicsTextItem()
+    # io.setPos(0, 0)
+    # io.setDefaultTextColor(Qt.QColor(102, 102, 102))
+    # io.setPlainText(
+    #     "Scene: {0}".format(str(self))
+    # )
+    # self.addItem(io)
+
+    scene_rect = self.sceneRect()
+    text_rect = QtCore.QRectF(scene_rect.left()   + 4,
+                              scene_rect.top()    + 4,
+                              scene_rect.width()  - 4,
+                              scene_rect.height() - 4)
+    message = str(self)
+    font = painter.font()
+    font.setBold(True)
+    font.setPointSize(14)
+    painter.setFont(font)
+    painter.setPen(QtCore.Qt.lightGray)
+    painter.drawText(text_rect.translated(2, 2), message)
+    painter.setPen(QtCore.Qt.black)
+    painter.drawText(text_rect, message)@}
+
+As the scene controller does not directly manages scenes, it has to react upon
+the signals sent by the scene graph controller.
+
+Additionally it needs to keep track of the currently selected scene, by holding
+a reference to that. The common identifier is the identifier of the domain
+model.
+
+@d Scene controller constructor
+@{
+def __init__(self, parent):
+    """Constructor.
+
+    :param parent: the parent of this scene controller.
+    :type parent: Qt.QObject
+    """
+
+    super(SceneController, self).__init__(parent)
+
+    self.scenes = {}
+    self.current_scene = None
+@}
+
+Whenever a new scene is created, the scene controller needs to create a scene of
+type \verb+QGraphicsScene+ and needs to keep track of that scene.
+
+@d Scene controller slots
+@{
+@@QtCore.pyqtSlot(domain_scene.SceneModel)
+def on_scene_added(self, scene_domain_model):
+    """React when a scene was added.
+
+    :param scene_domain_model: the scene that was added.
+    :type scene_domain_model:  qde.domain.scene.SceneModel
+    """
+
+    if scene_domain_model.id_ not in self.scenes:
+        scene_view_model = guidomain_scene.SceneViewModel(
+            domain_object=scene_domain_model
+        )
+        self.scenes[scene_domain_model.id_] = scene_view_model
+        self.logger.debug("Scene '%s' was added" % scene_view_model)
+    else:
+        self.logger.debug("Scene '%s' already known" % scene)
+@}
+
+Whenever a scene is deleted, it needs to delete the scene from its known scenes
+as well.
+
+@d Scene controller slots
+@{
+@@QtCore.pyqtSlot(domain_scene.SceneModel)
+def on_scene_removed(self, scene_domain_model):
+    """React when a scene was removed/deleted.
+
+    :param scene_domain_model: the scene that was removed.
+    :type scene_domain_model:  qde.domain.scene.SceneModel
+    """
+
+    if scene_domain_model.id_ in self.scenes:
+        del(self.scenes[scene_domain_model.id_])
+        self.logger.debug("Scene '%s' was removed" % scene_domain_model)
+    else:
+        self.logger.warn((
+            "Scene '%s' should be removed, "
+            "but is not known"
+        ) % scene_domain_model)
+@}
+
+To actually change the scene, the scene controller needs to react whenever the
+scene was changed. This happens by reacting to the \verb+do_select_scene+
+signal sent by the scene graph controller.
+
+@d Scene controller signals
+@{
+do_change_scene = QtCore.pyqtSignal(guidomain_scene.SceneViewModel)
+@}
+
+@d Scene controller slots
+@{
+@@QtCore.pyqtSlot(domain_scene.SceneModel)
+def on_scene_changed(self, scene_domain_model):
+    """Gets triggered when the scene was changed by the view.
+
+    :param scene_domain_model: The currently selected scene.
+    :type  scene_domain_model: qde.editor.domain.scene.SceneModel
+    """
+
+    if scene_domain_model.id_ in self.scenes:
+        self.current_scene = self.scenes[scene_domain_model.id_]
+        self.do_change_scene.emit(self.current_scene)
+        self.logger.debug("Scene changed: %s", self.current_scene)
+    else:
+        self.logger.warn((
+            "Should change to scene '%s', "
+            "but that scene is not known"
+        ) % scene_domain_model)
+@}
+
+As can be seen in the fragment above, the scene controller actually emits
+another signal, \verb+do_change_scene+, which provides the view model of the
+currently set scene.
+The \verb+do_change_scene+ signal is then in turn consumed by the
+\verb+on_scene_changed+ slot of the scene view for actually changing the
+displayed scene.
+
+@d Connect main window components
+@{
+self.scene_controller.do_change_scene.connect(
+    self.main_window.scene_view.on_scene_changed
+)@}
+
+@d Scene view slots
+@{
+@@QtCore.pyqtSlot(scene.SceneViewModel)
+def on_scene_changed(self, scene_view_model):
+    # TODO: Document method
+
+    self.setScene(scene_view_model)
+    # TODO: self.scrollTo(scene_view_model.view_position)
+    self.scene().invalidate()
+    self.logger.debug("Scene has changed: %s", scene_view_model)@}
+
+At this point scenes can be managed and displayed but they still cannot be
+rendered as nodes cannot be added yet. First of all as there are no nodes yet
+and second as there exists no possibility to add nodes.
+
+Thinking of the definition of what shall be achieved, as defined at the
+beginning of this chapter, a node defining a sphere is implemented.
+
+@d Implicit sphere node
+@{{
+    "name": "Implicit sphere",
+    "id_": "16d90b34-a728-4caa-b07d-a3244ecc87e3",
+    "description": "Definition of a sphere by using implicit surfaces",
+    "inputs": [
+        @<Implicit sphere node inputs@>
+    ],
+    "outputs": [
+        @<Implicit sphere node outputs@>
+    ],
+    "definitions": [
+        @<Implicit sphere node definitions@>
+    ],
+    "invocations": [
+        @<Implicit sphere node invocations@>
+    ],
+    "parts": [
+        @<Implicit sphere node parts@>
+    ],
+    "nodes": [
+        @<Implicit sphere node nodes@>
+    ],
+    "connections": [
+        @<Implicit sphere node connections@>
+    ]
+}@}
+
+At the current point the sphere node will only have one input: the radius of
+the sphere. The positition of the sphere will be at the center (meaning the
+X-, the Y- and the Z-position are all 0). For being able to change the
+positition, another node will be introduced.
+
+@d Implicit sphere node inputs
+@{{
+    "name": "radius",
+    "atomic_id": "468aea9e-0a03-4e63-b6b4-8a7a76775a1a",
+    "default_value": {
+        "type_": "float",
+        "value": "1"
+    },
+    "id_": "f5c6a538-1dbc-4add-a15d-ddc4a5e553da",
+    "description": "The radius of the sphere",
+    "min_value": "-1000",
+    "max_value": "1000",
+}@}
+
+The output of the sphere node is of type implicit as the node represents an
+implicit surface.
+
+@d Implicit sphere node outputs
+@{{
+    "name": "output",
+    "id_": "a3ac68e5-5afe-4779-9e9f-5b619e041ae6",
+    "atomic_id": "c019271c-35b6-425c-9ff2-a1d893111adb"
+}@}
+
+The definition of the node is the actual implementation of a sphere as a
+implicit surface.
+
+@d Implicit sphere node definitions
+@{{
+    "id_": "99d20a26-f233-4310-adb2-5e540726d079",
+    "script": [
+        "// Returns the signed distance to a sphere with given radius for the"
+        "// given position."
+        "float sphere(vec3 position, float radius)"
+        "{"
+        "    return length(position) - radius;"
+        "}"
+    ]
+}@}
+
+The invocation of the node is simply calling the above definition using the
+parameters of the node, which is in this case the radius.
+
+The parameters are in case of implicit surfaces uniform variables of the type
+of the parameter, as implicit surfaces are rendered by the fragment shader. The
+uniform variables are defined by a type and an identifier, whereas in the case
+of paramaters their identifier is used.
+
+The position of the node is an indirect parameter, which is not defined by the
+node's inputs. It will be setup by the node's parts.
+
+@d Implicit sphere node invocations
+@{{
+    "id_": "4cd369d2-c245-49d8-9388-6b9387af8376",
+    "script": [
+        "float s = sphere(",
+        "    16d90b34-a728-4caa-b07d-a3244ecc87e3-position,",
+        "    5c6a538-1dbc-4add-a15d-ddc4a5e553da",
+        ");"
+    ]
+}@}
+
+The parts of the node, in this case it is only one part, contain the body of
+the node. The body is about evaluating the inputs and passing them on to a
+shader.
+
+@d Implicit sphere node parts
+@{{
+    "id_": "74b73ce7-8c9d-4202-a533-c77aba9035a6",
+    "name": "Implicit sphere node function",
+    "script": [
+        "# -*- coding: utf-8 -*-",
+        "",
+        "from PyQt5 import QtGui",
+        "",
+        "",
+        "class Class_ImplicitSphere(object):",
+        "    def __init__(self):",
+        "        self.position = QtGui.QVector3D()",
+        "",
+        "    def process(self, context, inputs):",
+        "        shader = context.current_shader.program",
+        "        ",
+        "        radius = inputs[0].process(context).value",
+        "        shader_radius_location = shader.uniformLocation(\"f5c6a538-1dbc-4add-a15d-ddc4a5e553da\")",
+        "        shader.setUniformValue(shader_radius_location, radius)",
+        "        ",
+        "        position = self.position",
+        "        shader_position_location = shader.uniformLocation(",
+        "            \"16d90b34-a728-4caa-b07d-a3244ecc87e3-position\"",
+        "        )",
+        "        shader.setUniformValue(shader_position_location, position)",
+        "        ",
+        "        return context",
+    ]
+}@}
+
+Connections are composed of an input and an output plus a reference to a part,
+as stated in \todo{Add reference}. In this case there is exactly one input, the
+radius, and one output, an object defined by implicit functions.
+
+The radius is being defined by an input, which is therefore being referenced as
+source. There is although no external node being referenced, as the radius is
+of the atomic type float. Therefore the source node is 0, meaning it is an
+internal reference. The input itself is used as part for the input. 
+
+The very same applies for the output of that connection. The radius is being
+consumed by the first part of the node's part (which has only this part). As
+this definition is within the same node, the target node is also 0. The part is
+then being referenced by its identifier.
+
+@d Implicit sphere node connections
+@{{
+    "source_node": "00000000-0000-0000-0000-000000000000",
+    "source_part": "f5c6a538-1dbc-4add-a15d-ddc4a5e553da",
+    "target_node": "00000000-0000-0000-0000-000000000000",
+    "target_part": "74b73ce7-8c9d-4202-a533-c77aba9035a6",
+}@}
+
+Now a very basic node is avaialble, but the node does not get recognized by the
+application yet. As nodes are defined by external files, they need to be
+searched, loaded and registered to make them available to the application.
+
+Therefore the node controller is introduced, which will manage the node
+definitions.
+
+@d Node controller declarations
+@{
+@@common.with_logger
+class NodeController(Qt.QObject):
+    """The node controller.
+
+    A controller managing nodes.
+    """
+
+    # Constants
+    NODES_PATH = "nodes"
+    NODES_EXTENSION = "node"
+
+    # Signals
+    @<Node controller signals@>
+
+    @<Node controller constructor@>
+    @<Node controller methods@>
+
+    @<Node controller slots@>
+@}
+
+The node controller assumes, that all node definitions are placed within the
+\verb+nodes+ subdirectory of the application's working directory. Further it
+assumes, that node definition files use the \verb+node+ extension.
+
+@d Node controller constructor
+@{
+def __init__(self):
+    """ Constructor. """
+
+    self.nodes_path = "{current_dir}{sep}{nodes_path}".format(
+        current_dir=os.getcwd(),
+        sep=os.sep,
+        nodes_path=NodeController.NODES_PATH
+    )
+    self.nodes_extension = NodeController.NODES_EXTENSION@}
+
+The node controller will then scan that directory containing the node
+definitions and load each one.
+
+@d Node controller methods
+@{
+def load_nodes(self):
+    """Loads all files with the ending NodeController.NODES_EXTENSION
+    within the NodeController.NODES_PATH directory, relative to the current
+    working directory.
+    """
+
+    @<Node controller load nodes method@>@}
+
+The node definitions will use the before defined atomic types, e.g. a float
+value, at various places. Therefore it is important, that the node controller
+knows about the atomic types.
+
+@d Node controller constructor
+@{
+    self.node_definition_parts = {}
+@}
+
+As they are static, they can simply be added to the above defined dictionary.
+
+@d Node controller load nodes method
+@{
+for atomic_type in parameter.AtomicTypes.atomic_types:
+    if atomic_type.id_ not in self.node_definition_parts:
+        self.logger.info("Loading atomic type %s", atomic_type.type_)
+        self.node_definition_parts[atomic_type.id_] = atomic_type@}
+
+Having the atomic types avaialble as parts, the node definitions themselves may
+be loaded. There is only one problem to that: there is nothing to hold the
+node defintions. Therefore the node definition domain model is introduced.
+
+@d Node definition domain model declarations
+@{
+class NodeDefinition(object):
+    """Represents the definition of a node."""
+
+    # Signals
+    @<Node definition domain model signals@>
+
+    @<Node definition domain model constructor@>
+    @<Node definition domain model methods@>@}
+
+The definition of a node is quite similar to a node itself. As the definiton of
+a node may be changed, the flag \verb+was_changed+ is added.
+
+@d Node definition domain model constructor
+@{
+def __init__(self, id_):
+    """Constructor.
+
+    :param id_: the globally unique identifier of the node.
+    :type  id_: uuid.uuid4
+    """
+
+    self.id_   = id_
+
+    self.description = ""
+    self.parent = None
+    self.inupts = []
+    self.outputs = []
+    self.parts = []
+    self.nodes = []
+    self.connections = []
+    self.was_changed = False@}
+
+Now the controller is able to instantiate nodes definitions and keep them in a
+list.
+
+@d Node controller constructor
+@{    self.node_definitions = {}@}
+
+The controller scans the \verb+node+ subdirectory, containing the node
+definitions, for files ending in \verb+node+.
+
+@d Node controller load nodes method
+@{
+
+if os.path.exists(self.nodes_path):
+    node_definition_files = glob.glob("{path}{sep}*.{ext}".format(
+        path=self.nodes_path,
+        sep=os.sep,
+        ext=self.nodes_extension
+    ))
+    if len(node_definition_files) > 0:
+        for file in node_definition_files:
+            self.logger.debug("Found %s, would load now", file)
+    else:
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__, "No node definitions found."
+        )
+        self.logger.warn(message)
+else:
+    message = QtCore.QCoreApplication.translate(
+        __class__.__name__, "No node definitions found."
+    )
+    self.logger.warn(message)
+@}
+
+
+Finally the node controller needs to be instantiated by the main application
+and the loading of the node definitions needs to be triggered.
+
+@d Set up controllers for main application
+@{
+self.node_controller = node.NodeController()
+self.node_controller.load_nodes()@}
