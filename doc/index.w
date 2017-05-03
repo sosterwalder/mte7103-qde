@@ -17,6 +17,7 @@
 % Load Standard Packages:
 %---------------------------------------------------------------------------
 \usepackage{scrpage2}                    % Control of page headers and footers in LaTeX,
+\usepackage{scrhack}
 \usepackage{marginnote}
                                          % needed for e.g. deftripstyle (to defined page styles)
 \usepackage[english]{babel}              % English hyphenation
