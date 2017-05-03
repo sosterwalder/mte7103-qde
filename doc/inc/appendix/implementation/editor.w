@@ -2741,7 +2741,7 @@ for atomic_type in parameter.AtomicTypes.atomic_types:
         node_definition_part = node.NodeDefinitionPart(atomic_type.id_)
         node_definition_part.type_ = atomic_type.type_
         node_definition_part.creator_function = create_func
-        self.node_definition_parts[atomic_type.id_] = node_definition_part@}
+        self.node_definition_parts[atomic_type.id_] = node_definition_part
         self.logger.info(
             "Created node part for atomic type %s: %s",
             atomic_type.type_, atomic_type.id_
@@ -2750,7 +2750,7 @@ for atomic_type in parameter.AtomicTypes.atomic_types:
         self.logger.warn((
             "Already knowing node part for atomic type %s. This should not"
             "happen"
-        ), atomic_type.type_)
+        ), atomic_type.type_)@}
 
 Having the atomic types avaialble as parts, the node definitions themselves may
 be loaded. There is only one problem to that: there is nothing to hold the
@@ -3130,7 +3130,7 @@ class ValueInterface(object):
     def __init__(self):
         """Constructor."""
 
-        self.function_type = None@}
+        self.function_type = None
 
     def clone(self):
         """Clones the currently set value.
@@ -3143,7 +3143,7 @@ class ValueInterface(object):
             __module__.__name__,
             "This method must be implemented in a child class"
         )
-        raise NotImplementedError(message)
+        raise NotImplementedError(message)@}
 
 
 Then an interface for setting and getting values is defined.
