@@ -29,6 +29,8 @@ import logging
 import logging.config
 import os
 import json
+from PyQt5 import Qt
+from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
@@ -244,6 +246,7 @@ import enum
 
 
 @<Node type declarations@>
+@<Node part state changed declarations@>
 @}
 
 @o ../src/qde/editor/domain/parameter.py
@@ -257,6 +260,12 @@ import enum
 from qde.editor.foundation import type as types
 
 @<Parameter declarations@>
+@<Paramater domain model value generic interface@>
+@<Paramater domain model value interface@>
+@<Paramater domain model float value@>
+@<Paramater domain model text value@>
+@<Paramater domain model scene value@>
+@<Parameter domain module methods@>
 @}
 
 @d Parameter declarations
@@ -301,6 +310,129 @@ from qde.editor.foundation import type as types
     ]
 @}
 
+@d Paramater domain model text value
+@{
+class TextValue(Value):
+    """A class holding values for text/string nodes."""
+
+    def __init__(self, string_value):
+        """Constructor.
+
+        :param string_value: the string value that shall be held
+        :type  string_value: str
+        """
+
+        super(TextValue, self).__init__(string_value)
+        self.function_type = types.NodeType.TEXT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return TextValue(self.value)@}
+
+@d Paramater domain model image value
+@{
+class ImageValue(ValueInterface):
+    """A class holding values for image nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(ImageValue, self).__init__()
+        self.function_type = types.NodeType.IMAGE
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return ImageValue()@}
+
+@d Paramater domain model generic value
+@{
+class GenericValue(ValueInterface):
+    """A class holding values for generic nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(GenericValue, self).__init__()
+        self.function_type = types.NodeType.GENERIC
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return GenericValue()@}
+
+@d Paramater domain model dynamic value
+@{
+class DynamicValue(ValueInterface):
+    """A class holding values for dynamic nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(DynamicValue, self).__init__()
+        self.function_type = types.NodeType.DYNAMIC
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return DynamicValue()@}
+
+@d Paramater domain model mesh value
+@{
+class MeshValue(ValueInterface):
+    """A class holding values for mesh nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(MeshValue, self).__init__()
+        self.function_type = types.NodeType.MESH
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return MeshValue()@}
+
+@d Paramater domain model implicit value
+@{
+class ImplicitValue(ValueInterface):
+    """A class holding values for implicit surface nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(ImplicitValue, self).__init__()
+        self.function_type = types.NodeType.IMPLICIT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return ImplicitValue()@}
 
 
 @o ../src/qde/editor/domain/node.py
@@ -315,7 +447,12 @@ from qde.editor.foundation import type as types
 from qde.editor.foundation import flag
 
 @<Node domain model declarations@>
+@<Node part domain model declarations@>
 @<Node definition domain model declarations@>
+@<Node definition part domain model declarations@>
+@<Node definition input domain model declarations@>
+@<Node definition output domain model declarations@>
+@<Node domain module methods@>
 @}
 
 @o ../src/qde/editor/gui_domain/node.py
@@ -440,12 +577,67 @@ def create_pixmap(self):
 # System imports
 import glob
 import os
+import time
+import uuid
 from PyQt5 import Qt
 
 # Project imports
 from qde.editor.foundation import common
+from qde.editor.foundation import type as types
+from qde.editor.technical import json
 from qde.editor.domain import parameter
+from qde.editor.domain import node
 
 
 @<Node controller declarations@>
+@}
+
+@o ../src/qde/editor/technical/json.py
+@{#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding JSON related aspects.
+"""
+
+# System imports
+import json
+import uuid
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.domain import node
+from qde.editor.domain import parameter
+
+
+@<JSON module declarations@>
+@}
+
+@d JSON module declarations
+@{
+@@common.with_logger
+class Json(object):
+    """Class handling JSON relevant tasks.
+    """
+
+    @<JSON methods@>
+@}
+
+% TODO: Implement those
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_connection(cls, conn):
+    pass
+
+@@classmethod
+def build_node_definition_definition(cls, d):
+    pass
+
+@@classmethod
+def build_node_definition_invocation(cls, d):
+    pass
+
+@@classmethod
+def build_node_definition_part(cls, d):
+    pass
 @}

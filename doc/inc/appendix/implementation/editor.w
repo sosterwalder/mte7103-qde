@@ -1,4 +1,4 @@
-% -*- mode: latex; coding: utf-8 -*-
+%-*- mode: latex; coding: utf-8 -*-
 
 \subsection{Editor}
 \label{subsec:editor}
@@ -337,11 +337,11 @@ def setup_ui(self):
     @<Set up parameter view in main window@>
     @<Set up render view in main window@>
 
-     horizontal_splitter = QtWidgets.QSplitter()
+    horizontal_splitter = QtWidgets.QSplitter()
     @<Add render view to horizontal splitter in main window@>
     @<Add parameter view to horizontal splitter in main window@>
 
-     vertical_splitter = QtWidgets.QSplitter()
+    vertical_splitter = QtWidgets.QSplitter()
     vertical_splitter.setOrientation(QtCore.Qt.Vertical)
     vertical_splitter.addWidget(horizontal_splitter)
     @<Add scene view to vertical splitter in main window@>
@@ -2300,7 +2300,7 @@ positition, another node will be introduced.
     "id_": "f5c6a538-1dbc-4add-a15d-ddc4a5e553da",
     "description": "The radius of the sphere",
     "min_value": "-1000",
-    "max_value": "1000",
+    "max_value": "1000"
 }@}
 
 The output of the sphere node is of type implicit as the node represents an
@@ -2320,11 +2320,11 @@ implicit surface.
 @{{
     "id_": "99d20a26-f233-4310-adb2-5e540726d079",
     "script": [
-        "// Returns the signed distance to a sphere with given radius for the"
-        "// given position."
-        "float sphere(vec3 position, float radius)"
-        "{"
-        "    return length(position) - radius;"
+        "// Returns the signed distance to a sphere with given radius for the",
+        "// given position.",
+        "float sphere(vec3 position, float radius)",
+        "{",
+        "    return length(position) - radius;",
         "}"
     ]
 }@}
@@ -2382,7 +2382,7 @@ shader.
         "        )",
         "        shader.setUniformValue(shader_position_location, position)",
         "        ",
-        "        return context",
+        "        return context"
     ]
 }@}
 
@@ -2405,7 +2405,7 @@ then being referenced by its identifier.
     "source_node": "00000000-0000-0000-0000-000000000000",
     "source_part": "f5c6a538-1dbc-4add-a15d-ddc4a5e553da",
     "target_node": "00000000-0000-0000-0000-000000000000",
-    "target_part": "74b73ce7-8c9d-4202-a533-c77aba9035a6",
+    "target_part": "74b73ce7-8c9d-4202-a533-c77aba9035a6"
 }@}
 
 Now a very basic node is avaialble, but the node does not get recognized by the
@@ -2418,7 +2418,7 @@ definitions.
 @d Node controller declarations
 @{
 @@common.with_logger
-class NodeController(Qt.QObject):
+class NodeController(object):
     """The node controller.
 
     A controller managing nodes.
@@ -2466,23 +2466,291 @@ def load_nodes(self):
 
     @<Node controller load nodes method@>@}
 
-The node definitions will use the before defined atomic types, e.g. a float
-value, at various places. Therefore it is important, that the node controller
-knows about the atomic types.
+Node definitons will be contain parts. The parts within node definition are
+used to create corresponding parts within instances of themselves. The parts
+are able to create values based on the atomic types through functions.
+
+@d Node definition part domain model declarations
+@{
+class NodeDefinitionPart(object):
+    """Represents a part of the definition of a node."""
+
+    # Signals
+    @<Node definition part domain model signals@>
+
+    @<Node definition part domain model constructor@>
+    @<Node definition part domain model methods@>@}
+
+The part of a node definition holds an identifier as well as an expression to
+create a function for creating and handling values which will be used when
+evaluating a node. Further it provides a function which allows to instantiate
+itself as part of a node (instance).
+
+@d Node definition part domain model constructor
+@{
+def __init__(self, id_):
+    """Constructor.
+
+    :param id_: the globally unique identifier of the part of the node
+                definition.
+    :type  id_: uuid.uuid4
+    """
+
+    self.id_         = id_
+    self.type_       = None
+    self.name        = None
+
+    # This property is used when evaluating node instances using this node
+    # definition
+    self.function_creator = lambda: create_value_function(
+        parameter.FloatValue(0)
+    )
+
+    # This property will be used to create/instantiate a part of a node
+    # instance
+    self.creator_function = None
+    @}
+
+The node controller needs to keep track of node defintion parts, as they are a
+central aspect and may be reused.
 
 @d Node controller constructor
 @{
     self.node_definition_parts = {}
 @}
 
-As they are static, they can simply be added to the above defined dictionary.
+The code snippet defining the constructor of a node definition part uses a
+function called \verb+create_value_function+ of the \verb+functions+ module.
+
+@d Node domain module methods
+@{
+def create_value_function(value):
+    """Creates a new value function using the provided value.
+
+    :param value: the value which the function shall have.
+    :type  value: qde.editor.domain.parameter.Value
+    """
+
+    value_function = NodePart.ValueFunction()
+    value_function.value = value.clone()
+
+    return value_function
+@}
+
+That brings up the concept of value functions. Value functions are one of the
+building blocks of a node. They are used to evaluate a node value-wise through
+its inputs.
+
+@d Node part domain model value function declarations
+@{
+class ValueFunction(Function):
+    """Class representing a value function for nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(NodePart.ValueFunction, self).__init__()
+        self.value = None
+
+    def clone(self):
+        """Clones the currently set value function.
+
+        :return: a clone of the currently set value function.
+        :rtype: qde.editor.domain.node.NodePart.Function
+        """
+
+        new_function = create_value_function(self.value)
+        new_function.node_part = self.node_part
+
+        return new_function
+
+    def process(self, context, inputs, output_index):
+        """Processes the value function for the given context, the given inputs
+        and the given index of the output.
+
+        :param context: the context of the processing
+        :type  context: qde.editor.domain.node.NodePartContext
+        :param inputs: a list of inputs to process
+        :type inputs: list
+        :param output_index: the index of the output which shall be used
+        :type output_index: int
+
+        :return: the context
+        :rtype:  qde.editor.domain.node.NodePartContext
+        """
+
+        if not self.value.is_cachable or self.has_changed:
+            if len(inputs) > 0:
+                inputs[0].process(context, self.processing_index)
+                value.set_value_from_context(context)
+            else:
+                self.value.set_value_in_context(context)
+
+            self.has_changed = False
+        else:
+            self.value.set_value_in_context(context)
+
+        # TODO: Handle events
+
+        return context@}
+
+During the initialization of a node, its value function may not be clear or it
+is simply subject to change. Therefore it makes sense to provide a default
+value function which gets used by default.
+
+@d Node part domain model default value function declarations
+@{
+class DefaultValueFunction(ValueFunction):
+    """The default value function of a node part."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(NodePart.DefaultValueFunction, self).__init__()
+
+    def clone(self):
+        """Returns itself as a default value function may not be cloned.
+
+        :return: a self-reference.
+        :rtype: DefaultValueFunction
+        """
+
+        return self
+
+    def process(self, context, inputs, output_index):
+        """Processes the default value function for the given context, the given inputs
+        and the given index of the output.
+
+        :param context: the context of the processing
+        :type  context: qde.editor.domain.node.NodePartContext
+        :param inputs: a list of inputs to process
+        :type inputs: list
+        :param output_index: the index of the output which shall be used
+        :type output_index: int
+
+        :return: the context
+        :rtype:  qde.editor.domain.node.NodePartContext
+        """
+
+        self.value.set_value_in_context(context)
+        self.has_changed = False
+
+        return context@}
+
+The value function relies strongly on the conecpt of node parts, which is not
+defined yet. A part of a node is actually an instance of an atomic type
+(which is usually an input) within an instance of a node definition.
+
+@d Node part domain model declarations
+@{
+class NodePart(object):
+    """Represents a part of a node."""
+
+    @<Node part domain model function declarations@>
+    @<Node part domain model value function declarations@>
+    @<Node part domain model default value function declarations@>
+
+    # Signals
+    @<Node part domain model signals@>
+
+    @<Node part domain model constructor@>
+    @<Node part domain model methods@>
+@}
+
+@d Node part domain model constructor
+@{
+def __init__(self, id_, default_function):
+    """Constructor.
+
+    :param id_: the identifier of the node part.
+    :type  id_: uuid.uuid4
+    :param default_function: the default function of the part
+    :type default_function: Function
+    """
+
+    self.id_              = id_
+    self.function_        = default_function
+    self.default_function = default_function
+    self.type_            = types.NodeType.GENERIC@}
+
+A part of a node has a function, which gets called whenever a part of a node is
+being processed.
+
+@d Node part domain model function declarations
+@{
+class Function(object):
+    """Represents the function of a part of a node."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.has_changed = True
+        self.evaluation_index = 0
+        self.changed_state = types.StateChange.VALUE.value | types.StateChange.SUBTREE.value
+
+    def clone(self):
+        """Clones the currently set function."""
+
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)
+
+    def process(self, context, inputs, output_index):
+        """Processes the value function for the given context, the given
+        inputs."""
+
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)
+@}
+
+When a part of a node is being processed, also its inputs are processed.
+Whenever an input (value) changes, the node part needs to handle the changes.
+There are three possible types of changes: nothing has changed, the value (of
+the function) has changed or the subtree (inputs) has changed.
+
+@d Node part state changed declarations
+@{
+class StateChange(enum.Enum):
+    """Possible changes of state."""
+
+    NOTHING  = 0
+    VALUE    = 1
+    SUBTREE  = 2@}
+
+At the end, all (end-) nodes will be composed of parts of atomic type.
+When building the node definition from the JSON input, the (atomic) part of the
+node definition is fetched from the node controller. Therefore it is necessary
+to provide parts for the atomic types before loading all the node definitions.
 
 @d Node controller load nodes method
 @{
 for atomic_type in parameter.AtomicTypes.atomic_types:
     if atomic_type.id_ not in self.node_definition_parts:
-        self.logger.info("Loading atomic type %s", atomic_type.type_)
-        self.node_definition_parts[atomic_type.id_] = atomic_type@}
+
+        def create_func(id_, default_function, name, type_):
+            node_part = node.NodePart(id_, default_function)
+            node_part.type_ = type_
+            node_part.name = name
+            return node_part
+
+        node_definition_part = node.NodeDefinitionPart(atomic_type.id_)
+        node_definition_part.type_ = atomic_type.type_
+        node_definition_part.creator_function = create_func
+        self.node_definition_parts[atomic_type.id_] = node_definition_part@}
+        self.logger.info(
+            "Created node part for atomic type %s: %s",
+            atomic_type.type_, atomic_type.id_
+        )
+    else:
+        self.logger.warn((
+            "Already knowing node part for atomic type %s. This should not"
+            "happen"
+        ), atomic_type.type_)
 
 Having the atomic types avaialble as parts, the node definitions themselves may
 be loaded. There is only one problem to that: there is nothing to hold the
@@ -2511,14 +2779,17 @@ def __init__(self, id_):
     :type  id_: uuid.uuid4
     """
 
-    self.id_   = id_
+    self.id_         = id_
 
+    self.name        = ""
     self.description = ""
-    self.parent = None
-    self.inupts = []
-    self.outputs = []
-    self.parts = []
-    self.nodes = []
+    self.parent      = None
+    self.inupts      = []
+    self.outputs     = []
+    self.definitions = []
+    self.invocations = []
+    self.parts       = []
+    self.nodes       = []
     self.connections = []
     self.was_changed = False@}
 
@@ -2540,9 +2811,26 @@ if os.path.exists(self.nodes_path):
         sep=os.sep,
         ext=self.nodes_extension
     ))
-    if len(node_definition_files) > 0:
-        for file in node_definition_files:
-            self.logger.debug("Found %s, would load now", file)
+    num_node_definitions = len(node_definition_files)
+    if num_node_definitions > 0:
+        self.logger.info(
+            "Found %d node definition(s), loading.",
+            num_node_definitions
+        )
+        t0 = time.perf_counter()
+        for file_name in node_definition_files:
+            self.logger.debug(
+                "Found node definition %s, trying to load",
+                file_name
+            )
+            node_definition = self.load_node_definition_from_file_name(file_name)
+            if node_definition is not None:
+                self.node_definitions[node_definition.id_] = node_definition
+        t1 = time.perf_counter()
+        self.logger.info(
+            "Loading node definitions took %.10f seconds",
+            (t1 - t0)
+        )
     else:
         message = QtCore.QCoreApplication.translate(
             __class__.__name__, "No node definitions found."
@@ -2555,6 +2843,578 @@ else:
     self.logger.warn(message)
 @}
 
+If such a file is found, its identifier is extracted from the file name. If the
+node definition is not known yet, it gets loaded and added to the list of known
+node definitions.
+
+@d Node controller methods
+@{
+def load_node_definition_from_file_name(self, file_name):
+    """Loads a node definition from the given file name.
+    If no such file exists, an FileNotFoundError is raised.
+
+    :param file_name: the file name to load.
+    :type  file_name: str
+
+    :return: the loaded node definition and its identifier or None
+    :rtype:  qde.editor.domain.node.NodeDefinition or None
+    """
+
+    if not os.path.exists(file_name):
+        self.logger.warn((
+            "Tried to load node defintion from file %s, "
+            "but the file does not exist"
+        ), file_name)
+        return None
+
+    # Extract the defintion identifier from the file name, which is
+    # "uuid4.node".
+    definition_id = os.path.splitext(os.path.basename(file_name))[0]
+
+    if definition_id in self.node_definitions:
+        self.logger.warn(
+            "Should load node definition from file %s, but is already loaded",
+            file_name
+        )
+        return self.node_definitions[definition_id]
+
+    try:
+        with open(file_name) as definition_fh:
+            node_definition = json.Json.load_node_definition(
+                self, definition_fh
+            )
+            self.logger.debug(
+                "Loaded node definition %s from file %s",
+                definition_id, file_name
+            )
+            # TODO: Trigger (loading) callback
+            return node_definition
+    except json.json.decoder.JSONDecodeError as exc:
+        self.logger.warn(
+            "There was an error loading the node definition %s: %s",
+            definition_id, exc
+        )
+        return None@}
+
+The loading of the node definiton is simply about parsing the various sections
+and handling them correspondingly. To prevent the node controller from being
+bloated, the parsing is done in a separate module responsible for JSON specific
+tasks.
+
+@d JSON methods
+@{
+@@classmethod
+def load_node_definition(cls, node_controller, json_file_handle):
+    """Loads a node definition from given JSON input.
+
+    :param node_controller: reference to the node controller
+    :type node_controller: qde.editor.application.node.NodeController
+    :param json_file_handle: an open file handle containing JSON data
+    :type json_file_handle: file
+
+    :return: a node definition
+    :rtype: qde.editor.domain.node.NodeDefinition
+    """
+
+    o = json.load(json_file_handle)
+
+    name        = str(o['name'])
+    id_         = uuid.UUID(o['id_'])
+    description = str(o['description'])
+
+    inputs = []
+    for input in o['inputs']:
+        print(type(input))
+        node_definition_input = cls.build_node_definition_input(
+            node_controller, input
+        )
+        inputs.append(node_definition_input)
+
+    outputs = []
+    for output in o['outputs']:
+        node_definition_output = cls.build_node_definition_output(
+            node_controller, output
+        )
+        outputs.append(node_definition_output)
+
+    node_definitions = {}
+    for node_def in o['nodes']:
+        definition_id, node_definition = cls.build_node_definition(node_def)
+        node_definitions[definition_id] = node_definition
+
+    connections = []
+    for conn in o['connections']:
+        connection = cls.build_node_definition_connection(conn)
+        connections.append(connection)
+
+    definitions = []
+    for d in o['definitions']:
+        definition = cls.build_node_definition_definition(d)
+        definitions.append(definition)
+
+    invocations = []
+    for i in o['invocations']:
+        invocation = cls.build_node_definition_invocation(i)
+        invocations.append(invocation)
+
+    node_definition             = node.NodeDefinition(id_)
+    node_definition.name        = name
+    node_definition.description = description
+    node_definition.inputs      = inputs
+    node_definition.outputs     = outputs
+    node_definition.nodes       = node_definitions
+    node_definition.connections = connections
+    node_definition.definitions = definitions
+    node_definition.invocations = invocations
+
+    # TODO: Check if this part can be abve the def. instance
+    parts = []
+    for p in o['parts']:
+        part = cls.build_node_definition_part(p)
+        parts.append(part)
+    node_definition.parts = parts
+
+    # TODO: Do a consistency check
+    node_definition.was_changed = False
+
+    return node_definition@}
+
+As can be seen in the above listing, there are parts, that are not yet defined:
+inputs, outputs, connections, definitions, invocations and parts.
+
+First the building of the node definition inputs is defined.
+
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_input(cls, node_controller, json_input):
+    """Builds and returns a node definition input from the given JSON input
+    data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a node definition input
+    :rtype:  qde.editor.domain.node.NodeDefinitionInput
+    """
+
+    input_id             = uuid.UUID(json_input['id_'])
+    name                 = str(json_input['name'])
+    atomic_id            = uuid.UUID(json_input['atomic_id'])
+    description          = str(json_input['description'])
+    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+
+    default_value_str = ""
+    default_value_entry = json_input['default_value']
+    default_value = parameter.create_value(
+        default_value_entry['type_'],
+        default_value_entry['value']
+    )
+
+    min_value = float(json_input['min_value'])
+    max_value = float(json_input['max_value'])
+
+    node_definition_input = node.NodeDefinitionInput(
+        input_id,
+        name,
+        node_definition_part,
+        default_value
+    )
+    node_definition_input.description = description
+    node_definition_input.min_value = min_value
+    node_definition_input.max_value = max_value
+
+    cls.logger.debug(
+        "Built node definition input for node definition %s",
+        atomic_id
+    )
+    return node_definition_input
+@}
+
+However, there are a few things missing, which are used in the above code
+fragments. The possibility to create values from given parameters, the actual
+node definition input as domain model and getting the node definition part
+identified by the given atomic identifier.
+
+@d Node controller methods
+@{
+def get_node_definition_part(self, id_):
+    """Returns the node definition part identified by the given identifier.
+
+    If no such part is available, a generic part with that identifier is being
+    created.
+
+    :param id_: the identifier of the part of the node definition to get.
+    :type  id_: uuid.uuid4
+
+    :return: the node definition part identified by the given identifier.
+    :rtype: qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    if str(id_) not in self.node_definition_parts:
+        self.logger.warn((
+            "Part %s of the node definition was not found. Creating a"
+            "generic one."
+        ), id_)
+
+        type_ = types.NodeType.GENERIC
+        def create_func(id_, default_function, name, type_):
+            node_part = node.NodePart(id_, None)
+            node_part.type_ = type_
+            node_part.name = name
+            return node_part
+        node_definition_part = node.NodeDefinitionPart(id_)
+        node_definition_part.type_ = type_
+        node_definition_part.creator_function = create_func
+        self.node_definition_parts[id_] = node_definition_part
+        return node_definition_part
+    else:
+        return self.node_definition_parts[str(id_)]
+@}
+
+The creation of values from given parameters is done within the parameter
+module, as this is something very parameter specific. Therefore a static method
+is defined, which returns an instance of an atomic type, e.g. a float value or
+a scene. \todo{instance of atomic type, ok?}
+
+@d Parameter domain module methods
+@{
+def create_value(type_, value_string):
+    """Creates an object of the given type with the given value.
+
+    :param type_: the type of the value to create.
+    :type  type_: str
+    :param value_string: the value that the value shall have.
+    "type  value_string: str
+
+    :return: a value-type of the given type with the given value.
+    :rtype: qde.editor.domain.parameter.Value
+    """
+
+    if type_.lower() == "float":
+        float_value = float(value_string)
+        return FloatValue(float_value)
+    elif type_.lower() == "text":
+        return TextValue(value_string)
+    elif type_.lower() == "image":
+        return ImageValue()
+    elif type_.lower() == "scene":
+        return SceneValue()
+    elif type_.lower() == "generic":
+        return GenericValue()
+    elif type_.lower() == "dynamic":
+        return DynamicValue()
+    elif type_.lower() == "mesh":
+        return MeshValue()
+    elif type_.lower() == "implicit":
+        return ImplicitValue()
+    else:
+        message = QtCore.QCoreApplication.translate(
+            __module__.__name__, "Unknown type for value provided"
+        )
+        raise Exception(message)@}
+
+Further the instanciable classes of the atomic types are defined at the very same
+place.
+
+First, a generic value interface is defined. This interface holds a refernce to
+the atomic type of the value and defines what type the function of a value is.
+
+@d Paramater domain model value generic interface
+@{
+class ValueInterface(object):
+    """Generic value interface."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.function_type = None@}
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        message = QtCore.QCoreApplication.translate(
+            __module__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)
+
+
+Then an interface for setting and getting values is defined.
+
+@d Paramater domain model value interface
+@{
+class Value(ValueInterface):
+    """Value interface for setting and getting values."""
+
+    def __init__(self, value):
+        """Constructor.
+
+        :param value: the value that shall be held
+        :type  value: object
+        """
+
+        super(Value, self).__init__()
+        self.value = value@}
+
+Then the specific value types are implemented, based either on the generic or
+the concrete value interface, depending on the type. Here just two
+implementations are given as an example. The other implementations can be found
+at~\todo{link to fragments}.
+
+@d Paramater domain model float value
+@{# Python
+class FloatValue(Value):
+    """A class holding float values."""
+
+    def __init__(self, float_value):
+        """Constructor.
+
+        :param float_value: the float value that shall be held
+        :type  float_value: float
+        """
+
+        super(FloatValue, self).__init__(float_value)
+        self.function_type = types.NodeType.FLOAT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return FloatValue(self.value)@}
+
+@d Paramater domain model scene value
+@{
+class SceneValue(ValueInterface):
+    """A class holding scene values."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(SceneValue, self).__init__()
+        self.function_type = types.NodeType.SCENE
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return SceneValue()@}
+
+What now still is missing, is the definition of the node definition input
+domain model.
+
+@d Node definition input domain model declarations
+@{
+class NodeDefinitionInput(object):
+    """Represents an input of a definition of a node."""
+
+    # Signals
+    @<Node definition input domain model signals@>
+
+    @<Node definition input domain model constructor@>
+    @<Node definition input domain model methods@>@}
+
+@d Node definition input domain model constructor
+@{
+def __init__(self, id_, name, node_definition_part, default_value):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: TODO
+    :param default_value: the default value of the input
+    :type default_value: qde.editor.domain.parameter.Value
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part
+    self.description          = ""
+    self.min_value            = -100000
+    self.max_value            = 100000
+
+    self.default_function = create_default_value_function(
+        default_value
+    )@}
+
+The code snippet defining the constructor of a node definition input uses a
+function called \verb+create_default_value_function+ of the \verb+functions+
+module. This function creates a default value function based on the given
+default value.
+
+@d Node domain module methods
+@{
+def create_default_value_function(value):
+    """Creates a new default value function using the provided value.
+
+    :param value: the value which the function shall have.
+    :type  value: qde.editor.domain.parameter.Value
+    """
+
+    value_function = NodePart.DefaultValueFunction()
+    value_function.value = value.clone()
+
+    return value_function@}
+
+With this implementation all the parts needed for creating and handling node
+definition inputs are defined, which leads to the next implementation. The
+outputs of a node definition. The outputs are in the same way implemented as
+the inputs of a node definition.
+
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_output(cls, node_controller, json_input):
+    """Builds and returns a node definition output from the given JSON input
+    data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a node definition output
+    :rtype:  qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    output_id             = uuid.UUID(json_input['id_'])
+    name                 = str(json_input['name'])
+    atomic_id            = uuid.UUID(json_input['atomic_id'])
+    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+
+    node_definition_output = node.NodeDefinitionOutput(
+        output_id,
+        name,
+        node_definition_part
+    )
+
+    cls.logger.debug(
+        "Built node definition output for node definition %s",
+        atomic_id
+    )
+    return node_definition_output
+@}
+
+The domain model of the node definition output is very similar to the input,
+has less attributes although.
+
+@d Node definition output domain model declarations
+@{
+class NodeDefinitionOutput(object):
+    """Represents an output of a definition of a node."""
+
+    # Signals
+    @<Node definition output domain model signals@>
+
+    @<Node definition output domain model constructor@>
+    @<Node definition output domain model methods@>@}
+
+@d Node definition output domain model constructor
+@{
+def __init__(self, id_, name, node_definition_part):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part@}
+
+As a node definition may contain references to other node defintions, it has to
+parse them. The parsing is similar to that of the inputs and outputs.
+
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition(cls, node_controller, json_input):
+    """Builds and returns a node definition from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a dictionary containg the node definition at the index of the
+             definition identifier.
+    :rtype:  dict
+    """
+
+    definition_id   = uuid.UUID(json_input['id_'])
+    atomic_id       = uuid.UUID(json_input['atomic_id'])
+    node_definition = node_controller.get_node_definition(atomic_id)
+
+    cls.logger.debug(
+        "Built node definition for node definition %s",
+        atomic_id
+    )
+    return (definition_id, node_definition)
+@}
+
+As can be seen in the above code fragment, the node definition is returned by
+the node controller. This is very similar to getting the node definition part
+from the node controller.
+
+@d Node controller methods
+@{
+def get_node_definition(self, id_):
+    """Returns the node definition identified by the given identifier.
+
+    If no such definition is available, it will be tried to load the
+    definition. If this is not possible as well, None will be returned.
+
+    :param id_: the identifier of the node definition to get.
+    :type  id_: uuid.uuid4
+
+    :return: the node definition identified by the given identifier or None.
+    :rtype:  qde.editor.domain.node.NodeDefinition or None
+    """
+
+    self.logger.debug(
+        "Getting node definition %s",
+        id_
+    )
+
+    if str(id_) in self.node_definitions:
+        return self.node_definitions[str(id_)]
+    elif self.root_node is not None and id_ == self.root_node.id_:
+        return self.root_node
+    else:
+        # The node definition was not found, try to load it from node
+        # definition files.
+        file_name = os.path.join(
+            self.nodes_path,
+            id_,
+            self.nodes_extension
+        )
+        node_definition = self.load_node_definition_from_file_name(
+            file_name
+        )
+        if node_definition is not None:
+            self.node_definitions[node_definition.id_] = node_definition
+            return node_definition
+        else:
+            return None@}
 
 Finally the node controller needs to be instantiated by the main application
 and the loading of the node definitions needs to be triggered.
