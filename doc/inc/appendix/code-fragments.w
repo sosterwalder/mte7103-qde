@@ -258,6 +258,7 @@ import enum
 
 # Project imports
 from qde.editor.foundation import type as types
+from qde.editor.domain import node
 
 @<Parameter declarations@>
 @<Paramater domain model value generic interface@>
@@ -270,31 +271,31 @@ from qde.editor.foundation import type as types
 
 @d Parameter declarations
 @{
-    FloatValue = AtomicType(
+    FloatValue = create_node_definition_part.__func__(
         id_="468aea9e-0a03-4e63-b6b4-8a7a76775a1a",
         type_=types.NodeType.FLOAT
     )
-    Text = AtomicType(
+    Text = create_node_definition_part.__func__(
         id_="e43bdd1b-a895-4bd8-8d5a-b401a63f7a6f",
         type_=types.NodeType.TEXT
     )
-    Scene = AtomicType(
+    Scene = create_node_definition_part.__func__(
         id_="bfb47e7text7-1b05-4864-8397-de30bf005ff8",
         type_=types.NodeType.SCENE
     )
-    Image = AtomicType(
+    Image = create_node_definition_part.__func__(
         id_="21fd1960-1307-4b53-b7bf-d08f02757335",
         type_=types.NodeType.IMAGE
     )
-    DynamicValue = AtomicType(
+    DynamicValue = create_node_definition_part.__func__(
         id_="68720ae3-8068-43ce-94d8-8705dc3b8bfe",
         type_=types.NodeType.DYNAMIC
     )
-    Mesh = AtomicType(
+    Mesh = create_node_definition_part.__func__(
         id_="9791d341-b92c-43dd-954a-9d83b9020e43",
         type_=types.NodeType.MESH
     )
-    Implicit = AtomicType(
+    Implicit = create_node_definition_part.__func__(
         id_="c019271c-35b6-425c-9ff2-a1d893111adb",
         type_=types.NodeType.IMPLICIT
     )
@@ -308,6 +309,7 @@ from qde.editor.foundation import type as types
         Mesh,
         Implicit,
     ]
+
 @}
 
 @d Paramater domain model text value
@@ -452,6 +454,9 @@ from qde.editor.foundation import flag
 @<Node definition part domain model declarations@>
 @<Node definition input domain model declarations@>
 @<Node definition output domain model declarations@>
+@<Node definition connection domain model declarations@>
+@<Node definition definition domain model declarations@>
+@<Node definition invocation domain model declarations@>
 @<Node domain module methods@>
 @}
 
@@ -580,6 +585,7 @@ import os
 import time
 import uuid
 from PyQt5 import Qt
+from PyQt5 import QtCore
 
 # Project imports
 from qde.editor.foundation import common
@@ -605,6 +611,7 @@ import uuid
 
 # Project imports
 from qde.editor.foundation import common
+from qde.editor.foundation import type as types
 from qde.editor.domain import node
 from qde.editor.domain import parameter
 
@@ -622,22 +629,146 @@ class Json(object):
     @<JSON methods@>
 @}
 
-% TODO: Implement those
+@d Node definition connection domain model declarations
+@{
+class NodeDefinitionConnection(object):
+    """Represents a connection of a definition of a node."""
+
+    # Signals
+    @<Node definition connection domain model signals@>
+
+    def __init__(self,
+                 source_node_id, source_part_id,
+                 target_node_id, target_part_id):
+        """Constructor.
+
+        :param source_node_id: the identifier of the source node.
+        :type  source_node_id: uuid.uuid4
+        :param source_part_id: the identifier of the part of the source node.
+        :type  source_part_id: uuid.uuid4
+        :param target_node_id: the identifier of the target node.
+        :type  target_node_id: uuid.uuid4
+        :param target_part_id: the identifier of the part of the target node.
+        :type  target_part_id: uuid.uuid4
+        """
+
+        self.source_node_id = source_node_id
+        self.source_part_id = source_part_id
+        self.target_node_id = target_node_id
+        self.target_part_id = target_part_id@}
+
 @d JSON methods
 @{
 @@classmethod
-def build_node_definition_connection(cls, conn):
-    pass
+def build_node_definition_connection(cls, json_input):
+    """Builds and returns a connection for a node definition from the given
+    JSON input data.
 
-@@classmethod
-def build_node_definition_definition(cls, d):
-    pass
+    :param json_input: the input in JSON format
+    :type  json_input: dict
 
-@@classmethod
-def build_node_definition_invocation(cls, d):
-    pass
+    :return: the connection of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionConnection
+    """
 
+    source_node_id = uuid.UUID(json_input['source_node'])
+    source_part_id = uuid.UUID(json_input['source_part'])
+    target_node_id = uuid.UUID(json_input['target_node'])
+    target_part_id = uuid.UUID(json_input['target_part'])
+
+    node_definition_connection = node.NodeDefinitionConnection(
+        source_node_id,
+        source_part_id,
+        target_node_id,
+        target_part_id
+    )
+
+    cls.logger.debug("Built node definition connection")
+    return node_definition_connection
+@}
+
+@d Node definition definition domain model declarations
+@{
+class NodeDefinitionDefinition(object):
+    """Represents a definition part of a definition of a node."""
+
+    def __init__(self, id_, script):
+        """Constructor.
+
+        :param id_: the globally unique identifier of the definition.
+        :type  id_: uuid.uuid4
+        :param script: the script part of the definition.
+        :param script: str
+        """
+
+        self.id_ = id_
+        self.script = script@}
+
+@d JSON methods
+@{
 @@classmethod
-def build_node_definition_part(cls, d):
-    pass
+def build_node_definition_definition(cls, json_input):
+    """Builds and returns a definition for a node definition from the given
+    JSON input data.
+
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the definition of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionDefinition
+    """
+
+    definition_id = uuid.UUID(json_input['id_'])
+    script        = str(json_input['script'])
+
+    node_definition_definition = node.NodeDefinitionDefinition(
+        definition_id,
+        script
+    )
+
+    cls.logger.debug("Built node definition definition")
+    return node_definition_definition
+@}
+
+@d Node definition invocation domain model declarations
+@{
+class NodeDefinitionInvocation(object):
+    """Represents an invocation of a definition of a node."""
+
+    def __init__(self, id_, script):
+        """Constructor.
+
+        :param id_: the globally unique identifier of the definition.
+        :type  id_: uuid.uuid4
+        :param script: the script part of the invocation.
+        :param script: str
+        """
+
+        self.id_ = id_
+        self.script = script@}
+
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_invocation(cls, json_input):
+    """Builds and returns a invocation for a node definition from the given
+    JSON input data.
+
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the invocation of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionInvocation
+    """
+
+    invocation_id = uuid.UUID(json_input['id_'])
+    script        = str(json_input['script'])
+
+    node_definition_invocation = node.NodeDefinitionInvocation(
+        invocation_id,
+        script
+    )
+
+    cls.logger.debug("Built node definition invocation")
+    return node_definition_invocation
 @}

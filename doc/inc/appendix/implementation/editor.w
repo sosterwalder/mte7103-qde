@@ -81,7 +81,7 @@ All that the entry point needs to do in case of the editor application, is
 spawning the editor application, execute it and exit again, as can be seen below.
 
 @d Main entry point
-@{# Python
+@{
 if __name__ == "__main__":
     app = application.Application(sys.argv)
     status = app.exec()
@@ -1684,14 +1684,43 @@ class AtomicType(object):
 @}
 
 As the word atomic indicates, these types are atomic, meaning there only exists
-one explicit instance per type, which is therefore static.
+one explicit instance per type, which is therefore static. As can be seen in
+the code fragment below, the atomic types are parts of node definitions
+themselves. Only the creation of the generict atomic type is shown, the rest is
+omitted and can be found at~\todo{Add reference to code fragments.}
 
 @d Parameter declarations
 @{
 class AtomicTypes(object):
     """Creates and holds all atomic types of the system."""
 
-    Generic = AtomicType(
+    @@staticmethod
+    def create_node_definition_part(id_, type_):
+        """Creates a node definition part based on the given identifier and
+        type.
+
+        :param id_: the identifiert to use for the part.
+        :type  id_: uuid.uuid4
+        :param type_: the type of the part.
+        :tpye type_: qde.editor.domain.parameter.AtomicType
+
+        :return: a node definition part.
+        :rtype: qde.editor.domain.node.NodeDefinitionPart
+        """
+
+        def create_func(id_, default_function, name, type_):
+            node_part = node.NodePart(id_, default_function)
+            node_part.type_ = type_
+            node_part.name = name
+            return node_part
+
+        node_definition_part = node.NodeDefinitionPart(id_)
+        node_definition_part.type_ = type_
+        node_definition_part.creator_function = create_func
+
+        return node_definition_part
+
+    Generic = create_node_definition_part.__func__(
         id_="54b20acc-5867-4535-861e-f461bdbf3bf3",
         type_=types.NodeType.GENERIC
     )
@@ -2343,6 +2372,7 @@ node's inputs. It will be setup by the node's parts.
 @d Implicit sphere node invocations
 @{{
     "id_": "4cd369d2-c245-49d8-9388-6b9387af8376",
+    "type": "implicit",
     "script": [
         "float s = sphere(",
         "    16d90b34-a728-4caa-b07d-a3244ecc87e3-position,",
@@ -2359,6 +2389,7 @@ shader.
 @{{
     "id_": "74b73ce7-8c9d-4202-a533-c77aba9035a6",
     "name": "Implicit sphere node function",
+    "type_": "implicit",
     "script": [
         "# -*- coding: utf-8 -*-",
         "",
@@ -2427,6 +2458,8 @@ class NodeController(object):
     # Constants
     NODES_PATH = "nodes"
     NODES_EXTENSION = "node"
+    ROOT_NODE_ID = uuid.UUID("026c04d0-36d2-49d5-ad15-f4fb87fe8eeb")
+    ROOT_NODE_OUTPUT_ID = uuid.UUID("a8fadcfc-4e19-4862-90cf-a262eef2219b")
 
     # Signals
     @<Node controller signals@>
@@ -2466,7 +2499,7 @@ def load_nodes(self):
 
     @<Node controller load nodes method@>@}
 
-Node definitons will be contain parts. The parts within node definition are
+Node definitons will contain parts. The parts within node definition are
 used to create corresponding parts within instances of themselves. The parts
 are able to create values based on the atomic types through functions.
 
@@ -2496,9 +2529,10 @@ def __init__(self, id_):
     :type  id_: uuid.uuid4
     """
 
-    self.id_         = id_
-    self.type_       = None
-    self.name        = None
+    self.id_    = id_
+    self.type_  = None
+    self.name   = None
+    self.parent = None
 
     # This property is used when evaluating node instances using this node
     # definition
@@ -2731,19 +2765,9 @@ to provide parts for the atomic types before loading all the node definitions.
 @{
 for atomic_type in parameter.AtomicTypes.atomic_types:
     if atomic_type.id_ not in self.node_definition_parts:
-
-        def create_func(id_, default_function, name, type_):
-            node_part = node.NodePart(id_, default_function)
-            node_part.type_ = type_
-            node_part.name = name
-            return node_part
-
-        node_definition_part = node.NodeDefinitionPart(atomic_type.id_)
-        node_definition_part.type_ = atomic_type.type_
-        node_definition_part.creator_function = create_func
-        self.node_definition_parts[atomic_type.id_] = node_definition_part
+        self.node_definition_parts[atomic_type.id_] = atomic_type
         self.logger.info(
-            "Created node part for atomic type %s: %s",
+            "Added atomic type %s: %s",
             atomic_type.type_, atomic_type.id_
         )
     else:
@@ -2768,7 +2792,8 @@ class NodeDefinition(object):
     @<Node definition domain model methods@>@}
 
 The definition of a node is quite similar to a node itself. As the definiton of
-a node may be changed, the flag \verb+was_changed+ is added.
+a node may be changed, the flag \verb+was_changed+ is added. Further a node
+definition holds all instances of itself, meaning nodes.
 
 @d Node definition domain model constructor
 @{
@@ -2791,6 +2816,7 @@ def __init__(self, id_):
     self.parts       = []
     self.nodes       = []
     self.connections = []
+    self.instances   = []
     self.was_changed = False@}
 
 Now the controller is able to instantiate nodes definitions and keep them in a
@@ -2924,7 +2950,6 @@ def load_node_definition(cls, node_controller, json_file_handle):
 
     inputs = []
     for input in o['inputs']:
-        print(type(input))
         node_definition_input = cls.build_node_definition_input(
             node_controller, input
         )
@@ -2970,7 +2995,7 @@ def load_node_definition(cls, node_controller, json_file_handle):
     # TODO: Check if this part can be abve the def. instance
     parts = []
     for p in o['parts']:
-        part = cls.build_node_definition_part(p)
+        part = cls.build_node_definition_part(node_controller, node_definition, p)
         parts.append(part)
     node_definition.parts = parts
 
@@ -2980,7 +3005,8 @@ def load_node_definition(cls, node_controller, json_file_handle):
     return node_definition@}
 
 As can be seen in the above listing, there are parts, that are not yet defined:
-inputs, outputs, connections, definitions, invocations and parts.
+inputs, outputs, other node definitions, connections, definitions, invocations
+and parts.
 
 First the building of the node definition inputs is defined.
 
@@ -3415,6 +3441,129 @@ def get_node_definition(self, id_):
             return node_definition
         else:
             return None@}
+
+As can be seen in the above code snippet, the node controller holds the
+root node, which is placed within the root scene.
+
+@d Node controller constructor
+@{
+    # TODO: Load from coonfiguration?
+    self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
+    self.root_node.name = QtCore.QCoreApplication.translate(
+        __class__.__name__,
+        'Root'
+    )
+    root_node_output = node.NodeDefinitionOutput(
+        NodeController.ROOT_NODE_OUTPUT_ID,
+        QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            'Output'
+        ),
+        parameter.AtomicTypes.Generic
+    )
+    self.root_node.add_output(root_node_output)
+    self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)@}
+
+Currently there is no possiblity to add outputs to a node definition. Adding an
+ouptut simply adds that output to the list of outputs the node definition has.
+Furthermore that output needs to added for each instance of that node
+definition as well.
+\todo{Add inputs as well?}
+
+@d Node definition domain model methods
+@{
+def add_output(self, node_definition_output):
+    """Adds the given output to the beginning of the list of outputs and
+    also to all instances of this node definition.
+
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    self.add_output_at(len(self.outputs), node_definition_output)
+
+def add_output_at(self, index, node_definition_output):
+    """Adds the given output to the list of outputs at the given index
+    position and also to all instances of this node definition.
+
+    :param index: the position in the list of outputs where the new output
+                  shall be added at.
+    :type  index: int
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+
+    :raise: an index error when the given index is not valid.
+    :raises: IndexError
+    """
+
+    if index < 0 or index > len(self.outputs):
+        raise IndexError()
+
+    self.outputs.insert(index, node_definition_output)
+
+    for instance in self.instances:
+        instance.add_output_at(
+            index,
+            node_definition_output.create_instance()
+        )
+
+    # TODO: Insert connection if output is atomic
+
+    self.was_changed = True@}
+
+Having the reading and parsing of inputs, outputs and other node definition
+implemented, the reading and parsing of connections, definitions, invocations
+and parts still remains.
+
+The reading and parsing of connections, definitions and invocation is very
+straightforward and very similar to the one of the node definitions. Therefore
+it will not be shown in detail. Details are found at~\todo[inline]{Add
+reference to code fragments here}.
+
+The last part when loading a node definition, is reading and parsing the code
+part of the node.
+
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_part(cls, node_controller, parent, json_input):
+    """Builds and returns a node definition part from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param parent: the parent of the node definition part
+    :type  parent: qde.editor.domain.node.NodeDefinition
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: 
+    :rtype:  
+    """
+
+    part_id         = uuid.UUID(json_input['id_'])
+    name            = str(json_input['name'])
+
+    script_lines = []
+    for script_line in json_input['script']:
+        script_lines.append(str(script_line))
+    script = "\n".join(script_lines)
+
+    type_string = json_input['type_']
+    type_ = types.NodeType[type_string.upper()]
+
+    node_definition_part = node.NodeDefinitionPart(part_id)
+    node_definition_part.name = name
+    node_definition_part.type_ = type_
+    node_definition_part.parent = parent
+
+    node_controller.node_definition_parts[part_id] = node_definition_part
+
+    cls.logger.debug(
+        "Built part for node definition %s",
+        part_id
+    )
+    return node_definition_part
+@}
 
 Finally the node controller needs to be instantiated by the main application
 and the loading of the node definitions needs to be triggered.
