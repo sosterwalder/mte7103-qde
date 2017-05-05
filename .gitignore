@@ -152,3 +152,4 @@ doc/_minted-index/
 doc/build/
 doc/**/auto/
 doc/source/*.rst
+doc/inc/versions.*
