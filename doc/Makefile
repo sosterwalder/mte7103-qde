@@ -31,9 +31,6 @@ OS           := $(shell uname)
 .build-glossary:
 	makeglossaries $(JOB) ${TEX_VERBOSE}
 
-.build-pdflatex:
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-
 .set-build-to-build-doc-fast:
 	$(eval BUILD_COMMAND = build-doc-fast)
 
@@ -52,26 +49,16 @@ endif
 
 all: clean-doc build-doc
 
-build-doc:
-	rm -f *{$(CLEAN_EXT)}
-	rm -f inc/*{$(CLEAN_EXT)}
-	rm -rf `$(BIBLIOGRAPHY) --cache`
-	${NUWEB} -o $(JOB).$(NUWEB_EXT)
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	${NUWEB} -o $(JOB).$(NUWEB_EXT)
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
-	# makeglossaries $(JOB) ${TEX_VERBOSE}
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
+build-doc: clean-doc clean-bib doc pdf doc pdf .build-bibliography pdf
 
-build-doc-fast:
-	${NUWEB} -o $(JOB).$(NUWEB_EXT)
-	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) ${TEX_VERBOSE}
-	${NUWEB} -o $(JOB).$(NUWEB_EXT)
+build-doc-fast: doc pdf doc
+
+clean-bib:
+	rm -rf `$(BIBLIOGRAPHY) --cache`
 
 clean-doc:
-	rm -f *{$(CLEAN_EXT)}
-	rm -f inc/*{$(CLEAN_EXT)}
+	@rm -f *{$(CLEAN_EXT)}
+	@rm -f inc/*{$(CLEAN_EXT)}
 
 clean-doc-dist: clean
 	@rm -f *.pdf
