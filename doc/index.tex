@@ -194,7 +194,17 @@
 \label{chap:versions}
 
 \begin{versionhistory}
-    \vhEntry{ 0cd017d }{ 2017-05-21 10:19:53 }{ SO }{ foo }
+    \vhEntry{ 89c7544 }{ 2017-02-28 17:09:43 }{ SO }{ Set up initial project structure, provide first content }
+    \vhEntry{ 10192d8 }{ 2017-03-02 22:37:17 }{ SO }{ Set up project schedule }
+    \vhEntry{ 54f4b23 }{ 2017-03-05 22:53:15 }{ SO }{ Set up project structure, implement main entry point and main window }
+    \vhEntry{ ffda0e5 }{ 2017-03-15 10:58:51 }{ SO }{ Scene graph, logging, adapt project schedule }
+    \vhEntry{ 34b09b7 }{ 2017-03-24 17:08:22 }{ SO }{ Update meeting minutes, thoughts about node implementation }
+    \vhEntry{ 06fe268 }{ 2017-04-03 23:00:35 }{ SO }{ Add requirements, node graph implemenetation }
+    \vhEntry{ d264175 }{ 2017-04-10 16:07:01 }{ SO }{ Conversion from Org-Mode to Nuweb, revise editor implementation }
+    \vhEntry{ f8b524b }{ 2017-04-30 23:42:57 }{ SO }{ Approach node graph and nodes }
+    \vhEntry{ 2f46832 }{ 2017-05-04 21:13:41 }{ SO }{ Impel node definitions further }
+    \vhEntry{ ae34fc5 }{ 2017-05-24 13:56:31 }{ SO }{ Change class to tufte-book, title page, introduction, further implementation }
+    
 \end{versionhistory}% -*- coding: utf-8 -*-
 
 \chapter*{Abstract}
@@ -358,7 +368,7 @@ mesh-based models and corresponding rendering algorithms may be implemented.
 
 \newthought{Optional objectives} are the following:
 \begin{itemize}
-  \item Additional features for the editor as follows.
+  \item Additional features for the editor, as follows.
   \begin{itemize}
     \item A sequencer, allowing a time-based scheduling of defined scenes.
     \item Additional nodes, such as operations (e.g. replication of objects)
@@ -433,18 +443,16 @@ meant equally.
 \label{sec:involved_persons}
 
 \begin{table}[h]
+  \caption{List of the involved persons.}
   \begin{tabularx}{\textwidth}{llX}
     \toprule
-    \textbf{Role} & \textbf{Name} & \textbf{Task} \\ \midrule
-    \textit{Author}  & Sven Osterwalder\protect\footnotemark[1]{} &
-    Author of the thesis.\\
-    \textit{Advisor} & Prof.\ Claude Fuhrer\protect\footnotemark[2]{} &
-    Supervises the student doing the thesis.\\
-    \textit{Expert}  & Dr.\ Eric Dubuis\protect\footnotemark[3]{}     &
-    Provides expertise concerning the thesis's subject, monitors and
-    grades the thesis.\\ \bottomrule
+    \textbf{Role} & \textbf{Name} & \textbf{Task} \\
+    \midrule
+    \textit{Author}  & Sven Osterwalder\protect\footnotemark[1]{} & Author of the thesis.\\
+    \textit{Advisor} & Prof.\ Claude Fuhrer\protect\footnotemark[2]{} & Supervises the student doing the thesis.\\
+    \textit{Expert}  & Dr.\ Eric Dubuis\protect\footnotemark[3]{}     & Provides expertise concerning the thesis's subject, monitors and grades the thesis.\\
+    \bottomrule
   \end{tabularx}
-  \caption{List of the involved persons.}
 \end{table}
 \footnotetext[1]{sven.osterwaldertudents.bfh.ch}
 \footnotetext[2]{claude.fuhrer@bfh.ch}
@@ -454,6 +462,7 @@ meant equally.
 \label{sec:deliverables}
 
 \begin{table}[h]
+  \caption{List of deliverables.}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Deliverable} & \textbf{Description} \\
@@ -465,8 +474,9 @@ meant equally.
     computer graphics, which was developped during this thesis. \\
     \bottomrule
   \end{tabularx}
-  \caption{List of deliverables.}
 \end{table}
+
+\newpage{}
 
 \section{Organization of work}
 \label{sec:organization-of-work}
@@ -478,50 +488,51 @@ meant equally.
 Fuhrer, and the expert, Dr. Eric Dubuis, helped reaching the defined goals and
 preventing erroneous directions of the thesis. The supervisor supported the
 author of this thesis by providing suggestions throughout the held meetings.
-The minutes of the meetings may be found under meeting minutes~\todo{Add
-correct reference}.
+The minutes of the meetings may be found under meeting minutes.
+\todo[inline]{Add correct reference}
 
 \subsection{Phases of the project and milestones}
 \label{subsec:project-phases-milestones}
 
 \begin{table}[h]
-    \begin{tabularx}{\textwidth}{XXr}
+  \caption{Phases of the project.}
+  \begin{tabularx}{\textwidth}{Xr}
     \toprule
-    \textbf{Phase}   & \textbf{Description} & \textbf{Week / 2017} \\
+    \textbf{Phase}   & \textbf{Week / 2017} \\
     \midrule
-    Start of the project & & 8 \\
-    Definition of objectives and limitation & & 8-9 \\
-    Documentation and development & & 8-30 \\
-    Corrections & & 30-31 \\
-    Preparation of the thesis' defense & & 31-32 \\
-    \bottomrule
-    \end{tabularx}
-    \caption{Phases of the project.}
-\end{table}
-\todo[inline]{Describe the points in the phases table.}
-
-\begin{table}[h]
-    \begin{tabularx}{\textwidth}{XXr}
-    \toprule
-    \textbf{Phase}   & \textbf{Description} & \textbf{End of week / 2017} \\
-    \midrule
-    Project structure is set up & & 8 \\
-    Mandatory project goals are reached & & 30 \\
-    Hand-in of the thesis & & 31 \\
-    Defense of the thesis & & 32 \\
+    Start of the project & 8 \\
+    Definition of objectives and limitation & 8-9 \\
+    Documentation and development & 8-30 \\
+    Corrections & 30-31 \\
+    Preparation of the thesis' defense & 31-32 \\
     \bottomrule
   \end{tabularx}
-  \caption{Milestones of the project.}
 \end{table}
-\todo[inline]{Describe the points in the milestones table.}
+
+\begin{table}[h]
+  \caption{Milestones of the project.}
+  \begin{tabularx}{\textwidth}{Xr}
+    \toprule
+    \textbf{Milestone}   & \textbf{End of week / 2017} \\
+    \midrule
+    Project structure is set up & 8 \\
+    Mandatory project goals are reached & 30 \\
+    Hand-in of the thesis & 31 \\
+    Defense of the thesis & 32 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\newpage{}
 
 \subsection{Schedule}
 \label{subsec:project-schedule}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
     \begin{ganttchart}[
         vgrid,
-        x unit=0.5cm,
+        x unit=4.5mm,
+        y unit chart=0.87cm,
         bar/.append style={fill=bfhgrey!50},
     ]{1}{26}
         \gantttitle{2017}{26} \ganttnewline{}
@@ -539,13 +550,83 @@ correct reference}.
     \end{ganttchart}
     \caption{Schedule of the project. The subtitle displays calendar weeks.}
 \end{figure*}
-% i inc/fundamentals.w
-% i inc/methodologies.w
-% i inc/results.w
-% i inc/discussion-conclusion.w
+% -*- mode: latex; coding: utf-8 -*-
+
+\chapter{Fundamentals}
+\label{chap:fundamentals}
+
+\todo[inline]{Write chapter.}
+% Der aktuelle Wissensstand zum behandelten Thema oder zur Fragestellung muss zu
+% Beginn der Arbeit beschrieben werden. Die Vorarbeiten und Publikationen, auf die
+% sich der Bericht stützt, werden genannt [3, p. 26]. Je nach Arbeit und
+% Zielpublikum werden die Grundlagen kurz zusammengefasst und einander
+% gegenübergestellt. Der theoretische Hintergrund oder Normen, die für die
+% Untersuchung eine Rolle spielen, werden objektiv dargestellt. Gibt es nur sehr
+% wenige Grundlagen, die eingangs der Arbeit erläutert werden müssen, können diese
+% Informationen auch als Absatz in der Einleitung oder als Unterkapitel zum
+% Kapitel der Einleitung verfasst werden.
+
+\section{Software architecture}
+\label{sec:architecture}
+
+\todo[inline]{Write chapter.}
+
+\section{Rendering}
+\label{sec:rendering}
+
+\todo[inline]{Write chapter.}
+% -*- mode: latex; coding: utf-8 -*-
+
+\chapter{Methodologies}
+\label{chap:methodologies}
+
+\todo[inline]{Write chapter.}
+
+% Das Kapitel der Methoden erklärt, was (Material) untersucht wurde und wie
+% (Methode) ersteres untersucht wurde. Aufgrund der Beschreibung der Methoden muss
+% es möglich sein, den Versuch oder die Studie zu wiederholen. Ist die
+% Beschreibung der Versuchsanordnung oder des Vorgehens von sehr geringem Umfang,
+% können diese nach Rücksprache mit der Betreuungsperson auch als Absatz in der
+% Einleitung oder als Unterkapitel zum Kapitel der Einleitung verfasst werden.% -*- mode: latex; coding: utf-8 -*-
+
+\chapter{Results}
+\label{chap:results}
+
+\todo[inline]{Write chapter.}
+
+% Gestützt auf Quellen, Messungen und Datenerhebungen werden die anhand der
+% Fragestellung gewon- nenen Ergebnisse präsentiert [3, p. 116]. Während das
+% Kapitel zu Material und Methoden ( 3.2.3) oder das entsprechende Unterkapitel
+% der Einleitung die Versuchsanordnung beschreibt, werden im Kapitel Ergebnisse
+% der Versuchsablauf mit den Resultaten objektiv wiedergegeben. Alle Überlegungen,
+% Berechnungen oder Experimente des Berichts müssen vollständig nachvollziehbar
+% sein [3, p. 26]. Zusammen mit der Diskussion und den Folgerungen machen die
+% Ergebnisse qualitativ und quantitativ den Hauptteil des Berichts aus [3, p. 26].% -*- mode: latex; coding: utf-8 -*-
+
+\chapter{Discussion and conclusion}
+\label{chap:discussion-conclusion}
+
+\todo[inline]{Write chapter.}
+
+% Im Kapitel Diskussion setzt sich die Autorin, der Autor mit den erzielten
+% Ergebnissen auseinander. Diese werden interpretiert und mit Erkenntnissen aus
+% anderen Studien zur gleichen Fragestellung beurteilt. Die Diskussion schafft die
+% nötigen Grundlagen, damit die in der Einleitung formulierte Fragestellung
+% möglichst gut und sachlich richtig beantwortet werden kann.
+
+% In den Folgerungen können die wichtigsten Ergebnisse in ihrer kritischen
+% Würdigung prägnant zusammengefasst werden. Es wird eine Art Schlussbilanz
+% gezogen. Aus der detaillierten Darstellung der Ergebnisse und deren Diskussion
+% lässt sich in der Regel eine Antwort auf die Ausgangsfrage ableiten [3, p. 26].
+% Die Antwort auf die Fragestellung kann zu Empfeh- lungen für die Ausführung in
+% der Praxis oder für weitere Studien führen. Die Folgerungen dürfen keine neuen
+% Elemente und Aspekte enthalten, welche nicht schon in den Ergebnissen und in der
+% Diskussion behandelt wurden. Wenn die Problemstellung der Arbeit nur sehr wenige
+% Folgerungen verlangt, können diese auch als Schlussteil in die Diskussion
+% integriert werden.
+% TODO: Check if still needed
 % i inc/procedure.w
 % i inc/implementation.w
-\todo[inline]{fix main part}
 
 
 % Backmatter
