@@ -28,13 +28,14 @@
 \newpage{}
 @i inc/introduction.w
 @i inc/administrative-aspects.w
-% i inc/fundamentals.w
-% i inc/methodologies.w
-% i inc/results.w
-% i inc/discussion-conclusion.w
+@i inc/fundamentals.w
+@i inc/methodologies.w
+@i inc/results.w
+@i inc/discussion-conclusion.w
+
+% TODO: Check if still needed
 % i inc/procedure.w
 % i inc/implementation.w
-\todo[inline]{fix main part}
 
 
 % Backmatter
