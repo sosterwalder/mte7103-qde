@@ -40,7 +40,7 @@ def write_version_to_csv(version):
         vfh.write("\n{version};{short};{author};{date};{description}".format(
             version=version.key, short=version.short_key,
             author=version.author,
-            date=version.date_string,
+            date=version.date,
             description=version.description
         ))
 
