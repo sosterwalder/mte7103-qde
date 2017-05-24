@@ -1,39 +1,16 @@
 % -*- mode: latex; coding: utf-8 -*-
 
 \begin{titlepage}
-
-    % BFH-Logo absolute placed at (28,12) on A4 and picture (16:9 or 15cm x 8.5cm)
-    % Actually not a realy satisfactory solution but working.
-    %---------------------------------------------------------------------------
-    \setlength{\unitlength}{1mm}
-    % \includegraphics[scale=1.0]{img/BFH_Logo_B}
-    BFH Logo
-
-    \begin{picture}(150,2)
-        \put(0,0){\color{bfhgrey}\rule{150mm}{2mm}}
-    \end{picture}
-
-    \begin{figure}[H]
-        \hspace*{0.25cm}
-        % \includegraphics{img/logo.pdf}
-        LOGO
-    \end{figure}
-
-    \begin{picture}(150,2)
-        \put(0,0){\color{bfhgrey}\rule{150mm}{2mm}}
-    \end{picture}
-
-    \begin{flushleft}
-        \fontsize{26pt}{28pt}\selectfont
-        \textbf{\titletext} \\
+    \BgThispage
+    \begin{fullwidth}%
+        \sffamily%
+        \fontsize{36}{40}\selectfont\par\noindent\textcolor{darkgray}{\allcaps{\titletext}}
         \vspace{3mm}
-        \subtitletext{}\\
+        \fontsize{18}{20}\selectfont\par\noindent\textcolor{darkgray}{\allcaps{\subtitletext}}
         \vspace{6mm}
-        \fontsize{14pt}{16pt}\selectfont
-        \textbf{\subsubtitletext} \\
-        \vspace{3mm}
-
-        \fontsize{10pt}{17pt}\selectfont
+        \fontsize{14}{16}\selectfont\par\noindent\allcaps{\subsubtitletext}%
+        \vspace{24mm}
+        \normalsize\normalfont%
         \begin{tabbing}
         xxxxxxxxxxxxxxx   \= xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \kill
         Major:            \> Computer science                                         \\
@@ -43,15 +20,22 @@
         Date:             \> \vhCurrentDate{}\\
         Version:          \> \vhCurrentVersion\\
         \end{tabbing}
-    \end{flushleft}
-    \footnotetext[1]{sven.osterwalder@@students.bfh.ch}
-    \footnotetext[2]{claude.fuhrer@@bfh.ch}
-    \footnotetext[3]{eric.dubuis@@comet.ch}
+        \vspace{10mm}
+        \begin{tabularx}{0.5\textwidth}{@@{}XX@@{}}
+            \includegraphics[width=50px]{images/by-sa-big} &
+            \includegraphics[height=20pt]{images/BFH_Logo_B} \\
 
-    \vfill
-    % \includegraphics[height=\baselineskip]{img/by-sa}\\ \small{\sffamily{Licensed under the Creative Commons Attribution-ShareAlike 3.0 License}}
-    by-sa
-
-    \thispagestyle{titlepageStyle}
-
+            \tiny{\sffamily{This work is licensed under
+            a~\href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative
+            Commons Attribution-ShareAlike 4.0 International
+            License}.}}\index{license}
+            & \tiny{\sffamily{Berne University of Applied Sciences}}\\
+        \end{tabularx}
+        \footnotetext[1]{sven.osterwalder@@students.bfh.ch}
+        \footnotetext[2]{claude.fuhrer@@bfh.ch}
+        \footnotetext[3]{eric.dubuis@@comet.ch}
+    \end{fullwidth}%
 \end{titlepage}
+\restoregeometry
+\thispagestyle{empty}%
+\clearpage%
