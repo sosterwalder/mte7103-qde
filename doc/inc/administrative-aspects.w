@@ -13,18 +13,16 @@ meant equally.
 \label{sec:involved_persons}
 
 \begin{table}[h]
+  \caption{List of the involved persons.}
   \begin{tabularx}{\textwidth}{llX}
     \toprule
-    \textbf{Role} & \textbf{Name} & \textbf{Task} \\ \midrule
-    \textit{Author}  & Sven Osterwalder\protect\footnotemark[1]{} &
-    Author of the thesis.\\
-    \textit{Advisor} & Prof.\ Claude Fuhrer\protect\footnotemark[2]{} &
-    Supervises the student doing the thesis.\\
-    \textit{Expert}  & Dr.\ Eric Dubuis\protect\footnotemark[3]{}     &
-    Provides expertise concerning the thesis's subject, monitors and
-    grades the thesis.\\ \bottomrule
+    \textbf{Role} & \textbf{Name} & \textbf{Task} \\
+    \midrule
+    \textit{Author}  & Sven Osterwalder\protect\footnotemark[1]{} & Author of the thesis.\\
+    \textit{Advisor} & Prof.\ Claude Fuhrer\protect\footnotemark[2]{} & Supervises the student doing the thesis.\\
+    \textit{Expert}  & Dr.\ Eric Dubuis\protect\footnotemark[3]{}     & Provides expertise concerning the thesis's subject, monitors and grades the thesis.\\
+    \bottomrule
   \end{tabularx}
-  \caption{List of the involved persons.}
 \end{table}
 \footnotetext[1]{sven.osterwalder@students.bfh.ch}
 \footnotetext[2]{claude.fuhrer@@bfh.ch}
@@ -34,6 +32,7 @@ meant equally.
 \label{sec:deliverables}
 
 \begin{table}[h]
+  \caption{List of deliverables.}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Deliverable} & \textbf{Description} \\
@@ -45,8 +44,9 @@ meant equally.
     computer graphics, which was developped during this thesis. \\
     \bottomrule
   \end{tabularx}
-  \caption{List of deliverables.}
 \end{table}
+
+\newpage{}
 
 \section{Organization of work}
 \label{sec:organization-of-work}
@@ -58,50 +58,51 @@ meant equally.
 Fuhrer, and the expert, Dr. Eric Dubuis, helped reaching the defined goals and
 preventing erroneous directions of the thesis. The supervisor supported the
 author of this thesis by providing suggestions throughout the held meetings.
-The minutes of the meetings may be found under meeting minutes~\todo{Add
-correct reference}.
+The minutes of the meetings may be found under meeting minutes.
+\todo[inline]{Add correct reference}
 
 \subsection{Phases of the project and milestones}
 \label{subsec:project-phases-milestones}
 
 \begin{table}[h]
-    \begin{tabularx}{\textwidth}{XXr}
+  \caption{Phases of the project.}
+  \begin{tabularx}{\textwidth}{Xr}
     \toprule
-    \textbf{Phase}   & \textbf{Description} & \textbf{Week / 2017} \\
+    \textbf{Phase}   & \textbf{Week / 2017} \\
     \midrule
-    Start of the project & & 8 \\
-    Definition of objectives and limitation & & 8-9 \\
-    Documentation and development & & 8-30 \\
-    Corrections & & 30-31 \\
-    Preparation of the thesis' defense & & 31-32 \\
-    \bottomrule
-    \end{tabularx}
-    \caption{Phases of the project.}
-\end{table}
-\todo[inline]{Describe the points in the phases table.}
-
-\begin{table}[h]
-    \begin{tabularx}{\textwidth}{XXr}
-    \toprule
-    \textbf{Phase}   & \textbf{Description} & \textbf{End of week / 2017} \\
-    \midrule
-    Project structure is set up & & 8 \\
-    Mandatory project goals are reached & & 30 \\
-    Hand-in of the thesis & & 31 \\
-    Defense of the thesis & & 32 \\
+    Start of the project & 8 \\
+    Definition of objectives and limitation & 8-9 \\
+    Documentation and development & 8-30 \\
+    Corrections & 30-31 \\
+    Preparation of the thesis' defense & 31-32 \\
     \bottomrule
   \end{tabularx}
-  \caption{Milestones of the project.}
 \end{table}
-\todo[inline]{Describe the points in the milestones table.}
+
+\begin{table}[h]
+  \caption{Milestones of the project.}
+  \begin{tabularx}{\textwidth}{Xr}
+    \toprule
+    \textbf{Milestone}   & \textbf{End of week / 2017} \\
+    \midrule
+    Project structure is set up & 8 \\
+    Mandatory project goals are reached & 30 \\
+    Hand-in of the thesis & 31 \\
+    Defense of the thesis & 32 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\newpage{}
 
 \subsection{Schedule}
 \label{subsec:project-schedule}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
     \begin{ganttchart}[
         vgrid,
-        x unit=0.5cm,
+        x unit=4.5mm,
+        y unit chart=0.87cm,
         bar/.append style={fill=bfhgrey!50},
     ]{1}{26}
         \gantttitle{2017}{26} \ganttnewline{}
