@@ -122,7 +122,7 @@ mesh-based models and corresponding rendering algorithms may be implemented.
 
 \newthought{Optional objectives} are the following:
 \begin{itemize}
-  \item Additional features for the editor as follows.
+  \item Additional features for the editor, as follows.
   \begin{itemize}
     \item A sequencer, allowing a time-based scheduling of defined scenes.
     \item Additional nodes, such as operations (e.g. replication of objects)
