@@ -4,7 +4,7 @@
 ifdef QDE_DEBUG
 NUWEB = nuweb -v -r -l
 TEX_VERBOSE =
-TEX_HALT = -halt-on-errors
+TEX_HALT = -halt-on-error
 QDE_DEBUG = QDE_DEBUG=1
 else
 NUWEB = nuweb -r -l
