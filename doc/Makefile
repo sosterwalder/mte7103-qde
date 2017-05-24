@@ -4,10 +4,12 @@
 ifdef QDE_DEBUG
 NUWEB = nuweb -v -r -l
 TEX_VERBOSE =
+TEX_HALT = -halt-on-errors
 QDE_DEBUG = QDE_DEBUG=1
 else
 NUWEB = nuweb -r -l
 TEX_VERBOSE = 1> /dev/null
+TEX_HALT =
 QDE_DEBUG =
 endif
 
@@ -77,6 +79,9 @@ clean-doc-dist: clean
 doc:
 	# -o suppresses the generation of (code) files
 	${NUWEB} -o $(JOB).$(NUWEB_EXT)
+
+pdf:
+	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(TEX_HALT) $(BUILD) ${TEX_VERBOSE}
 
 src:
 	# -t suppresses the generation of tex files
