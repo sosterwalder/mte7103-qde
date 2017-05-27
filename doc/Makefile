@@ -25,12 +25,6 @@ OS           := $(shell uname)
 
 .PHONY: all build-doc build-doc-fast clean-doc clean-doc-fast doc src watch-build-doc watch-build-doc-fast watch-doc
 
-.build-bibliography:
-	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
-
-.build-glossary:
-	makeglossaries $(JOB) ${TEX_VERBOSE}
-
 .set-build-to-build-doc-fast:
 	$(eval BUILD_COMMAND = build-doc-fast)
 
@@ -42,16 +36,22 @@ OS           := $(shell uname)
 
 .watch-build-command:
 ifeq ($(OS), Darwin)
-	fswatch -o . -r --include '\.w$$' --exclude '.*' | (while read; do $(QDE_DEBUG) make $(BUILD_COMMAND); done)
+	fswatch -o . -r --include '\.w$$' --include '\.bib$$' --include '\.bbl$$' --exclude '.*' | (while read; do $(QDE_DEBUG) make $(BUILD_COMMAND); done)
 else
 	while true; do inotifywait -r -e modify --exclude="(.*.lol|.*.lot|.*.lof|.*.toc|.*.tdo|.*.ist|.*.out|.*.pdf|.*.aux|.*.glo|.*.idx|.*.bbl|.*.swp|.*.blg|.*.fdb_latexmk|.*.fls|.*.log)" . && $(QDE_DEBUG) make $(BUILD_COMMAND); done
 endif
 
 all: clean-doc build-doc
 
-build-doc: clean-doc clean-bib doc pdf doc pdf .build-bibliography pdf
+bib:
+	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
+
+build-doc: clean-doc clean-bib doc pdf doc pdf bib pdf
 
 build-doc-fast: doc pdf doc
+
+glossary:
+	makeglossaries $(JOB) ${TEX_VERBOSE}
 
 clean-bib:
 	rm -rf `$(BIBLIOGRAPHY) --cache`
