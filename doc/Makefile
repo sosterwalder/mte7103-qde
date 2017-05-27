@@ -23,7 +23,7 @@ PDFLATEX     := pdflatex
 BIBLIOGRAPHY := biber
 OS           := $(shell uname)
 
-.PHONY: all build-doc build-doc-fast clean-doc clean-doc-fast doc src watch-build-doc watch-build-doc-fast watch-doc
+.PHONY: all bib build-doc build-doc-fast clean-doc clean-doc-fast doc glossary src watch-build-doc watch-build-doc-fast watch-doc
 
 .set-build-to-build-doc-fast:
 	$(eval BUILD_COMMAND = build-doc-fast)
@@ -46,12 +46,17 @@ all: clean-doc build-doc
 bib:
 	$(BIBLIOGRAPHY) $(JOB) ${TEX_VERBOSE}
 
-build-doc: clean-doc clean-bib doc pdf doc pdf bib pdf
+build-doc:
+	$(MAKE) clean-doc
+	$(MAKE) clean-bib
+	$(MAKE) doc
+	$(MAKE) pdf
+	$(MAKE) doc
+	$(MAKE) pdf
+	$(MAKE) bib
+	$(MAKE) pdf
 
 build-doc-fast: doc pdf doc
-
-glossary:
-	makeglossaries $(JOB) ${TEX_VERBOSE}
 
 clean-bib:
 	rm -rf `$(BIBLIOGRAPHY) --cache`
@@ -66,6 +71,9 @@ clean-doc-dist: clean
 doc:
 	# -o suppresses the generation of (code) files
 	${NUWEB} -o $(JOB).$(NUWEB_EXT)
+
+glossary:
+	makeglossaries $(JOB) ${TEX_VERBOSE}
 
 pdf:
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(TEX_HALT) $(BUILD) ${TEX_VERBOSE}
