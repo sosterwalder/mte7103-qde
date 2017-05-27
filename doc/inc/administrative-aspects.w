@@ -3,11 +3,41 @@
 \chapter{Administrative aspects}
 \label{chap:administrative_aspects}
 
-\newthought{Some administrative aspects} of this thesis are covered, they are
-although not required for understanding of the result.
+% Link to previous
+% Make a connection to what has immediately gone before. Recap the last chapter.
+% In the last chapter I showed that… Having argued in the previous chapter that…
+% As a result of x, which I established in the last chapter….. It is also possible
+% to make a link between this chapter and the whole argument… The first step in
+% answering my research question (repeat question) .. was to.. . In the last
+% chapter I …
+\newthought{The last chapter} provided an introduction to this thesis by
+outlining the purpose and situation, the related works and the document
+structure.
 
-\newthought{The whole documentation} uses the male form, whereby both genera are
-meant equally.
+% Focus: What does this chapter specifically do?
+% Now focus the reader’s attention on what this chapter is specifically going to
+% do and why it is important. In this chapter I will examine.. I will present… I
+% will report … This is crucial in (aim of thesis/research question) in order to….
+\newthought{This chapter} covers some administrative aspects of this thesis,
+they are although not required for understanding of the result.
+
+% Overview: How is it done?
+% The third paragraph simply outlines the way that you are going to achieve the
+% aim spelled out in the previous paragraph. It’s really just a statement of the
+% contents in the order that the reader will encounter them. It is important to
+% state these not simply as topics, but actually how they build up the internal
+% chapter argument… I will begin by examining the definitions of, then move to
+% seeing how these were applied… I first of all explain my orientation to the
+% research process, positioning myself as a critical scholar.. I then explain the
+% methodology that I used in the research, arguing that ethnography was the most
+% suitable approach to provide answers to the question of…
+\newthought{The first section} defines the involved persons and their role
+during this thesis. Afterwards the deliverable items are shown and described.
+The last section elaborates on the organization of work including meetings, the
+phases and milestones as well as the thesis's schedule.
+
+\newthought{Note that} the whole documentation uses the male form, whereby both
+genera are equally meant.
 
 \section{Involved persons}
 \label{sec:involved_persons}
@@ -28,6 +58,8 @@ meant equally.
 \footnotetext[2]{claude.fuhrer@@bfh.ch}
 \footnotetext[3]{eric.dubuis@@comet.ch}
 
+\newpage{}
+
 \section{Deliverables}
 \label{sec:deliverables}
 
@@ -46,22 +78,19 @@ meant equally.
   \end{tabularx}
 \end{table}
 
-\newpage{}
-
 \section{Organization of work}
 \label{sec:organization-of-work}
 
 \subsection{Meetings}
 \label{subsec:meetings}
 
-\newthought{Various meetings} with the supervising professor, Prof. Claude
-Fuhrer, and the expert, Dr. Eric Dubuis, helped reaching the defined goals and
-preventing erroneous directions of the thesis. The supervisor supported the
-author of this thesis by providing suggestions throughout the held meetings.
-The minutes of the meetings may be found under meeting minutes.
-\todo[inline]{Add correct reference}
+\newthought{Various meetings} with the supervisor and the expert helped reaching
+the defined goals and preventing erroneous directions of the thesis. The
+supervisor and the expert supported the author of this thesis by providing
+suggestions throughout the held meetings. The minutes of the meetings may be
+found under meeting minutes. \todo[inline]{Add correct reference}
 
-\subsection{Phases of the project and milestones}
+\subsection{Phases and milestones}
 \label{subsec:project-phases-milestones}
 
 \begin{table}[h]
