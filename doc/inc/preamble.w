@@ -29,6 +29,7 @@
     eprint=false
 ]{biblatex}
 \usepackage{bookmark}
+\usepackage{esvect}                          % Provides nicer vector display in math mode
 
 % Environments
 % ---------------------------------------------------------------------------
