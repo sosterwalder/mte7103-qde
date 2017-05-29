@@ -52,6 +52,19 @@ principles}~\cite{osterwalder_volume_2016}.
 \section{Software architecture}
 \label{sec:architecture}
 
+\newthought{This~\autoref{sec:architecture}} is a summary of the previous
+project work of the author,~\enquote{QDE --- a visual animation system,
+architecture}~\cite{osterwalder_qde_2016}. It describes the fundamentals for the
+architecture for the intended software of this thesis.
+
+\newthought{Software architecture} is inherent to software engineering and
+software development. It may be done implicitly, for example when developing a
+smaller software where the concepts are somewhat intuitively clear and the
+decisions forming the design are worked out in one's head. But it may also be
+done explicitly, when developing a larger software for example. But what is
+software architecture?~\citeauthor{kruchten_rup_2003} defines software
+architecture as follows.
+
 \newthought{``An architecture is the \textit{set of significant
 decisions}} about the organization of a software system, the selection of
 \textit{structural elements} and their interfaces by which the system is
@@ -67,10 +80,140 @@ is important. [...] So, this makes it hard to tell people how to describe their
 architecture.~\enquote{Tell us what is important.} Architecture is about the
 important stuff. Whatever that is.}~\cite{fowler_architect_2003}
 
-\newthought{This~\autoref{sec:architecture}} is a summary of the previous
-project work of the author,~\enquote{QDE --- a visual animation system,
-architecture}~\cite{osterwalder_qde_2016}. It describes the fundamentals for the
-architecture for the intended software of this thesis.
+\newthought{The envisaged idea of this thesis}, using a node based graph for
+modeling objects and scenes and rendering them using sphere tracing, was
+developed ahead of this thesis. To ensure that this idea is really feasible, a
+prototype was developed during the former project
+work~\citetitle{osterwalder_volume_2016}. This prototype acted as a proof of
+concept. For this prototype an implicitly defined architecture was used, which
+led to an architecture which is hard to maintain and extend by providing no
+clear segregation between the data model and its representation.
+
+\newthought{With the previous project work},~\citetitle{osterwalder_qde_2016}, a
+software architecture was developed to prevent this circumstance. The software
+architecture is based on the unified process, what leads to an iterative
+approach.
+
+\newthought{Based upon the vision} actors are defined. The actors in turn are
+used in use cases, which define functional requirements for the behavior of a
+system. The definition of use cases shows the extent of the software and define
+its functionality and therefore the requirements. Based on the these
+requirements, the components shown in~\autoref{table:software-components} are
+established.
+
+\begin{table}[h]
+  \caption{Description of the components of the envisaged software.}
+  \label{table:software-components}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Component} & \textbf{Description} \\
+    \midrule
+    Player & Reads objects and scenes defined by the editor component and plays
+    them back in the defined chronological order.\\
+    Editor & Allows \textit{modeling} and \textit{composing} of objects and
+    scenes using a node based graphical user interface. \textit{Renders} objects
+    and scenes in real time using sphere tracing. \\
+    \midrule
+    Scene graph & Holds scenes in a tree like structure and has at least a root
+    node.\\
+    Node graph & Contains all nodes which define a single scene.\\
+    Parameter & Holds the parameters of a node from the node graph.\\
+    Rendering & Renders a node.\\
+    Time line & Depicts temporal events in terms of scenes which follow a
+    chronological order.\\ 
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[h]
+  \caption{%
+    A mock up of the editor application showing its components.\newline{}
+    1: Scene graph.\newline{}
+    2: Node graph.\newline{}
+    3: Parameter view.\newline{}
+    4: Rendering view.\newline{}
+    5: Time line.
+  }
+  \label{fig:editor-components}
+  \includegraphics[width=0.95\linewidth]{images/editor-components}
+\end{figure}
+
+\newthought{Identifying the components} helps finding the noteworthy concepts or
+objects. Decomposing a domain into noteworthy concepts or objects
+is~\enquote{the quintessential object-oriented analysis
+step}~\cite{larman_applying_2004}.~\enquote{The domain model is a visual
+representation of conceptual classes or real-situation objects in a
+domain.}~\cite{larman_applying_2004} The domain models for the editor and the
+player component are shown in~\autoref{fig:editor-domain-model} and
+in~\autoref{fig:player-domain-model} respectively.
+
+\begin{figure*}[h]
+  \caption{Domain model of the editor component.}
+  \label{fig:editor-domain-model}
+  \includegraphics[width=0.95\linewidth]{images/editor-domain-model}
+\end{figure*}
+
+\begin{figure*}[h]
+  \caption{Domain model of the player component.}
+  \label{fig:player-domain-model}
+  \includegraphics[width=0.95\linewidth]{images/player-domain-model}
+\end{figure*}
+
+% TODO: Add may be a reference to the documentation? The image of the editor
+% domain model is too small to be read.
+
+\newthought{Identifying the noteworthy concepts or objects} allows the
+definition of the logical architecture, which shows the overall image of
+(software) classes in form of packets, subsystems and layers.
+
+\newthought{To reduce coupling and dependencies} a relaxed layered architecture
+is used. In contrast to a strict layered architecture, which allows any layer
+calling only services or interfaces from the layer below, the relaxed layered
+architecture allows higher layers to communicate with any lower layer. To ensure
+low coupling and dependencies also for the graphical user interface, the models
+and their views are segregated using the model-view separation principle. This
+principle states that domain objects should have no direct knowledge about
+objects of the graphical user interface. In addition controllers are used, which
+represent workflow objects of the application layer.
+
+\begin{table}[h]
+  \caption{Layers of the envisaged software.}
+  \label{table:layers}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Layer} & \textbf{Description}\\
+    \midrule
+    UI & All elements of the graphical user interface.\\
+    Application & Controller/workflow objects.\\
+    Domain & Models respectively logic of the application.\\
+    Technical services & Technical infrastructure, such as graphics, window
+    creation and so on.\\
+    Foundation & Basic elements and low level services, such as a timer, arrays
+    or other data classes.\\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\newthought{Class diagrams provide a software point of view} whereas domain
+models provide rather a conceptual point of view. A class diagram shows classes,
+interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
+class diagram of the editor component whereas~\autoref{fig:player-class-diagram}
+shows the class diagram for the player component.
+
+\begin{figure*}[h]
+  \caption{Class diagram of the editor component.}
+  \label{fig:editor-class-diagram}
+  \includegraphics[width=0.95\linewidth]{images/editor-class-diagram}
+\end{figure*}
+
+\begin{figure*}[h]
+  \caption{Class diagram of the player component.}
+  \label{fig:player-class-diagram}
+  \includegraphics[width=0.95\linewidth]{images/player-class-diagram}
+\end{figure*}
+
+% TODO: Add may be a reference to the documentation? The images of the class
+% diagrams are too small to be read.
 
 \section{Rendering}
 \label{sec:rendering}
@@ -107,19 +250,21 @@ intensity is considered, therefore ~\enquote{the intensity of light emitted from
 all other points that reaches the first and is reflected from the first to the
 second}~\cite[pp. 775 and 776]{foley_computer_1996} point is added.
 
+\newpage{}
+
 \newthought{In 1986 James~\enquote{Jim}~Kajiya} set up the so called rendering
 equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 776]{foley_computer_1996}
 
 \begin{figure}
   \label{eq:rendering-equation}
-  \caption[][-120pt]{The rendering equation as defined by James Kajiya.}
+  \caption{The rendering equation as defined by James Kajiya.}
   \begin{equation}
     I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
   \end{equation}
 \end{figure}
 
-\marginnote[-130pt]{%
+\marginnote{%-130pt
   \begin{description}
     \item[$x, x' \text{and } x''$] Points in space.
     \item[$I(x, x')$] Intensity of the light going from point $x'$ to point $x$.
@@ -194,19 +339,18 @@ intersections between rays and objects. In contrast to the classical ray tracing
 approaches, the marching distance on rays is not defined by an absolute or a
 relative distance, instead distance functions are used. The distance functions
 are used to expand unbounding volumes (in this concrete case spheres, hence the
-name) along rays.~\autoref{fig:} illustrates this procedure.
+name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
 \begin{figure}[h]
     \caption{Illustration of the sphere tracing
       algorithm.
       Ray~\textit{e} hits no objects until reaching the horizon at
       $d_{max}$. Rays~\textit{f},~\textit{g} and~\textit{h} hit
-      polygon~\textit{poly1}.
-      \protect\footnotemark}\label{fig:sphere_tracing_1}
+      polygon~\textit{poly1}.}
+      \label{fig:sphere-tracing-1}
     \centering
-    \includegraphics{images/sphere_tracing_principle}
+    \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
 \end{figure}
-\footnotetext{Own illustration using Inkscape.}
 
 \newthought{Unbounding volumes} contrast with bounding volumes, which enclose a
 solid. Unbounding volumes enclose a part of space without including certain
@@ -228,21 +372,29 @@ continues until an object is being hit or until a predefined maximum distance of
 the ray $d_{max}$ is being reached. An object is being hit, whenever the
 returned radius of the distance function is below a predefined constant
 $\epsilon$. A possible implementation of the sphere tracing algorithm is shown
-in~\autoref{alg:sphere_tracing}.
+in~\autoref{alg:sphere-tracing}. This~\autoref{alg:sphere-tracing} is although
+only showing the distance estimation. Shading is done outside, for example in a
+render method which calls the sphere trace method. Shading means in this context
+the determination of a surface's respectively a pixel's color.
 
- \begin{figure}
-   \caption{An abstract implementation of the sphere tracing algorithm\protect\footnotemark.}
-   \begin{minted}{python}
+ \begin{figure*}
+   \label{alg:sphere-tracing}
+   \caption{%
+     An abstract implementation of the sphere tracing algorithm. Algorithm in
+     pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
+   }
+   \begin{pythoncode}
 def sphere_trace():
     ray_distance          = 0
     estimated_distance    = 0
     max_distance          = 9001
+    max_steps             = 100
     convergence_precision = 0.000001
 
     while ray_distance < max_distance:
-        # sd_sphere is a signed distance function defining the implicit surface
+        # sd_sphere is a signed distance function defining the implicit surface.
         # cast_ray defines the ray equation given the current traveled /
-        # marched distance of the ray
+        # marched distance of the ray.
         estimated_distance = sd_sphere(cast_ray(ray_distance))
 
         if estimated_distance < convergence_precision:
@@ -256,6 +408,28 @@ def sphere_trace():
     # When we reach this point, there was no intersection between the ray and a
     # implicit surface, so simply return 0
     return 0
-   \end{minted}
+   \end{pythoncode}
+\end{figure*}
+
+\newthought{Shading} is done as proposed by~\citeauthor{whitted_improved_1980}
+in~\citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}. This means,
+that the sphere tracing algorithm needs to return which object was hit and the
+material of this object. Depending on the objects material, three cases can
+occur: the material is reflective and refractive, the material is only
+reflective or the material is diffuse. For simplicity only the last case is
+being taken into account. For the actual shading a local illumination method is
+used:~\textit{phong shading}.
+
+\newthought{The phong illumination model} describes (reflected) light intensity
+$I$ as a composition of the ambient, the diffuse and the perfect specular
+reflection of a surface.
+
+\begin{figure}
+  \label{eq:phong-equation}
+  \caption{The phong illumination model as defined by Phong Bui-Tuong. Note that
+  the emissive term was left out intentionally as it is mainly used to achieve
+  special effects.}
+  \begin{equation}
+    I(\vv{V}) = k_{a} \cdot L_{a} + k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) + k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
+  \end{equation}
 \end{figure}
-\footnotetext{Algorithm in pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]}
