@@ -1,9 +1,10 @@
 % -*- mode: latex; coding: utf-8 -*-
 
 \documentclass[%
-    a4paper,
-    nobib,   % Disable natbib
-    openany  % Remove blank pages used for two page layout
+    a4paper,    % Use A4, not US letter!
+    justified,  % Use justified text
+    nobib,      % Disable natbib
+    openany     % Remove blank pages used for two page layout
 ]{tufte-book}
 
 @i inc/preamble.w
