@@ -2818,7 +2818,7 @@ def __init__(self, id_):
     self.name        = ""
     self.description = ""
     self.parent      = None
-    self.inupts      = []
+    self.inputs      = []
     self.outputs     = []
     self.definitions = []
     self.invocations = []
