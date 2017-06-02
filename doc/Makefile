@@ -23,7 +23,7 @@ PDFLATEX     := pdflatex
 BIBLIOGRAPHY := biber
 OS           := $(shell uname)
 
-.PHONY: all bib build-doc build-doc-fast clean-doc clean-doc-fast doc glossary src watch-build-doc watch-build-doc-fast watch-doc
+.PHONY: all bib build-doc build-doc-fast clean-doc clean-doc-fast doc glossary list src watch-build-doc watch-build-doc-fast watch-doc
 
 .set-build-to-build-doc-fast:
 	$(eval BUILD_COMMAND = build-doc-fast)
@@ -74,6 +74,12 @@ doc:
 
 glossary:
 	makeglossaries $(JOB) ${TEX_VERBOSE}
+
+list:
+	@# According to
+	@# https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$' | xargs
+
 
 pdf:
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(TEX_HALT) $(BUILD) ${TEX_VERBOSE}
