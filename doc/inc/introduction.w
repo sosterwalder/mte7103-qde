@@ -108,7 +108,6 @@ mesh-based models and corresponding rendering algorithms may be implemented.
       nodes and connections between the nodes.
     \item Nodes for the node-based graph structure.
       \begin{itemize}
-        
         \item Simple objects defined by signed distance functions: Cube and
           sphere
         \item Simple operations: Merge/Union, Intersection, Difference
@@ -169,7 +168,7 @@ concerning the implementation of the intended software.
 
 The following chapter on the \textit{results} concludes on the implementation
 of the editor and the player components.
-% TODO: Elaborate more?
+% TODO: Elaborate more? OK like this.
 
 % TODO: Move this to a more fitting place
 % ray casting --- basics \& principles''~\cite{osterwalder_volume_2016}. As the

@@ -13,3 +13,5 @@
 % Berechnungen oder Experimente des Berichts müssen vollständig nachvollziehbar
 % sein [3, p. 26]. Zusammen mit der Diskussion und den Folgerungen machen die
 % Ergebnisse qualitativ und quantitativ den Hauptteil des Berichts aus [3, p. 26].
+
+% Resultate weniger kritisch, erst in Diskussion, überlappt sich aber.

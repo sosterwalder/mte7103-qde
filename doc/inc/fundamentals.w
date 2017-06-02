@@ -52,7 +52,7 @@ principles}~\cite{osterwalder_volume_2016}.
 \section{Software architecture}
 \label{sec:architecture}
 
-\newthought{This~\autoref{sec:architecture}} is a summary of the previous
+\newthought{This section} is a summary of the previous
 project work of the author,~\enquote{QDE --- a visual animation system,
 architecture}~\cite{osterwalder_qde_2016}. It describes the fundamentals for the
 architecture for the intended software of this thesis.
@@ -102,8 +102,6 @@ requirements, the components shown in~\autoref{table:software-components} are
 established.
 
 \begin{table}[h]
-  \caption{Description of the components of the envisaged software.}
-  \label{table:software-components}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Component} & \textbf{Description} \\
@@ -123,9 +121,11 @@ established.
     chronological order.\\ 
     \bottomrule
   \end{tabularx}
+  \caption{Description of the components of the envisaged software.}
+  \label{table:software-components}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \caption{%
     A mock up of the editor application showing its components.\newline{}
     1: Scene graph.\newline{}
@@ -153,14 +153,15 @@ in~\autoref{fig:player-domain-model} respectively.
   \includegraphics[width=0.95\linewidth]{images/editor-domain-model}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \caption{Domain model of the player component.}
   \label{fig:player-domain-model}
   \includegraphics[width=0.95\linewidth]{images/player-domain-model}
 \end{figure*}
 
 % TODO: Add may be a reference to the documentation? The image of the editor
-% domain model is too small to be read.
+% domain model is too small to be read. --> Bigger, scaled and rotated. One
+% figure per page.
 
 \newthought{Identifying the noteworthy concepts or objects} allows the
 definition of the logical architecture, which shows the overall image of
@@ -200,20 +201,21 @@ interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
 class diagram of the editor component whereas~\autoref{fig:player-class-diagram}
 shows the class diagram for the player component.
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \caption{Class diagram of the editor component.}
   \label{fig:editor-class-diagram}
   \includegraphics[width=0.95\linewidth]{images/editor-class-diagram}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \caption{Class diagram of the player component.}
   \label{fig:player-class-diagram}
   \includegraphics[width=0.95\linewidth]{images/player-class-diagram}
 \end{figure*}
 
 % TODO: Add may be a reference to the documentation? The images of the class
-% diagrams are too small to be read.
+% diagrams are too small to be read. --> Bigger, scaled and rotated. One figure
+% per page.
 
 \section{Rendering}
 \label{sec:rendering}
@@ -258,7 +260,7 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 
 \begin{figure}
   \label{eq:rendering-equation}
-  \caption{The rendering equation as defined by James Kajiya.}
+  \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
   \begin{equation}
     I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
   \end{equation}
@@ -271,7 +273,7 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
     \item[$g(x, x')$] A geometrical term.
       \begin{description}
         \item[$0$] $x$ and $x'$ are occluded by each other.
-        \item[$1\over{r^2}$] $x$ and $x'$ are visible to one other, $r$ being
+        \item[$\frac{1}{r^2}$] $x$ and $x'$ are visible to one other, $r$ being
           the distance between the two points.
       \end{description}
     \item[$\varepsilon(x, x')$] Intensity of the light being emitted from point
@@ -342,14 +344,14 @@ are used to expand unbounding volumes (in this concrete case spheres, hence the
 name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
 \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
     \caption{Illustration of the sphere tracing
       algorithm.
       Ray~\textit{e} hits no objects until reaching the horizon at
       $d_{max}$. Rays~\textit{f},~\textit{g} and~\textit{h} hit
       polygon~\textit{poly1}.}
       \label{fig:sphere-tracing-1}
-    \centering
-    \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
 \end{figure}
 
 \newthought{Unbounding volumes} contrast with bounding volumes, which enclose a
@@ -415,10 +417,14 @@ def sphere_trace():
 in~\citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}. This means,
 that the sphere tracing algorithm needs to return which object was hit and the
 material of this object. Depending on the objects material, three cases can
-occur: the material is reflective and refractive, the material is only
-reflective or the material is diffuse. For simplicity only the last case is
-being taken into account. For the actual shading a local illumination method is
-used:~\textit{phong shading}.
+occur:
+\begin{enumerate*}
+  \item the material is reflective and refractive,
+  \item the material is only reflective or
+  \item the material is diffuse.
+\end{enumerate*}
+For simplicity only the last case is being taken into account. For the actual
+shading a local illumination method is used:~\textit{phong shading}.
 
 \newthought{The phong illumination model} describes (reflected) light intensity
 $I$ as a composition of the ambient, the diffuse and the perfect specular
