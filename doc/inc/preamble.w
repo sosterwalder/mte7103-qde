@@ -2,7 +2,8 @@
 
 % Load packages
 % ---------------------------------------------------------------------------
-\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}
+\usepackage[usenames,dvipsnames,svgnames]{xcolor}
+\usepackage{minted}
 \usepackage[english]{babel}              % English hyphenation
 \usepackage[utf8]{inputenc}              % UTF-8 input encoding
 % \usepackage[T1]{fontenc}                 % hyphenation of words with ä,ö and ü
@@ -14,11 +15,10 @@
 \usepackage{blindtext}                   % Dummy text
 \usepackage[pages=some]{background}            % Backgrounds
 \usepackage[absolute,overlay]{textpos}
-\usepackage{minted}
 \usepackage{hyperref}
 \usepackage{makeidx}
 \usepackage[nonumberlist,nomain]{glossaries}
-\usepackage[textwidth=65mm]{todonotes}
+\usepackage{todonotes}
 \usepackage[
     backend=biber,
     style=ieee,
@@ -30,6 +30,29 @@
 ]{biblatex}
 \usepackage{bookmark}
 \usepackage{esvect}                          % Provides nicer vector display in math mode
+\usepackage[inline]{enumitem}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{cleveref}
+
+% Settings
+%---------------------------------------------------------------------------
+% TIKZ: A lot of arrows for TIKZ
+\usetikzlibrary{arrows.meta}
+
+% TUFTE: Do not break when there already is a break
+% Source: https://tex.stackexchange.com/questions/291746/tufte-latex-newthought-after-section
+\makeatletter
+\def\tuftebreak{%
+  \if@@nobreak\else
+    \par
+    \ifdim\lastskip<\tufteskipamount
+      \removelastskip \penalty -100
+      \tufteskip
+    \fi
+  \fi
+}
+\makeatother
 
 % Environments
 % ---------------------------------------------------------------------------
@@ -60,6 +83,10 @@
 \newcommand{\subsubtitletext}{MTE7103 --- Master thesis}
 \author[Sven Osterwalder]{Sven Osterwalder}
 \publisher{Berne University of Applied Sciences}
+
+% Commands
+%----------------------------------------------------------------------------
+\renewcommand\labelenumi{(\theenumi)}
 
 % Background set up
 %---------------------------------------------------------------------------
