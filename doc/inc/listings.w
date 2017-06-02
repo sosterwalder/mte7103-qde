@@ -2,7 +2,7 @@
 
 \newminted{python}{%
     bgcolor=LightGray,
-    escapeinside=§§,
+    escapeinside=||,
     linenos=true,
     mathescape=true,
 }
