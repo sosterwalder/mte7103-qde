@@ -31,7 +31,7 @@ too, and may be found in the appendix.\todo[inline]{Insert reference/link to tes
 
 The requirements are defined by the preceding project work,~\enquote{QDE --- a
   visual animation system, software architecture}~\citep[p. 8
-ff.]{osterwalder_qde_2016}, and are still valid.
+ff.]{osterwalder-qde-2016}, and are still valid.
 
 For the editor application however, Python is used as a programming language.
 This decision is made as the author of the thesis has several years of
@@ -102,7 +102,7 @@ the controller and the view, meaning the view acts also as a controller while
 still separating the storage of data. The editor application does not actually
 store data (in a conventional way, e.g. using a database) but solely exports it.
 Due to this circumstance the model-view-controller pattern is explicitly used,
-as also stated in \cite[p. 38]{osterwalder_qde_2016}.
+as also stated in \cite[p. 38]{osterwalder-qde-2016}.
 
 \todo[inline]{Describe the exact process of communication between ViewModel,
 Controller and Model.}

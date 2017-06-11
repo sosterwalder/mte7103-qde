@@ -149,3 +149,5 @@ found under meeting minutes. \todo[inline]{Add correct reference}
     \end{ganttchart}
     \caption{Schedule of the project. The subtitle displays calendar weeks.}
 \end{figure*}
+
+% TODO: Risk analysis and management

@@ -102,4 +102,4 @@ of name-spaces is intended.
 % 
 % The first stage of the project shows the creation of the /editor/ component, as
 % it provides the possibility of creating and editing real-time animations which
-% may then be played back by the /player/ component\cite[p. 29]{osterwalder_qde_2016}.
+% may then be played back by the /player/ component\cite[p. 29]{osterwalder-qde-2016}.

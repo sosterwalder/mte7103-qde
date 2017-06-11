@@ -40,7 +40,7 @@ The camera shall move 5 units towards the two objects during this time.
 
 To achieve this overall goal while providing the user a user-friendly
 experience, several components are needed. These are the following, being
-defined in~\citetitle[pp. 29 ff.]{osterwalder_qde_2016}
+defined in~\citetitle[pp. 29 ff.]{osterwalder-qde-2016}
 
 \begin{itemize}
 \item A scene graph, allowing the creation and deletion of scenes. The scene graph
@@ -119,7 +119,7 @@ itself~\footnote{http://doc.qt.io/Qt-5/qapplication.html\#exec}.
 
 As the main application initializes resources, it act as central node between the
 various layers of the architecture, initializing them and connecting them using
-signals.\cite[pp. 37 --- 38]{osterwalder_qde_2016}
+signals.\cite[pp. 37 --- 38]{osterwalder-qde-2016}
 
 Therefore it needs to do at least three things: initialize itself, set up
 components and connect components. This all happens when the main application is
@@ -274,7 +274,7 @@ sets up the whole layout. The method creates a central widget containing a grid
 layout.
 
 As the main window holds all other view components and a look as proposed
-in~\citetitle[p. 9]{osterwalder_qde_2016} is targeted, a simple grid layout does
+in~\citetitle[p. 9]{osterwalder-qde-2016} is targeted, a simple grid layout does
 not provide enough possibilities. Instead a horizontal box layout in combination
 with splitters is used.
 
@@ -1416,7 +1416,7 @@ represented within the node graph as such a data structure.
 The nodes are the building blocks of a real time animation. They represent
 different aspects, such as scenes themselves, time line clips, models, cameras,
 lights, materials, generic operators and effects. These aspects are only examples
-(coming from~\citetitle[p. 30 and 31]{osterwalder_qde_2016}) as the node
+(coming from~\citetitle[p. 30 and 31]{osterwalder-qde-2016}) as the node
 structure will be expandable for allowing the addition of new nodes.
 
 The implementation of the scene graph component was relatively straightforward
@@ -2899,7 +2899,7 @@ node definitions.
 @{
 def load_node_definition_from_file_name(self, file_name):
     """Loads a node definition from the given file name.
-    If no such file exists, an FileNotFoundError is raised.
+    If no such file exists, None is returned.
 
     :param file_name: the file name to load.
     :type  file_name: str

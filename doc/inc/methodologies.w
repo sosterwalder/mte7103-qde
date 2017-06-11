@@ -1,4 +1,4 @@
-% -*- mode: latex; coding: utf-8 -*-
+% -*- mode: latex; coding: utf-8; outline-minor-mode: t -*-
 
 \chapter{Methodologies}
 \label{chap:methodologies}
