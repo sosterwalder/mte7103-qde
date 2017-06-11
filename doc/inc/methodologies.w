@@ -557,9 +557,72 @@ edge cases are:
         "No files with node definitions found at %s." % self.nodes_path
     )
     self.logger.fatal(message)@}
+  \caption{Output a warning when no node definitions are being found.}
+  \label{lst:nodes-controller-load-node-defs-warning-2}
 \end{figure}
 
 \section{Agile software development}
 \label{sec:agile-software-development}
 
-TBD.
+\newthought{Software engineering invokes always a methodology,} be it wittingly
+or unwittingly. For a (very) small project the methodology may follow intuitively,
+by experience and it may be a mixture of methodologies. For medium to large
+projects however, using certain methodologies or principles becomes inevitable
+for being able to evaluate (the success of) a project.
+
+\newthought{Every commonly used software engineering methodology} has advantages
+but buries also certain risks. Be it a traditional method like the waterfall
+model, incremental development, the v-model, the spiral model or a more recent
+method like agile development. It depends largely on the project what
+methodology fits best and buries the least risks.~\cite{haneen-risk-2012,
+mens-se-2008}
+
+\newthought{Risk is the basic problem of software
+development.}~\cite{beck-xp-2004} Examples of risks are: schedule slips,
+canceled projects, increased defect rates, misunderstood domain/business,
+changes, false feature rich.~\cite{beck-xp-2004}
+
+\newthought{Traditional software engineering methodologies}, such as the
+waterfall model or incremental development, struggle with change. In case of the
+waterfall model they embrace change not at all or, in the case of incremental
+development, the phases are rather long what allows only slow reaction.
+
+\begin{figure*}[ht]
+  \includegraphics[width=0.95\linewidth]{images/waterfall}
+  \caption{Phases of the water fall methodology.~\cite[p. 16]{shore-aad-2007}}
+  \label{fig:waterfall}
+\end{figure*}
+
+\begin{figure*}[ht]
+  \includegraphics[width=0.95\linewidth]{images/iterative-dev}
+  \caption{Phases of iterative development.~\cite[p. 16]{shore-aad-2007}}
+  \label{fig:iterative-dev}
+\end{figure*}
+
+\newthought{By applying basic principles}, agile development methodologies try
+overcome this problem. These principles may vary depending on the used
+methodology, but the fundamental principles are:
+\begin{enumerate*}
+  \item rapid feedback,
+  \item assume simplicity,
+  \item incremental change,
+  \item embracing change and
+  \item quality work.
+\end{enumerate*}~\cite{beck-xp-2004}
+Further details can be found at~\cite{beck-xp-2004, shore-aad-2007}.
+
+\newthought{An adapted version of extreme programming} is used for this thesis.
+This methodology was chosen as after the preceding project
+work,~\citetitle{osterwalder-qde-2016}, several things were still subject to
+change and therefore an exact planning, analysis and design, as traditional
+methodologies require it, would not be very practical.
+% TODO: Mention what exactly was modified.
+
+\begin{figure*}[ht]
+  \includegraphics[width=0.95\linewidth]{images/xp}
+  \caption{Iterations in the extreme programming methodology and phases of an
+    interation.~\cite[p. 18]{shore-aad-2007}}
+  \label{fig:xp}
+\end{figure*}
+
+% TODO: Check if this is enough or elaborate more otherwise.
