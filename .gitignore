@@ -153,3 +153,5 @@ doc/build/
 doc/**/auto/
 doc/source/*.rst
 doc/inc/versions.*
+doc/**/*.w-e
+doc/**/.#*.w
