@@ -44,17 +44,17 @@ understanding of the result of this thesis.
 \newthought{The first section of this chapter} defines the software architecture
 that is used for the implementation of the intended software. It is mainly a
 summary of the previous project work,~\enquote{QDE --- a visual animation
-system, architecture}~\cite{osterwalder_qde_2016}. The second section shows the
+system, architecture}~\cite{osterwalder-qde-2016}. The second section shows the
 algorithm which is used for rendering. It is a summary of a previous project
 work,~\enquote{Volume ray casting --- basics \&
-principles}~\cite{osterwalder_volume_2016}.
+principles}~\cite{osterwalder-volume-2016}.
 
 \section{Software architecture}
-\label{sec:architecture}
+\label{sec:software-architecture}
 
 \newthought{This section} is a summary of the previous
 project work of the author,~\enquote{QDE --- a visual animation system,
-architecture}~\cite{osterwalder_qde_2016}. It describes the fundamentals for the
+architecture}~\cite{osterwalder-qde-2016}. It describes the fundamentals for the
 architecture for the intended software of this thesis.
 
 \newthought{Software architecture} is inherent to software engineering and
@@ -84,12 +84,12 @@ important stuff. Whatever that is.}~\cite{fowler_architect_2003}
 modeling objects and scenes and rendering them using sphere tracing, was
 developed ahead of this thesis. To ensure that this idea is really feasible, a
 prototype was developed during the former project
-work~\citetitle{osterwalder_volume_2016}. This prototype acted as a proof of
+work~\citetitle{osterwalder-volume-2016}. This prototype acted as a proof of
 concept. For this prototype an implicitly defined architecture was used, which
 led to an architecture which is hard to maintain and extend by providing no
 clear segregation between the data model and its representation.
 
-\newthought{With the previous project work},~\citetitle{osterwalder_qde_2016}, a
+\newthought{With the previous project work},~\citetitle{osterwalder-qde-2016}, a
 software architecture was developed to prevent this circumstance. The software
 architecture is based on the unified process, what leads to an iterative
 approach.
@@ -222,7 +222,7 @@ shows the class diagram for the player component.
 
 \newthought{This~\autoref{sec:rendering}} is a summary of a previous project
 work of the author,~\enquote{Volume ray casting --- basics \&
-principles}~\cite{osterwalder_volume_2016}. It describes the fundamentals for
+principles}~\cite{osterwalder-volume-2016}. It describes the fundamentals for
 the rendering algorithm that is used for the intended software of this thesis.
 
 \newthought{Rendering} is one of the main aspects of this thesis, as the main

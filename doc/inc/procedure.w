@@ -70,7 +70,7 @@ Therefore PyQt5 is an additional requirement.
 \label{ssubsec:layering}
 
 Concerning the architecture, a layered architecture is foreseen, as stated in
-\cite[p. 38 ff.]{osterwalder_qde_2016}. A relaxed layered architecture leads to
+\cite[p. 38 ff.]{osterwalder-qde-2016}. A relaxed layered architecture leads to
 low coupling, reduces dependencies and enhances cohesion as well as clarity.
 
 As the architecture's core \todo{Link to components} components are all graphical, a graphical user

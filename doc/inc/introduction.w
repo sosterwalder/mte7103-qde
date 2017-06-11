@@ -137,9 +137,9 @@ mesh-based models and corresponding rendering algorithms may be implemented.
 
 \newthought{Preliminary} to this thesis two project works were done:
 \enquote{Volume ray casting --- basics \&
-principles}~\cite{osterwalder_volume_2016}, which describes the basics and
+principles}~\cite{osterwalder-volume-2016}, which describes the basics and
 principles of sphere tracing, a special form of ray tracing, and \enquote{QDE
---- a visual animation system, architecture}~\cite{osterwalder_qde_2016}, which
+--- a visual animation system, architecture}~\cite{osterwalder-qde-2016}, which
 established the ideas and notions of an editor and a player component as well as
 the basis for a possible software architecture for these components. The latter
 project work is presented in detail in the chapter about the procedure, the
@@ -157,9 +157,9 @@ The administrative aspects are followed by a chapter on the
 \textit{fundamentals}. The purpose of that chapter is to present the
 fundamentals, that this thesis is built upon. One aspect is a framework for the
 implementation of the intended software, which is heavily based on the previous
-project work, \enquote{QDE --- a visual animation system, architecture}~\cite{osterwalder_qde_2016}. Another aspect is the rendering,
+project work, \enquote{QDE --- a visual animation system, architecture}~\cite{osterwalder-qde-2016}. Another aspect is the rendering,
 which is using a special form of ray tracing as described in ``Volume ray
-casting --- basics \& principles''~\cite{osterwalder_volume_2016}.
+casting --- basics \& principles''~\cite{osterwalder-volume-2016}.
 
 The next chapter on the \textit{methodologies} introduces a concept called
 literate programming and elaborates some details of the implementation using
@@ -171,7 +171,7 @@ of the editor and the player components.
 % TODO: Elaborate more? OK like this.
 
 % TODO: Move this to a more fitting place
-% ray casting --- basics \& principles''~\cite{osterwalder_volume_2016}. As the
+% ray casting --- basics \& principles''~\cite{osterwalder-volume-2016}. As the
 % editor component defines the whole data structure it builds the basis of the
 % thesis and can be seen as main part of the thesis. The player component re-uses
 % concepts established within the editor.
