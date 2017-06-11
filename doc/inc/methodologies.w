@@ -362,9 +362,12 @@ def __init__(self, id_):
 \end{figure}
 
 \newthought{One of the problems mentioned before} can be seen
-in~\cref{lst:node-def-constructor}: it shows a rather dull constructor
-without any logic which is not interesting. Additionally importing of modules
-would be needed, e.g. PyQt or system modules. This was left out deliberately.
+in~\cref{lst:node-def-constructor}: it shows a rather dull constructor without
+any logic which is not interesting. Additionally importing of modules would be
+needed, e.g. PyQt or system modules. This was left out deliberately. At this
+point the implementation of node definitions will not be shown further, as this
+is beyond scope. Further implementation can be seen at~\todo{insert
+reference(s) to node domain model here}.
 
 \newthought{Node definitions will be loaded from external files} in JSON format.
 This happens within the node controller component, which will not be shown here
@@ -381,42 +384,172 @@ def load_node_definitions(self):
     """Loads all files with the ending NODES_EXTENSION
     within the NODES_PATH directory, relative to
     the current working directory.
-    """@}
+    """
+@}
   \caption{Head of the method that loads node definitions from external JSON
     files.}
   \label{lst:load-node-definitions}
 \end{figure}
 
 \vspace*{-2\baselineskip}
-\newthought{When loading the node definitions}, the first thing to do is to
-check whether the path containing the files with the node definitions exist or
-not. Is this not the case a warning message will be logged.
+\newthought{When loading the node definitions}, there are two cases (and
+consequences) at the first instance:
+\begin{enumerate*}
+  \item the directory containing the node definitions exists, the load
+    definitions may be loaded or
+  \item the directory does not exit.
+\end{enumerate*}
+In the first case the directory possibly containing node definitions is being
+searched for such files, in the second case a warning message is logged.
 
 \begin{figure}[!h]
   @d Load node definitions
   @{
-    if os.path.exists(self.nodes_path):
-        @<Load existing node definitions@>
-    else:
-        @<Output warning when no node definitions are found@>@}
+if os.path.exists(self.nodes_path):
+    @<Find and load node definition files@>
+else:
+    @<Output warning when directory with node definitions does not exist@>@}
   \caption{Check whether the path containing the node definition files exist or
     not.}
   \label{lst:nodes-controller-load-nodes-2}
 \end{figure}
 
-% TODO: Continue here.
-% * Incorporate verbosity better
-% * Better transition to logging
-
-\newthought{Literate programming allows great verbosity} as can be seen
-in~\cref{lst:nodes-controller-load-nodes-2}. Logging the warning message is
-simply a matter of preparing a corresponding message and calling
-the~\mintinline{python}{fatal} method of the logging interface.
+\vspace*{-2\baselineskip}
+\newthought{In the first case}, when the directory containing the node
+definitions exists, files containing node definitions are searched. The files
+are searched by wildcard pattern matching the extension:~\verb|*.node|.
 
 \begin{figure}[!h]
+  @d Find and load node definition files
+  @{
+node_definition_files = glob.glob("{path}{sep}*.{ext}".format(
+    path=self.nodes_path,
+    sep=os.sep,
+    ext=self.nodes_extension
+))
+num_node_definitions = len(node_definition_files)@}
+  \caption{When the directory containing the node definitions exists, files
+    matching the pattern~\emph{*.node} are searched.}
+  \label{lst:nodes-controller-find-node-def-files}
+\end{figure}
+
+\vspace*{-2\baselineskip}
+\newthought{Having searched for node definition files}, there are again two
+cases, similar as before:
+\begin{enumerate*}
+  \item files (possibly) containing node definitions exist or
+  \item no files with the ending \verb|.node| exist within the source directory.
+\end{enumerate*}
+Again, as before, in the first case the node definitions will be loaded, in the
+second case a warning message will be logged.
+
+\begin{figure}[!h]
+  @d Find and load node definition files
+  @{
+if num_node_definitions > 0:
+    @<Load found node definitions@>
+else:
+    @<Output warning when no node definitions are found@>@}
+  \caption{When files (possibly) containing node definition files are found,
+    they are tried being loaded. When no such files are found, a warning message
+    is being logged.}
+  \label{lst:nodes-controller-find-node-def-files-2}
+\end{figure}
+
+\newthought{Given that node definitions are present}, they are loaded from the
+file system, parsed and then stored internally as domain model. To maintain
+readability, all this is encapsulated in a
+method,\\
+\mintinline{python}{load_node_definition_from_file_name}, which is
+deliberately not\\
+shown here as this would go beyond scope. If the node
+definition cannot be loaded or parsed~\mintinline{python}{None} is being
+returned.
+
+\begin{figure}[!h]
+  @d Load found node definitions
+  @{
+self.logger.info(
+    "Found %d node definition(s), loading.",
+    num_node_definitions
+)
+t0 = time.perf_counter()
+for file_name in node_definition_files:
+    self.logger.debug(
+        "Found node definition %s, trying to load",
+        file_name
+    )
+    node_definition = self.load_node_definition_from_file_name(
+        file_name
+    )@}
+  \caption{Loading and parsing of the node definitions found within the folder
+    containing (possibly) node definition files. If a node definition cannot be
+    loaded or parsed,~\textit{None} is being returned.}
+  \label{lst:nodes-controller-load-node-defs}
+\end{figure}
+
+\newpage{}
+
+\newthought{When a node definition could be loaded}, a view model based on the
+domain model is being created. Both models are then stored internally and a
+signal about the loaded node definition is being emitted, to inform other
+components which are interested in this event.
+
+\begin{figure}[!h]
+  @d Load found node definitions
+  @{
+    if node_definition is not None:
+        node_definition_view_model = node_view_model.NodeViewModel(
+            id_=node_definition.id_,
+            domain_object=node_definition
+        )
+        self.node_definitions[node_definition.id_] = (
+            node_definition,
+            node_definition_view_model
+        )
+        @<Node controller load node definition emit@>
+
+t1 = time.perf_counter()
+self.logger.info(
+    "Loading node definitions took %.10f seconds",
+    (t1 - t0)
+)@}
+  \caption{A view model, based on the domain model, for the node definition is
+    being created. Both models are then stored internally and the signal, that a
+    node definition was loaded is being emitted.}
+  \label{lst:nodes-controller-load-node-defs-2}
+\end{figure}
+
+\newpage{}
+
+\newthought{The implementation of the edge cases} is still remaining at this
+point. When such an edge case happens, a corresponding message is logged. The
+edge cases are:
+
+\begin{enumerate}
+  \item the directory holding the node definitions does not exist
+\end{enumerate}
+
+\begin{figure}[!h]
+  @d Output warning when directory with node definitions does not exist
+  @{
+    message = QtCore.QCoreApplication.translate(
+        __class__.__name__,
+        "The directory holding the node definitions, %s, does not exist." % self.nodes_path
+    )
+    self.logger.fatal(message)@}
   \caption{Output a warning when the path containing the node definition files
     does not exist.}
-  \label{lst:nodes-controller-load-nodes-3}
+  \label{lst:nodes-controller-load-node-defs-warning}
+\end{figure}
+
+\tuftebreak{}or
+
+\begin{enumerate}[resume]
+  \item no files containing node definitions are found.
+\end{enumerate}
+  
+\begin{figure}[!h]
   @d Output warning when no node definitions are found
   @{
     message = QtCore.QCoreApplication.translate(
