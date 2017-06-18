@@ -96,26 +96,22 @@
 % footnotes above bottom floats. This can be corrected via the
 % \fnbelowfloat command of the stfloats package.
 
-Computer science has always strived to create representations of scenes and
-models, that are as near to the reality as possible. A representation, that is
-as much as possible like the (visual) perception of a human being. During the
+\newthought{Computer science has always strived} to create representations of
+scenes and models, that are as near to the human reality as possible. During the
 development of computer graphics different approaches to reach such a
-representation emerged. A branch of those approaches are lighting models, which
-calculate the lighting of a representation or a scene respectively. A relatively
-realistic appearing model is~\emph{ray tracing}, which is based on the physics
-of light as well as on surface materials. Due to its computational complexity
-however ray tracing would not allow rendering images in real-time (calculating
-at least 25 images in one second) until recently with the ongoing development of
-graphic cards (GPUs). An implementation which allows rendering ray traced images
-in real-time is~\emph{sphere tracing}. This method has admittedly a clear
-disadvantage: the de facto way of representing objects, using triangle based
-meshes, cannot be used directly. Instead distance fields defined by implicit
-functions build the basis for sphere tracing.\\
-To this point in time there are no solutions (at least none are known to the
-author), that provide a convenient way for modeling, animating and rendering
-objects and scenes which use signed distance functions for modeling and sphere
-tracing for rendering. This thesis presents the design and development of a
-software which provides both: a node based approach for modeling and animating
-objects using signed distance functions as well as allowing the composition of
-scenes while rendering objects, or scenes respectively, in real time on the GPU
-using sphere tracing.
+representation emerged. A relatively realistic appearing approach is~\emph{ray
+tracing}, which is based on the physics of light as well as on surface
+materials. Due to its computational complexity however ray tracing would not
+allow rendering images in real-time (calculating at least 25 images in one
+second) until the last few years. An implementation which allows rendering ray
+traced images in real-time is~\emph{sphere tracing}. Albeit allowing rendering
+ray traced images in real-time, this method has admittedly a clear disadvantage:
+the de facto way of representing objects, using triangle based meshes, cannot be
+used directly. Instead distance fields defined by implicit functions build the
+basis for sphere tracing. To this point in time there are no to the author known
+solutions, that provide a convenient way for modeling, animating and rendering
+objects and scenes which use implicit functions for modeling and sphere tracing
+for rendering. This thesis presents the design and development of a software
+which provides both: a node based approach for modeling and animating objects
+using implicit functions as well as allowing the composition of scenes while
+rendering scenes in real time on the GPU using sphere tracing.
