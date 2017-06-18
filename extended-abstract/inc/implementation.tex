@@ -12,23 +12,15 @@ the software itself, written using the literate programming paradigm.
   \item the observer software design pattern, allowing communication between
     components of the software.
 \end{enumerate*}
-\newthought{The software itself} is an editor which allows \emph{modeling}
-objects, \emph{composing} objects to scenes and \emph{rendering} scenes in real
-time. Modeling is done by composing single nodes (defined by external JSON
-files) to objects using a node based graph structure. Compositing includes two
-aspects: the composition of objects into scenes and the composition of an
-animation which is defined by multiple scenes which follow a chronological
-order. The first aspect is realized by a scene graph structure, which contains
-at least a root scene. Each scene may contain objects in form of nodes which can
-be connected and whose parameters (such as size, color and so on) can be
-modified. The second aspect is realized by a time line, which allows a
-chronological organization of scenes. For rendering a highly optimized algorithm
-based on ray tracing is used. The algorithm is called sphere tracing and allows
-the rendering of ray traced scenes in real time on the GPU. Real-time means in
-this context being able to generate at least 25 images in one second. Contingent
-upon the used rendering algorithm all models are modeled using implicit
-surfaces. For rendering the sphere tracing algorithm was used, which was
-established in the preceding project work.
+\newthought{The software itself} is an editor which allows~\emph{modeling}
+objects,~\emph{composing} objects to scenes and~\emph{rendering} scenes in
+real-time. Scenes are stored in a scene graph structure and represented by a
+tree view. Each scene can contain one or more objects represented as nodes in a
+node based graph structure. Objects are defined by external files and can
+represent implicit functions, cameras or effects. Every object has one or more
+parameters (such as size, color and so on) which can be used to connect nodes.
+For rendering the sphere tracing algorithm was used, which was established in
+the preceding project work.
 
 % The editor was written in the python programming language
 % using the literate programming paradigm and uses the Qt framework as basis and
