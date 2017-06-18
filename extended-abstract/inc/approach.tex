@@ -1,0 +1,71 @@
+% -*- mode: latex; coding: utf-8 -*-
+
+\section{Approach}
+
+\newthought{To reach the intended goal,} an existing draft of a software
+architecture was continued, refined and completed. The draft was the result of
+the preceding project work,~\citetitle{osterwalder-qde-2016}. The software
+itself was developed using literate programming and the agile methodology
+extreme programming. For rendering the sphere tracing algorithm was used, which
+was established in the preceding project
+work,~\citetitle{osterwalder-volume-2016}.
+
+\subsection{Literate programming}
+
+\newthought{Documenting software is crucial.} All too frequently however,
+software is not documented properly or the documentation is even neglected as it
+can be quite costly with seemingly little benefit. Several examples show
+however, that documenting software is crucial. No documentation at all, outdated
+or irrelevant documentation can lead to unforeseen efforts concerning time and
+costs. To prevent such unforeseen efforts the developed software and this thesis
+was written with a paradigm called~\emph{literate programming}. The paradigm was
+introduced in~\citeyear{knuth-lp-1984} by~\citeauthor{knuth-lp-1984}. It
+proposes to consider programs to be works of literature and to explain to human
+beings what the computer shall do to achieve certain goals.
+
+% \begin{figure}[h]
+%   \begin{flushleft} \small
+% \begin{minipage}{\linewidth}\label{scrap3}\raggedright\small
+% \NWtarget{load-node-defs}{} $\langle\,${\itshape Load node definitions}\nobreak\ {\footnotesize {1}}$\,\rangle\equiv$
+% \vspace{-1ex}
+% \begin{pythoncode}
+% def load_node_definitions(self):
+%     """Loads all files with the ending
+%     NODES_EXTENSION within the NODES_PATH
+%     directory, relative to the current working directory.
+%     """
+% 
+%     if os.path.exists(self.nodes_path):
+%         |\hbox{$\langle\,${\itshape Find and load $\cdots$}$\,\rangle$}|
+%     else:
+%         |\hbox{$\langle\,${\itshape Output warning, that $\cdots$}$\,\rangle$}||\NWsep|
+% |\NWsep|
+% \end{pythoncode}
+% \end{minipage}%\vspace{4ex}
+% \end{flushleft}
+% \caption{Example of a code fragment for loading node definition files. This
+%   fragment is itself part of another fragment which generates a python file.}
+% \label{lst:literate-program}
+% \end{figure}
+
+\subsection{Agile software development}
+
+\newthought{Change is one of the main challenges} when developing software. Be
+it induced by new requirements or by newly-gained insights during development.
+Traditional software engineering methodologies, such as the waterfall model or
+incremental development, struggle with change. By applying basic principles,
+agile development methodologies try to overcome this problem. These principles
+may vary depending on the used methodology, but the fundamental principles are:
+\begin{enumerate*}
+  \item rapid feedback,
+  \item assume simplicity,
+  \item incremental change,
+  \item embracing change and
+  \item quality work.
+\end{enumerate*}% ~\cite{beck-xp-2004}
+
+\newthought{An adapted version of extreme programming} was used for this thesis.
+This methodology was chosen as after the preceding project
+work,~\citetitle{osterwalder-qde-2016}, several things were still subject to
+change and therefore an exact planning, analysis and design, as traditional
+methodologies require it, would not have been very practical.
