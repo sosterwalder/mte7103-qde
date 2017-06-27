@@ -146,6 +146,7 @@ sympy-plots-for-*.tex/
 
 
 # Project specific
+nw0*
 src/
 nodes/
 doc/_minted-index/
