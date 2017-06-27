@@ -1,0 +1,162 @@
+No.:              04
+Date/time:        16.06.2017 07:45 - 08:40
+Place:            Skype
+Involved persons: Prof. Dr. Eric Dubuis (ED)
+                  Sven Osterwalder (SO)
+
+Meeting minutes 2017-06-16
+==========================
+
+General
+-------
+
+Prof. Fuhrer is today sadly not able to attend the meeting as planned. Prof.
+Fuhrer proposed to hold the meeting nevertheless to which Dr. Dubuis agreed. The
+proceedings of the meeting are recorded by Sven Osterwalder and are sent to
+Prof. Fuhrer and Dr. Dubuis.
+
+
+Presentation and discussion of the current state of the work (SO, ED)
+---------------------------------------------------------------------
+
+* Overview of the current state of the documentation (SO)
+
+  * The chapter containing the introduction is done. (SO)
+  * Chapter about administrative aspects is nearly done, only the risk
+    management, as discussed in the last meeting, will be added. (SO)
+  * The graphics in the chapter containing fundamentals need to be bigger as
+    they are otherwise not readable. This was discussed with Mr. Fuhrer already.
+    Otherwise the chapter is done. (SO)
+  * The chapter about methodologies is done. (SO)
+  * The chapter containing the results is half done. The section about the
+    software architecture is done, the second section, about literate
+    programming, will only be very short and mostly reference to the already
+    introduced methodology as well as a reference to the appendix, which holds
+    the actual implementation of the software in form of a literate program.
+    What remains is the description of the developed software and its
+    components. (SO)
+
+    * This is OK. (ED)
+
+  * Still remaining is the abstract. (SO)
+  * For every chapter a review of the previous chapter, the goal of the current
+    chapter and the methods for reaching that goals were introduced. (SO)
+    * Yes, this is good, I like that. You used some times the
+      word~\enquote{last} to mention the previous chapter. This should
+      be~\enquote{previous} instead of~\enquote{last}.
+
+Discussion of the current state of work (ED, SO)
+------------------------------------------------
+
+* Hand-in of the first draft abstract regarding the book containing the theses
+  of Berne University of Applied Sciences. According to an email sent by Ms.
+  Jeanbourquin containing the overall planning of the autumn semester 2017 the
+  hand-in of the abstract needs to be today, 2017-06-16. In a previous sent mail
+  although, containing direct information concerning the book, the deadline is
+  the 7th of July 2017. The deadline of today seems only to be a deadline for a
+  first draft. (SO)
+
+* The next intended steps are the following: (SO)
+
+  * Finish and upload the abstract, needed for the book. (SO)
+  * Finish writing the chapter containing the results: Layers, literate
+    programming and the software itself. (SO)
+  * Finish the development of the software to reach the defined project goals. (SO)
+  * Preparation for the public presentation and the defense of the thesis. (SO)
+
+* The time schedule is still valid and the project is still on schedule. (SO)
+
+* Re-considering of the objectives and limitations. (ED)
+
+  * All concepts of the objectives need to be explained within the thesis. This
+    is very important! (ED)
+    * Except for real-time and graphical user interface this is currently the
+      case. (SO)
+    * This is OK, but explain what means real-time in the context of this
+      thesis, as this seems to be a central point. Provide maybe evidence, that
+      the project reaches its definition of real-time using the described
+      algorithms and define maybe what are the limits of the use technology
+      concerning real-time (e.g. rendering too complex scenes and getting below
+      25 fps therefore). (ED)
+    * You have graphical user interface as an objective. What exactly does a
+      graphical user interface mean for you or especially for this thesis?
+      Graphical user interfaces are a complex subject on their own. (ED)
+      * The focus is clearly not on the graphical user interface. It is rather
+        providing elements of a toolbox to facilitate certain tasks using Qt's
+        user interface. (SO)
+      * This was exactly my intention when bringing this point up. Try to call
+        the usage of graphical elements as you use them, a toolbox providing
+        certain elements ready for usage. So you can prevent on focusing too
+        much on the aspect of the graphical user interface. (ED)
+
+  * You may even reduce your set goals --- while maintaining the initially
+    handed-in goals of course. (ED)
+
+    * There are additional goals which are optional. Shall I keep or remove
+      them? (SO)
+    * Are they reachable? (ED)
+    * No, at the current state of the project it is very unlikely to reach them.
+      (SO)
+    * Remove the optional objectives then. (ED)
+
+* What in my opinion is missing, is a part between the methodologies and the
+  results. I think there is a gap. (ED)
+  * I had the same feeling while creating the new document structure. The
+    results of this thesis are a software design and the implementation of that
+    design. (SO)
+  * In this case there seems to be no gap, but you should rename the results to
+    implementation as the implementation seems to be the result. (SO)
+
+* Can you show me the current situation of the developed software in form of a
+  literate program, which is in the appendix, as mentioned before? (ED)
+
+  * Presentation of an older version of the developed literate program. (SO)
+
+  * This is generally speaking OK. Try not to loose too much time for the
+    implementation any more by going into great detail. Try to find a good
+    balance between showing the algorithms and the textual explanation of
+    things. Try to limit yourself to only the essential things. (ED)
+
+  * This is quite hard to accomplish due to literate programming. Everything
+    needs to be explained from scratch. The algorithms are not introduced as
+    such (theoretical), it is more of an practical presentation by combining the
+    textual explanation and the code. (SO)
+
+  * I see, maybe the classical representation is due to the usage of literate
+    programming not possible. As you introduce the relevant algorithms in the
+    main part of the thesis and reference them accordingly when implementing
+    them in the literate program, this is OK. (ED)
+
+  * My main focus is currently on finishing the documentation far as possible
+    and then to implement the missing features to reach the objectives. I will
+    do this using one of the methodologies introduced when talking about risk
+    management at the last meeting. This means e.g. programming directly in the
+    code fragment file and add only as much as necessary to the literate
+    program. (SO)
+
+  * Yes, this is OK, this is kind of what I meant by finding a good balance.
+    (ED)
+
+Further steps/proceedings (SO, ED)
+----------------------------------
+
+* Defense of the thesis: 15.08.2017, 1500 in Biel
+
+  The official, planned hand-in of the thesis by the student is the 28th of
+  July 2017. The latest hand-in of the thesis by the adviser and expert is the
+  18th of August 2017. This means the defense of the thesis needs to be
+  somewhere between the 28th of July 2017 and the 18th of August 2017. Due to
+  holidays of Dr. Dubuis the earliest possible date is the 15th of August 2017,
+  15:00 in Biel. This needs to be discussed with Prof. Fuhrer, but it is a first
+  proposal.
+
+* Meetings
+  Until the hand-in of the thesis no official meetings are planned. Any
+  inquiries can be done by email however.
+
+* Write and finish abstract
+* Finish results
+* Process TODOs
+* Continue and finish the development of the software
+* Correction of the thesis
+* Prepare the defense of the thesis
