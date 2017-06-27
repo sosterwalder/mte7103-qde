@@ -17,7 +17,7 @@
 % to make a link between this chapter and the whole argument… The first step in
 % answering my research question (repeat question) .. was to.. . In the last
 % chapter I …
-\newthought{The last chapter} provided the fundamentals that are required for
+\newthought{The previous chapter} provided the fundamentals that are required for
 understanding the results of this thesis.
 
 % Focus: What does this chapter specifically do?
@@ -600,7 +600,7 @@ development, the phases are rather long what allows only slow reaction.
 \end{figure*}
 
 \newthought{By applying basic principles}, agile development methodologies try
-overcome this problem. These principles may vary depending on the used
+to overcome this problem. These principles may vary depending on the used
 methodology, but the fundamental principles are:
 \begin{enumerate*}
   \item rapid feedback,

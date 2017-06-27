@@ -20,7 +20,7 @@
 % to make a link between this chapter and the whole argument… The first step in
 % answering my research question (repeat question) .. was to.. . In the last
 % chapter I …
-\newthought{The last chapter} covered some administrative aspects including the
+\newthought{The previous chapter} covered some administrative aspects including the
 involved persons, the phases and milestones of the thesis as well as its
 schedule.
 
@@ -50,7 +50,8 @@ work,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}.
 
 \section{Software architecture}
-\label{sec:software-architecture}
+\label{soarch}
+% \label{fundamentals:sec:software-architecture}
 
 \newthought{This section} is a summary of the previous
 project work of the author,~\enquote{QDE --- a visual animation system,
@@ -118,7 +119,7 @@ established.
     Parameter & Holds the parameters of a node from the node graph.\\
     Rendering & Renders a node.\\
     Time line & Depicts temporal events in terms of scenes which follow a
-    chronological order.\\ 
+    chronological order.\\
     \bottomrule
   \end{tabularx}
   \caption{Description of the components of the envisaged software.}
@@ -141,9 +142,9 @@ established.
 \newthought{Identifying the components} helps finding the noteworthy concepts or
 objects. Decomposing a domain into noteworthy concepts or objects
 is~\enquote{the quintessential object-oriented analysis
-step}~\cite{larman_applying_2004}.~\enquote{The domain model is a visual
+step}~\cite{larman-applying-2004}.~\enquote{The domain model is a visual
 representation of conceptual classes or real-situation objects in a
-domain.}~\cite{larman_applying_2004} The domain models for the editor and the
+domain.}~\cite{larman-applying-2004} The domain models for the editor and the
 player component are shown in~\autoref{fig:editor-domain-model} and
 in~\autoref{fig:player-domain-model} respectively.
 

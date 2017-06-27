@@ -50,7 +50,8 @@ gotten more powerful in processing power. Since around 2009 GPUs are able to
 produce real time computer graphics using sphere tracing. While allowing ray
 tracing in real time on modern GPUs, sphere tracing has also a clear
 disadvantage. The de facto way of representing objects, using triangle based
-meshes, cannot be used directly. Instead distance fields defined by implicit functions build the basis for sphere tracing.
+meshes, cannot be used directly. Instead distance fields defined by implicit
+functions build the basis for sphere tracing.
 
 \section{Purpose and situation}
 \label{sec:purpose}
@@ -79,7 +80,7 @@ tracing.
 
 \newthought{The objective of this thesis} is the design and development of a
 software for \textit{modeling}, \textit{composing} and \textit{rendering} real
-time computer graphics through a graphical user interface.
+time computer graphics through a graphical toolbox.
 
 \newthought{Modeling} is done by composing single nodes to objects using a
 node based graph structure.
