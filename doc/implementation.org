@@ -1,3 +1,0 @@
-#+INLCUDE "./implementation/requirements.org"
-#+INCLUDE "./implementation/structure.org"
-#+INCLUDE "./implementation/editor.org"
