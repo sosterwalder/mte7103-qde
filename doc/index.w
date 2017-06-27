@@ -31,7 +31,7 @@
 @i inc/administrative-aspects.w
 @i inc/fundamentals.w
 @i inc/methodologies.w
-@i inc/results.w
+@i inc/implementation.w
 @i inc/discussion-conclusion.w
 
 % TODO: Check if still needed
@@ -44,8 +44,7 @@
 \backmatter{}
 
 % Appendix
-% i inc/appendix.w
-\todo[inline]{fix appendix}
+@i inc/appendix.w
 
 % Bibliography
 \printbibliography{}
