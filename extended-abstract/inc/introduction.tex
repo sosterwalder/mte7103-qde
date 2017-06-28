@@ -99,17 +99,22 @@
 \newthought{Computer science has always strived} to create representations of
 scenes and models, that are as near to the human reality as possible. One such
 representation is~\emph{ray tracing}, which is based on the physics of light as
-well as on surface materials. Its usage for real-time rendering, calculating at
-least 25 images in one second, was due to its computational complexity not
-feasible until the last few years. An implementation allowing rendering ray
-traced images in real-time is~\emph{sphere tracing}. Albeit this advantage, this
-method has admittedly a clear disadvantage: the de facto way of representing
-objects, using triangle based meshes, cannot be used directly. Instead distance
-fields defined by implicit functions build the basis for sphere tracing. To this
-point in time there are no, known to the author, solutions that provide a
-convenient way for modeling, animating and rendering objects and scenes which
-use implicit functions for modeling and sphere tracing for rendering. This
-thesis presents the design and development of a software which provides both: a
-node based approach for modeling and animating objects using implicit functions
-as well as allowing the composition of scenes while rendering in real time on
-the graphics card using sphere tracing.
+well as on surface materials. In contrast to ray tracing,~\emph{sphere tracing}
+allows rendering ray traced images in real-time. The de facto way of
+representing objects however, using triangle based meshes, cannot be used
+directly with this method. Instead distance fields defined by implicit functions
+build the basis. At present there are no solutions (known to the author), that
+provide a convenient way to use implicit functions for modeling and sphere
+tracing for rendering. This thesis presents the design and development of a
+software which provides both: a modular, node based approach for modeling and
+animating objects using implicit functions while rendering in real time on the
+graphics card using sphere tracing.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.2]{inc/image}
+    \caption{\small Roundabout maneuver 180$^o$ subdivided in pieces (1) to (9),
+      with several time- and speed indications.}
+    \label{m2}
+  \end{center}
+\end{figure}
