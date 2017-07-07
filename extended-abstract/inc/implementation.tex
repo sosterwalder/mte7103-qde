@@ -2,23 +2,24 @@
 
 \section{Implementation}
 
-\newthought{The results of this thesis} are an architecture for a software and
-the software itself, written using the literate programming paradigm.
-\newthought{Three aspects define the software architecture:}
+\newthought{The results of this thesis} are an architecture for a software
+program, and the program itself, written using the literate programming
+paradigm.
+\newthought{Three aspects define the software architecture}:
 \begin{enumerate*}
-  \item The model-view-view model software design pattern using additionally
-    controllers,
-  \item the layers software architectural pattern and
+  \item the model-view-view model software design pattern using controllers in
+    addition,
+  \item the layered software architectural pattern and
   \item the observer software design pattern, allowing communication between
     components of the software.
 \end{enumerate*}
 \newthought{The software itself} is an editor which allows~\emph{modeling}
 objects, ~\emph{composing} objects to scenes and~\emph{rendering} scenes in
-real-time. Scenes are stored in a scene graph structure and represented by a
-tree view. Each scene can contain one or more objects, being defined by external
-files, represented as nodes in a node based graph structure. The parameters of
-objects are used for interconnection between nodes. For rendering the sphere
-tracing algorithm was used, which was established in the preceding project work.
+real-time. Scenes are stored in a scene graph structure and are represented by a
+tree view. Each scene can contain one or more objects, defined by external
+files and represented as nodes in the graph structure. The parameters of
+objects are used for interconnections between nodes. For rendering, the sphere
+tracing algorithm established in the preceding project work was used.
 
 % The editor was written in the python programming language
 % using the literate programming paradigm and uses the Qt framework as basis and
