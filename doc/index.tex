@@ -1636,7 +1636,7 @@ components which are interested in this event.
             node_definition,
             node_definition_view_model
         )
-        |\hbox{$\langle\,${\itshape Node controller load node definition emit}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+        |\hbox{$\langle\,${\itshape Node controller load node definition emit}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 
 t1 = time.perf_counter()
 self.logger.info(
@@ -4623,7 +4623,7 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
-\NWtarget{nuweb88a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {88a}}$\,\rangle\equiv$
+\NWtarget{nuweb79a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {79a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       logger_name = "{module_name}.{class_name}".format(
@@ -4643,7 +4643,7 @@ named~\verb=with_logger=. The method has the following functionality.
 \item Provide an easy to use interface for logging.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
-\NWtarget{nuweb88b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {88b}}$\,\rangle\equiv$
+\NWtarget{nuweb79b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {79b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       cls.logger = logging.getLogger(logger_name)
@@ -6724,7 +6724,7 @@ class NodeController(QtCore.QObject):
     |\hbox{$\langle\,${\itshape Node controller signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 
     |\hbox{$\langle\,${\itshape Node controller constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
 
     |\hbox{$\langle\,${\itshape Node controller slots}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 |\NWsep|
@@ -6772,7 +6772,7 @@ def __init__(self, parent=None):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6800,11 +6800,12 @@ def load_nodes(self):
     working directory.
     """
 
-    |\hbox{$\langle\,${\itshape Node controller load nodes method}\nobreak\ {\footnotesize ?}$\,\rangle$}||\NWsep|
+    |\hbox{$\langle\,${\itshape Node controller load nodes method}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}||\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6901,7 +6902,7 @@ def __init__(self, id_):
 \label{editor:lst:node-definition-part:constructor}
 \end{figure}
 
-\newthought{The node controller needs to keep track} of node defintion parts, as
+\newthought{The node controller needs to keep track} of node definition parts, as
 they are a central aspect and may be reused.
 
 \begin{figure}
@@ -6916,7 +6917,7 @@ they are a central aspect and may be reused.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -7118,7 +7119,7 @@ type (which is usually an input) within an instance of a node definition.
 class NodePart(object):
     """Represents a part of a node."""
 
-    |\hbox{$\langle\,${\itshape Node part domain model function declarations}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node part domain model function declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Node part domain model value function declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Node part domain model default value function declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 
@@ -7177,512 +7178,812 @@ def __init__(self, id_, default_function):
 \label{editor:lst:node-part:constructor}
 \end{figure}
 
-% A part of a node has a function, which gets called whenever a part of a node is
-% being processed.
-% 
-% ATd Node part domain model function declarations
-% AT{
-% class Function(object):
-%     """Represents the function of a part of a node."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         self.has_changed = True
-%         self.evaluation_index = 0
-%         self.changed_state = types.StateChange.VALUE.value | types.StateChange.SUBTREE.value
-% 
-%     def clone(self):
-%         """Clones the currently set function."""
-% 
-%         message = QtCore.QCoreApplication.translate(
-%             __class__.__name__,
-%             "This method must be implemented in a child class"
-%         )
-%         raise NotImplementedError(message)
-% 
-%     def process(self, context, inputs, output_index):
-%         """Processes the value function for the given context, the given
-%         inputs."""
-% 
-%         message = QtCore.QCoreApplication.translate(
-%             __class__.__name__,
-%             "This method must be implemented in a child class"
-%         )
-%         raise NotImplementedError(message)
-% AT}
-% 
-% When a part of a node is being processed, also its inputs are processed.
-% Whenever an input (value) changes, the node part needs to handle the changes.
-% There are three possible types of changes: nothing has changed, the value (of
-% the function) has changed or the subtree (inputs) has changed.
-% 
-% ATd Node part state changed declarations
-% AT{
-% class StateChange(enum.Enum):
-%     """Possible changes of state."""
-% 
-%     NOTHING  = 0
-%     VALUE    = 1
-%     SUBTREE  = 2AT}
-% 
-% At the end, all (end-) nodes will be composed of parts of atomic type.
-% When building the node definition from the JSON input, the (atomic) part of the
-% node definition is fetched from the node controller. Therefore it is necessary
-% to provide parts for the atomic types before loading all the node definitions.
-% 
-% ATd Node controller load nodes method
-% AT{
-% for atomic_type in parameter.AtomicTypes.atomic_types:
-%     if atomic_type.id_ not in self.node_definition_parts:
-%         self.node_definition_parts[atomic_type.id_] = atomic_type
-%         self.logger.info(
-%             "Added atomic type %s: %s",
-%             atomic_type.type_, atomic_type.id_
-%         )
-%     else:
-%         self.logger.warn((
-%             "Already knowing node part for atomic type %s. This should not"
-%             "happen"
-%         ), atomic_type.type_)AT}
-% 
-% Having the atomic types avaialble as parts, the node definitions themselves may
-% be loaded. There is only one problem to that: there is nothing to hold the
-% node defintions. Therefore the node definition domain model is introduced.
-% 
-% ATd Node definition domain model declarations
-% AT{
-% class NodeDefinition(object):
-%     """Represents the definition of a node."""
-% 
-%     # Signals
-%     AT<Node definition domain model signalsAT>
-% 
-%     AT<Node definition domain model constructorAT>
-%     AT<Node definition domain model methodsAT>AT}
-% 
-% The definition of a node is quite similar to a node itself. As the definiton of
-% a node may be changed, the flag~\verb=was_changed= is added. Further a node
-% definition holds all instances of itself, meaning nodes.
-% 
-% ATd Node definition domain model constructor
-% AT{
-% def __init__(self, id_):
-%     """Constructor.
-% 
-%     :param id_: the globally unique identifier of the node.
-%     :type  id_: uuid.uuid4
-%     """
-% 
-%     self.id_         = id_
-% 
-%     self.name        = ""
-%     self.description = ""
-%     self.parent      = None
-%     self.inputs      = []
-%     self.outputs     = []
-%     self.definitions = []
-%     self.invocations = []
-%     self.parts       = []
-%     self.nodes       = []
-%     self.connections = []
-%     self.instances   = []
-%     self.was_changed = FalseAT}
-% 
-% Now the controller is able to instantiate nodes definitions and keep them in a
-% list. The controller manages both, the domain and the view models. As they both
-% share the same ID, as the view model is being created from the data of the
-% domain model, only one entry is necessary.
-% The entry in the dictionary will therefore hold a tuple, containing the domain
-% and the view model, identified by their common identifier.
-% 
-% ATd Node controller constructor
-% AT{    self.node_definitions = {}AT}
-% 
-% The controller scans the~\verb=node= subdirectory, containing the node
-% definitions, for files ending in~\verb=node=.
-% 
-% ATd Node controller load nodes method
-% AT{
-% 
-% if os.path.exists(self.nodes_path):
-%     node_definition_files = glob.glob("{path}{sep}*.{ext}".format(
-%         path=self.nodes_path,
-%         sep=os.sep,
-%         ext=self.nodes_extension
-%     ))
-%     num_node_definitions = len(node_definition_files)
-%     if num_node_definitions > 0:
-%         self.logger.info(
-%             "Found %d node definition(s), loading.",
-%             num_node_definitions
-%         )
-%         t0 = time.perf_counter()
-%         for file_name in node_definition_files:
-%             self.logger.debug(
-%                 "Found node definition %s, trying to load",
-%                 file_name
-%             )
-%             node_definition = self.load_node_definition_from_file_name(file_name)
-%             if node_definition is not None:
-%                 node_definition_view_model = node_view_model.NodeViewModel(
-%                     id_=node_definition.id_,
-%                     domain_object=node_definition
-%                 )
-%                 self.node_definitions[node_definition.id_] = (
-%                     node_definition,
-%                     node_definition_view_model
-%                 )
-%                 AT<Node controller load node definition emitAT>
-% 
-%         t1 = time.perf_counter()
-%         self.logger.info(
-%             "Loading node definitions took %.10f seconds",
-%             (t1 - t0)
-%         )
-%     else:
-%         message = QtCore.QCoreApplication.translate(
-%             __class__.__name__, "No node definitions found."
-%         )
-%         self.logger.warn(message)
-% else:
-%     message = QtCore.QCoreApplication.translate(
-%         __class__.__name__, "No node definitions found."
-%     )
-%     self.logger.warn(message)
-% AT}
-% 
-% If such a file is found, its identifier is extracted from the file name. If the
-% node definition is not known yet, it gets loaded and added to the list of known
-% node definitions.
-% 
-% ATd Node controller methods
-% AT{
-% def load_node_definition_from_file_name(self, file_name):
-%     """Loads a node definition from the given file name.
-%     If no such file exists, None is returned.
-% 
-%     :param file_name: the file name to load.
-%     :type  file_name: str
-% 
-%     :return: the loaded node definition and its identifier or None
-%     :rtype:  qde.editor.domain.node.NodeDefinition or None
-%     """
-% 
-%     if not os.path.exists(file_name):
-%         self.logger.warn((
-%             "Tried to load node defintion from file %s, "
-%             "but the file does not exist"
-%         ), file_name)
-%         return None
-% 
-%     # Extract the defintion identifier from the file name, which is
-%     # "uuid4.node".
-%     definition_id = os.path.splitext(os.path.basename(file_name))[0]
-% 
-%     if definition_id in self.node_definitions:
-%         self.logger.warn(
-%             "Should load node definition from file %s, but is already loaded",
-%             file_name
-%         )
-%         return self.node_definitions[definition_id]
-% 
-%     try:
-%         with open(file_name) as definition_fh:
-%             node_definition = json.Json.load_node_definition(
-%                 self, definition_fh
-%             )
-%             self.logger.debug(
-%                 "Loaded node definition %s from file %s",
-%                 definition_id, file_name
-%             )
-%             # TODO: Trigger (loading) callback
-%             AT<Node controller load node definition trigger callbackAT>
-%             return node_definition
-%     except json.json.decoder.JSONDecodeError as exc:
-%         self.logger.warn(
-%             "There was an error loading the node definition %s: %s",
-%             definition_id, exc
-%         )
-%         return NoneAT}
-% 
-% Whenever a new node definition gets loaded, other components need to be
-% informed about the fact, that a new node definition is available. However, as
-% the signal emits a view model, the laoded node definition cannot be emitted
-% directly. Instead a view model needs to be created, which will then be emitted.
-% 
-% ATd Node controller load node definition emit
-% AT{
-% self.do_add_node_view_definition.emit(node_definition_view_model)
-% AT}
-% 
-% The loading of the node definiton itself is simply about parsing the various
-% sections and handling them correspondingly. To prevent the node controller from
-% being bloated, the parsing is done in a separate module responsible for JSON
-% specific tasks.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def load_node_definition(cls, node_controller, json_file_handle):
-%     """Loads a node definition from given JSON input.
-% 
-%     :param node_controller: reference to the node controller
-%     :type node_controller: qde.editor.application.node.NodeController
-%     :param json_file_handle: an open file handle containing JSON data
-%     :type json_file_handle: file
-% 
-%     :return: a node definition
-%     :rtype: qde.editor.domain.node.NodeDefinition
-%     """
-% 
-%     o = json.load(json_file_handle)
-% 
-%     name        = str(o['name'])
-%     id_         = uuid.UUID(o['id_'])
-%     description = str(o['description'])
-% 
-%     inputs = []
-%     for input in o['inputs']:
-%         node_definition_input = cls.build_node_definition_input(
-%             node_controller, input
-%         )
-%         inputs.append(node_definition_input)
-% 
-%     outputs = []
-%     for output in o['outputs']:
-%         node_definition_output = cls.build_node_definition_output(
-%             node_controller, output
-%         )
-%         outputs.append(node_definition_output)
-% 
-%     node_definitions = {}
-%     for node_def in o['nodes']:
-%         definition_id, node_definition = cls.build_node_definition(node_def)
-%         node_definitions[definition_id] = node_definition
-% 
-%     connections = []
-%     for conn in o['connections']:
-%         connection = cls.build_node_definition_connection(conn)
-%         connections.append(connection)
-% 
-%     definitions = []
-%     for d in o['definitions']:
-%         definition = cls.build_node_definition_definition(d)
-%         definitions.append(definition)
-% 
-%     invocations = []
-%     for i in o['invocations']:
-%         invocation = cls.build_node_definition_invocation(i)
-%         invocations.append(invocation)
-% 
-%     node_definition             = node.NodeDefinition(id_)
-%     node_definition.name        = name
-%     node_definition.description = description
-%     node_definition.inputs      = inputs
-%     node_definition.outputs     = outputs
-%     node_definition.nodes       = node_definitions
-%     node_definition.connections = connections
-%     node_definition.definitions = definitions
-%     node_definition.invocations = invocations
-% 
-%     # TODO: Check if this part can be abve the def. instance
-%     parts = []
-%     for p in o['parts']:
-%         part = cls.build_node_definition_part(node_controller, node_definition, p)
-%         parts.append(part)
-%     node_definition.parts = parts
-% 
-%     # TODO: Do a consistency check
-%     node_definition.was_changed = False
-% 
-%     return node_definitionAT}
-% 
-% As can be seen in the above listing, there are parts, that are not yet defined:
-% inputs, outputs, other node definitions, connections, definitions, invocations
-% and parts.
-% 
-% First the building of the node definition inputs is defined.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition_input(cls, node_controller, json_input):
-%     """Builds and returns a node definition input from the given JSON input
-%     data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: a node definition input
-%     :rtype:  qde.editor.domain.node.NodeDefinitionInput
-%     """
-% 
-%     input_id             = uuid.UUID(json_input['id_'])
-%     name                 = str(json_input['name'])
-%     atomic_id            = uuid.UUID(json_input['atomic_id'])
-%     description          = str(json_input['description'])
-%     node_definition_part = node_controller.get_node_definition_part(atomic_id)
-% 
-%     default_value_str = ""
-%     default_value_entry = json_input['default_value']
-%     default_value = parameter.create_value(
-%         default_value_entry['type_'],
-%         default_value_entry['value']
-%     )
-% 
-%     min_value = float(json_input['min_value'])
-%     max_value = float(json_input['max_value'])
-% 
-%     node_definition_input = node.NodeDefinitionInput(
-%         input_id,
-%         name,
-%         node_definition_part,
-%         default_value
-%     )
-%     node_definition_input.description = description
-%     node_definition_input.min_value = min_value
-%     node_definition_input.max_value = max_value
-% 
-%     cls.logger.debug(
-%         "Built node definition input for node definition %s",
-%         atomic_id
-%     )
-%     return node_definition_input
-% AT}
-% 
-% However, there are a few things missing, which are used in the above code
-% fragments. The possibility to create values from given parameters, the actual
-% node definition input as domain model and getting the node definition part
-% identified by the given atomic identifier.
-% 
-% ATd Node controller methods
-% AT{
-% def get_node_definition_part(self, id_):
-%     """Returns the node definition part identified by the given identifier.
-% 
-%     If no such part is available, a generic part with that identifier is being
-%     created.
-% 
-%     :param id_: the identifier of the part of the node definition to get.
-%     :type  id_: uuid.uuid4
-% 
-%     :return: the node definition part identified by the given identifier.
-%     :rtype: qde.editor.domain.node.NodeDefinitionPart
-%     """
-% 
-%     if str(id_) not in self.node_definition_parts:
-%         self.logger.warn((
-%             "Part %s of the node definition was not found. Creating a"
-%             "generic one."
-%         ), id_)
-% 
-%         type_ = types.NodeType.GENERIC
-%         def create_func(id_, default_function, name, type_):
-%             node_part = node.NodePart(id_, None)
-%             node_part.type_ = type_
-%             node_part.name = name
-%             return node_part
-%         node_definition_part = node.NodeDefinitionPart(id_)
-%         node_definition_part.type_ = type_
-%         node_definition_part.creator_function = create_func
-%         self.node_definition_parts[id_] = node_definition_part
-%         return node_definition_part
-%     else:
-%         return self.node_definition_parts[str(id_)]
-% AT}
-% 
-% The creation of values from given parameters is done within the parameter
-% module, as this is something very parameter specific. Therefore a static method
-% is defined, which returns an instance of an atomic type, e.g. a float value or
-% a scene. \todo{instance of atomic type, ok?}
-% 
-% ATd Parameter domain module methods
-% AT{
-% def create_value(type_, value_string):
-%     """Creates an object of the given type with the given value.
-% 
-%     :param type_: the type of the value to create.
-%     :type  type_: str
-%     :param value_string: the value that the value shall have.
-%     "type  value_string: str
-% 
-%     :return: a value-type of the given type with the given value.
-%     :rtype: qde.editor.domain.parameter.Value
-%     """
-% 
-%     if type_.lower() == "float":
-%         float_value = float(value_string)
-%         return FloatValue(float_value)
-%     elif type_.lower() == "text":
-%         return TextValue(value_string)
-%     elif type_.lower() == "image":
-%         return ImageValue()
-%     elif type_.lower() == "scene":
-%         return SceneValue()
-%     elif type_.lower() == "generic":
-%         return GenericValue()
-%     elif type_.lower() == "dynamic":
-%         return DynamicValue()
-%     elif type_.lower() == "mesh":
-%         return MeshValue()
-%     elif type_.lower() == "implicit":
-%         return ImplicitValue()
-%     else:
-%         message = QtCore.QCoreApplication.translate(
-%             __module__.__name__, "Unknown type for value provided"
-%         )
-%         raise Exception(message)AT}
-% 
-% Further the instanciable classes of the atomic types are defined at the very same
-% place.
-% 
-% First, a generic value interface is defined. This interface holds a refernce to
-% the atomic type of the value and defines what type the function of a value is.
-% 
-% ATd Paramater domain model value generic interface
-% AT{
-% class ValueInterface(object):
-%     """Generic value interface."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         self.function_type = None
-% 
-%     def clone(self):
-%         """Clones the currently set value.
-% 
-%         :return: a clone of the currently set value
-%         :rtype:  qde.editor.domain.parameter.ValueInterface
-%         """
-% 
-%         message = QtCore.QCoreApplication.translate(
-%             __module__.__name__,
-%             "This method must be implemented in a child class"
-%         )
-%         raise NotImplementedError(message)AT}
-% 
-% 
-% Then an interface for setting and getting values is defined.
-% 
-% ATd Paramater domain model value interface
-% AT{
-% class Value(ValueInterface):
-%     """Value interface for setting and getting values."""
-% 
-%     def __init__(self, value):
-%         """Constructor.
-% 
-%         :param value: the value that shall be held
-%         :type  value: object
-%         """
-% 
-%         super(Value, self).__init__()
-%         self.value = valueAT}
-% 
+\newthought{A part of a node has a function}, which gets called whenever a part
+of a node is being processed.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap117}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node part domain model function declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class Function(object):
+    """Represents the function of a part of a node."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.has_changed = True
+        self.evaluation_index = 0
+        self.changed_state = types.StateChange.VALUE.value | types.StateChange.SUBTREE.value
+
+    def clone(self):
+        """Clones the currently set function."""
+
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)
+
+    def process(self, context, inputs, output_index):
+        """Processes the value function for the given context, the given
+        inputs."""
+
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Definition of the function class which is used in parts of nodes.
+  \newline{}\newline{}Editor $\rightarrow$ Function}
+\label{editor:lst:function}
+\end{figure}
+
+\newthought{When a part of a node is being processed}, also its inputs are
+processed. Whenever an input (value) changes, the node part needs to handle the
+changes. There are three possible types of changes: nothing has changed, the
+value (of the function) has changed or the subtree (inputs) has changed.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap118}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node part state changed declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class StateChange(enum.Enum):
+    """Possible changes of state."""
+
+    NOTHING  = 0
+    VALUE    = 1
+    SUBTREE  = 2|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class which holds the possible values of a state change of a node
+  part.
+  \newline{}\newline{}Editor $\rightarrow$ State change}
+\label{editor:lst:state-change}
+\end{figure}
+
+\newthought{Finally all nodes will be composed of atomic types.} When building
+the node definition from the JSON input, the (atomic) part of the node
+definition is fetched from the node controller. Therefore it is necessary to
+provide parts for the atomic types before loading all the node definitions.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap119}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller load nodes method}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+for atomic_type in parameter.AtomicTypes.atomic_types:
+    if atomic_type.id_ not in self.node_definition_parts:
+        self.node_definition_parts[atomic_type.id_] = atomic_type
+        self.logger.info(
+            "Added atomic type %s: %s",
+            atomic_type.type_, atomic_type.id_
+        )
+    else:
+        self.logger.warn((
+            "Already knowing node part for atomic type %s. This should not"
+            "happen"
+        ), atomic_type.type_)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The node controller provides the atomic types which build the basis of
+  the part of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$ Methods
+  $\rightarrow$ Load nodes}
+\label{editor:lst:node-controller:methods:load-nodes:atomic-types}
+\end{figure}
+
+\newthought{Having the atomic types available as parts}, the node definitions
+themselves may be loaded. There is only one problem to that: there is nothing to
+hold the node defintions. Therefore the node definition domain model is
+introduced.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap120}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition domain model declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinition(object):
+    """Represents the definition of a node."""
+
+    # Signals
+    |\hbox{$\langle\,${\itshape Node definition domain model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    |\hbox{$\langle\,${\itshape Node definition domain model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node definition domain model methods}\nobreak\ {\footnotesize ?}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Definition of the node definition class, which represents the definition
+  of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition}
+\label{editor:lst:node-definition}
+\end{figure}
+
+\newthought{The definition of a node} is quite similar to a node itself. As the
+definition of a node may be changed, the flag~\verb=was_changed= is added.
+Further a node definition holds all instances of itself, meaning nodes.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap121}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition domain model constructor}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def __init__(self, id_):
+    """Constructor.
+
+    :param id_: the globally unique identifier of the node.
+    :type  id_: uuid.uuid4
+    """
+
+    self.id_         = id_
+
+    self.name        = ""
+    self.description = ""
+    self.parent      = None
+    self.inputs      = []
+    self.outputs     = []
+    self.definitions = []
+    self.invocations = []
+    self.parts       = []
+    self.nodes       = []
+    self.connections = []
+    self.instances   = []
+    self.was_changed = False|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Constructor of the node definition class.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
+  Constructor}
+\label{editor:lst:node-definition:constructor}
+\end{figure}
+
+\newthought{The node controller is now able} to instantiate nodes definitions
+and keep them in a list. The controller manages both, the domain and the view
+models. As they both share the same ID, as the view model is being created from
+the data of the domain model, only one entry is necessary. The entry in the
+dictionary will therefore hold a tuple, containing the domain and the view
+model, identified by their common identifier.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap122}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller constructor}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    self.node_definitions = {}
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The node controller holds a dictionary containing node definitions.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Constructor}
+\label{editor:lst:node-controller:constructor:node-definitions}
+\end{figure}
+
+\newthought{The node controller scans} the~\verb=node= subdirectory, containing
+the node definitions, for files ending in~\verb=node=.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap123}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller load nodes method}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+
+if os.path.exists(self.nodes_path):
+    node_definition_files = glob.glob("{path}{sep}*.{ext}".format(
+        path=self.nodes_path,
+        sep=os.sep,
+        ext=self.nodes_extension
+    ))
+    num_node_definitions = len(node_definition_files)
+    if num_node_definitions > 0:
+        self.logger.info(
+            "Found %d node definition(s), loading.",
+            num_node_definitions
+        )
+        t0 = time.perf_counter()
+        for file_name in node_definition_files:
+            self.logger.debug(
+                "Found node definition %s, trying to load",
+                file_name
+            )
+            node_definition = self.load_node_definition_from_file_name(file_name)
+            if node_definition is not None:
+                node_definition_view_model = node_view_model.NodeViewModel(
+                    id_=node_definition.id_,
+                    domain_object=node_definition
+                )
+                self.node_definitions[node_definition.id_] = (
+                    node_definition,
+                    node_definition_view_model
+                )
+                |\hbox{$\langle\,${\itshape Node controller load node definition emit}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+
+        t1 = time.perf_counter()
+        self.logger.info(
+            "Loading node definitions took %.10f seconds",
+            (t1 - t0)
+        )
+    else:
+        message = QtCore.QCoreApplication.translate(
+            __class__.__name__, "No node definitions found."
+        )
+        self.logger.warn(message)
+else:
+    message = QtCore.QCoreApplication.translate(
+        __class__.__name__, "No node definitions found."
+    )
+    self.logger.warn(message)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The node controller loads and parses node definition files from the
+  file system.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Load nodes}
+\label{editor:lst:node-controller:methods:load-nodes:laod}
+\end{figure}
+
+\newthought{If a file containing a node definition is found}, its identifier is
+extracted from the file name. If the node definition is not known yet, it gets
+loaded and added to the list of known node definitions.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap124}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def load_node_definition_from_file_name(self, file_name):
+    """Loads a node definition from the given file name.
+    If no such file exists, None is returned.
+
+    :param file_name: the file name to load.
+    :type  file_name: str
+
+    :return: the loaded node definition and its identifier or None
+    :rtype:  qde.editor.domain.node.NodeDefinition or None
+    """
+
+    if not os.path.exists(file_name):
+        self.logger.warn((
+            "Tried to load node definition from file %s, "
+            "but the file does not exist"
+        ), file_name)
+        return None
+
+    # Extract the definition identifier from the file name, which is
+    # "uuid4.node".
+    definition_id = os.path.splitext(os.path.basename(file_name))[0]
+
+    if definition_id in self.node_definitions:
+        self.logger.warn(
+            "Should load node definition from file %s, but is already loaded",
+            file_name
+        )
+        return self.node_definitions[definition_id]
+
+    try:
+        with open(file_name) as definition_fh:
+            node_definition = json.Json.load_node_definition(
+                self, definition_fh
+            )
+            self.logger.debug(
+                "Loaded node definition %s from file %s",
+                definition_id, file_name
+            )
+            # TODO: Trigger (loading) callback
+            |\hbox{$\langle\,${\itshape Node controller load node definition trigger callback}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+            return node_definition
+    except json.json.decoder.JSONDecodeError as exc:
+        self.logger.warn(
+            "There was an error loading the node definition %s: %s",
+            definition_id, exc
+        )
+        return None|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A method which tries to load a node definition from the
+  file system using the provided file name.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Load node definition from file name}
+\label{editor:lst:node-controller:methods:load-node-definition-from-file-name}
+\end{figure}
+
+\newthought{Whenever a new node definition gets loaded}, other components need
+to be informed about the fact, that a new node definition is available. However,
+as the signal emits a view model, the laoded node definition cannot be emitted
+directly. Instead a view model needs to be created, which will then be emitted.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap125}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller load node definition emit}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+self.do_add_node_view_definition.emit(node_definition_view_model)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Whenever a new node definition gets loaded, the node controller emits a
+  corresponding signal containing the node view model for the loaded node definition.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Load node definitions}
+\label{editor:lst:node-controller:methods:load-node-definitions:do-add-node-view-definition}
+\end{figure}
+
+\newthought{The loading of the node definition itself} is simply about parsing the various
+sections and handling them correspondingly. To prevent the node controller from
+being bloated, the parsing is done in a separate module responsible for JSON
+specific tasks.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap126}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def load_node_definition(cls, node_controller, json_file_handle):
+    """Loads a node definition from given JSON input.
+
+    :param node_controller: reference to the node controller
+    :type node_controller: qde.editor.application.node.NodeController
+    :param json_file_handle: an open file handle containing JSON data
+    :type json_file_handle: file
+
+    :return: a node definition
+    :rtype: qde.editor.domain.node.NodeDefinition
+    """
+
+    o = json.load(json_file_handle)
+
+    name        = str(o['name'])
+    id_         = uuid.UUID(o['id_'])
+    description = str(o['description'])
+
+    inputs = []
+    for input in o['inputs']:
+        node_definition_input = cls.build_node_definition_input(
+            node_controller, input
+        )
+        inputs.append(node_definition_input)
+
+    outputs = []
+    for output in o['outputs']:
+        node_definition_output = cls.build_node_definition_output(
+            node_controller, output
+        )
+        outputs.append(node_definition_output)
+
+    node_definitions = {}
+    for node_def in o['nodes']:
+        definition_id, node_definition = cls.build_node_definition(node_def)
+        node_definitions[definition_id] = node_definition
+
+    connections = []
+    for conn in o['connections']:
+        connection = cls.build_node_definition_connection(conn)
+        connections.append(connection)
+
+    definitions = []
+    for d in o['definitions']:
+        definition = cls.build_node_definition_definition(d)
+        definitions.append(definition)
+
+    invocations = []
+    for i in o['invocations']:
+        invocation = cls.build_node_definition_invocation(i)
+        invocations.append(invocation)
+
+    node_definition             = node.NodeDefinition(id_)
+    node_definition.name        = name
+    node_definition.description = description
+    node_definition.inputs      = inputs
+    node_definition.outputs     = outputs
+    node_definition.nodes       = node_definitions
+    node_definition.connections = connections
+    node_definition.definitions = definitions
+    node_definition.invocations = invocations
+
+    # TODO: Check if this part can be abve the def. instance
+    parts = []
+    for p in o['parts']:
+        part = cls.build_node_definition_part(node_controller, node_definition, p)
+        parts.append(part)
+    node_definition.parts = parts
+
+    # TODO: Do a consistency check
+    node_definition.was_changed = False
+
+    return node_definition|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class method of the JSON module, which loads a node definition from a
+  file handle (pointing to a JSON file containing a node definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+\label{editor:lst:json:methods:load-node-definition}
+\end{figure}
+
+\newthought{Not all parts of node definitions are defined yet}: inputs, outputs,
+other node definitions, connections, definitions, invocations and parts.First
+the building of the node definition inputs is defined.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap127}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_input(cls, node_controller, json_input):
+    """Builds and returns a node definition input from the given JSON input
+    data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a node definition input
+    :rtype:  qde.editor.domain.node.NodeDefinitionInput
+    """
+
+    input_id             = uuid.UUID(json_input['id_'])
+    name                 = str(json_input['name'])
+    atomic_id            = uuid.UUID(json_input['atomic_id'])
+    description          = str(json_input['description'])
+    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+
+    default_value_str = ""
+    default_value_entry = json_input['default_value']
+    default_value = parameter.create_value(
+        default_value_entry['type_'],
+        default_value_entry['value']
+    )
+
+    min_value = float(json_input['min_value'])
+    max_value = float(json_input['max_value'])
+
+    node_definition_input = node.NodeDefinitionInput(
+        input_id,
+        name,
+        node_definition_part,
+        default_value
+    )
+    node_definition_input.description = description
+    node_definition_input.min_value = min_value
+    node_definition_input.max_value = max_value
+
+    cls.logger.debug(
+        "Built node definition input for node definition %s",
+        atomic_id
+    )
+    return node_definition_input
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class method of the JSON module, which builds the input of a node
+  definition from a file handle (pointing to a JSON file containing a node
+  definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition input}
+\label{editor:lst:json:methods:build-node-definition-input}
+\end{figure}
+
+\newthought{There are a few things missing}, which are used in the above code
+fragment: the possibility to create values from given parameters, the actual
+node definition input as domain model and getting the node definition part
+identified by the given atomic identifier.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap128}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def get_node_definition_part(self, id_):
+    """Returns the node definition part identified by the given identifier.
+
+    If no such part is available, a generic part with that identifier is being
+    created.
+
+    :param id_: the identifier of the part of the node definition to get.
+    :type  id_: uuid.uuid4
+
+    :return: the node definition part identified by the given identifier.
+    :rtype: qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    if str(id_) not in self.node_definition_parts:
+        self.logger.warn((
+            "Part %s of the node definition was not found. Creating a"
+            "generic one."
+        ), id_)
+
+        type_ = types.NodeType.GENERIC
+        def create_func(id_, default_function, name, type_):
+            node_part = node.NodePart(id_, None)
+            node_part.type_ = type_
+            node_part.name = name
+            return node_part
+        node_definition_part = node.NodeDefinitionPart(id_)
+        node_definition_part.type_ = type_
+        node_definition_part.creator_function = create_func
+        self.node_definition_parts[id_] = node_definition_part
+        return node_definition_part
+    else:
+        return self.node_definition_parts[str(id_)]
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A method of the node controller, which returns a node definition
+  by a provided identifier. If no node definition part is found for the given
+  identifier, a new node definition part is created.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Get node definition part}
+\label{editor:lst:node-controller:methods:get-node-definition-part}
+\end{figure}
+
+\newthought{The creation of values from given parameters} is done within the
+parameter module, as this is something very parameter specific. Therefore a
+static method is defined, which returns an instance of an atomic type, e.g. a
+float value or a scene. \todo{instance of atomic type, ok?}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap129}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Parameter domain module methods}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def create_value(type_, value_string):
+    """Creates an object of the given type with the given value.
+
+    :param type_: the type of the value to create.
+    :type  type_: str
+    :param value_string: the value that the value shall have.
+    "type  value_string: str
+
+    :return: a value-type of the given type with the given value.
+    :rtype: qde.editor.domain.parameter.Value
+    """
+
+    if type_.lower() == "float":
+        float_value = float(value_string)
+        return FloatValue(float_value)
+    elif type_.lower() == "text":
+        return TextValue(value_string)
+    elif type_.lower() == "image":
+        return ImageValue()
+    elif type_.lower() == "scene":
+        return SceneValue()
+    elif type_.lower() == "generic":
+        return GenericValue()
+    elif type_.lower() == "dynamic":
+        return DynamicValue()
+    elif type_.lower() == "mesh":
+        return MeshValue()
+    elif type_.lower() == "implicit":
+        return ImplicitValue()
+    else:
+        message = QtCore.QCoreApplication.translate(
+            __module__.__name__, "Unknown type for value provided"
+        )
+        raise Exception(message)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Method of the parameter module, which creates an object of a specific
+  value instance based on the provided type of the value.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  Create value}
+\label{editor:lst:parameter:create-value}
+\end{figure}
+
+\newthought{For the specific value instances} a generic value interface is
+defined. This interface holds a reference to the atomic type of the value and
+defines what type the function of a value is.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap130}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Paramater domain model value generic interface}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class ValueInterface(object):
+    """Generic value interface."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.function_type = None
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        message = QtCore.QCoreApplication.translate(
+            __module__.__name__,
+            "This method must be implemented in a child class"
+        )
+        raise NotImplementedError(message)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Interface as basis for the value specific instances.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  Value interface}
+\label{editor:lst:parameter:value-interface}
+\end{figure}
+
+Then an interface for setting and getting values is defined.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap131}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Paramater domain model value interface}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class Value(ValueInterface):
+    """Value interface for setting and getting values."""
+
+    def __init__(self, value):
+        """Constructor.
+
+        :param value: the value that shall be held
+        :type  value: object
+        """
+
+        super(Value, self).__init__()
+        self.value = value|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Class which provides an interface to the value of the value specific
+  instances.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  Value}
+\label{editor:lst:parameter:value}
+\end{figure}
+
 % Then the specific value types are implemented, based either on the generic or
 % the concrete value interface, depending on the type. Here just two
 % implementations are given as an example. The other implementations can be found
@@ -8166,7 +8467,7 @@ def __init__(self, id_, default_function):
 % 
 % \todo{Add position correction to add node dialog.}
 % 
-% The dialog for adding a node instance from a node defintion shall only be shown
+% The dialog for adding a node instance from a node definition shall only be shown
 % from within a scene, that is from within the scene view. Therefore the add node
 % dialog is added to the scene view.
 % 
@@ -8273,7 +8574,7 @@ def __init__(self, id_, default_function):
 % AT<Add sub frame to columnAT>
 % AT<Save the node definition to list of known nodesAT>AT}
 % 
-% It might happen, that the node defintion is already present. If this is the case
+% It might happen, that the node definition is already present. If this is the case
 % the process will be stopped.
 % 
 % ATd Check if the node definition is already known
