@@ -34,11 +34,6 @@
 @i inc/implementation.w
 @i inc/discussion-conclusion.w
 
-% TODO: Check if still needed
-% i inc/procedure.w
-% i inc/implementation.w
-
-
 % Backmatter
 %---------------------------------------------------------------------------
 \backmatter{}
