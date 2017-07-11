@@ -61,7 +61,6 @@
 
 % Commands
 %---------------------------------------------------------------------------
-% Prints the month name (e.g., January) and the year (e.g., 2008)
 @i inc/commands.w
 
 % Definition of colors
