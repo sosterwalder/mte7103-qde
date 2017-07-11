@@ -393,6 +393,7 @@ def create_value_function(value):
 one of the building blocks of a node. They are used to evaluate a node
 value-wise through its inputs.
 
+\begin{figure}
 @d Node part domain model value function declarations
 @{
 class ValueFunction(Function):
@@ -504,6 +505,7 @@ class DefaultValueFunction(ValueFunction):
 which is not defined yet. A part of a node is actually an instance of an atomic
 type (which is usually an input) within an instance of a node definition.
 
+\begin{figure}
 @d Node part domain model declarations
 @{
 class NodePart(object):
