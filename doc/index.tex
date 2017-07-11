@@ -1118,21 +1118,22 @@ methodologies, that are used to implement this thesis.
 \label{sec:literate-programming}
 
 \newthought{Software may be documented in different ways.} It may be in terms of
-a preceding documentation, e.g. in form of a software architecture, which
-describes the software conceptually and hints at its implementation. It may be
-in terms of documenting the software inline through inline comments. Frequently
-both methodologies are used, in independent order. However, all too frequently
-the documentation is not done properly and is even neglected as it can be quite
-costly with seemingly little benefit.
+a documentation, e.g. in the form of a software architecture which
+describes the software conceptually and hints at its implementation. Or it may
+be in terms of documenting within the software itself through inline comments.
+Frequently both methodologies are used. However, all too
+frequently the documentation is not done properly, and even neglected as it can
+be quite costly with seemingly little benefit.
 
-\newthought{Documenting software is crucial.} Whenever software is written,
+\newthought{Documenting software is critical.} Whenever software is written,
 decisions are made. In the moment a decision is made, it may seem intuitively
-clear as it evolved by thought. This seemingly clearness of the decision is most
-of the time deceptive. Is a decision still clear when some time has passed by
-since making that decision? What were the facts that led to it? Is the decision
-also clear for other, may be less involved persons? All these concerns show that
-documenting software is crucial. No documentation at all, outdated or irrelevant
-documentation can lead to unforeseen efforts concerning time and costs.
+clear, as it has evolved through creative thought processes. The seeming clarity
+of the decision is most of the time deceptive. Is a decision still clear when
+some time has passed since making that decision? What were the considerations
+that led to it? Is the decision also clear for other, may be less-involved
+persons? All these concerns show that documenting software is critical. No
+documentation at all, or outdated or irrelevant documentation, can lead to
+unforeseen and costly efforts concerning work and time.
 
 \newthought{\citeauthor{hoare-hpl-1973} states~\citeyear{hoare-hpl-1973}} in his
 work~\citetitle{hoare-hpl-1973} that~\enquote{documentation must be regarded as
@@ -1158,7 +1159,7 @@ to be works of literature}~\cite[p.
 1]{knuth-lp-1984}.~\citeauthor{knuth-lp-1984} proposes to change
 the~\enquote{traditional attitude to the construction of programs}~\cite[p.
 1]{knuth-lp-1984}. Instead of imagining that the main task is to instruct a
-computer what to do, one shall concentrate on explaining to human beings what
+computer what to do, one should concentrate on explaining to human beings what
 the computer shall do.~\cite[p. 1]{knuth-lp-1984}
 
 \newthought{The ideas of literate programming} have been embodied in several
@@ -1170,16 +1171,16 @@ languages:
   \item a programming language
 \end{enumerate*}.
 Such a software system uses a single document as input (which can be split up in
-multiple files) and generates two outputs:
+multiple parts) and generates two outputs:
 \begin{enumerate*}
-\item a document in a document formatting language, such as~\LaTeX{} which, may
-    then be converted in a platform independent binary description, such as
-    PDF.
+  \item a document in a formatting language, such as
+    Knuth's~\LaTeX{}~\cite{knuth-tex-1987} (which may then be converted in a
+    printable and viewable form, such as PDF).
   \item a compilable program in a programming language, such as Python or C
-    which may then be compiled into an executable program.
+    (which may then be converted into an executable program).
 \end{enumerate*}~\cite{knuth-lp-1984}
-The first is called~\emph{weaving} and the latter~\emph{tangling}. This process
-is illustrated in~\autoref{fig:weave-and-tangle}.
+The first process is called~\emph{weaving} and the second~\emph{tangling}. This
+process is illustrated in~\autoref{fig:weave-and-tangle}.
 
 \begin{figure}
   \label{fig:weave-and-tangle}
@@ -1204,18 +1205,19 @@ is illustrated in~\autoref{fig:weave-and-tangle}.
   \end{tikzpicture}
 \end{figure}
 
-\newthought{Several literate programming systems were evaluated} during the
-first phases of this thesis:
+\newthought{Several literate programming (LP) systems were evaluated} during the
+first phase of this thesis:
 CWEB~\sidenote{\url{http://www-cs-faculty.stanford.edu/~uno/cweb.html}},
 Noweb~\sidenote{\url{https://www.cs.tufts.edu/~nr/noweb/}},
 lit~\sidenote{\url{http://cdosborn.github.io/lit/lit/root.html}},
 PyLiterate~\sidenote{\url{https://github.com/bslatkin/pyliterate}},
 pyWeb~\sidenote{\url{http://pywebtool.sourceforge.net/}} and
-Babel~\sidenote{\url{http://orgmode.org/worg/org-contrib/babel/}} (which is part
-of org mode of Emacs). All of these tools have their strengths and weaknesses.
-However, none of these systems fulfill all the needed requirements:
+Babel~\sidenote{\url{http://orgmode.org/worg/org-contrib/babel/}}. All of these
+tools have their strengths and weaknesses.
+However, none of these systems fulfill all the needed requirements of this
+project:
 \begin{enumerate*}
-  \item Provide pretty printing of the program parts.
+  \item Provide \enquote{pretty printing}~\protect\footnotemark[1]{} of the program parts.
   \item Provide automatic references between the definition of program parts and
     their usage.
   \item Expand program parts having the same name instead of redefining them.
@@ -1223,110 +1225,66 @@ However, none of these systems fulfill all the needed requirements:
   \item Allow the inclusion of files for both parts, the document formatting
     language and the programming language.
 \end{enumerate*}
+\footnote{pretty printing refers to content-based formatting (e.g. line color
+  and indentation to improve readability).}
 
-\newthought{Ultimately nuweb~\footnote{\url{http://nuweb.sourceforge.net/}} was
-chosen} as it fulfills all these requirements. It has adapted and simplified the
-ideas FunnelWeb~\footnote{\url{http://www.ross.net/funnelweb/}}. It is
-independent of the programming language for the source code. As document
-formatting language it uses~\LaTeX{}. Although the documentation of nuweb
-states, that it has no pretty printing of source code, it provides an option to
-display source code as listings. This method was modified to support visualizing
-the expansion of parts as well as to use specific syntax highlighting and code
-output within~\LaTeX{}.
+\newthought{Ultimately a further literate programming system},
+nuweb~\footnote{\url{http://nuweb.sourceforge.net/}}, was chosen as it fulfills
+all these requirements. It has adapted and simplified the ideas of
+FunnelWeb~\footnote{\url{http://www.ross.net/funnelweb/}}. It is independent of
+the programming language for the source code. As document formatting language it
+uses~\LaTeX{}. Although the documentation of nuweb states that it is not
+designed for the pretty printing of source code, it does provide an option to
+display source code as listings. This facility has been modified to support
+visualizing the expansion of parts as well as to use syntax highlighting of the
+code within~\LaTeX{}.
 
-\newthought{nuweb provides several commands to process files.} All commands
-begin with an at sign (@). Whenever a file does not contain any commands the
-file is copied unprocessed. The same applies for parts of files which contain no
-commands. nuweb provides a single binary, which processes the
-input files and generates the output files (in document formatting language and
-as source code respectively). The commands are used to~\emph{specify output
-files},~\emph{define fragments }and to~\emph{delimit scraps}.
+\newthought{The nuweb system provides several commands to process files.} All
+commands begin with an at sign (@). Whenever a file or part does not contain
+any commands the file is copied unprocessed. nuweb provides a single executable
+program, which processes the input files and generates the output files (weaving
+and tangling, in document formatting language and as source code respectively).
 
-\begin{table}[h]
-  \caption{The major commands of nuweb.~\cite[p. 3]{briggs-nuweb-93}}
-  \label{table:nuweb-commands}
-  \begin{tabularx}{\textwidth}{lX}
-    \toprule
-    \textbf{Command} & \textbf{Description}\\
-    \midrule
-    \verb|@o file-name flags scrap| & \emph{Outputs} the given scrap to the
-                                       defined \emph{file} using the provided
-                                       flags.\\
-    \verb|@d fragment-name scrap|   & Defines a~\emph{fragment} which refers to
-                                       / holds the given scrap.\\
-    \verb|@q fragment-name scrap|   & Defines a~\emph{quoted fragment} which refers to
-                                       / holds the given scrap. Inside a quoted
-                                       fragment referred fragments are not expanded.\\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-\marginnote[-70pt]{Note that fragment names may be abbreviated, either during
-invocation or definition. nuweb simply preserves the longest version of a
-fragment name.~\cite[p. 4]{briggs-nuweb-93}}
+\newthought{A fragment consists of scraps} which in this project contain the
+source code. They may also contain for instance paragraphs for formatted text or
+mathematical equations.
 
-\newthought{Scraps define content} in form of source code. They~\enquote{have
-specific markers to allow precise control over the contents and
-layout.}~\cite{briggs-nuweb-93} There are three ways of defining scraps, which
-can be seen in~\autoref{table:nuweb-scraps}. They all include everything between
-the specific markers but they differ when being typeset.
-\begin{table}[h]
-  \caption{Ways of defining scraps in nuweb.~\cite[p. 3]{briggs-nuweb-93}}
-  \label{table:nuweb-scraps}
-  \begin{tabularx}{\textwidth}{lX}
-    \toprule
-    \textbf{Scrap} & \textbf{Typesetting}\\
-    \midrule
-    \verb|@{ Content of scrap here @}| & Verbatim mode.\\
-    \verb|@[ Content of scrap here @]| & Paragraph mode.\\
-    \verb|@( Content of scrap here @)| & Math mode.\\
-    \bottomrule
-  \end{tabularx}
-\end{table}
+\newthought{Literate programming can be very expressive} when all concepts are
+explicitly defined before implementation.~\citeauthor{knuth-lp-1984} sees this
+expressiveness an advantage as one is forced to clarify thoughts before
+programming~\cite[p. 13]{knuth-lp-1984}. This is surely very true for small
+software but only partly true for larger software. The problem with larger
+software is, that when using literate programming, the documentation tends to be
+correspondingly large. \emph{To overcome this problem} in this project, the
+actual implementation of the software is placed into to the
+appendix~\todo{insert reference to appendix here}.
 
-\newthought{A fragment is being invoked} by
-using~\verb|@<fragment-name@>|.~\enquote{It causes the fragment fragment-name
-to be expanded inline as the code is written out to a file. It is an error to
-specify recursive fragment invocations.}~\cite[p. 3]{briggs-nuweb-93} There are
-various other commands and details, but mentioning them would go beyond the
-scope of this thesis. They can be found at~\cite{briggs-nuweb-93}.
+\newthought{Another problematic aspect} is the implementation of repeating
+fragments or parts with similar but not identical technical details (such as imports
+or getter and setter methods). This might be interesting only for
+software developers or technically oriented readers who want to grasp all the
+details.~\emph{This aspect can
+be overcome} by moving recurring or uninteresting fragments to a separate
+file (see~\todo{add reference to code fragments}).
 
-\newthought{Literate programming can be very expressive} as all thoughts are
-laid down before implementing something.~\citeauthor{knuth-lp-1984} sees this
-expressiveness an advantage as one is forced to clarify his thoughts before
-programming~\cite[p. 13]{knuth-lp-1984}. This is surely very true for rather
-small software and partly also for larger software. The problem with larger
-software is, that using literate programming, the documentation tends to be
-rather large too. \emph{To overcome this aspect} the actual implementation of
-the intended software is moved to the appendix~\todo{insert reference to
-appendix here}.
+\newthought{To show the principles of literate programming},
+without annoying the reader, only an excerpt of some details is given here.
 
-\newthought{Another problematic aspect is the implementation of technical
-details} such as imports for example or plain getter and setter methods, which
-may recur and may often be very similar. While this might be interesting for
-software developers or technically oriented readers, who want to grasp all the
-details, this might not be interesting for other readers.~\emph{This aspect can
-be overcome}, by moving recurring or seemingly uninteresting parts to a separate
-file, see~\todo{add reference to code fragments}, which holds these code
-fragments.
-
-\newthought{To show the principles of literate programming} nevertheless,
-without annoying the reader, only an excerpt of some details is given at this
-place. One of the more interesting things of the intended software might
+\newthought{One of the more interesting things} of the software might
 be the definition of a node~\todo{add reference to the node concept within
-appendix} and the loading of node definitions from external files. These two
-aspects are shown below. However, not all of the details are shown as this would
-go beyond the scope.
+appendix} and its loading from external files. These two aspects are shown
+below. More details of this example would go beyond the scope of this thesis.
 
 \newthought{Some essential thoughts about classes and objects} may help to stay
 consistent when developing the software, before implementing the node class.
-Each class should at least have
+Each class should at least have four parts:
 \begin{enumerate}
-  \item Signals --- to inform other components about events.
-  \item A constructor.
-  \item Various methods.
-  \item Slots --- to get informed about events from other components.
+  \item Signals --- to inform other objects about events.
+  \item A constructor --- creator of an initial instance of a class.
+  \item Various methods --- actions which can be executed by the object.
+  \item Slots --- receive signals from other objects.
 \end{enumerate}
-This pattern is applied to the declaration of the node class.
+This structure is applied to the declaration of the node class.
 
 \newpage{}
 
@@ -4665,7 +4623,7 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
-\NWtarget{nuweb87a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {87a}}$\,\rangle\equiv$
+\NWtarget{nuweb88a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {88a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       logger_name = "{module_name}.{class_name}".format(
@@ -4685,7 +4643,7 @@ named~\verb=with_logger=. The method has the following functionality.
 \item Provide an easy to use interface for logging.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
-\NWtarget{nuweb87b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {87b}}$\,\rangle\equiv$
+\NWtarget{nuweb88b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {88b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       cls.logger = logging.getLogger(logger_name)
