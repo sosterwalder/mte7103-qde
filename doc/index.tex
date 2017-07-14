@@ -304,40 +304,39 @@ which renders a simple scene in real-time.
 % dritten Teil wird die präzise Fragestellung formuliert. Das Ziel des Berichts
 % wird genannt und es wird erläutert, welchen Nutzen die Untersuchung haben soll.
 
-\newthought{The subject of computer graphics} exists since the beginning of
-modern computing. Ever since the subject of computer graphics has strived to
-create realistic depictions of the observable reality. Over time various
-approaches for creating artificial images (the so called rendering) evolved.
-One of those approaches is ray tracing.
-It was introduced in~\citeyear{appel_techniques_1968}
+\newthought{The application area of computer graphics} exists since the
+beginning of modern computing. Computer scientists have always strived to create
+realistic depictions of the observable reality.
+
+\newthought{Over time various approaches} for creating artificial images (the so
+called rendering) have evolved. One of these approaches is ray tracing. This was
+introduced in~\citeyear{appel_techniques_1968}
 by~\citeauthor{appel_techniques_1968} in the
-work~\citetitle{appel_techniques_1968}~\cite{appel_techniques_1968}. In
-\citeyear{whitted_improved_1980} it was improved
+article~\citetitle{appel_techniques_1968}~\cite{appel_techniques_1968}. In
+\citeyear{whitted_improved_1980} this methods were improved
 by~\citeauthor{whitted_improved_1980} in his work
 \citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}.
 
 \newthought{Ray tracing captivates} through simplicity while providing a very
-high image quality including perfect refractions and reflections. For a long
-time although, the approach was not performant enough to deliver images in real
-time. Real time means being able to render at least 25 rendered images (frames)
-within a second. Otherwise, due to the human anatomy, the output is perceived as
-either still images or as a too slow animation.
+high image quality, including perfect refractions and reflections of light. For
+a long time although, the approach was not efficient enough to deliver images in
+real time, which requires creating at least 25 rendered images (frames) per
+second. Otherwise, due to the human anatomy, the output is perceived as either
+still and jerky images or as a too slow animation.
 
 \newthought{Sphere tracing} is a ray tracing approach introduced
 in~\citeyear{hart_sphere_1994} by~\citeauthor{hart_sphere_1994} in his
 work~\citetitle{hart_sphere_1994}~\cite{hart_sphere_1994}. This approach is
-faster than the classical ray tracing approaches in finding intersections
-between rays and objects. The speed up is achieved by using signed distance
-functions for modeling the objects to be rendered and by expanding volumes for
-finding intersections.
+faster than the classical ray tracing approaches in its method of finding
+intersections between rays and objects.
 
 \newthought{Graphics processing units (GPUs)} have evolved over time and have
-gotten more powerful in processing power. Since around 2009 GPUs are able to
+become exponentially more powerful in processing power. Since around 2009, GPUs are able to
 produce real time computer graphics using sphere tracing. While allowing ray
-tracing in real time on modern GPUs, sphere tracing has also a clear
-disadvantage. The de facto way of representing objects, using triangle based
-meshes, cannot be used directly. Instead distance fields defined by implicit
-functions build the basis for sphere tracing.
+tracing in real time on modern GPUs, sphere tracing has, however, a clear
+disadvantage. The de facto way of representing the surface of objects using triangle based
+meshes cannot be used directly. Instead, distance functions are used for
+modeling the surfaces as seen from any view point.
 
 \section{Purpose and situation}
 \label{sec:purpose}
@@ -345,8 +344,8 @@ functions build the basis for sphere tracing.
 \subsection{Motivation}
 \label{subsec:motivation}
 
-\newthought{To this point in time} there are no solutions (at least none are
-known to the author), that provide a convenient way for modeling, animating and
+\newthought{Up to this point in time} there are no solutions (at least none are
+known to the author) that provide a convenient way for modeling, animating and
 rendering objects and scenes using signed distance functions for modeling and
 sphere tracing for rendering.
 Most of the solutions using sphere tracing implement it by having one or
@@ -355,125 +354,102 @@ Other solutions provide node based approaches, but they allow either no sphere
 tracing at all, meaning they use rasterization, or they provide nodes containing
 (fragment-) shader code, which leads again to a single big fragment shader.
 
-\newthought{This thesis} aims at designing and developing a software which
-provides both: a node based approach for modeling and animating objects using
-signed distance functions as well as allowing the composition of scenes while
-rendering objects, or scenes respectively, in real time on the GPU using sphere
-tracing.
+\newthought{This thesis} aims at designing and developing a program which
+provides both, a node based approach for modeling and animating objects using
+signed distance functions and allowing the rendering of scenes using sphere
+tracing, efficiently enough to be executed in real time on the GPU.
 
 \subsection{Objectives and limitations}
 \label{subsec:objectives}
 
 \newthought{The objective of this thesis} is the design and development of a
-software for \textit{modeling}, \textit{composing} and \textit{rendering} real
-time computer graphics through a graphical toolbox.
+program for \textit{modeling}, \textit{composing} and \textit{rendering} real
+time computer graphics by providing a graphical toolbox.
 
-\newthought{Modeling} is done by composing single nodes to objects using a
-node based graph structure.
+\newthought{Modeling} is done by composing simple objects into complex objects
+and scenes using a node based graph structure of~\enquote{nodes}.
 
-\newthought{Compositing} includes two aspects: the composition of objects into
-scenes and the composition of an animation which is defined by multiple scenes
+\newthought{Composing} includes two aspects: the combination of objects into
+scenes, and the creation of an animation which is defined by multiple scenes
 which follow a chronological order. The first aspect is realized by a scene
-graph structure, which contains at least a root scene. Each scene may contain
-nodes. The second aspect is realized by a time line, which allows a
-chronological organization of scenes.
+graph structure. The second aspect is realized by a time line.
 
-\newthought{For rendering} a highly optimized algorithm based on ray tracing is
+\newthought{For rendering}, a highly optimized algorithm based on ray tracing is
 used. The algorithm is called sphere tracing and allows the rendering of ray
-traced scenes in real time on the GPU. Contingent upon the used rendering
-algorithm all models are modeled using implicit surfaces. In addition
-mesh-based models and corresponding rendering algorithms may be implemented.
+traced scenes in real time on the GPU. Contingent upon the rendering algorithm
+used all objects are modeled using distance functions.
 
 \newthought{Required objectives} are the following:
 \begin{itemize}
   \item Development of an editor for creating and editing real time rendered
     scenes, containing the following features.
     \begin{itemize}
-      \item A scene graph, allowing management (creation and deletion) of
-        scenes. The scene graph has at least a root scene.
-    \item A node-based graph structure, allowing the composition of scenes using
-      nodes and connections between the nodes.
-    \item Nodes for the node-based graph structure.
+      \item A scene tree, allowing management (creation and deletion) of
+        scenes.
+      \item One node-based graph structure for each scene in the scene tree.
+        This allows the composition of scenes using
+        nodes and connections between the nodes.
+    \item Nodes
       \begin{itemize}
-        \item Simple objects defined by signed distance functions: Cube and
-          sphere
-        \item Simple operations: Merge/Union, Intersection, Difference
-        \item Transformations: Rotate, Translate and Scale
-        \item Camera
+        \item Simple objects defined by signed distance functions: In this
+          thesis the objects are limited to cube and sphere (other solids could
+          be modeled in the same way).
+        \item Simple operations: Union, Intersection, Subtraction.
+        \item Transformations: Rotate, Translate and Scale.
+        \item Camera.
         \item Renderer (ray traced rendering using sphere tracing)
-        \item Lights
+        \item Point light sources.
       \end{itemize}
     \end{itemize}
-\end{itemize}
-
-\newthought{Optional objectives} are the following:
-\begin{itemize}
-  \item Additional features for the editor, as follows.
-  \begin{itemize}
-    \item A sequencer, allowing a time-based scheduling of defined scenes.
-    \item Additional nodes, such as operations (e.g. replication of objects)
-      or post-processing effects (glow/glare, color grading and so on).
-  \end{itemize}
-  \item Development of a standalone player application. The player allows the
-    playback of animations (time-based, compounded scenes in sequential order)
-    created with the editor.
 \end{itemize}
 
 \section{Related works}
 \label{sec:related-works}
 
-\newthought{Preliminary} to this thesis two project works were done:
-\enquote{Volume ray casting --- basics \&
-principles}~\cite{osterwalder-volume-2016}, which describes the basics and
-principles of sphere tracing, a special form of ray tracing, and \enquote{QDE
+\newthought{Preliminary} to this thesis two project works were completed.
+The first was \enquote{Volume ray casting --- basics \&
+principles}~\cite{osterwalder-volume-2016}, which describes the concepts
+of sphere tracing The second was \enquote{QDE
 --- a visual animation system, architecture}~\cite{osterwalder-qde-2016}, which
-established the ideas and notions of an editor and a player component as well as
-the basis for a possible software architecture for these components. The latter
-project work is presented in detail in the chapter about the procedure, the
-former project work is presented in the chapter about the implementation.
+established the concepts of an editor and a player component, as well as
+the basis for a possible software architecture for these components.
+
+\newthought{For clarity in the explanation} of this thesis first the
+architecture is presented, see section~\enquote{\nameref{soarch}}. Then the rendering is
+presented in section~\enquote{\nameref{sec:rendering}}.
 
 \section{Document structure}
 \label{sec:document-structure}
 
-This document is divided into six chapters, the first being this \textit{introduction}. The
-second chapter on \textit{administrative aspects} shows the planning of the
-project, including the involved persons, deliverables and the phases and
+\newthought{This document is divided into six chapters}, the first being this
+chapter,~\enquote{\nameref{chap:introduction}}. The second
+chapter~\enquote{\nameref{chap:administrative-aspects}} shows the planning of
+the project, including the persons involved, the deliverables, and phases and
 milestones.
 
-The administrative aspects are followed by a chapter on the
-\textit{fundamentals}. The purpose of that chapter is to present the
-fundamentals, that this thesis is built upon. One aspect is a framework for the
-implementation of the intended software, which is heavily based on the previous
-project work, \enquote{QDE --- a visual animation system, architecture}~\cite{osterwalder-qde-2016}. Another aspect is the rendering,
-which is using a special form of ray tracing as described in ``Volume ray
-casting --- basics \& principles''~\cite{osterwalder-volume-2016}.
+\newthought{The administrative aspects are followed by} the
+chapter~\enquote{\nameref{fundamentals}}. The purpose of this chapter is to
+present the principles, based on the previous project works mentioned above that
+this thesis is built upon.
 
-The next chapter on the \textit{methodologies} introduces a concept called
-literate programming and elaborates some details of the implementation using
-literate programming. Additionally it introduces standards and principles
-concerning the implementation of the intended software.
+\newthought{The next chapter} on~\enquote{\nameref{chap:methodologies}}
+introduces a concept called literate programming and elaborates some details of
+the implementation using this. Additionally it introduces standards and
+principles for implementation of the developed software.
 
-The following chapter on the \textit{results} concludes on the implementation
-of the editor and the player components.
+\newthought{The following chapter} on~\enquote{\nameref{chap:implementation}}
+describes the editor component.
 % TODO: Elaborate more? OK like this.
 
-% TODO: Move this to a more fitting place
-% ray casting --- basics \& principles''~\cite{osterwalder-volume-2016}. As the
-% editor component defines the whole data structure it builds the basis of the
-% thesis and can be seen as main part of the thesis. The player component re-uses
-% concepts established within the editor.
-% Given that literate programming is very complete and elaborated, as components
-% being developed using this procedure are completely derived from the
-% documentation, the actual implementation is found in the appendix as otherwise
-% this thesis would be simply too extensive.
+\newthought{The last chapter}~\enquote{\nameref{chap:discussion-conclusion}}
+considers the methodologies as well as the results. Some further work on the
+editor and the player components is proposed as well.
 
-The last chapter is \textit{discussion and conclusion} and discusses the
-methodologies as well as the results. Some further work on the editor and the
-player components is proposed as well.
+\newthought{After the regular content} follow appendices,
+see~\enquote{\nameref{part:appendix}}, detailing the requirements for building the
+above-mentioned components, and the actual source code in form of a literal
+program.
 
-After the regular content follows the \textit{appendix}, containing the
-requirements for building the before mentioned components, the actual source
-code in form of literal programming as well as test cases for the components.
 % TODO: Add missing content, if content _is_ missing.
 % -*- mode: latex; coding: utf-8 -*-
 
@@ -2163,6 +2139,18 @@ developed.
 % Folgerungen verlangt, können diese auch als Schlussteil in die Diskussion
 % integriert werden.
 
+\newthought{Optional objectives} are the following:
+\begin{itemize}
+  \item Additional features for the editor, as follows.
+  \begin{itemize}
+    \item A sequencer, allowing a time-based scheduling of defined scenes.
+    \item Additional nodes, such as operations (e.g. replication of objects)
+      or post-processing effects (glow/glare, color grading and so on).
+  \end{itemize}
+  \item Development of a standalone player application. The player allows the
+    playback of animations (time-based, compounded scenes in sequential order)
+    created with the editor.
+\end{itemize}
 % Backmatter
 %---------------------------------------------------------------------------
 \backmatter{}
@@ -2172,6 +2160,7 @@ developed.
 
 \appendix
 \part*{Appendix}
+\label{part:appendix}
 
 % -*- mode: latex; coding: utf-8 -*-
 
@@ -2417,7 +2406,7 @@ if __name__ == "__main__":
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb144}{144}.
 
 \item{}
 \end{list}
@@ -2477,7 +2466,7 @@ signals.\cite[pp. 37 --- 38]{osterwalder-qde-2016}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb146}{146}.
 
 \item{}
 \end{list}
@@ -2515,7 +2504,7 @@ def __init__(self, arguments):
     |\hbox{$\langle\,${\itshape Set up components for main application}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Add root node for main application}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Set model for scene graph view}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Load nodes}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Load nodes}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     self.main_window.show()|\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
@@ -2598,7 +2587,7 @@ class MainWindow(QtWidgets.QMainWindow):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb149}{149}.
 
 \item{}
 \end{list}
@@ -2915,7 +2904,7 @@ class SceneModel(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb151a}{151a}.
 
 \item{}
 \end{list}
@@ -2996,14 +2985,14 @@ class SceneGraphViewModel(Qt.QObject):
 
     |\hbox{$\langle\,${\itshape Scene graph view model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Scene graph view model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Scene graph view model methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Scene graph view model methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Scene graph view model slots}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb151b}{151b}.
 
 \item{}
 \end{list}
@@ -3112,7 +3101,7 @@ class SceneGraphController(QtCore.QAbstractItemModel):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb152b}{152b}.
 
 \item{}
 \end{list}
@@ -3733,6 +3722,7 @@ def node_count(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb151c}{, 151c}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -3766,7 +3756,7 @@ self.scene_graph_controller = scene.SceneGraphController(self)|\NWsep|
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -3798,7 +3788,7 @@ Therefore~\verb=QTreeView= is used as basis for the scene graph view.
 \NWtarget{nuweb?}{} $\langle\,${\itshape Scene graph view declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-|\hbox{$\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize \NWlink{nuweb155b}{155b}}$\,\rangle$}|
 class SceneGraphView(QtWidgets.QTreeView):
     """The scene graph view widget.
     A widget for displaying and managing the scene graph.
@@ -3813,7 +3803,7 @@ class SceneGraphView(QtWidgets.QTreeView):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb153}{153}.
 
 \item{}
 \end{list}
@@ -4623,7 +4613,7 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
-\NWtarget{nuweb79a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {79a}}$\,\rangle\equiv$
+\NWtarget{nuweb91a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {91a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       logger_name = "{module_name}.{class_name}".format(
@@ -4634,7 +4624,7 @@ named~\verb=with_logger=. The method has the following functionality.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb155a}{155a}.
 
 \item{}
 \end{list}
@@ -4643,7 +4633,7 @@ named~\verb=with_logger=. The method has the following functionality.
 \item Provide an easy to use interface for logging.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
-\NWtarget{nuweb79b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {79b}}$\,\rangle\equiv$
+\NWtarget{nuweb91b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {91b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
       cls.logger = logging.getLogger(logger_name)
@@ -4653,7 +4643,7 @@ return cls|\NWsep|
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb155a}{155a}.
 
 \item{}
 \end{list}
@@ -5041,7 +5031,7 @@ class NodeType(enum.Enum):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156a}{156a}.
 
 \item{}
 \end{list}
@@ -5088,8 +5078,8 @@ class AtomicType(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -5152,8 +5142,8 @@ class AtomicTypes(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -5187,7 +5177,7 @@ class NodeModel(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -5279,7 +5269,7 @@ class NodeViewModel(Qt.QGraphicsObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161b}{161b}.
 
 \item{}
 \end{list}
@@ -5318,7 +5308,7 @@ def __init__(self, id_, domain_object, parent=None):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5355,7 +5345,7 @@ def type_(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5381,7 +5371,7 @@ def name(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5460,7 +5450,7 @@ def paint(self, painter, option, widget):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5491,7 +5481,7 @@ node.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5527,7 +5517,7 @@ def create_cache_key(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5598,7 +5588,7 @@ def status(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5729,15 +5719,15 @@ class SceneView(Qt.QGraphicsView):
     # Signals
     |\hbox{$\langle\,${\itshape Scene view signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 
-    |\hbox{$\langle\,${\itshape Scene view constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Scene view methods}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Scene view constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Scene view methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Scene view slots}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb153}{153}.
 
 \item{}
 \end{list}
@@ -5768,6 +5758,7 @@ def __init__(self, parent=None):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5953,7 +5944,7 @@ class SceneController(Qt.QObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb152b}{152b}.
 
 \item{}
 \end{list}
@@ -5975,7 +5966,7 @@ self.scene_controller = scene.SceneController(self)|\NWsep|
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6012,13 +6003,13 @@ class SceneViewModel(Qt.QGraphicsScene):
     |\hbox{$\langle\,${\itshape Scene view model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 
     |\hbox{$\langle\,${\itshape Scene view model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb151b}{151b}.
 
 \item{}
 \end{list}
@@ -6109,6 +6100,7 @@ def drawBackground(self, painter, rect):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb152a}{, 152a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6436,7 +6428,7 @@ at~\autoref{appendix:chap:editor}, a node defining a sphere is implemented.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb164a}{164a}.
 
 \item{}
 \end{list}
@@ -6732,7 +6724,7 @@ class NodeController(QtCore.QObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb164b}{164b}.
 
 \item{}
 \end{list}
@@ -6772,7 +6764,7 @@ def __init__(self, parent=None):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6805,7 +6797,7 @@ def load_nodes(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6842,7 +6834,7 @@ class NodeDefinitionPart(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -6917,7 +6909,7 @@ they are a central aspect and may be reused.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6956,7 +6948,8 @@ def create_value_function(value):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -7133,7 +7126,7 @@ class NodePart(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -7252,7 +7245,7 @@ class StateChange(enum.Enum):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156a}{156a}.
 
 \item{}
 \end{list}
@@ -7323,12 +7316,12 @@ class NodeDefinition(object):
     |\hbox{$\langle\,${\itshape Node definition domain model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
 
     |\hbox{$\langle\,${\itshape Node definition domain model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Node definition domain model methods}\nobreak\ {\footnotesize ?}$\,\rangle$}||\NWsep|
+    |\hbox{$\langle\,${\itshape Node definition domain model methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}||\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -7406,7 +7399,7 @@ model, identified by their common identifier.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -7554,7 +7547,7 @@ def load_node_definition_from_file_name(self, file_name):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -7687,8 +7680,8 @@ def load_node_definition(cls, node_controller, json_file_handle):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
 
 \item{}
 \end{list}
@@ -7761,8 +7754,8 @@ def build_node_definition_input(cls, node_controller, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
 
 \item{}
 \end{list}
@@ -7824,14 +7817,14 @@ def get_node_definition_part(self, id_):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
-\caption{A method of the node controller, which returns a node definition
+\caption{A method of the node controller, which returns a node definition part
   by a provided identifier. If no node definition part is found for the given
   identifier, a new node definition part is created.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
@@ -7888,7 +7881,7 @@ def create_value(type_, value_string):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -7935,7 +7928,7 @@ class ValueInterface(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -7971,7 +7964,7 @@ class Value(ValueInterface):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -7984,537 +7977,946 @@ class Value(ValueInterface):
 \label{editor:lst:parameter:value}
 \end{figure}
 
-% Then the specific value types are implemented, based either on the generic or
-% the concrete value interface, depending on the type. Here just two
-% implementations are given as an example. The other implementations can be found
-% at~\todo{link to fragments}.
-% 
-% ATd Paramater domain model float value
-% AT{# Python
-% class FloatValue(Value):
-%     """A class holding float values."""
-% 
-%     def __init__(self, float_value):
-%         """Constructor.
-% 
-%         :param float_value: the float value that shall be held
-%         :type  float_value: float
-%         """
-% 
-%         super(FloatValue, self).__init__(float_value)
-%         self.function_type = types.NodeType.FLOAT
-% 
-%     def clone(self):
-%         """Clones the currently set value.
-% 
-%         :return: a clone of the currently set value
-%         :rtype:  qde.editor.domain.parameter.ValueInterface
-%         """
-% 
-%         return FloatValue(self.value)AT}
-% 
-% ATd Paramater domain model scene value
-% AT{
-% class SceneValue(ValueInterface):
-%     """A class holding scene values."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         super(SceneValue, self).__init__()
-%         self.function_type = types.NodeType.SCENE
-% 
-%     def clone(self):
-%         """Clones the currently set value.
-% 
-%         :return: a clone of the currently set value
-%         :rtype:  qde.editor.domain.parameter.ValueInterface
-%         """
-% 
-%         return SceneValue()AT}
-% 
-% What now still is missing, is the definition of the node definition input
-% domain model.
-% 
-% ATd Node definition input domain model declarations
-% AT{
-% class NodeDefinitionInput(object):
-%     """Represents an input of a definition of a node."""
-% 
-%     # Signals
-%     AT<Node definition input domain model signalsAT>
-% 
-%     AT<Node definition input domain model constructorAT>
-%     AT<Node definition input domain model methodsAT>AT}
-% 
-% ATd Node definition input domain model constructor
-% AT{
-% def __init__(self, id_, name, node_definition_part, default_value):
-%     """Constructor.
-% 
-%     :param id_: the identifier of the definition
-%     :type  id_: uuid.uuid4
-%     :param name: the name of the definition
-%     :type  name: str
-%     :param node_definition_part: the atomic part of the node definition
-%     :type node_definition_part: TODO
-%     :param default_value: the default value of the input
-%     :type default_value: qde.editor.domain.parameter.Value
-%     """
-% 
-%     self.id_                  = id_
-%     self.name                 = name
-%     self.node_definition_part = node_definition_part
-%     self.description          = ""
-%     self.min_value            = -100000
-%     self.max_value            = 100000
-% 
-%     self.default_function = create_default_value_function(
-%         default_value
-%     )AT}
-% 
-% The code snippet defining the constructor of a node definition input uses a
-% function called~\verb=create_default_value_function+ of the~\verb+functions=
-% module. This function creates a default value function based on the given
-% default value.
-% 
-% ATd Node domain module methods
-% AT{
-% def create_default_value_function(value):
-%     """Creates a new default value function using the provided value.
-% 
-%     :param value: the value which the function shall have.
-%     :type  value: qde.editor.domain.parameter.Value
-%     """
-% 
-%     value_function = NodePart.DefaultValueFunction()
-%     value_function.value = value.clone()
-% 
-%     return value_functionAT}
-% 
-% With this implementation all the parts needed for creating and handling node
-% definition inputs are defined, which leads to the next implementation. The
-% outputs of a node definition. The outputs are in the same way implemented as
-% the inputs of a node definition.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition_output(cls, node_controller, json_input):
-%     """Builds and returns a node definition output from the given JSON input
-%     data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: a node definition output
-%     :rtype:  qde.editor.domain.node.NodeDefinitionOutput
-%     """
-% 
-%     output_id             = uuid.UUID(json_input['id_'])
-%     name                 = str(json_input['name'])
-%     atomic_id            = uuid.UUID(json_input['atomic_id'])
-%     node_definition_part = node_controller.get_node_definition_part(atomic_id)
-% 
-%     node_definition_output = node.NodeDefinitionOutput(
-%         output_id,
-%         name,
-%         node_definition_part
-%     )
-% 
-%     cls.logger.debug(
-%         "Built node definition output for node definition %s",
-%         atomic_id
-%     )
-%     return node_definition_output
-% AT}
-% 
-% The domain model of the node definition output is very similar to the input,
-% has less attributes although.
-% 
-% ATd Node definition output domain model declarations
-% AT{
-% class NodeDefinitionOutput(object):
-%     """Represents an output of a definition of a node."""
-% 
-%     # Signals
-%     AT<Node definition output domain model signalsAT>
-% 
-%     AT<Node definition output domain model constructorAT>
-%     AT<Node definition output domain model methodsAT>AT}
-% 
-% ATd Node definition output domain model constructor
-% AT{
-% def __init__(self, id_, name, node_definition_part):
-%     """Constructor.
-% 
-%     :param id_: the identifier of the definition
-%     :type  id_: uuid.uuid4
-%     :param name: the name of the definition
-%     :type  name: str
-%     :param node_definition_part: the atomic part of the node definition
-%     :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
-%     """
-% 
-%     self.id_                  = id_
-%     self.name                 = name
-%     self.node_definition_part = node_definition_partAT}
-% 
-% As a node definition may contain references to other node defintions, it has to
-% parse them. The parsing is similar to that of the inputs and outputs.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition(cls, node_controller, json_input):
-%     """Builds and returns a node definition from the given JSON input data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: a dictionary containg the node definition at the index of the
-%              definition identifier.
-%     :rtype:  dict
-%     """
-% 
-%     definition_id   = uuid.UUID(json_input['id_'])
-%     atomic_id       = uuid.UUID(json_input['atomic_id'])
-% 
-%     node_definition, node_view_model = node_controller.get_node_definition(
-%         atomic_id
-%     )
-% 
-%     cls.logger.debug(
-%         "Built node definition for node definition %s",
-%         atomic_id
-%     )
-%     return (definition_id, node_definition)
-% AT}
-% 
-% As can be seen in the above code fragment, the node definition is returned by
-% the node controller. This is very similar to getting the node definition part
-% from the node controller.
-% 
-% ATd Node controller methods
-% AT{
-% def get_node_definition(self, id_):
-%     """Returns the node definition identified by the given identifier.
-% 
-%     If no such definition is available, it will be tried to load the
-%     definition. If this is not possible as well, None will be returned.
-% 
-%     :param id_: the identifier of the node definition to get.
-%     :type  id_: uuid.uuid4
-% 
-%     :return: the node definition identified by the given identifier or None.
-%     :rtype:  qde.editor.domain.node.NodeDefinition or None
-%     """
-% 
-%     self.logger.debug(
-%         "Getting node definition %s",
-%         id_
-%     )
-% 
-%     if str(id_) in self.node_definitions:
-%         return self.node_definitions[str(id_)]
-%     elif self.root_node is not None and id_ == self.root_node.id_:
-%         return self.root_node
-%     else:
-%         # The node definition was not found, try to load it from node
-%         # definition files.
-%         file_name = os.path.join(
-%             self.nodes_path,
-%             id_,
-%             self.nodes_extension
-%         )
-%         node_definition = self.load_node_definition_from_file_name(
-%             file_name
-%         )
-%         if node_definition is not None:
-%             node_definition_view_model = node_view_model.NodeViewModel(
-%                 id_=node_definition.id_,
-%                 domain_object=node_definition
-%             )
-%             self.node_definitions[node_definition.id_] = (
-%                 node_definition,
-%                 node_view_model
-%             )
-%             return (node_definition, node_view_model)
-%         else:
-%             return NoneAT}
-% 
-% As can be seen in the above code snippet, the node controller holds the
-% root node, which is placed within the root scene.
-% 
-% ATd Node controller constructor
-% AT{
-%     # TODO: Load from coonfiguration?
-%     self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
-%     self.root_node.name = QtCore.QCoreApplication.translate(
-%         __class__.__name__,
-%         'Root'
-%     )
-%     root_node_output = node.NodeDefinitionOutput(
-%         NodeController.ROOT_NODE_OUTPUT_ID,
-%         QtCore.QCoreApplication.translate(
-%             __class__.__name__,
-%             'Output'
-%         ),
-%         parameter.AtomicTypes.Generic
-%     )
-%     self.root_node.add_output(root_node_output)
-%     self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)AT}
-% 
-% Currently there is no possiblity to add outputs to a node definition. Adding an
-% ouptut simply adds that output to the list of outputs the node definition has.
-% Furthermore that output needs to added for each instance of that node
-% definition as well.
-% \todo{Add inputs as well?}
-% 
-% ATd Node definition domain model methods
-% AT{
-% def add_output(self, node_definition_output):
-%     """Adds the given output to the beginning of the list of outputs and
-%     also to all instances of this node definition.
-% 
-%     :param node_definition_output: the output to add.
-%     :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
-%     """
-% 
-%     self.add_output_at(len(self.outputs), node_definition_output)
-% 
-% def add_output_at(self, index, node_definition_output):
-%     """Adds the given output to the list of outputs at the given index
-%     position and also to all instances of this node definition.
-% 
-%     :param index: the position in the list of outputs where the new output
-%                   shall be added at.
-%     :type  index: int
-%     :param node_definition_output: the output to add.
-%     :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
-% 
-%     :raise: an index error when the given index is not valid.
-%     :raises: IndexError
-%     """
-% 
-%     if index < 0 or index > len(self.outputs):
-%         raise IndexError()
-% 
-%     self.outputs.insert(index, node_definition_output)
-% 
-%     for instance in self.instances:
-%         instance.add_output_at(
-%             index,
-%             node_definition_output.create_instance()
-%         )
-% 
-%     # TODO: Insert connection if output is atomic
-% 
-%     self.was_changed = True
-% 
-% # TODO: Describe this properly
-% ATATproperty
-% def type_(self):
-%     """Return the type of the node, determined by its primary output.
-%     If no primary output is given, it is assumed that the node is of
-%     generic type."""
-% 
-%     type_ = types.NodeType.GENERIC
-% 
-%     if len(self.outputs) > 0:
-%         type_ = self.outputs[0].node_definition_part.type_
-% 
-%     return type_AT}
-% 
-% Having the reading and parsing of inputs, outputs and other node definition
-% implemented, the reading and parsing of connections, definitions, invocations
-% and parts still remains.
-% 
-% The reading and parsing of connections, definitions and invocation is very
-% straightforward and very similar to the one of the node definitions. Therefore
-% it will not be shown in detail. Details are found at~\todo[inline]{Add
-% reference to code fragments here}.
-% 
-% The last part when loading a node definition, is reading and parsing the code
-% part of the node.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition_part(cls, node_controller, parent, json_input):
-%     """Builds and returns a node definition part from the given JSON input data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param parent: the parent of the node definition part
-%     :type  parent: qde.editor.domain.node.NodeDefinition
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: 
-%     :rtype:  
-%     """
-% 
-%     part_id         = uuid.UUID(json_input['id_'])
-%     name            = str(json_input['name'])
-% 
-%     script_lines = []
-%     for script_line in json_input['script']:
-%         script_lines.append(str(script_line))
-%     script = "\n".join(script_lines)
-% 
-%     type_string = json_input['type_']
-%     type_ = types.NodeType[type_string.upper()]
-% 
-%     node_definition_part = node.NodeDefinitionPart(part_id)
-%     node_definition_part.name = name
-%     node_definition_part.type_ = type_
-%     node_definition_part.parent = parent
-% 
-%     node_controller.node_definition_parts[part_id] = node_definition_part
-% 
-%     cls.logger.debug(
-%         "Built part for node definition %s",
-%         part_id
-%     )
-%     return node_definition_part
-% AT}
-% 
-% Finally the node controller needs to be instantiated by the main application
-% and the loading of the node definitions needs to be triggered. The loading may
-% although not be triggered at the same place as the signals for reacting upon
-% new node definitions need to be in place first.
-% 
-% ATd Set up controllers for main application
-% AT{
-% self.node_controller = node.NodeController()AT}
-% 
-% The loading of node definitions is done right before the main window is shown,
-% as at that point all necessary connections between signals and slots are in
-% place.
-% ATd Load nodes
-% AT{
-% self.node_controller.load_nodes()AT}
-% 
-% Now node definitions are being loaded and parsed. Although there is no
-% possiblity to select and instantiate the node definitons yet.
-% 
-% To allow the instantiation of nodes, a (user interface) component is necessary:
-% A dialog for adding nodes to the currently active scene.
-% It will access all the loaded nodes and provide an interface for selecting a
-% node definition which then will be instantiated.
-% 
-% ATd Add node dialog declarations
-% AT{
-% ATATcommon.with_logger
-% class AddNodeDialog(QtWidgets.QDialog):
-%     """Class for adding nodes to a scene view."""
-% 
-%     # Signals
-%     AT<Add node dialog signalsAT>
-% 
-%     AT<Add node dialog column declarationAT>
-% 
-%    def __init__(self, parent=None):
-%         """Constructor.
-% 
-%         :param parent: the parent of this dialog.
-%         :type  parent: QtGui.QWidget
-%         """
-% 
-%         super(AddNodeDialog, self).__init__(parent)
-% 
-%         self.columns                = {}
-%         self.node_definitions       = {}
-%         self.chosen_node_definition = None
-% 
-%         self.setFixedSize(parent.width(), parent.height())
-%         self.setWindowTitle("Add node")
-% 
-%         layout = QtWidgets.QHBoxLayout(self)
-%         # layout.setContentsMargins(0, 0, 0, 0)
-%         # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
-%         self.setLayout(layout)
-% 
-%     AT<Add node dialog methodsAT>
-% 
-%     # Slots
-%     AT<Add node dialog slotsAT>
-% AT}
-% 
-% The key idea of the add node dialog is to have multiple columns where each
-% column defines a specific node type. The node definitions of each type are then
-% vertically listed per column. As these columns are tightly tied to the add node
-% dialog, the declaration of the column class is part of the add node dialog.
-% 
-% ATd Add node dialog column declaration
-% AT{
-% class Column(object):
-%     """Class representing a column within the add node dialog."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         self.frame         = None
-%         self.sub_frames    = []
-%         self.label         = None
-%         self.v_box_layout  = None
-% AT}
-% 
-% \todo{Add position correction to add node dialog.}
-% 
-% The dialog for adding a node instance from a node definition shall only be shown
-% from within a scene, that is from within the scene view. Therefore the add node
-% dialog is added to the scene view.
-% 
-% ATd Scene view constructor
-% AT{
-%     self.add_node_dialog = node.AddNodeDialog(self)
-% AT}
-% 
-% Whenever the scene view is focussed and the tabulator key is being pressed, the
-% dialog for adding a node shall be shown. For achieving this, the
-%~\verb=event= method of the scene view needs to be overwritten.
-% 
-% ATd Scene view methods
-% AT{
-% def event(self, event):
-%     if (
-%             event.type() == Qt.QEvent.KeyPress and
-%             event.key()  == QtCore.Qt.Key_Tab
-%     ):
-%         self.logger.debug("Tabulator was pressed")
-% 
-%         # Sanity check: Open the dialog only if it is not opened already.
-%         if not self.add_node_dialog.isVisible():
-%             current_scene = self.scene()
-%             assert current_scene is not None
-%             insert_at = current_scene.insert_at
-%             insert_position = QtCore.QPoint(
-%                 insert_at.x() * node_view_model.NodeViewModel.WIDTH,
-%                 insert_at.y() * node_view_model.NodeViewModel.HEIGHT
-%             )
-%             insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
-%             self.add_node_dialog.move(insert_position)
-%             add_dialog_result = self.add_node_dialog.exec()
-% 
-%             # At this point we are sure, that this dialog instance was handled
-%             # properly, so accepting the event might be sane here.
-%             event.accept()
-% 
-%             if add_dialog_result == QtWidgets.QDialog.Accepted:
-%                 AT<Handle node definition chosenAT>
-%                 return True
-%             else:
-%                 return False
-% 
-%     return super(SceneView, self).event(event)
-% AT}
-% 
+\newthought{Now the specific value types are implemented}, based either on the
+generic or the concrete value interface, depending on the type. Here just two
+implementations are given as an example. The other implementations can be found
+at~\todo{link to fragments}.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap132}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Paramater domain model float value}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class FloatValue(Value):
+    """A class holding float values."""
+
+    def __init__(self, float_value):
+        """Constructor.
+
+        :param float_value: the float value that shall be held
+        :type  float_value: float
+        """
+
+        super(FloatValue, self).__init__(float_value)
+        self.function_type = types.NodeType.FLOAT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return FloatValue(self.value)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Implementation of the float value type.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  FloatValue}
+\label{editor:lst:parameter:float-value}
+\end{figure}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap133}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Paramater domain model scene value}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class SceneValue(ValueInterface):
+    """A class holding scene values."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(SceneValue, self).__init__()
+        self.function_type = types.NodeType.SCENE
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return SceneValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Implementation of the scene value type.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  SceneValue}
+\label{editor:lst:parameter:scene-value}
+\end{figure}
+
+\newthought{The definition of the input of a node definition} is still missing
+however.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap134}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition input domain model declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinitionInput(object):
+    """Represents an input of a definition of a node."""
+
+    # Signals
+    |\hbox{$\langle\,${\itshape Node definition input domain model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    |\hbox{$\langle\,${\itshape Node definition input domain model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node definition input domain model methods}\nobreak\ {\footnotesize ?}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Implementation of the input of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input}
+\label{editor:lst:node-definition-input}
+\end{figure}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap135}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition input domain model constructor}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def __init__(self, id_, name, node_definition_part, default_value):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: TODO
+    :param default_value: the default value of the input
+    :type default_value: qde.editor.domain.parameter.Value
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part
+    self.description          = ""
+    self.min_value            = -100000
+    self.max_value            = 100000
+
+    self.default_function = create_default_value_function(
+        default_value
+    )|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Constructor of the input of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
+  Constructor}
+\label{editor:lst:node-definition-input:constructor}
+\end{figure}
+
+\newthought{The code snippet defining the constructor of a node definition
+input} uses a function called~\verb=create_default_value_function= of
+the~\verb=functions= module. This function creates a default value function
+based on the given default value.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap136}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node domain module methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def create_default_value_function(value):
+    """Creates a new default value function using the provided value.
+
+    :param value: the value which the function shall have.
+    :type  value: qde.editor.domain.parameter.Value
+    """
+
+    value_function = NodePart.DefaultValueFunction()
+    value_function.value = value.clone()
+
+    return value_function|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Function that creates a default value function based on a provided
+  value.
+  \newline{}\newline{}Editor $\rightarrow$ Node $\rightarrow$
+  Methods $\rightarrow$ Create default value function}
+\label{editor:lst:node:create-default-value-function}
+\end{figure}
+
+\newthought{With this last implementation} all the parts needed for creating and
+handling node definition inputs are defined, which leads to the next
+implementation. The outputs of a node definition. The outputs are in the same
+way implemented as the inputs of a node definition.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap137}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_output(cls, node_controller, json_input):
+    """Builds and returns a node definition output from the given JSON input
+    data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a node definition output
+    :rtype:  qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    output_id             = uuid.UUID(json_input['id_'])
+    name                 = str(json_input['name'])
+    atomic_id            = uuid.UUID(json_input['atomic_id'])
+    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+
+    node_definition_output = node.NodeDefinitionOutput(
+        output_id,
+        name,
+        node_definition_part
+    )
+
+    cls.logger.debug(
+        "Built node definition output for node definition %s",
+        atomic_id
+    )
+    return node_definition_output
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class method of the JSON module, which builds the output of a node
+  definition from a file handle (pointing to a JSON file containing a node
+  definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition output}
+\label{editor:lst:json:methods:build-node-definition-output}
+\end{figure}
+
+\newthought{The domain model of the node definition output} is very similar to
+the input, has less attributes although.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap138}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition output domain model declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinitionOutput(object):
+    """Represents an output of a definition of a node."""
+
+    # Signals
+    |\hbox{$\langle\,${\itshape Node definition output domain model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    |\hbox{$\langle\,${\itshape Node definition output domain model constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node definition output domain model methods}\nobreak\ {\footnotesize ?}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Implementation of the output of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition output}
+\label{editor:lst:node-definition-output}
+\end{figure}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap139}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition output domain model constructor}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def __init__(self, id_, name, node_definition_part):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Constructor of the output of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
+  Constructor}
+\label{editor:lst:node-definition-input:constructor}
+\end{figure}
+
+\newthought{A node definition may contain references} to other node defintions,
+therefore it is necessary to parse them. The parsing is similar to that of the
+inputs and outputs.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap140}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition(cls, node_controller, json_input):
+    """Builds and returns a node definition from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a dictionary containg the node definition at the index of the
+             definition identifier.
+    :rtype:  dict
+    """
+
+    definition_id   = uuid.UUID(json_input['id_'])
+    atomic_id       = uuid.UUID(json_input['atomic_id'])
+
+    node_definition, node_view_model = node_controller.get_node_definition(
+        atomic_id
+    )
+
+    cls.logger.debug(
+        "Built node definition for node definition %s",
+        atomic_id
+    )
+    return (definition_id, node_definition)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class method of the JSON module, which builds the definition of a node
+  from a file handle (pointing to a JSON file containing a node
+  definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition}
+\label{editor:lst:json:methods:build-node-definition}
+\end{figure}
+
+As can be seen in the above code fragment, the node definition is returned by
+the node controller. This is very similar to getting the node definition part
+from the node controller.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap141}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def get_node_definition(self, id_):
+    """Returns the node definition identified by the given identifier.
+
+    If no such definition is available, it will be tried to load the
+    definition. If this is not possible as well, None will be returned.
+
+    :param id_: the identifier of the node definition to get.
+    :type  id_: uuid.uuid4
+
+    :return: the node definition identified by the given identifier or None.
+    :rtype:  qde.editor.domain.node.NodeDefinition or None
+    """
+
+    self.logger.debug(
+        "Getting node definition %s",
+        id_
+    )
+
+    if str(id_) in self.node_definitions:
+        return self.node_definitions[str(id_)]
+    elif self.root_node is not None and id_ == self.root_node.id_:
+        return self.root_node
+    else:
+        # The node definition was not found, try to load it from node
+        # definition files.
+        file_name = os.path.join(
+            self.nodes_path,
+            id_,
+            self.nodes_extension
+        )
+        node_definition = self.load_node_definition_from_file_name(
+            file_name
+        )
+        if node_definition is not None:
+            node_definition_view_model = node_view_model.NodeViewModel(
+                id_=node_definition.id_,
+                domain_object=node_definition
+            )
+            self.node_definitions[node_definition.id_] = (
+                node_definition,
+                node_view_model
+            )
+            return (node_definition, node_view_model)
+        else:
+            return None|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A method of the node controller, which returns a node definition
+  by a provided identifier. If no node definition is found for the given
+  identifier, a new node definition is created by loading the definition from
+  the file system.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Get node definition}
+\label{editor:lst:node-controller:methods:get-node-definition}
+\end{figure}
+
+\newthought{The node controller holds a reference to the root node} of the root
+scene of the system. This scene acts as an entry point when evaluating the scene
+graph.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap142}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node controller constructor}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    # TODO: Load from coonfiguration?
+    self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
+    self.root_node.name = QtCore.QCoreApplication.translate(
+        __class__.__name__,
+        'Root'
+    )
+    root_node_output = node.NodeDefinitionOutput(
+        NodeController.ROOT_NODE_OUTPUT_ID,
+        QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            'Output'
+        ),
+        parameter.AtomicTypes.Generic
+    )
+    self.root_node.add_output(root_node_output)
+    self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The root node of the system is manually created by the node controller
+  and is also a node definition.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Constructor}
+\label{editor:lst:node-controller:constructor:add-root-node}
+\end{figure}
+
+\newthought{Currently there is no possibility to add outputs} to a node
+definition. Adding an output simply adds that output to the list of outputs the
+node definition has. Furthermore that output needs to added for each instance of
+that node definition as well. \todo{Add inputs as well?}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap143}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition domain model methods}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def add_output(self, node_definition_output):
+    """Adds the given output to the beginning of the list of outputs and
+    also to all instances of this node definition.
+
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    self.add_output_at(len(self.outputs), node_definition_output)
+
+def add_output_at(self, index, node_definition_output):
+    """Adds the given output to the list of outputs at the given index
+    position and also to all instances of this node definition.
+
+    :param index: the position in the list of outputs where the new output
+                  shall be added at.
+    :type  index: int
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+
+    :raise: an index error when the given index is not valid.
+    :raises: IndexError
+    """
+
+    if index < 0 or index > len(self.outputs):
+        raise IndexError()
+
+    self.outputs.insert(index, node_definition_output)
+
+    for instance in self.instances:
+        instance.add_output_at(
+            index,
+            node_definition_output.create_instance()
+        )
+
+    # TODO: Insert connection if output is atomic
+
+    self.was_changed = True|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Methods which add a given output of a node definition to a node
+  definition. The first method adds the output at the end of the list of
+  outputs, the second adds the output at the given index.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
+  Methods}
+\label{editor:lst:node-definition:methods:add-output}
+\end{figure}
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap144}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Node definition domain model methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# TODO: Describe this properly
+|\normalfont{}\fontfamily{}|property
+def type_(self):
+    """Return the type of the node, determined by its primary output.
+    If no primary output is given, it is assumed that the node is of
+    generic type."""
+
+    type_ = types.NodeType.GENERIC
+
+    if len(self.outputs) > 0:
+        type_ = self.outputs[0].node_definition_part.type_
+
+    return type_|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Type property of a node definition. If the node definition uses
+  outputs, the type is derived by its primary output. Otherwise a generic type
+  is assumed.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
+  Methods}
+\label{editor:lst:node-definition:methods:type}
+\end{figure}
+
+Having the reading and parsing of inputs, outputs and other node definition
+implemented, the reading and parsing of connections, definitions, invocations
+and parts still remains.
+
+\newthought{The reading and parsing} of connections, definitions and invocation
+is very straightforward and very similar to the one of the node definitions.
+Therefore it will not be shown in detail. Details are found at~\todo[inline]{Add
+reference to code fragments here}.
+
+\newthought{The last part when loading a node definition} is reading and parsing
+the code part of the node.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap145}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_part(cls, node_controller, parent, json_input):
+    """Builds and returns a node definition part from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param parent: the parent of the node definition part
+    :type  parent: qde.editor.domain.node.NodeDefinition
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the built part of the node definition
+    :rtype:  qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    part_id         = uuid.UUID(json_input['id_'])
+    name            = str(json_input['name'])
+
+    script_lines = []
+    for script_line in json_input['script']:
+        script_lines.append(str(script_line))
+    script = "\n".join(script_lines)
+
+    type_string = json_input['type_']
+    type_ = types.NodeType[type_string.upper()]
+
+    node_definition_part = node.NodeDefinitionPart(part_id)
+    node_definition_part.name = name
+    node_definition_part.type_ = type_
+    node_definition_part.parent = parent
+
+    node_controller.node_definition_parts[part_id] = node_definition_part
+
+    cls.logger.debug(
+        "Built part for node definition %s",
+        part_id
+    )
+    return node_definition_part
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{A class method of the JSON module, which builds a part of the
+  definition of a node from a file handle (pointing to a JSON file containing a
+  node definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition part}
+\label{editor:lst:json:methods:build-node-definition-part}
+\end{figure}
+
+\newthought{Finally the node controller needs to be instantiated} by the main
+application and the loading of the node definitions needs to be triggered. The
+loading may although not be triggered at the same place as the signals for
+reacting upon new node definitions need to be in place first.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap146}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Set up controllers for main application}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+self.node_controller = node.NodeController()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Instantiation of the node controller from within the main application.
+  \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
+  Constructor}
+\label{editor:lst:main-application:constructor:setup-node-controller}
+\end{figure}
+
+\newthought{Loading of node definitions} is done right before the main window is
+shown, as at that point all necessary connections between signals and slots are
+in place.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap147}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Load nodes}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+self.node_controller.load_nodes()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Loading of nodes is triggered by the main application right after
+  instantiating the node controller.
+  \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
+  Constructor}
+\label{editor:lst:main-application:constructor:load-nodes}
+\end{figure}
+
+\newthought{Now node definitions are being loaded and parsed.} Although there is
+no possiblity to select and instantiate the node definitons yet. To allow the
+instantiation of nodes, a (user interface) component is necessary: A dialog for
+adding nodes to the currently active scene. It will access all the loaded nodes
+and provide an interface for selecting a node definition which then will be
+instantiated.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap148}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Add node dialog declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|common.with_logger
+class AddNodeDialog(QtWidgets.QDialog):
+    """Class for adding nodes to a scene view."""
+
+    # Signals
+    |\hbox{$\langle\,${\itshape Add node dialog signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    |\hbox{$\langle\,${\itshape Add node dialog column declaration}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+
+   def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent: the parent of this dialog.
+        :type  parent: QtGui.QWidget
+        """
+
+        super(AddNodeDialog, self).__init__(parent)
+
+        self.columns                = {}
+        self.node_definitions       = {}
+        self.chosen_node_definition = None
+
+        self.setFixedSize(parent.width(), parent.height())
+        self.setWindowTitle("Add node")
+
+        layout = QtWidgets.QHBoxLayout(self)
+        # layout.setContentsMargins(0, 0, 0, 0)
+        # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
+        self.setLayout(layout)
+
+    |\hbox{$\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    # Slots
+    |\hbox{$\langle\,${\itshape Add node dialog slots}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb169b}{169b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Definition of a dialog to add nodes to the currently active scene. The
+  nodes are ordered in columns according to their type.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog}
+\label{editor:lst:add-node-dialog}
+\end{figure}
+
+\newthought{The key idea of the add node dialog} is to have multiple columns
+where each column defines a specific node type. The node definitions of each
+type are then vertically listed per column. As these columns are tightly tied to
+the add node dialog, the declaration of the column class is part of the add node
+dialog.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap149}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Add node dialog column declaration}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class Column(object):
+    """Class representing a column within the add node dialog."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.frame         = None
+        self.sub_frames    = []
+        self.label         = None
+        self.v_box_layout  = None
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{Class representing column within the dialog to create new node
+  instances.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Column}
+\label{editor:lst:add-node-dialog:column}
+\end{figure}
+
+\todo[inline]{Add position correction to add node dialog.}
+
+\newthought{The dialog for adding a node instance} from a node definition shall
+only be shown from within a scene, that is from within the scene view. Therefore
+the add node dialog is added to the scene view.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap150}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Scene view constructor}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    self.add_node_dialog = node.AddNodeDialog(self)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The dialog for adding new node instances is initialized by the scene
+  view.
+  \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Constructor}
+\label{editor:lst:scene-view:constructor:add-node-dialog}
+\end{figure}
+
+\newthought{Whenever the scene view is focussed} and the tabulator key is being
+pressed, the dialog for adding a node shall be shown. For achieving this, the
+~\verb=event= method of the scene view needs to be overwritten.
+
+\begin{figure}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap151}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape Scene view methods}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def event(self, event):
+    if (
+            event.type() == Qt.QEvent.KeyPress and
+            event.key()  == QtCore.Qt.Key_Tab
+    ):
+        self.logger.debug("Tabulator was pressed")
+
+        # Sanity check: Open the dialog only if it is not opened already.
+        if not self.add_node_dialog.isVisible():
+            current_scene = self.scene()
+            assert current_scene is not None
+            insert_at = current_scene.insert_at
+            insert_position = QtCore.QPoint(
+                insert_at.x() * node_view_model.NodeViewModel.WIDTH,
+                insert_at.y() * node_view_model.NodeViewModel.HEIGHT
+            )
+            insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
+            self.add_node_dialog.move(insert_position)
+            add_dialog_result = self.add_node_dialog.exec()
+
+            # At this point we are sure, that this dialog instance was handled
+            # properly, so accepting the event might be sane here.
+            event.accept()
+
+            if add_dialog_result == QtWidgets.QDialog.Accepted:
+                |\hbox{$\langle\,${\itshape Handle node definition chosen}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+                return True
+            else:
+                return False
+
+    return super(SceneView, self).event(event)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\caption{The event method of the scene view is overwritten for being able to
+  show the dialog for adding new instances of nodes when the tabulator key is
+  pressed.
+  \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Methods}
+\label{editor:lst:scene-view:methods:event}
+\end{figure}
+
 % % TODO: Continue here
 % % node_definition = self.add_node_dialog.chosen_node_definition
 % % self.logger.debug(
@@ -8729,8 +9131,1340 @@ class Value(ValueInterface):
 % i inc/appendix/test-cases.w
 % i inc/appendix/minutes.w
 % i inc/appendix/work-log.w
-% i inc/appendix/code-fragments.w
 
+% -*- mode: latex; coding: utf-8 -*-
+
+\section{Code fragments}
+\label{sec:code-fragments}
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap152}\raggedright\small
+\NWtarget{nuweb144}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {144}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Main entry point for the QDE editor application. """
+
+# System imports
+import sys
+
+# Project imports
+from qde.editor.application import application
+
+|\hbox{$\langle\,${\itshape Main entry point}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap153}\raggedright\small
+\NWtarget{nuweb146}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {146}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Main application module for the QDE editor."""
+
+# System imports
+import logging
+import logging.config
+import os
+import json
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.application import node
+from qde.editor.application import scene
+from qde.editor.gui import main_window as qde_main_window
+
+
+|\hbox{$\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap154}\raggedright\small
+\NWtarget{nuweb149}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {149}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding the main application window. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.gui import scene as guiscene
+
+
+|\hbox{$\langle\,${\itshape Main window declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap155}\raggedright\small
+\NWtarget{nuweb151a}{} \verb@"../src/qde/editor/domain/scene.py"@\nobreak\ {\footnotesize {151a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the domain layer. """
+
+# System imports
+import uuid
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+
+
+|\hbox{$\langle\,${\itshape Scene model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap156}\raggedright\small
+\NWtarget{nuweb151b}{} \verb@"../src/qde/editor/gui_domain/scene.py"@\nobreak\ {\footnotesize {151b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the gui_domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+from qde.editor.foundation import common
+
+|\hbox{$\langle\,${\itshape Scene graph view model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Scene view model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap157}\raggedright\small
+\NWtarget{nuweb151c}{} $\langle\,${\itshape Scene graph view model methods}\nobreak\ {\footnotesize {151c}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def __str__(self):
+    """Return the string representation of the current object."""
+
+    return str(self.id_)[0:8]
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb151c}{, 151c}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap158}\raggedright\small
+\NWtarget{nuweb152a}{} $\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize {152a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def __str__(self):
+    """Return the string representation of the current object."""
+
+    return str(self.id_)[0:8]
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb152a}{, 152a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap159}\raggedright\small
+\NWtarget{nuweb152b}{} \verb@"../src/qde/editor/application/scene.py"@\nobreak\ {\footnotesize {152b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the application layer.
+"""
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.domain     import scene as domain_scene
+from qde.editor.gui_domain import scene as guidomain_scene
+
+|\hbox{$\langle\,${\itshape Scene graph controller declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Scene controller declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap160}\raggedright\small
+\NWtarget{nuweb153}{} \verb@"../src/qde/editor/gui/scene.py"@\nobreak\ {\footnotesize {153}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding scene related aspects concerning the graphical user interface layer.
+"""
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.gui_domain import node as node_view_model
+from qde.editor.gui_domain import scene
+from qde.editor.gui import node
+
+|\hbox{$\langle\,${\itshape Scene graph view declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Scene view declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap161}\raggedright\small
+\NWtarget{nuweb154}{} \verb@"../logging.json"@\nobreak\ {\footnotesize {154}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(levelname)-7s - %(name)s.%(funcName)s::%(lineno)s: %(message)s"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+
+        "info_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "info.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": "errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 20,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "info_file_handler", "error_file_handler"],
+        "propagate": "no"
+    }
+}|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap162}\raggedright\small
+\NWtarget{nuweb155a}{} \verb@"../src/qde/editor/foundation/common.py"@\nobreak\ {\footnotesize {155a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Module holding common helper methods."""
+
+# System imports
+import logging
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
+
+# Project imports
+
+
+def with_logger(cls):
+    """Add a logger instance (using a stream handler) to the given class.
+
+    :param cls: the class which the logger shall be added to.
+    :type  cls: a class of type cls.
+
+    :return: the class with the logger instance added.
+    :rtype:  a class of type cls.
+    """
+
+    |\hbox{$\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize \NWlink{nuweb91a}{91a}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize \NWlink{nuweb91b}{91b}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap163}\raggedright\small
+\NWtarget{nuweb155b}{} $\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize {155b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|common.with_logger
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap164}\raggedright\small
+\NWtarget{nuweb156a}{} \verb@"../src/qde/editor/foundation/type.py"@\nobreak\ {\footnotesize {156a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# -*- coding: utf-8 -*-
+"""Module for type-specific aspects."""
+
+# System imports
+import enum
+
+# Project imports
+
+
+|\hbox{$\langle\,${\itshape Node type declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node part state changed declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap165}\raggedright\small
+\NWtarget{nuweb156b}{} \verb@"../src/qde/editor/domain/parameter.py"@\nobreak\ {\footnotesize {156b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# -*- coding: utf-8 -*-
+
+"""Module for parameter-specific aspects."""
+
+# System imports
+
+# Project imports
+from qde.editor.foundation import type as types
+from qde.editor.domain import node
+
+|\hbox{$\langle\,${\itshape Parameter declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model value generic interface}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model value interface}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model float value}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize \NWlink{nuweb158a}{158a}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model scene value}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Parameter domain module methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap166}\raggedright\small
+\NWtarget{nuweb157}{} $\langle\,${\itshape Parameter declarations}\nobreak\ {\footnotesize {157}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    FloatValue = create_node_definition_part.__func__(
+        id_="468aea9e-0a03-4e63-b6b4-8a7a76775a1a",
+        type_=types.NodeType.FLOAT
+    )
+    Text = create_node_definition_part.__func__(
+        id_="e43bdd1b-a895-4bd8-8d5a-b401a63f7a6f",
+        type_=types.NodeType.TEXT
+    )
+    Scene = create_node_definition_part.__func__(
+        id_="bfb47e7text7-1b05-4864-8397-de30bf005ff8",
+        type_=types.NodeType.SCENE
+    )
+    Image = create_node_definition_part.__func__(
+        id_="21fd1960-1307-4b53-b7bf-d08f02757335",
+        type_=types.NodeType.IMAGE
+    )
+    DynamicValue = create_node_definition_part.__func__(
+        id_="68720ae3-8068-43ce-94d8-8705dc3b8bfe",
+        type_=types.NodeType.DYNAMIC
+    )
+    Mesh = create_node_definition_part.__func__(
+        id_="9791d341-b92c-43dd-954a-9d83b9020e43",
+        type_=types.NodeType.MESH
+    )
+    Implicit = create_node_definition_part.__func__(
+        id_="c019271c-35b6-425c-9ff2-a1d893111adb",
+        type_=types.NodeType.IMPLICIT
+    )
+
+    atomic_types = [
+        FloatValue,
+        Text,
+        Scene,
+        Image,
+        DynamicValue,
+        Mesh,
+        Implicit,
+    ]
+
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap167}\raggedright\small
+\NWtarget{nuweb158a}{} $\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize {158a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class TextValue(Value):
+    """A class holding values for text/string nodes."""
+
+    def __init__(self, string_value):
+        """Constructor.
+
+        :param string_value: the string value that shall be held
+        :type  string_value: str
+        """
+
+        super(TextValue, self).__init__(string_value)
+        self.function_type = types.NodeType.TEXT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return TextValue(self.value)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap168}\raggedright\small
+\NWtarget{nuweb158b}{} $\langle\,${\itshape Paramater domain model image value}\nobreak\ {\footnotesize {158b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class ImageValue(ValueInterface):
+    """A class holding values for image nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(ImageValue, self).__init__()
+        self.function_type = types.NodeType.IMAGE
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return ImageValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap169}\raggedright\small
+\NWtarget{nuweb159a}{} $\langle\,${\itshape Paramater domain model generic value}\nobreak\ {\footnotesize {159a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class GenericValue(ValueInterface):
+    """A class holding values for generic nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(GenericValue, self).__init__()
+        self.function_type = types.NodeType.GENERIC
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return GenericValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap170}\raggedright\small
+\NWtarget{nuweb159b}{} $\langle\,${\itshape Paramater domain model dynamic value}\nobreak\ {\footnotesize {159b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class DynamicValue(ValueInterface):
+    """A class holding values for dynamic nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(DynamicValue, self).__init__()
+        self.function_type = types.NodeType.DYNAMIC
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return DynamicValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap171}\raggedright\small
+\NWtarget{nuweb160a}{} $\langle\,${\itshape Paramater domain model mesh value}\nobreak\ {\footnotesize {160a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class MeshValue(ValueInterface):
+    """A class holding values for mesh nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(MeshValue, self).__init__()
+        self.function_type = types.NodeType.MESH
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return MeshValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap172}\raggedright\small
+\NWtarget{nuweb160b}{} $\langle\,${\itshape Paramater domain model implicit value}\nobreak\ {\footnotesize {160b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class ImplicitValue(ValueInterface):
+    """A class holding values for implicit surface nodes."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(ImplicitValue, self).__init__()
+        self.function_type = types.NodeType.IMPLICIT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return ImplicitValue()|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap173}\raggedright\small
+\NWtarget{nuweb161a}{} \verb@"../src/qde/editor/domain/node.py"@\nobreak\ {\footnotesize {161a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# -*- coding: utf-8 -*-
+
+"""Module for node-specific aspects."""
+
+# System imports
+
+# Project imports
+from qde.editor.foundation import type as types
+from qde.editor.foundation import flag
+
+|\hbox{$\langle\,${\itshape Node domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node part domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition part domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition input domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition output domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb166}{166}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb167b}{167b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb168b}{168b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node domain module methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap174}\raggedright\small
+\NWtarget{nuweb161b}{} \verb@"../src/qde/editor/gui_domain/node.py"@\nobreak\ {\footnotesize {161b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# -*- coding: utf-8 -*-
+
+""" Module holding node related aspects concerning the gui_domain layer. """
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+from qde.editor.foundation import common
+
+|\normalfont{}\fontfamily{}|common.with_logger
+|\hbox{$\langle\,${\itshape Node view model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap175}\raggedright\small
+\NWtarget{nuweb162a}{} $\langle\,${\itshape Node view model constructor}\nobreak\ {\footnotesize {162a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    self.setPos(self.position)
+    self.setAcceptHoverEvents(True)
+    self.setFlag(Qt.QGraphicsObject.ItemIsFocusable)
+    self.setFlag(Qt.QGraphicsObject.ItemIsMovable)
+    self.setFlag(Qt.QGraphicsObject.ItemIsSelectable)
+    self.setFlag(Qt.QGraphicsObject.ItemClipsToShape)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap176}\raggedright\small
+\NWtarget{nuweb162b}{} \verb@"../src/qde/editor/foundation/flag.py"@\nobreak\ {\footnotesize {162b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+# -*- coding: utf-8 -*-
+
+"""Module for flag-specific aspects."""
+
+# System imports
+import enum
+
+# Project imports
+
+
+class NodeStatus(enum.Enum):
+    """Statues which a node can have."""
+
+    OK              = 0
+    NO_INPUTS       = 1
+    WRONG_INPUT     = 2
+    INPUT_ERRONEOUS = 3
+    INPUT_CYCLIC    = 4
+    LINK_MISSING    = 5
+    TOO_MANY_INPUTS = 6
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap177}\raggedright\small
+\NWtarget{nuweb163}{} $\langle\,${\itshape Node view model methods}\nobreak\ {\footnotesize {163}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def boundingRect(self):
+    """Return the bounding rectangle of the node.
+
+    :return: the bounding rectangle of the node.
+    :rtype: Qt.QRectF
+    """
+
+    return Qt.QRectF(
+        0, 0, self.width * NodeViewModel.WIDTH, NodeViewModel.HEIGHT
+    )
+
+def create_pixmap(self):
+    """Creation of the pixmap (=bitmap, the actual 'image')"""
+
+    image = QImage(self.boundingRect().size().toSize(),
+                    QImage.Format_ARGB32_Premultiplied)
+    pixmap = QPixmap.fromImage(image)
+    pixmap.fill(Qt.transparent)
+
+    rect = self.boundingRect()
+
+    painter = QPainter()
+    painter.begin(pixmap)
+    painter.setRenderHint(QPainter.Antialiasing)
+
+    # Shape
+    path = QPainterPath()
+    path.addRect(rect)
+    # path.addRoundedRect(rect, 5, 5)
+    painter.drawPath(path)
+
+    # Color / gradient
+    color = QColor(255, 0, 0, 128)
+    color.setHsv(color.hsvHue(), 160, 255)
+    color_desaturated = color
+    color_desaturated.setHsv(color.hsvHue(), 40, 255)
+    top_color = QColor(60, 70, 80)
+    if self.status is not flag.NodeStatus.OK:
+        top_color = QColor(255, 0, 0)
+    gradient_top_color = cmn.multiply_colors(
+        top_color, color_desaturated
+    )
+    gradient_bottom_color = cmn.multiply_colors(
+        QColor(110, 120, 130), color_desaturated
+    )
+    rect_gradient = QLinearGradient(
+        QPoint(0.0, 0.0), QPoint(0.0, rect.height())
+    )
+    rect_gradient.setColorAt(0.0, gradient_top_color)
+    rect_gradient.setColorAt(1.0, gradient_bottom_color)
+
+    brush = QBrush(rect_gradient)
+
+    painter.fillPath(path, brush)
+    painter.end()
+
+    return pixmap
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap178}\raggedright\small
+\NWtarget{nuweb164a}{} \verb@"../nodes/16d90b34-a728-4caa-b07d-a3244ecc87e3.node"@\nobreak\ {\footnotesize {164a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\hbox{$\langle\,${\itshape Implicit sphere node}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap179}\raggedright\small
+\NWtarget{nuweb164b}{} \verb@"../src/qde/editor/application/node.py"@\nobreak\ {\footnotesize {164b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding node related aspects concerning the application layer.
+"""
+
+# System imports
+import glob
+import os
+import time
+import uuid
+from PyQt5 import Qt
+from PyQt5 import QtCore
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.foundation import type as types
+from qde.editor.technical  import json
+from qde.editor.domain     import parameter
+from qde.editor.domain     import node
+from qde.editor.gui_domain import node as node_view_model
+
+
+|\hbox{$\langle\,${\itshape Node controller declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap180}\raggedright\small
+\NWtarget{nuweb165a}{} \verb@"../src/qde/editor/technical/json.py"@\nobreak\ {\footnotesize {165a}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" Module holding JSON related aspects.
+"""
+
+# System imports
+import json
+import uuid
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.foundation import type as types
+from qde.editor.domain import node
+from qde.editor.domain import parameter
+
+
+|\hbox{$\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize \NWlink{nuweb165b}{165b}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap181}\raggedright\small
+\NWtarget{nuweb165b}{} $\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize {165b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|common.with_logger
+class Json(object):
+    """Class handling JSON relevant tasks.
+    """
+
+    |\hbox{$\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165a}{165a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap182}\raggedright\small
+\NWtarget{nuweb166}{} $\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize {166}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinitionConnection(object):
+    """Represents a connection of a definition of a node."""
+
+    # Signals
+    |\hbox{$\langle\,${\itshape Node definition connection domain model signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+
+    def __init__(self,
+                 source_node_id, source_part_id,
+                 target_node_id, target_part_id):
+        """Constructor.
+
+        :param source_node_id: the identifier of the source node.
+        :type  source_node_id: uuid.uuid4
+        :param source_part_id: the identifier of the part of the source node.
+        :type  source_part_id: uuid.uuid4
+        :param target_node_id: the identifier of the target node.
+        :type  target_node_id: uuid.uuid4
+        :param target_part_id: the identifier of the part of the target node.
+        :type  target_part_id: uuid.uuid4
+        """
+
+        self.source_node_id = source_node_id
+        self.source_part_id = source_part_id
+        self.target_node_id = target_node_id
+        self.target_part_id = target_part_id|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap183}\raggedright\small
+\NWtarget{nuweb167a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {167a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_connection(cls, json_input):
+    """Builds and returns a connection for a node definition from the given
+    JSON input data.
+
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the connection of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionConnection
+    """
+
+    source_node_id = uuid.UUID(json_input['source_node'])
+    source_part_id = uuid.UUID(json_input['source_part'])
+    target_node_id = uuid.UUID(json_input['target_node'])
+    target_part_id = uuid.UUID(json_input['target_part'])
+
+    node_definition_connection = node.NodeDefinitionConnection(
+        source_node_id,
+        source_part_id,
+        target_node_id,
+        target_part_id
+    )
+
+    cls.logger.debug("Built node definition connection")
+    return node_definition_connection
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap184}\raggedright\small
+\NWtarget{nuweb167b}{} $\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize {167b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinitionDefinition(object):
+    """Represents a definition part of a definition of a node."""
+
+    def __init__(self, id_, script):
+        """Constructor.
+
+        :param id_: the globally unique identifier of the definition.
+        :type  id_: uuid.uuid4
+        :param script: the script part of the definition.
+        :param script: str
+        """
+
+        self.id_ = id_
+        self.script = script|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap185}\raggedright\small
+\NWtarget{nuweb168a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {168a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_definition(cls, json_input):
+    """Builds and returns a definition for a node definition from the given
+    JSON input data.
+
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the definition of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionDefinition
+    """
+
+    definition_id = uuid.UUID(json_input['id_'])
+    script        = str(json_input['script'])
+
+    node_definition_definition = node.NodeDefinitionDefinition(
+        definition_id,
+        script
+    )
+
+    cls.logger.debug("Built node definition definition")
+    return node_definition_definition
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap186}\raggedright\small
+\NWtarget{nuweb168b}{} $\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize {168b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+class NodeDefinitionInvocation(object):
+    """Represents an invocation of a definition of a node."""
+
+    def __init__(self, id_, script):
+        """Constructor.
+
+        :param id_: the globally unique identifier of the definition.
+        :type  id_: uuid.uuid4
+        :param script: the script part of the invocation.
+        :param script: str
+        """
+
+        self.id_ = id_
+        self.script = script|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap187}\raggedright\small
+\NWtarget{nuweb169a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {169a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|classmethod
+def build_node_definition_invocation(cls, json_input):
+    """Builds and returns a invocation for a node definition from the given
+    JSON input data.
+
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the invocation of a node definition.
+    :rtype:  qde.editor.domain.node.NodeDefinitionInvocation
+    """
+
+    invocation_id = uuid.UUID(json_input['id_'])
+    script        = str(json_input['script'])
+
+    node_definition_invocation = node.NodeDefinitionInvocation(
+        invocation_id,
+        script
+    )
+
+    cls.logger.debug("Built node definition invocation")
+    return node_definition_invocation
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap188}\raggedright\small
+\NWtarget{nuweb169b}{} \verb@"../src/qde/editor/gui/node.py"@\nobreak\ {\footnotesize {169b}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Module holding node related aspects."""
+
+# System imports
+import functools
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+
+# Project imports
+from qde.editor.foundation import common
+from qde.editor.gui_domain import node   as node_view_model
+from qde.editor.gui_domain import helper as gui_helper
+
+
+|\hbox{$\langle\,${\itshape Add node dialog declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap189}\raggedright\small
+\NWtarget{nuweb170}{} \verb@"../src/qde/editor/gui_domain/helper.py"@\nobreak\ {\footnotesize {170}}$\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Module holding graphical user interface related helper classes and
+methods."""
+
+# System imports
+from PyQt5 import Qt
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+
+# Project importss
+from qde.editor.foundation import common
+from qde.editor.gui_domain import node
+
+
+|\normalfont{}\fontfamily{}|common.with_logger
+class ClickableLabel(QtWidgets.QLabel):
+    """Class providing a label object which emits a signal called 'clicked'
+    when receiving a mouse press event."""
+
+    # Signals
+    clicked = QtCore.pyqtSignal()
+
+    def __init__(self, text, parent):
+        """Constructor.
+
+        :param text: the text, that the label will show.
+        :type text: str
+        :param parent: the parent object of this label.
+        :type parent: Qt.QObject
+        """
+
+        super(ClickableLabel, self).__init__(text, parent)
+        parent.installEventFilter(self)
+        label_font = QtGui.QFont()
+        label_font.setFamily(label_font.defaultFamily())
+        self.setFont(label_font)
+        self.logger.debug(self.font())
+
+    def eventFilter(self, object, event):
+        if event.type() == QtCore.QEvent.Enter:
+            font = self.font()
+            font.setUnderline(True)
+            self.setFont(font)
+            return True
+        elif event.type() == QtCore.QEvent.Leave:
+            font = self.font()
+            font.setUnderline(False)
+            self.setFont(font)
+            return True
+
+        return False
+
+    def mousePressEvent(self, event):
+        """Event handler when a mouse button was pressed on this label. Emits a
+        signal called 'clicked'.
+
+        :param event: the event which occurred.
+        :type event: Qt.QMouseEvent
+        """
+
+        self.logger.debug("Button clicked?")
+        self.clicked.emit()
+        super(ClickableLabel, self).mousePressEvent(event)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % OLD REQUIREMENTS, check if needed
 %
 % This chapter describes the requirements to extract the source code out of this
