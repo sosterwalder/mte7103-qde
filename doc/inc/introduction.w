@@ -52,7 +52,7 @@ disadvantage. The de facto way of representing the surface of objects using tria
 meshes cannot be used directly. Instead, distance functions are used for
 modeling the surfaces as seen from any view point.
 
-\section{Purpose and situation}
+\section{Purpose and conditions}
 \label{sec:purpose}
 
 \subsection{Motivation}
