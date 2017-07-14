@@ -1037,7 +1037,7 @@ def get_node_definition_part(self, id_):
     else:
         return self.node_definition_parts[str(id_)]
 @}
-\caption{A method of the node controller, which returns a node definition
+\caption{A method of the node controller, which returns a node definition part
   by a provided identifier. If no node definition part is found for the given
   identifier, a new node definition part is created.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
@@ -1151,537 +1151,676 @@ class Value(ValueInterface):
 \label{editor:lst:parameter:value}
 \end{figure}
 
-% Then the specific value types are implemented, based either on the generic or
-% the concrete value interface, depending on the type. Here just two
-% implementations are given as an example. The other implementations can be found
-% at~\todo{link to fragments}.
-% 
-% ATd Paramater domain model float value
-% AT{# Python
-% class FloatValue(Value):
-%     """A class holding float values."""
-% 
-%     def __init__(self, float_value):
-%         """Constructor.
-% 
-%         :param float_value: the float value that shall be held
-%         :type  float_value: float
-%         """
-% 
-%         super(FloatValue, self).__init__(float_value)
-%         self.function_type = types.NodeType.FLOAT
-% 
-%     def clone(self):
-%         """Clones the currently set value.
-% 
-%         :return: a clone of the currently set value
-%         :rtype:  qde.editor.domain.parameter.ValueInterface
-%         """
-% 
-%         return FloatValue(self.value)AT}
-% 
-% ATd Paramater domain model scene value
-% AT{
-% class SceneValue(ValueInterface):
-%     """A class holding scene values."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         super(SceneValue, self).__init__()
-%         self.function_type = types.NodeType.SCENE
-% 
-%     def clone(self):
-%         """Clones the currently set value.
-% 
-%         :return: a clone of the currently set value
-%         :rtype:  qde.editor.domain.parameter.ValueInterface
-%         """
-% 
-%         return SceneValue()AT}
-% 
-% What now still is missing, is the definition of the node definition input
-% domain model.
-% 
-% ATd Node definition input domain model declarations
-% AT{
-% class NodeDefinitionInput(object):
-%     """Represents an input of a definition of a node."""
-% 
-%     # Signals
-%     AT<Node definition input domain model signalsAT>
-% 
-%     AT<Node definition input domain model constructorAT>
-%     AT<Node definition input domain model methodsAT>AT}
-% 
-% ATd Node definition input domain model constructor
-% AT{
-% def __init__(self, id_, name, node_definition_part, default_value):
-%     """Constructor.
-% 
-%     :param id_: the identifier of the definition
-%     :type  id_: uuid.uuid4
-%     :param name: the name of the definition
-%     :type  name: str
-%     :param node_definition_part: the atomic part of the node definition
-%     :type node_definition_part: TODO
-%     :param default_value: the default value of the input
-%     :type default_value: qde.editor.domain.parameter.Value
-%     """
-% 
-%     self.id_                  = id_
-%     self.name                 = name
-%     self.node_definition_part = node_definition_part
-%     self.description          = ""
-%     self.min_value            = -100000
-%     self.max_value            = 100000
-% 
-%     self.default_function = create_default_value_function(
-%         default_value
-%     )AT}
-% 
-% The code snippet defining the constructor of a node definition input uses a
-% function called~\verb=create_default_value_function+ of the~\verb+functions=
-% module. This function creates a default value function based on the given
-% default value.
-% 
-% ATd Node domain module methods
-% AT{
-% def create_default_value_function(value):
-%     """Creates a new default value function using the provided value.
-% 
-%     :param value: the value which the function shall have.
-%     :type  value: qde.editor.domain.parameter.Value
-%     """
-% 
-%     value_function = NodePart.DefaultValueFunction()
-%     value_function.value = value.clone()
-% 
-%     return value_functionAT}
-% 
-% With this implementation all the parts needed for creating and handling node
-% definition inputs are defined, which leads to the next implementation. The
-% outputs of a node definition. The outputs are in the same way implemented as
-% the inputs of a node definition.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition_output(cls, node_controller, json_input):
-%     """Builds and returns a node definition output from the given JSON input
-%     data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: a node definition output
-%     :rtype:  qde.editor.domain.node.NodeDefinitionOutput
-%     """
-% 
-%     output_id             = uuid.UUID(json_input['id_'])
-%     name                 = str(json_input['name'])
-%     atomic_id            = uuid.UUID(json_input['atomic_id'])
-%     node_definition_part = node_controller.get_node_definition_part(atomic_id)
-% 
-%     node_definition_output = node.NodeDefinitionOutput(
-%         output_id,
-%         name,
-%         node_definition_part
-%     )
-% 
-%     cls.logger.debug(
-%         "Built node definition output for node definition %s",
-%         atomic_id
-%     )
-%     return node_definition_output
-% AT}
-% 
-% The domain model of the node definition output is very similar to the input,
-% has less attributes although.
-% 
-% ATd Node definition output domain model declarations
-% AT{
-% class NodeDefinitionOutput(object):
-%     """Represents an output of a definition of a node."""
-% 
-%     # Signals
-%     AT<Node definition output domain model signalsAT>
-% 
-%     AT<Node definition output domain model constructorAT>
-%     AT<Node definition output domain model methodsAT>AT}
-% 
-% ATd Node definition output domain model constructor
-% AT{
-% def __init__(self, id_, name, node_definition_part):
-%     """Constructor.
-% 
-%     :param id_: the identifier of the definition
-%     :type  id_: uuid.uuid4
-%     :param name: the name of the definition
-%     :type  name: str
-%     :param node_definition_part: the atomic part of the node definition
-%     :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
-%     """
-% 
-%     self.id_                  = id_
-%     self.name                 = name
-%     self.node_definition_part = node_definition_partAT}
-% 
-% As a node definition may contain references to other node defintions, it has to
-% parse them. The parsing is similar to that of the inputs and outputs.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition(cls, node_controller, json_input):
-%     """Builds and returns a node definition from the given JSON input data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: a dictionary containg the node definition at the index of the
-%              definition identifier.
-%     :rtype:  dict
-%     """
-% 
-%     definition_id   = uuid.UUID(json_input['id_'])
-%     atomic_id       = uuid.UUID(json_input['atomic_id'])
-% 
-%     node_definition, node_view_model = node_controller.get_node_definition(
-%         atomic_id
-%     )
-% 
-%     cls.logger.debug(
-%         "Built node definition for node definition %s",
-%         atomic_id
-%     )
-%     return (definition_id, node_definition)
-% AT}
-% 
-% As can be seen in the above code fragment, the node definition is returned by
-% the node controller. This is very similar to getting the node definition part
-% from the node controller.
-% 
-% ATd Node controller methods
-% AT{
-% def get_node_definition(self, id_):
-%     """Returns the node definition identified by the given identifier.
-% 
-%     If no such definition is available, it will be tried to load the
-%     definition. If this is not possible as well, None will be returned.
-% 
-%     :param id_: the identifier of the node definition to get.
-%     :type  id_: uuid.uuid4
-% 
-%     :return: the node definition identified by the given identifier or None.
-%     :rtype:  qde.editor.domain.node.NodeDefinition or None
-%     """
-% 
-%     self.logger.debug(
-%         "Getting node definition %s",
-%         id_
-%     )
-% 
-%     if str(id_) in self.node_definitions:
-%         return self.node_definitions[str(id_)]
-%     elif self.root_node is not None and id_ == self.root_node.id_:
-%         return self.root_node
-%     else:
-%         # The node definition was not found, try to load it from node
-%         # definition files.
-%         file_name = os.path.join(
-%             self.nodes_path,
-%             id_,
-%             self.nodes_extension
-%         )
-%         node_definition = self.load_node_definition_from_file_name(
-%             file_name
-%         )
-%         if node_definition is not None:
-%             node_definition_view_model = node_view_model.NodeViewModel(
-%                 id_=node_definition.id_,
-%                 domain_object=node_definition
-%             )
-%             self.node_definitions[node_definition.id_] = (
-%                 node_definition,
-%                 node_view_model
-%             )
-%             return (node_definition, node_view_model)
-%         else:
-%             return NoneAT}
-% 
-% As can be seen in the above code snippet, the node controller holds the
-% root node, which is placed within the root scene.
-% 
-% ATd Node controller constructor
-% AT{
-%     # TODO: Load from coonfiguration?
-%     self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
-%     self.root_node.name = QtCore.QCoreApplication.translate(
-%         __class__.__name__,
-%         'Root'
-%     )
-%     root_node_output = node.NodeDefinitionOutput(
-%         NodeController.ROOT_NODE_OUTPUT_ID,
-%         QtCore.QCoreApplication.translate(
-%             __class__.__name__,
-%             'Output'
-%         ),
-%         parameter.AtomicTypes.Generic
-%     )
-%     self.root_node.add_output(root_node_output)
-%     self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)AT}
-% 
-% Currently there is no possiblity to add outputs to a node definition. Adding an
-% ouptut simply adds that output to the list of outputs the node definition has.
-% Furthermore that output needs to added for each instance of that node
-% definition as well.
-% \todo{Add inputs as well?}
-% 
-% ATd Node definition domain model methods
-% AT{
-% def add_output(self, node_definition_output):
-%     """Adds the given output to the beginning of the list of outputs and
-%     also to all instances of this node definition.
-% 
-%     :param node_definition_output: the output to add.
-%     :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
-%     """
-% 
-%     self.add_output_at(len(self.outputs), node_definition_output)
-% 
-% def add_output_at(self, index, node_definition_output):
-%     """Adds the given output to the list of outputs at the given index
-%     position and also to all instances of this node definition.
-% 
-%     :param index: the position in the list of outputs where the new output
-%                   shall be added at.
-%     :type  index: int
-%     :param node_definition_output: the output to add.
-%     :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
-% 
-%     :raise: an index error when the given index is not valid.
-%     :raises: IndexError
-%     """
-% 
-%     if index < 0 or index > len(self.outputs):
-%         raise IndexError()
-% 
-%     self.outputs.insert(index, node_definition_output)
-% 
-%     for instance in self.instances:
-%         instance.add_output_at(
-%             index,
-%             node_definition_output.create_instance()
-%         )
-% 
-%     # TODO: Insert connection if output is atomic
-% 
-%     self.was_changed = True
-% 
-% # TODO: Describe this properly
-% ATATproperty
-% def type_(self):
-%     """Return the type of the node, determined by its primary output.
-%     If no primary output is given, it is assumed that the node is of
-%     generic type."""
-% 
-%     type_ = types.NodeType.GENERIC
-% 
-%     if len(self.outputs) > 0:
-%         type_ = self.outputs[0].node_definition_part.type_
-% 
-%     return type_AT}
-% 
-% Having the reading and parsing of inputs, outputs and other node definition
-% implemented, the reading and parsing of connections, definitions, invocations
-% and parts still remains.
-% 
-% The reading and parsing of connections, definitions and invocation is very
-% straightforward and very similar to the one of the node definitions. Therefore
-% it will not be shown in detail. Details are found at~\todo[inline]{Add
-% reference to code fragments here}.
-% 
-% The last part when loading a node definition, is reading and parsing the code
-% part of the node.
-% 
-% ATd JSON methods
-% AT{
-% ATATclassmethod
-% def build_node_definition_part(cls, node_controller, parent, json_input):
-%     """Builds and returns a node definition part from the given JSON input data.
-% 
-%     :param node_controller: a reference to the node controller
-%     :type  node_controller: qde.editor.application.node.NodeController
-%     :param parent: the parent of the node definition part
-%     :type  parent: qde.editor.domain.node.NodeDefinition
-%     :param json_input: the input in JSON format
-%     :type  json_input: dict
-% 
-%     :return: 
-%     :rtype:  
-%     """
-% 
-%     part_id         = uuid.UUID(json_input['id_'])
-%     name            = str(json_input['name'])
-% 
-%     script_lines = []
-%     for script_line in json_input['script']:
-%         script_lines.append(str(script_line))
-%     script = "\n".join(script_lines)
-% 
-%     type_string = json_input['type_']
-%     type_ = types.NodeType[type_string.upper()]
-% 
-%     node_definition_part = node.NodeDefinitionPart(part_id)
-%     node_definition_part.name = name
-%     node_definition_part.type_ = type_
-%     node_definition_part.parent = parent
-% 
-%     node_controller.node_definition_parts[part_id] = node_definition_part
-% 
-%     cls.logger.debug(
-%         "Built part for node definition %s",
-%         part_id
-%     )
-%     return node_definition_part
-% AT}
-% 
-% Finally the node controller needs to be instantiated by the main application
-% and the loading of the node definitions needs to be triggered. The loading may
-% although not be triggered at the same place as the signals for reacting upon
-% new node definitions need to be in place first.
-% 
-% ATd Set up controllers for main application
-% AT{
-% self.node_controller = node.NodeController()AT}
-% 
-% The loading of node definitions is done right before the main window is shown,
-% as at that point all necessary connections between signals and slots are in
-% place.
-% ATd Load nodes
-% AT{
-% self.node_controller.load_nodes()AT}
-% 
-% Now node definitions are being loaded and parsed. Although there is no
-% possiblity to select and instantiate the node definitons yet.
-% 
-% To allow the instantiation of nodes, a (user interface) component is necessary:
-% A dialog for adding nodes to the currently active scene.
-% It will access all the loaded nodes and provide an interface for selecting a
-% node definition which then will be instantiated.
-% 
-% ATd Add node dialog declarations
-% AT{
-% ATATcommon.with_logger
-% class AddNodeDialog(QtWidgets.QDialog):
-%     """Class for adding nodes to a scene view."""
-% 
-%     # Signals
-%     AT<Add node dialog signalsAT>
-% 
-%     AT<Add node dialog column declarationAT>
-% 
-%    def __init__(self, parent=None):
-%         """Constructor.
-% 
-%         :param parent: the parent of this dialog.
-%         :type  parent: QtGui.QWidget
-%         """
-% 
-%         super(AddNodeDialog, self).__init__(parent)
-% 
-%         self.columns                = {}
-%         self.node_definitions       = {}
-%         self.chosen_node_definition = None
-% 
-%         self.setFixedSize(parent.width(), parent.height())
-%         self.setWindowTitle("Add node")
-% 
-%         layout = QtWidgets.QHBoxLayout(self)
-%         # layout.setContentsMargins(0, 0, 0, 0)
-%         # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
-%         self.setLayout(layout)
-% 
-%     AT<Add node dialog methodsAT>
-% 
-%     # Slots
-%     AT<Add node dialog slotsAT>
-% AT}
-% 
-% The key idea of the add node dialog is to have multiple columns where each
-% column defines a specific node type. The node definitions of each type are then
-% vertically listed per column. As these columns are tightly tied to the add node
-% dialog, the declaration of the column class is part of the add node dialog.
-% 
-% ATd Add node dialog column declaration
-% AT{
-% class Column(object):
-%     """Class representing a column within the add node dialog."""
-% 
-%     def __init__(self):
-%         """Constructor."""
-% 
-%         self.frame         = None
-%         self.sub_frames    = []
-%         self.label         = None
-%         self.v_box_layout  = None
-% AT}
-% 
-% \todo{Add position correction to add node dialog.}
-% 
-% The dialog for adding a node instance from a node definition shall only be shown
-% from within a scene, that is from within the scene view. Therefore the add node
-% dialog is added to the scene view.
-% 
-% ATd Scene view constructor
-% AT{
-%     self.add_node_dialog = node.AddNodeDialog(self)
-% AT}
-% 
-% Whenever the scene view is focussed and the tabulator key is being pressed, the
-% dialog for adding a node shall be shown. For achieving this, the
-%~\verb=event= method of the scene view needs to be overwritten.
-% 
-% ATd Scene view methods
-% AT{
-% def event(self, event):
-%     if (
-%             event.type() == Qt.QEvent.KeyPress and
-%             event.key()  == QtCore.Qt.Key_Tab
-%     ):
-%         self.logger.debug("Tabulator was pressed")
-% 
-%         # Sanity check: Open the dialog only if it is not opened already.
-%         if not self.add_node_dialog.isVisible():
-%             current_scene = self.scene()
-%             assert current_scene is not None
-%             insert_at = current_scene.insert_at
-%             insert_position = QtCore.QPoint(
-%                 insert_at.x() * node_view_model.NodeViewModel.WIDTH,
-%                 insert_at.y() * node_view_model.NodeViewModel.HEIGHT
-%             )
-%             insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
-%             self.add_node_dialog.move(insert_position)
-%             add_dialog_result = self.add_node_dialog.exec()
-% 
-%             # At this point we are sure, that this dialog instance was handled
-%             # properly, so accepting the event might be sane here.
-%             event.accept()
-% 
-%             if add_dialog_result == QtWidgets.QDialog.Accepted:
-%                 AT<Handle node definition chosenAT>
-%                 return True
-%             else:
-%                 return False
-% 
-%     return super(SceneView, self).event(event)
-% AT}
-% 
+\newthought{Now the specific value types are implemented}, based either on the
+generic or the concrete value interface, depending on the type. Here just two
+implementations are given as an example. The other implementations can be found
+at~\todo{link to fragments}.
+
+\begin{figure}
+@d Paramater domain model float value
+@{
+class FloatValue(Value):
+    """A class holding float values."""
+
+    def __init__(self, float_value):
+        """Constructor.
+
+        :param float_value: the float value that shall be held
+        :type  float_value: float
+        """
+
+        super(FloatValue, self).__init__(float_value)
+        self.function_type = types.NodeType.FLOAT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return FloatValue(self.value)@}
+\caption{Implementation of the float value type.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  FloatValue}
+\label{editor:lst:parameter:float-value}
+\end{figure}
+
+\begin{figure}
+@d Paramater domain model scene value
+@{
+class SceneValue(ValueInterface):
+    """A class holding scene values."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(SceneValue, self).__init__()
+        self.function_type = types.NodeType.SCENE
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return SceneValue()@}
+\caption{Implementation of the scene value type.
+  \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
+  SceneValue}
+\label{editor:lst:parameter:scene-value}
+\end{figure}
+
+\newthought{The definition of the input of a node definition} is still missing
+however.
+
+\begin{figure}
+@d Node definition input domain model declarations
+@{
+class NodeDefinitionInput(object):
+    """Represents an input of a definition of a node."""
+
+    # Signals
+    @<Node definition input domain model signals@>
+
+    @<Node definition input domain model constructor@>
+    @<Node definition input domain model methods@>@}
+\caption{Implementation of the input of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input}
+\label{editor:lst:node-definition-input}
+\end{figure}
+
+\begin{figure}
+@d Node definition input domain model constructor
+@{
+def __init__(self, id_, name, node_definition_part, default_value):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: TODO
+    :param default_value: the default value of the input
+    :type default_value: qde.editor.domain.parameter.Value
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part
+    self.description          = ""
+    self.min_value            = -100000
+    self.max_value            = 100000
+
+    self.default_function = create_default_value_function(
+        default_value
+    )@}
+\caption{Constructor of the input of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
+  Constructor}
+\label{editor:lst:node-definition-input:constructor}
+\end{figure}
+
+\newthought{The code snippet defining the constructor of a node definition
+input} uses a function called~\verb=create_default_value_function= of
+the~\verb=functions= module. This function creates a default value function
+based on the given default value.
+
+\begin{figure}
+@d Node domain module methods
+@{
+def create_default_value_function(value):
+    """Creates a new default value function using the provided value.
+
+    :param value: the value which the function shall have.
+    :type  value: qde.editor.domain.parameter.Value
+    """
+
+    value_function = NodePart.DefaultValueFunction()
+    value_function.value = value.clone()
+
+    return value_function@}
+\caption{Function that creates a default value function based on a provided
+  value.
+  \newline{}\newline{}Editor $\rightarrow$ Node $\rightarrow$
+  Methods $\rightarrow$ Create default value function}
+\label{editor:lst:node:create-default-value-function}
+\end{figure}
+
+\newthought{With this last implementation} all the parts needed for creating and
+handling node definition inputs are defined, which leads to the next
+implementation. The outputs of a node definition. The outputs are in the same
+way implemented as the inputs of a node definition.
+
+\begin{figure}
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_output(cls, node_controller, json_input):
+    """Builds and returns a node definition output from the given JSON input
+    data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a node definition output
+    :rtype:  qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    output_id             = uuid.UUID(json_input['id_'])
+    name                 = str(json_input['name'])
+    atomic_id            = uuid.UUID(json_input['atomic_id'])
+    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+
+    node_definition_output = node.NodeDefinitionOutput(
+        output_id,
+        name,
+        node_definition_part
+    )
+
+    cls.logger.debug(
+        "Built node definition output for node definition %s",
+        atomic_id
+    )
+    return node_definition_output
+@}
+\caption{A class method of the JSON module, which builds the output of a node
+  definition from a file handle (pointing to a JSON file containing a node
+  definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition output}
+\label{editor:lst:json:methods:build-node-definition-output}
+\end{figure}
+
+\newthought{The domain model of the node definition output} is very similar to
+the input, has less attributes although.
+
+\begin{figure}
+@d Node definition output domain model declarations
+@{
+class NodeDefinitionOutput(object):
+    """Represents an output of a definition of a node."""
+
+    # Signals
+    @<Node definition output domain model signals@>
+
+    @<Node definition output domain model constructor@>
+    @<Node definition output domain model methods@>@}
+\caption{Implementation of the output of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition output}
+\label{editor:lst:node-definition-output}
+\end{figure}
+
+\begin{figure}
+@d Node definition output domain model constructor
+@{
+def __init__(self, id_, name, node_definition_part):
+    """Constructor.
+
+    :param id_: the identifier of the definition
+    :type  id_: uuid.uuid4
+    :param name: the name of the definition
+    :type  name: str
+    :param node_definition_part: the atomic part of the node definition
+    :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    self.id_                  = id_
+    self.name                 = name
+    self.node_definition_part = node_definition_part@}
+\caption{Constructor of the output of the definition of a node.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
+  Constructor}
+\label{editor:lst:node-definition-input:constructor}
+\end{figure}
+
+\newthought{A node definition may contain references} to other node defintions,
+therefore it is necessary to parse them. The parsing is similar to that of the
+inputs and outputs.
+
+\begin{figure}
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition(cls, node_controller, json_input):
+    """Builds and returns a node definition from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: a dictionary containg the node definition at the index of the
+             definition identifier.
+    :rtype:  dict
+    """
+
+    definition_id   = uuid.UUID(json_input['id_'])
+    atomic_id       = uuid.UUID(json_input['atomic_id'])
+
+    node_definition, node_view_model = node_controller.get_node_definition(
+        atomic_id
+    )
+
+    cls.logger.debug(
+        "Built node definition for node definition %s",
+        atomic_id
+    )
+    return (definition_id, node_definition)
+@}
+\caption{A class method of the JSON module, which builds the definition of a node
+  from a file handle (pointing to a JSON file containing a node
+  definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition}
+\label{editor:lst:json:methods:build-node-definition}
+\end{figure}
+
+As can be seen in the above code fragment, the node definition is returned by
+the node controller. This is very similar to getting the node definition part
+from the node controller.
+
+\begin{figure}
+@d Node controller methods
+@{
+def get_node_definition(self, id_):
+    """Returns the node definition identified by the given identifier.
+
+    If no such definition is available, it will be tried to load the
+    definition. If this is not possible as well, None will be returned.
+
+    :param id_: the identifier of the node definition to get.
+    :type  id_: uuid.uuid4
+
+    :return: the node definition identified by the given identifier or None.
+    :rtype:  qde.editor.domain.node.NodeDefinition or None
+    """
+
+    self.logger.debug(
+        "Getting node definition %s",
+        id_
+    )
+
+    if str(id_) in self.node_definitions:
+        return self.node_definitions[str(id_)]
+    elif self.root_node is not None and id_ == self.root_node.id_:
+        return self.root_node
+    else:
+        # The node definition was not found, try to load it from node
+        # definition files.
+        file_name = os.path.join(
+            self.nodes_path,
+            id_,
+            self.nodes_extension
+        )
+        node_definition = self.load_node_definition_from_file_name(
+            file_name
+        )
+        if node_definition is not None:
+            node_definition_view_model = node_view_model.NodeViewModel(
+                id_=node_definition.id_,
+                domain_object=node_definition
+            )
+            self.node_definitions[node_definition.id_] = (
+                node_definition,
+                node_view_model
+            )
+            return (node_definition, node_view_model)
+        else:
+            return None@}
+\caption{A method of the node controller, which returns a node definition
+  by a provided identifier. If no node definition is found for the given
+  identifier, a new node definition is created by loading the definition from
+  the file system.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Methods $\rightarrow$ Get node definition}
+\label{editor:lst:node-controller:methods:get-node-definition}
+\end{figure}
+
+\newthought{The node controller holds a reference to the root node} of the root
+scene of the system. This scene acts as an entry point when evaluating the scene
+graph.
+
+\begin{figure}
+@d Node controller constructor
+@{
+    # TODO: Load from coonfiguration?
+    self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
+    self.root_node.name = QtCore.QCoreApplication.translate(
+        __class__.__name__,
+        'Root'
+    )
+    root_node_output = node.NodeDefinitionOutput(
+        NodeController.ROOT_NODE_OUTPUT_ID,
+        QtCore.QCoreApplication.translate(
+            __class__.__name__,
+            'Output'
+        ),
+        parameter.AtomicTypes.Generic
+    )
+    self.root_node.add_output(root_node_output)
+    self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)@}
+\caption{The root node of the system is manually created by the node controller
+  and is also a node definition.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
+  Constructor}
+\label{editor:lst:node-controller:constructor:add-root-node}
+\end{figure}
+
+\newthought{Currently there is no possibility to add outputs} to a node
+definition. Adding an output simply adds that output to the list of outputs the
+node definition has. Furthermore that output needs to added for each instance of
+that node definition as well. \todo{Add inputs as well?}
+
+\begin{figure}
+@d Node definition domain model methods
+@{
+def add_output(self, node_definition_output):
+    """Adds the given output to the beginning of the list of outputs and
+    also to all instances of this node definition.
+
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+    """
+
+    self.add_output_at(len(self.outputs), node_definition_output)
+
+def add_output_at(self, index, node_definition_output):
+    """Adds the given output to the list of outputs at the given index
+    position and also to all instances of this node definition.
+
+    :param index: the position in the list of outputs where the new output
+                  shall be added at.
+    :type  index: int
+    :param node_definition_output: the output to add.
+    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+
+    :raise: an index error when the given index is not valid.
+    :raises: IndexError
+    """
+
+    if index < 0 or index > len(self.outputs):
+        raise IndexError()
+
+    self.outputs.insert(index, node_definition_output)
+
+    for instance in self.instances:
+        instance.add_output_at(
+            index,
+            node_definition_output.create_instance()
+        )
+
+    # TODO: Insert connection if output is atomic
+
+    self.was_changed = True@}
+\caption{Methods which add a given output of a node definition to a node
+  definition. The first method adds the output at the end of the list of
+  outputs, the second adds the output at the given index.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
+  Methods}
+\label{editor:lst:node-definition:methods:add-output}
+\end{figure}
+
+\begin{figure}
+@d Node definition domain model methods
+@{
+# TODO: Describe this properly
+@@property
+def type_(self):
+    """Return the type of the node, determined by its primary output.
+    If no primary output is given, it is assumed that the node is of
+    generic type."""
+
+    type_ = types.NodeType.GENERIC
+
+    if len(self.outputs) > 0:
+        type_ = self.outputs[0].node_definition_part.type_
+
+    return type_@}
+\caption{Type property of a node definition. If the node definition uses
+  outputs, the type is derived by its primary output. Otherwise a generic type
+  is assumed.
+  \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
+  Methods}
+\label{editor:lst:node-definition:methods:type}
+\end{figure}
+
+Having the reading and parsing of inputs, outputs and other node definition
+implemented, the reading and parsing of connections, definitions, invocations
+and parts still remains.
+
+\newthought{The reading and parsing} of connections, definitions and invocation
+is very straightforward and very similar to the one of the node definitions.
+Therefore it will not be shown in detail. Details are found at~\todo[inline]{Add
+reference to code fragments here}.
+
+\newthought{The last part when loading a node definition} is reading and parsing
+the code part of the node.
+
+\begin{figure}
+@d JSON methods
+@{
+@@classmethod
+def build_node_definition_part(cls, node_controller, parent, json_input):
+    """Builds and returns a node definition part from the given JSON input data.
+
+    :param node_controller: a reference to the node controller
+    :type  node_controller: qde.editor.application.node.NodeController
+    :param parent: the parent of the node definition part
+    :type  parent: qde.editor.domain.node.NodeDefinition
+    :param json_input: the input in JSON format
+    :type  json_input: dict
+
+    :return: the built part of the node definition
+    :rtype:  qde.editor.domain.node.NodeDefinitionPart
+    """
+
+    part_id         = uuid.UUID(json_input['id_'])
+    name            = str(json_input['name'])
+
+    script_lines = []
+    for script_line in json_input['script']:
+        script_lines.append(str(script_line))
+    script = "\n".join(script_lines)
+
+    type_string = json_input['type_']
+    type_ = types.NodeType[type_string.upper()]
+
+    node_definition_part = node.NodeDefinitionPart(part_id)
+    node_definition_part.name = name
+    node_definition_part.type_ = type_
+    node_definition_part.parent = parent
+
+    node_controller.node_definition_parts[part_id] = node_definition_part
+
+    cls.logger.debug(
+        "Built part for node definition %s",
+        part_id
+    )
+    return node_definition_part
+@}
+\caption{A class method of the JSON module, which builds a part of the
+  definition of a node from a file handle (pointing to a JSON file containing a
+  node definition).
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Build node definition part}
+\label{editor:lst:json:methods:build-node-definition-part}
+\end{figure}
+
+\newthought{Finally the node controller needs to be instantiated} by the main
+application and the loading of the node definitions needs to be triggered. The
+loading may although not be triggered at the same place as the signals for
+reacting upon new node definitions need to be in place first.
+
+\begin{figure}
+@d Set up controllers for main application
+@{
+self.node_controller = node.NodeController()@}
+\caption{Instantiation of the node controller from within the main application.
+  \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
+  Constructor}
+\label{editor:lst:main-application:constructor:setup-node-controller}
+\end{figure}
+
+\newthought{Loading of node definitions} is done right before the main window is
+shown, as at that point all necessary connections between signals and slots are
+in place.
+
+\begin{figure}
+@d Load nodes
+@{
+self.node_controller.load_nodes()@}
+\caption{Loading of nodes is triggered by the main application right after
+  instantiating the node controller.
+  \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
+  Constructor}
+\label{editor:lst:main-application:constructor:load-nodes}
+\end{figure}
+
+\newthought{Now node definitions are being loaded and parsed.} Although there is
+no possiblity to select and instantiate the node definitons yet. To allow the
+instantiation of nodes, a (user interface) component is necessary: A dialog for
+adding nodes to the currently active scene. It will access all the loaded nodes
+and provide an interface for selecting a node definition which then will be
+instantiated.
+
+\begin{figure}
+@d Add node dialog declarations
+@{
+@@common.with_logger
+class AddNodeDialog(QtWidgets.QDialog):
+    """Class for adding nodes to a scene view."""
+
+    # Signals
+    @<Add node dialog signals@>
+
+    @<Add node dialog column declaration@>
+
+   def __init__(self, parent=None):
+        """Constructor.
+
+        :param parent: the parent of this dialog.
+        :type  parent: QtGui.QWidget
+        """
+
+        super(AddNodeDialog, self).__init__(parent)
+
+        self.columns                = {}
+        self.node_definitions       = {}
+        self.chosen_node_definition = None
+
+        self.setFixedSize(parent.width(), parent.height())
+        self.setWindowTitle("Add node")
+
+        layout = QtWidgets.QHBoxLayout(self)
+        # layout.setContentsMargins(0, 0, 0, 0)
+        # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
+        self.setLayout(layout)
+
+    @<Add node dialog methods@>
+
+    # Slots
+    @<Add node dialog slots@>
+@}
+\caption{Definition of a dialog to add nodes to the currently active scene. The
+  nodes are ordered in columns according to their type.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog}
+\label{editor:lst:add-node-dialog}
+\end{figure}
+
+\newthought{The key idea of the add node dialog} is to have multiple columns
+where each column defines a specific node type. The node definitions of each
+type are then vertically listed per column. As these columns are tightly tied to
+the add node dialog, the declaration of the column class is part of the add node
+dialog.
+
+\begin{figure}
+@d Add node dialog column declaration
+@{
+class Column(object):
+    """Class representing a column within the add node dialog."""
+
+    def __init__(self):
+        """Constructor."""
+
+        self.frame         = None
+        self.sub_frames    = []
+        self.label         = None
+        self.v_box_layout  = None
+@}
+\caption{Class representing column within the dialog to create new node
+  instances.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Column}
+\label{editor:lst:add-node-dialog:column}
+\end{figure}
+
+\todo[inline]{Add position correction to add node dialog.}
+
+\newthought{The dialog for adding a node instance} from a node definition shall
+only be shown from within a scene, that is from within the scene view. Therefore
+the add node dialog is added to the scene view.
+
+\begin{figure}
+@d Scene view constructor
+@{
+    self.add_node_dialog = node.AddNodeDialog(self)
+@}
+\caption{The dialog for adding new node instances is initialized by the scene
+  view.
+  \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Constructor}
+\label{editor:lst:scene-view:constructor:add-node-dialog}
+\end{figure}
+
+\newthought{Whenever the scene view is focussed} and the tabulator key is being
+pressed, the dialog for adding a node shall be shown. For achieving this, the
+~\verb=event= method of the scene view needs to be overwritten.
+
+\begin{figure}
+@d Scene view methods
+@{
+def event(self, event):
+    if (
+            event.type() == Qt.QEvent.KeyPress and
+            event.key()  == QtCore.Qt.Key_Tab
+    ):
+        self.logger.debug("Tabulator was pressed")
+
+        # Sanity check: Open the dialog only if it is not opened already.
+        if not self.add_node_dialog.isVisible():
+            current_scene = self.scene()
+            assert current_scene is not None
+            insert_at = current_scene.insert_at
+            insert_position = QtCore.QPoint(
+                insert_at.x() * node_view_model.NodeViewModel.WIDTH,
+                insert_at.y() * node_view_model.NodeViewModel.HEIGHT
+            )
+            insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
+            self.add_node_dialog.move(insert_position)
+            add_dialog_result = self.add_node_dialog.exec()
+
+            # At this point we are sure, that this dialog instance was handled
+            # properly, so accepting the event might be sane here.
+            event.accept()
+
+            if add_dialog_result == QtWidgets.QDialog.Accepted:
+                @<Handle node definition chosen@>
+                return True
+            else:
+                return False
+
+    return super(SceneView, self).event(event)
+@}
+\caption{The event method of the scene view is overwritten for being able to
+  show the dialog for adding new instances of nodes when the tabulator key is
+  pressed.
+  \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Methods}
+\label{editor:lst:scene-view:methods:event}
+\end{figure}
+
 % % TODO: Continue here
 % % node_definition = self.add_node_dialog.chosen_node_definition
 % % self.logger.debug(

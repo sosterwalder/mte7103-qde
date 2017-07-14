@@ -2,6 +2,7 @@
 
 \appendix
 \part*{Appendix}
+\label{part:appendix}
 
 @i inc/appendix/implementation.w
 @i inc/appendix/editor.w
@@ -14,7 +15,8 @@
 % i inc/appendix/test-cases.w
 % i inc/appendix/minutes.w
 % i inc/appendix/work-log.w
-% i inc/appendix/code-fragments.w
+
+@i inc/appendix/code-fragments.w
 
 % OLD REQUIREMENTS, check if needed
 %

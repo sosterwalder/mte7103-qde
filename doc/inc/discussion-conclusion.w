@@ -21,3 +21,16 @@
 % Diskussion behandelt wurden. Wenn die Problemstellung der Arbeit nur sehr wenige
 % Folgerungen verlangt, können diese auch als Schlussteil in die Diskussion
 % integriert werden.
+
+\newthought{Optional objectives} are the following:
+\begin{itemize}
+  \item Additional features for the editor, as follows.
+  \begin{itemize}
+    \item A sequencer, allowing a time-based scheduling of defined scenes.
+    \item Additional nodes, such as operations (e.g. replication of objects)
+      or post-processing effects (glow/glare, color grading and so on).
+  \end{itemize}
+  \item Development of a standalone player application. The player allows the
+    playback of animations (time-based, compounded scenes in sequential order)
+    created with the editor.
+\end{itemize}
