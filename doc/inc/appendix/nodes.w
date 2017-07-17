@@ -1700,7 +1700,7 @@ class AddNodeDialog(QtWidgets.QDialog):
 
     @<Add node dialog column declaration@>
 
-   def __init__(self, parent=None):
+    def __init__(self, parent=None):
         """Constructor.
 
         :param parent: the parent of this dialog.
@@ -1718,7 +1718,7 @@ class AddNodeDialog(QtWidgets.QDialog):
 
         layout = QtWidgets.QHBoxLayout(self)
         # layout.setContentsMargins(0, 0, 0, 0)
-        # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
+        ()# layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
         self.setLayout(layout)
 
     @<Add node dialog methods@>
@@ -1837,198 +1837,199 @@ def event(self, event):
 % new node definition. The signal itself is emitting a view model of the read
 % node definition.
 % 
-% ATd Node controller signals
-% AT{do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)AT}
-% 
+@d Node controller signals
+@{
+do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)@}
+
 % Now other components may listen and receive view models of newly added node
 % definitions. In this specific case it is is the dialog for adding a node which
 % needs to listen to the added signal. The listening is done by the slot
 %~\verb=on_node_definition_added=.
-% 
-% ATd Add node dialog slots
-% AT{
-% ATATQtCore.pyqtSlot(node_view_model.NodeViewModel)
-% def on_node_definition_added(self, node_view_model):
-%     """Slot which is called whenever a new node definition is being added.
-% 
-%     :param node_view_model: The newly added node definition.
-%     :type  node_view_model: qde.editor.gui_domain.node.NodeDefinitionViewModel
-%     """
-% 
-%     self.logger.debug("Got new node definition: %s", node_view_model)
-% 
-%     node_name = node_view_model.domain_object.name
-%     type_name = node_view_model.domain_object.type_.name
-%     AT<On node definition added implementationAT>AT}
-% 
+
+@d Add node dialog slots
+@{
+@@QtCore.pyqtSlot(node_view_model.NodeViewModel)
+def on_node_definition_added(self, node_view_model):
+    """Slot which is called whenever a new node definition is being added.
+
+    :param node_view_model: The newly added node definition.
+    :type  node_view_model: qde.editor.gui_domain.node.NodeDefinitionViewModel
+    """
+
+    self.logger.debug("Got new node definition: %s", node_view_model)
+
+    node_name = node_view_model.domain_object.name
+    type_name = node_view_model.domain_object.type_.name
+    @<On node definition added implementation@>@}
+
 % As the idea of the dialog is to have one column per node type, the column needs
 % to be fetched first, based on the type name of the given node definition.
-% 
+%
 % Then a sub frame is created which holds a representation of the node
 % definition. This representation is rendered like an actual instance of a
 % node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
 % meaning it can be clicked. Clicking on a representation of a node definition
 % adds an instance of the clicked node definition to the currently active scene
 % at the cursor position where the dialog for adding a node was opened.
-% 
-% ATd On node definition added implementation
-% AT{
-% AT<Check if the node definition is already knownAT>
-% AT<Get or create column by type nameAT>
-% AT<Create sub frame for given node definitionAT>
-% AT<Create button for given node definition and add to sub frameAT>
-% AT<Add sub frame to columnAT>
-% AT<Save the node definition to list of known nodesAT>AT}
-% 
+
+@d On node definition added implementation
+@{
+@<Check if the node definition is already known@>
+@<Get or create column by type name@>
+@<Create sub frame for given node definition@>
+@<Create button for given node definition and add to sub frame@>
+@<Add sub frame to column@>
+@<Save the node definition to list of known nodes@>@}
+
 % It might happen, that the node definition is already present. If this is the case
 % the process will be stopped.
-% 
-% ATd Check if the node definition is already known
-% AT{
-% if node_view_model.id_ not in self.node_definitions:
-% AT}
-% 
+%
+@d Check if the node definition is already known
+@{
+if node_view_model.id_ not in self.node_definitions:
+@}
+
 % Getting or creating the column is about calling the corresponding method, as
 % the task is abstracted into a method to maintain readbility.
-% 
-% ATd Get or create column by type name
-% AT{
-%     column = self.get_or_create_column_by_name(type_name)AT}
-% 
+%
+@d Get or create column by type name
+@{
+    column = self.get_or_create_column_by_name(type_name)@}
+
 % The~\verb=get_or_create_column_by_name= tries to get a column by the given name
 % and if no column by that name exists, it creates a new column using the given
 % name.
-% 
-% ATd Add node dialog methods
-% AT{
-% def get_or_create_column_by_name(self, column_name):
-%     """Gets the column for the given column name.
-%     If there is no column for the given column name available, a new column
-%     using the given column name is created.
-% 
-%     :param column_name: the name of the column to get or create.
-%     :type  column_name: str
-% 
-%     :return: the column for the given column name.
-%     :rtype:  AddNodeDialog.Column
-%     """
-% 
-%     AT<Get existing column object by nameAT>
-%     AT<Create new column object based on nameAT>
-% 
-%     return columnAT}
-% 
+%
+@d Add node dialog methods
+@{
+def get_or_create_column_by_name(self, column_name):
+    """Gets the column for the given column name.
+    If there is no column for the given column name available, a new column
+    using the given column name is created.
+
+    :param column_name: the name of the column to get or create.
+    :type  column_name: str
+
+    :return: the column for the given column name.
+    :rtype:  AddNodeDialog.Column
+    """
+
+    @<Get existing column object by name@>
+    @<Create new column object based on name@>
+
+    return column@}
+
 % Therefore, if a column by the given name already exists, the reference to the
 % found column is returned.
-% 
-% ATd Get existing column object by name
-% AT{
-% if column_name in self.columns:
-%     column = self.columns[column_name]AT}
-% 
+%
+@d Get existing column object by name
+@{
+if column_name in self.columns:
+    column = self.columns[column_name]@}
+
 % If no column by the given name exists, a new column using the given name is
 % being created.
-% 
-% ATd Create new column object based on name
-% AT{
-% else:
-%     frame = QtWidgets.QFrame(self)
-%     self.layout().addWidget(frame)
-%     frame.setContentsMargins(0, 0, 0, 0)
-% 
-%     row = QtWidgets.QVBoxLayout(frame)
-%     row.setContentsMargins(0, 0, 0, 0)
-% 
-%     caption = "<h2>{0}</h2>".format(column_name)
-%     label = QtWidgets.QLabel(caption, frame)
-%     label.setContentsMargins(4, 2, 4, 2)
-%     label_font = QtGui.QFont()
-%     label_font.setFamily(label_font.defaultFamily())
-%     label_font.setBold(True)
-%     label_font.setUnderline(True)
-%     label.setFont(label_font)
-% 
-%     row.addWidget(label)
-%     row.addStretch(1)
-% 
-%     column = AddNodeDialog.Column()
-%     column.frame = frame
-%     column.label = column_name
-%     column.v_box_layout = row
-%     self.columns[column_name] = columnAT}
-% 
+%
+@d Create new column object based on name
+@{
+else:
+    frame = QtWidgets.QFrame(self)
+    self.layout().addWidget(frame)
+    frame.setContentsMargins(0, 0, 0, 0)
+
+    row = QtWidgets.QVBoxLayout(frame)
+    row.setContentsMargins(0, 0, 0, 0)
+
+    caption = "<h2>{0}</h2>".format(column_name)
+    label = QtWidgets.QLabel(caption, frame)
+    label.setContentsMargins(4, 2, 4, 2)
+    label_font = QtGui.QFont()
+    label_font.setFamily(label_font.defaultFamily())
+    label_font.setBold(True)
+    label_font.setUnderline(True)
+    label.setFont(label_font)
+
+    row.addWidget(label)
+    row.addStretch(1)
+
+    column = AddNodeDialog.Column()
+    column.frame = frame
+    column.label = column_name
+    column.v_box_layout = row
+    self.columns[column_name] = column@}
+
 % For adding the representation of the node definition to a column, the
 % creation of a sub frame is necessary.
-% 
-% ATd Create sub frame for given node definition
-% AT{
-%     sub_frame = QtWidgets.QFrame(column.frame)
-%     sub_frame_column = QtWidgets.QHBoxLayout(sub_frame)
-%     sub_frame_column.setContentsMargins(0, 0, 0, 0)
-%     sub_frame_column.setSpacing(0)AT}
-% 
+%
+@d Create sub frame for given node definition
+@{
+    sub_frame = QtWidgets.QFrame(column.frame)
+    sub_frame_column = QtWidgets.QHBoxLayout(sub_frame)
+    sub_frame_column.setContentsMargins(0, 0, 0, 0)
+    sub_frame_column.setSpacing(0)@}
+
 % The node representation is then created and added to the above created sub
 % frame. At this moment the presentation is simply a label.
-% 
-% ATd Create button for given node definition and add to sub frame
-% AT{
-%     button_label = gui_helper.ClickableLabel(node_name, sub_frame)
-%     button_label.setContentsMargins(4, 0, 4, 0)
-%     button_label.setSizePolicy(
-%         Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
-%     )
-%     sub_frame_column.addWidget(button_label)AT}
-% 
+%
+@d Create button for given node definition and add to sub frame
+@{
+    button_label = gui_helper.ClickableLabel(node_name, sub_frame)
+    button_label.setContentsMargins(4, 0, 4, 0)
+    button_label.setSizePolicy(
+        Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
+    )
+    sub_frame_column.addWidget(button_label)@}
+%
 % On thing that stands out in the above code fragment, is the clickable label
 % class. This label is nothing other than normal label emitting a signal called
 %~\verb=clicked= when receiving a mouse press event. Details may be found
 % at~\todo{add reference here}.
-% 
+%
 % For being able to react whenever such a label is clicked, it is necessary to
 % handle the~\verb=clicked= signal of the label. Up to now all signals emitted
 % the necessary objects. As the~\verb=clicked= signal is very generic, it does
 % not emit an object. It is nevertheless necessary to emit the chosen node
 % definition.
-% 
-% ATd Create button for given node definition and add to sub frame
-% AT{
-% 
-%     def _add_node_button_clicked(node_view_model):
-%         self.chosen_node_definition = node_view_model
-%         self.accept()
-% 
-%     button_label.clicked.connect(functools.partial(
-%         _add_node_button_clicked, node_view_model
-%     ))AT}
-% 
+%
+@d Create button for given node definition and add to sub frame
+@{
+
+    def _add_node_button_clicked(node_view_model):
+        self.chosen_node_definition = node_view_model
+        self.accept()
+
+    button_label.clicked.connect(functools.partial(
+        _add_node_button_clicked, node_view_model
+    ))@}
+
 % Finally the created sub frame is added to the found or created column.
-% 
-% ATd Add sub frame to column
-% AT{
-%     column.v_box_layout.insertWidget(
-%         column.v_box_layout.count() - 1, sub_frame
-%     )
-%     column.sub_frames.append(sub_frame)AT}
-% 
+%
+@d Add sub frame to column
+@{
+    column.v_box_layout.insertWidget(
+        column.v_box_layout.count() - 1, sub_frame
+    )
+    column.sub_frames.append(sub_frame)@}
+
 % If the node definition is not yet known, it is saved to the list of known node
 % definitions. Otherwise a warning is being shown.
-% 
-% ATd Save the node definition to list of known nodes
-% AT{
-%     self.node_definitions[node_view_model.id_] = node_view_model
-%     self.logger.debug("Added node definition %s", node_view_model)
-%     # TODO: Handle shortcuts
-% 
-% else:
-%     self.logger.warn("Node definition %s is already known", node_view_model)
-% AT}
-% 
+%
+@d Save the node definition to list of known nodes
+@{
+    self.node_definitions[node_view_model.id_] = node_view_model
+    self.logger.debug("Added node definition %s", node_view_model)
+    # TODO: Handle shortcuts
+
+else:
+    self.logger.warn("Node definition %s is already known", node_view_model)
+@}
+
 % The above defined slot needs to be triggered as soon as a new node definition
 % is being added. This is done within the main window, by connecting the slot with the
 %~\verb=do_add_node_view_definition= signal.
-% 
-% ATd Connect main window components
-% AT{
-% self.node_controller.do_add_node_view_definition.connect(
-%     self.main_window.scene_view.add_node_dialog.on_node_definition_added
-%     )AT}
+%
+@d Connect main window components
+@{
+self.node_controller.do_add_node_view_definition.connect(
+    self.main_window.scene_view.add_node_dialog.on_node_definition_added
+    )@}

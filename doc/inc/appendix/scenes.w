@@ -77,7 +77,7 @@ self.scene_view.setBackgroundBrush(brush)
 self.scene_view.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
 self.scene_view.setDragMode(QtWidgets.QGraphicsView.RubberBandDrag)
 self.scene_view.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
-self.scene_view.setOptimizationFlags(QtWidgets.QGraphicsView.DontAdjustForAntialiag)
+self.scene_view.setOptimizationFlags(QtWidgets.QGraphicsView.DontAdjustForAntialiasing)
 @}
 \caption{The scene view component is being set up by the main window.
   \newline{}\newline{}Editor $\rightarrow$ Main window $\rightarrow$

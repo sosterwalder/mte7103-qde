@@ -135,12 +135,12 @@ signals.\cite[pp. 37 --- 38]{osterwalder-qde-2016}
 \begin{figure}[h]
   @d Main application declarations
   @{
-  @@common.with_logger
-  class Application(QtWidgets.QApplication):
-      """Main application for QDE."""
+@@common.with_logger
+class Application(QtWidgets.QApplication):
+    """Main application for QDE."""
 
-      @<Main application constructor@>
-      @<Main application methods@>@}
+    @<Main application constructor@>
+    @<Main application methods@>@}
   \caption{Main application class of the editor
     application.\newline{}\newline{}Editor $\rightarrow$ Application}
   \label{editor:lst:app}

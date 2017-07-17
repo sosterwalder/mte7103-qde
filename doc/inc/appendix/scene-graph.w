@@ -240,10 +240,10 @@ def add_root_node(self):
         self.layoutChanged.emit()
         self.logger.debug("Added root node")
     else:
-    self.logger.warn((
-        "Not (re-) adding root node, already"
-        "present!"
-    ))
+        self.logger.warn((
+            "Not (re-) adding root node, already"
+            "present!"
+        ))
 @}
 @d Scene graph controller methods
 @{
@@ -312,7 +312,7 @@ model for a given row and column below a parent item.
 @d Scene graph controller methods
 @{
 def index(self, row, column, parent=QtCore.QModelIndex()):
-"""Return the index of the item in the model specified by the
+    """Return the index of the item in the model specified by the
     given row, column and parent index.
 
     :param row: The row for which the index shall be returned.

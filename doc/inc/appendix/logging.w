@@ -93,14 +93,14 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     @d Set logger name
     @{
-      logger_name = "{module_name}.{class_name}".format(
+logger_name = "{module_name}.{class_name}".format(
     module_name=cls.__module__,
     class_name=cls.__name__
 )@}
   \item Provide an easy to use interface for logging.
     @d Logger interface
     @{
-      cls.logger = logging.getLogger(logger_name)
+cls.logger = logging.getLogger(logger_name)
 
 return cls@}
 \end{itemize}
