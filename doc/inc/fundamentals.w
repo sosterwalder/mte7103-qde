@@ -20,16 +20,15 @@
 % to make a link between this chapter and the whole argument… The first step in
 % answering my research question (repeat question) .. was to.. . In the last
 % chapter I …
-\newthought{The previous chapter} covered some administrative aspects including the
-involved persons, the phases and milestones of the thesis as well as its
-schedule.
+\newthought{The previous chapter} covered administrative aspects including the
+persons involved, phases and the schedule, and milestones of the project work.
 
 % Focus: What does this chapter specifically do?
 % Now focus the reader’s attention on what this chapter is specifically going to
 % do and why it is important. In this chapter I will examine.. I will present… I
 % will report … This is crucial in (aim of thesis/research question) in order to….
 \newthought{This chapter} presents the fundamentals which are required for
-understanding of the result of this thesis.
+an understanding of this thesis.
 
 % Overview: How is it done?
 % The third paragraph simply outlines the way that you are going to achieve the
@@ -42,65 +41,74 @@ understanding of the result of this thesis.
 % methodology that I used in the research, arguing that ethnography was the most
 % suitable approach to provide answers to the question of…
 \newthought{The first section of this chapter} defines the software architecture
-that is used for the implementation of the intended software. It is mainly a
-summary of the previous project work,~\enquote{QDE --- a visual animation
-system, architecture}~\cite{osterwalder-qde-2016}. The second section shows the
-algorithm which is used for rendering. It is a summary of a previous project
-work,~\enquote{Volume ray casting --- basics \&
+that would be used for the implementation of the program implemented. It is
+mainly a summary of the previous project work,~\enquote{QDE --- a visual
+animation system, architecture}~\cite{osterwalder-qde-2016}. The second section
+shows the algorithm which is used for rendering. It is a summary of a previous
+project work,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}.
 
 \section{Software architecture}
 \label{soarch}
 % \label{fundamentals:sec:software-architecture}
 
-\newthought{This section} is a summary of the previous
-project work of the author,~\enquote{QDE --- a visual animation system,
+\newthought{This section} is a summary of the previous project work of the
+author,~\enquote{QDE --- a visual animation system,
 architecture}~\cite{osterwalder-qde-2016}. It describes the fundamentals for the
-architecture for the intended software of this thesis.
+architecture for the program implemented for this thesis.
 
 \newthought{Software architecture} is inherent to software engineering and
-software development. It may be done implicitly, for example when developing a
-smaller software where the concepts are somewhat intuitively clear and the
-decisions forming the design are worked out in one's head. But it may also be
-done explicitly, when developing a larger software for example. But what is
-software architecture?~\citeauthor{kruchten_rup_2003} defines software
-architecture as follows.
+software development. It may be implicit, for example when developing a smaller
+program where the concepts are intuitively clear and the design decisions are
+self-explanatory. Unfortunately, sometimes momentary~\enquote{self-explanatory}
+decisions are in retrospect deceptive, so that some documentation may be
+necessary. But the architecture may also be developed as an initial conceptual
+process, for instance when developing large and complex programs.
 
-\newthought{``An architecture is the \textit{set of significant
-decisions}} about the organization of a software system, the selection of
-\textit{structural elements} and their interfaces by which the system is
-composed, together with their \textit{behavior} as specified in the
+\newthought{But what is software
+architecture?}~\citeauthor{kruchten_rup_2003}~\cite{kruchten_rup_2003} defines
+software architecture as follows:~\enquote{An architecture is the \textit{set of
+significant decisions} about the organization of a software system, the
+selection of \textit{structural elements} and their interfaces by which the
+system is composed, together with their \textit{behavior} as specified in the
 collaborations among those elements, the \textit{composition} of these elements
 into progressively larger subsystems, and the \textit{architectural style} that
 guides this organization -- these elements and their interfaces, their
-collaborations, and their composition.''~\cite{kruchten_rup_2003}
+collaborations, and their composition.}
 
-Or as~\citeauthor{fowler_architect_2003} puts it:~\enquote{Whether something
-is part of the architecture is entirely based on whether the developers think it
-is important. [...] So, this makes it hard to tell people how to describe their
-architecture.~\enquote{Tell us what is important.} Architecture is about the
-important stuff. Whatever that is.}~\cite{fowler_architect_2003}
+Or as~\citeauthor{fowler_architect_2003}~\cite{folwer_architect_2003} puts
+it:~\enquote{Whether something is part of the architecture is entirely based on
+whether the developers think it is important. [...] So, this makes it hard to
+tell people how to describe their architecture.~\enquote{Tell us what is
+important.} Architecture is about the important stuff. Whatever that
+is.}
 
-\newthought{The envisaged idea of this thesis}, using a node based graph for
+\newthought{The idea envisaged for this thesis} of using a node based graph for
 modeling objects and scenes and rendering them using sphere tracing, was
-developed ahead of this thesis. To ensure that this idea is really feasible, a
-prototype was developed during the former project
-work~\citetitle{osterwalder-volume-2016}. This prototype acted as a proof of
-concept. For this prototype an implicitly defined architecture was used, which
-led to an architecture which is hard to maintain and extend by providing no
-clear segregation between the data model and its representation.
+developed in advance of this thesis. To ensure that this technical
+implementation was really feasible, a prototype was developed during the
+previous project
+work~\enquote{\citetitle{osterwalder-volume-2016}}~\cite{osterwalder-volume-2016}.
 
-\newthought{With the previous project work},~\citetitle{osterwalder-qde-2016}, a
-software architecture was developed to prevent this circumstance. The software
-architecture is based on the unified process, what leads to an iterative
-approach.
+\newthought{The architecture of this prototype} had however evolved implicitly,
+and showed itself as hard to maintain and extend by providing no clear
+segregation between the data model and its representation.
 
-\newthought{Based upon the vision} actors are defined. The actors in turn are
-used in use cases, which define functional requirements for the behavior of a
-system. The definition of use cases shows the extent of the software and define
-its functionality and therefore the requirements. Based on the these
-requirements, the components shown in~\autoref{table:software-components} are
-established.
+\newthought{With the next project
+work},~\enquote{\citetitle{osterwalder-qde-2016}}, a software architecture was
+developed to prevent the occurrence of such problems. The software architecture
+is based on the rational unified process (RUP)~\cite{kruchten_rup_2003} what
+leads to an iterative approach.
+
+\newthought{Based on the vision} of this thesis and using the methodologies of
+RUP, actors are defined. The actors in turn are participants in use cases that
+define functional requirements for the behavior of a system. The definition of
+use cases shows the limitations of the program and define its functionality and
+therefore the requirements.
+
+\newthought{The components}, shown in~\autoref{table:software-components}
+and~\autoref{fig:editor-components}, are established based on these
+requirements.
 
 \begin{table}[h]
   \begin{tabularx}{\textwidth}{lX}
@@ -109,27 +117,35 @@ established.
     \midrule
     Player & Reads objects and scenes defined by the editor component and plays
     them back in the defined chronological order.\\
-    Editor & Allows \textit{modeling} and \textit{composing} of objects and
-    scenes using a node based graphical user interface. \textit{Renders} objects
+    Editor & Allows modeling and composing of objects and
+    scenes using a node based graphical user interface. Renders objects
     and scenes in real time using sphere tracing. \\
-    \midrule
-    Scene graph & Holds scenes in a tree like structure and has at least a root
-    node.\\
-    Node graph & Contains all nodes which define a single scene.\\
-    Parameter & Holds the parameters of a node from the node graph.\\
-    Rendering & Renders a node.\\
-    Time line & Depicts temporal events in terms of scenes which follow a
-    chronological order.\\
     \bottomrule
   \end{tabularx}
-  \caption{Description of the components of the envisaged software.}
+  \caption{Description of the components of the program implemented.}
   \label{table:software-components}
+\end{table}
+
+\begin{table}[h]
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Sub component} & \textbf{Description} \\
+    Scene tree & Holds scenes in a tree like structure.            \\
+    Node graph & Contains all nodes which define a single scene.   \\
+    Parameter  & Holds the parameters of a node of the node graph. \\
+    Rendering  & Renders a node, presenting it for a viewer.       \\
+    Time line  & Depicts temporal events in terms of scenes which follow a
+    chronological order.                                           \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Description of the sub components of the editor component.}
+  \label{table:editor:sub-components}
 \end{table}
 
 \begin{figure}[ht]
   \caption{%
     A mock up of the editor application showing its components.\newline{}
-    1: Scene graph.\newline{}
+    1: Scene tree.\newline{}
     2: Node graph.\newline{}
     3: Parameter view.\newline{}
     4: Rendering view.\newline{}
@@ -139,14 +155,18 @@ established.
   \includegraphics[width=0.95\linewidth]{images/editor-components}
 \end{figure}
 
-\newthought{Identifying the components} helps finding the noteworthy concepts or
-objects. Decomposing a domain into noteworthy concepts or objects
-is~\enquote{the quintessential object-oriented analysis
+\newthought{Identifying the components} helps finding the important conceptual items.
+Decomposing a domain into noteworthy concepts is~\enquote{the quintessential object-oriented analysis
 step}~\cite{larman-applying-2004}.~\enquote{The domain model is a visual
 representation of conceptual classes or real-situation objects in a
-domain.}~\cite{larman-applying-2004} The domain models for the editor and the
-player component are shown in~\autoref{fig:editor-domain-model} and
-in~\autoref{fig:player-domain-model} respectively.
+domain.}~\cite{larman-applying-2004}
+
+\newthought{The editor and player components} are shown
+in~\autoref{fig:editor-domain-model} and in~\autoref{fig:player-domain-model}
+respectively in the form of a domain model. Each domain model is composed of
+components which build the sub components of the parent component, in this case
+the editor and player. These sub components represent the objects of the
+respective domain.
 
 \begin{figure*}[h]
   \caption{Domain model of the editor component.}
@@ -164,42 +184,52 @@ in~\autoref{fig:player-domain-model} respectively.
 % domain model is too small to be read. --> Bigger, scaled and rotated. One
 % figure per page.
 
-\newthought{Identifying the noteworthy concepts or objects} allows the
-definition of the logical architecture, which shows the overall image of
-(software) classes in form of packets, subsystems and layers.
+\newthought{Identifying the important concepts} allows the
+definition of the logical architecture and shows the overall image of
+(software) classes in form of packets, subsystems and layers. For a detailed
+definition of these items the reader is referred to the previous project
+work~\cite[pp. 37 ff.]{osterwalder-volume-2016}.
 
-\newthought{To reduce coupling and dependencies} a relaxed layered architecture
-is used. In contrast to a strict layered architecture, which allows any layer
-calling only services or interfaces from the layer below, the relaxed layered
-architecture allows higher layers to communicate with any lower layer. To ensure
-low coupling and dependencies also for the graphical user interface, the models
-and their views are segregated using the model-view separation principle. This
-principle states that domain objects should have no direct knowledge about
-objects of the graphical user interface. In addition controllers are used, which
-represent workflow objects of the application layer.
+\newthought{To reduce dependencies and the coupling} of components
+a~\enquote{relaxed layered} architecture is used. In contrast to a strict
+layered architecture, which allows any layer to call services or interfaces only
+from the layer below, a relaxed layered architecture allows higher layers to
+communicate with any lower layer. The architecture defines five layers, as shown
+in~\autoref{table:layers}.
+
+\newthought{To ensure low coupling and dependencies} also for the graphical user
+interface, the models and their views are segregated using the principle of
+model-view separation which states that domain objects, which are data models,
+should have no direct knowledge about their corresponding objects of the
+graphical user interface.
+
+\newthought{Workflow objects} control the user interaction with the visual
+objects by keeping track of the data models. Such~\textit{controllers} support the
+model-view separation principle and exist in the application layer.
 
 \begin{table}[h]
-  \caption{Layers of the envisaged software.}
+  \caption{Layers as envisaged during the conceptual phase and as used for
+    program implemented.}
   \label{table:layers}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Layer} & \textbf{Description}\\
     \midrule
-    UI & All elements of the graphical user interface.\\
-    Application & Controller/workflow objects.\\
-    Domain & Models respectively logic of the application.\\
-    Technical services & Technical infrastructure, such as graphics, window
-    creation and so on.\\
-    Foundation & Basic elements and low level services, such as a timer, arrays
-    or other data classes.\\
+    UI                 & All elements of the graphical user interface.                                       \\
+    Application        & Controllers (workflow objects).                                                     \\
+    Domain             & Data models according to the logic of the application.                              \\
+    Technical services & Technical infrastructure, such as graphics, window creation and so on.              \\
+    Foundation         & Basic elements and low level services, such as timer, arrays or other data classes. \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\newthought{Class diagrams provide a software point of view} whereas domain
-models provide rather a conceptual point of view. A class diagram shows classes,
+\newthought{Class diagrams are used to provide a software point of view},
+whereas domain models provide rather a conceptual point of view. A class
+diagram~\footnote{The concepts of RUP and OOP are as used in the previous
+project (QDE) and therefore will not be detailed here.} shows classes,
 interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
-class diagram of the editor component whereas~\autoref{fig:player-class-diagram}
+class diagram of the editor component and~\autoref{fig:player-class-diagram}
 shows the class diagram for the player component.
 
 \begin{figure*}[ht]
@@ -221,49 +251,51 @@ shows the class diagram for the player component.
 \section{Rendering}
 \label{sec:rendering}
 
-\newthought{This~\autoref{sec:rendering}} is a summary of a previous project
+\newthought{This~\autoref{sec:rendering}} is a summary of the previous project
 work of the author,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}. It describes the fundamentals for
-the rendering algorithm that is used for the intended software of this thesis.
+the rendering algorithm that is used for the program implemented in this thesis.
 
-\newthought{Rendering} is one of the main aspects of this thesis, as the main
-objective of the thesis is the design and development of a software for
-modeling, composing and \textit{rendering} real time computer graphics through a
-graphical user interface. \citeauthor{foley_computer_1996} describes rendering
+\newthought{Rendering} is the second main aspect of this thesis, as the
+objective is the design and development of a program for modeling, composing and
+\textit{rendering} real time computer graphics by providing a graphical toolbox.
+
+\newthought{\citeauthor{foley_computer_1996} describes rendering}
 as a~\enquote{process of creating images from
 models}~\cite{foley_computer_1996}. The basic idea of rendering is to determine
-the color of a surface at a certain point. For this task two concepts have
+the color of a surface at each point. For this task two concepts have
 evolved: \textit{illumination models} and \textit{shading models}.
-\newthought{Shading models} define when to use which illumination model and the
-parameters for the illumination model.
 
 \newthought{Illumination models} describe the amount of light that is
 transmitted from a point on a surface to a viewer. There exist two kinds of
 illumination models: local illumination models and global illumination models.
 Whereas local illumination models aggregate local data from adjacent surfaces
-and directly incoming light, global illumination models consider also indirect
-light. The algorithm used for rendering in the intended software is an
-algorithm using a \textit{global illumination model}.
+and directly incoming light from light sources, global illumination models
+consider also indirect light from reflections and refractions. The algorithm
+used for rendering in the implemented program uses a \textit{global illumination
+model}.
+
+\newthought{Shading models} define when and how to use which illumination model.
 
 \newthought{Global illumination models}~\enquote{express the light being
 transferred from one point to another in terms of the intensity of the light
-emitted from the first point to the second}~\cite[pp. 775 and
-776]{foley_computer_1996}. Additionally to this direct intensity the indirect
-intensity is considered, therefore ~\enquote{the intensity of light emitted from
-all other points that reaches the first and is reflected from the first to the
-second}~\cite[pp. 775 and 776]{foley_computer_1996} point is added.
+emitted}~\cite[pp. 775 and 776]{foley_computer_1996}. Additionally to this
+direct intensity, the indirect intensity is considered, meaning~\enquote{the
+intensity of light emitted from all other points that reaches the first and is
+reflected from the first to the second}~\cite[pp. 775 and
+776]{foley_computer_1996} point is added.
 
 \newpage{}
 
-\newthought{In 1986 James~\enquote{Jim}~Kajiya} set up the so called rendering
-equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
+\newthought{In 1986 James Kajiya} set up the so called rendering equation, which
+expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 776]{foley_computer_1996}
 
 \begin{figure}
   \label{eq:rendering-equation}
   \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
   \begin{equation}
-    I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
+    I(x, x') = g(x, x')\left[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx''\right]
   \end{equation}
 \end{figure}
 
@@ -271,21 +303,22 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
   \begin{description}
     \item[$x, x' \text{and } x''$] Points in space.
     \item[$I(x, x')$] Intensity of the light going from point $x'$ to point $x$.
-    \item[$g(x, x')$] A geometrical term.
-      \begin{description}
-        \item[$0$] $x$ and $x'$ are occluded by each other.
-        \item[$\frac{1}{r^2}$] $x$ and $x'$ are visible to one other, $r$ being
-          the distance between the two points.
-      \end{description}
+    \item[$g(x, x')$] A geometrical scaling factor:
+      \begin{itemize}
+        \item[--] $0$ if $x$ or $x'$ are occluded by each other.
+        \item[--] $\frac{1}{r^2}$ if $x$ and $x'$ are visible to one other, $r$ being
+          the distance them.
+      \end{itemize}
     \item[$\varepsilon(x, x')$] Intensity of the light being emitted from point
       $x'$ to point $x$.
     \item[$\rho(x, x', x'')$] Intensity of the light going from $x''$ to $x$, being
-      scattered on the surface of point $x'$.
+      scattered on the surface near point $x'$.
     \item[$\int\limits_{S}$] Integral over the union of all surfaces, hence $S =
       \bigcup\limits_{i=0}^{n} S_{i}$, $n$ being the number of surfaces.
       All points $x$, $x'$ and $x''$ brush all surfaces of all objects within
-      the scene. $S_{0}$ being an additional surface in form of a hemisphere
-      which spans the whole scene and acts as background.
+      the scene. Where $S_{i}$ is the surface of object $i$, and so $S_{0}$
+      being an additional surface in form of a hemisphere which spans the whole
+      scene and acts as background.
   \end{description}
 }
 
@@ -323,24 +356,26 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 % \end{table}
 
 \newthought{Implementing a global illumination model} or the rendering equation
-directly for rendering images in viable or even real time is not really
-feasible, even on modern hardware. The procedure is computationally complex and
-very time demanding.
+directly for rendering images in viable (computational feasible in a workflow
+for instance for the production of animated films) or even real time is not
+really feasible, even on the fastest modern hardware (2017). The procedure is
+computationally complex and very time demanding.
 
-\newthought{A simplified approach} to implement global illumination models (or
+\newthought{A simplified approach} to implement global illumination models (and
 the rendering equation) is ray tracing. Ray tracing is able to produce high
 quality, realistic looking images. Although it is still demanding in terms of
-time and computations, the time complexity is reasonable for producing still
-images. For producing images in real time however, the procedure is still too
+time and computations, the time complexity is viable for producing still
+images. For producing images in real time however, the algorithm is still too
 demanding. This is where a special form of ray tracing comes in.
 
 \newthought{Sphere tracing} is a ray tracing approach for implicit surfaces
 introduced in~\citeyear{hart_sphere_1994} by~\citeauthor{hart_sphere_1994} in
 his work~\citetitle{hart_sphere_1994}~\cite{hart_sphere_1994}. 
-Sphere tracing is faster than the classical ray tracing approaches in finding
+Sphere tracing is faster than the classical ray tracing approaches in its method
+of finding
 intersections between rays and objects. In contrast to the classical ray tracing
-approaches, the marching distance on rays is not defined by an absolute or a
-relative distance, instead distance functions are used. The distance functions
+approaches, the~\enquote{marching distance} of rays is not defined by an absolute or a
+relative distance, but instead, distance functions are used. The distance functions
 are used to expand unbounding volumes (in this concrete case spheres, hence the
 name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
@@ -349,9 +384,9 @@ name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
     \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
     \caption{Illustration of the sphere tracing
       algorithm.
-      Ray~\textit{e} hits no objects until reaching the horizon at
-      $d_{max}$. Rays~\textit{f},~\textit{g} and~\textit{h} hit
-      polygon~\textit{poly1}.}
+      Ray~\textit{e} hits no objects until reaching the horizon.
+      Rays~\textit{f},~\textit{g} and~\textit{h} hit
+      the solid~\textit{poly1}.}
       \label{fig:sphere-tracing-1}
 \end{figure}
 

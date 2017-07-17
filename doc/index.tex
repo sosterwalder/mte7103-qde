@@ -623,16 +623,15 @@ found under the appendix meeting minutes.~\todo{Add correct reference}
 % to make a link between this chapter and the whole argument… The first step in
 % answering my research question (repeat question) .. was to.. . In the last
 % chapter I …
-\newthought{The previous chapter} covered some administrative aspects including the
-involved persons, the phases and milestones of the thesis as well as its
-schedule.
+\newthought{The previous chapter} covered administrative aspects including the
+persons involved, phases and the schedule, and milestones of the project work.
 
 % Focus: What does this chapter specifically do?
 % Now focus the reader’s attention on what this chapter is specifically going to
 % do and why it is important. In this chapter I will examine.. I will present… I
 % will report … This is crucial in (aim of thesis/research question) in order to….
 \newthought{This chapter} presents the fundamentals which are required for
-understanding of the result of this thesis.
+an understanding of this thesis.
 
 % Overview: How is it done?
 % The third paragraph simply outlines the way that you are going to achieve the
@@ -645,65 +644,74 @@ understanding of the result of this thesis.
 % methodology that I used in the research, arguing that ethnography was the most
 % suitable approach to provide answers to the question of…
 \newthought{The first section of this chapter} defines the software architecture
-that is used for the implementation of the intended software. It is mainly a
-summary of the previous project work,~\enquote{QDE --- a visual animation
-system, architecture}~\cite{osterwalder-qde-2016}. The second section shows the
-algorithm which is used for rendering. It is a summary of a previous project
-work,~\enquote{Volume ray casting --- basics \&
+that would be used for the implementation of the program implemented. It is
+mainly a summary of the previous project work,~\enquote{QDE --- a visual
+animation system, architecture}~\cite{osterwalder-qde-2016}. The second section
+shows the algorithm which is used for rendering. It is a summary of a previous
+project work,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}.
 
 \section{Software architecture}
 \label{soarch}
 % \label{fundamentals:sec:software-architecture}
 
-\newthought{This section} is a summary of the previous
-project work of the author,~\enquote{QDE --- a visual animation system,
+\newthought{This section} is a summary of the previous project work of the
+author,~\enquote{QDE --- a visual animation system,
 architecture}~\cite{osterwalder-qde-2016}. It describes the fundamentals for the
-architecture for the intended software of this thesis.
+architecture for the program implemented for this thesis.
 
 \newthought{Software architecture} is inherent to software engineering and
-software development. It may be done implicitly, for example when developing a
-smaller software where the concepts are somewhat intuitively clear and the
-decisions forming the design are worked out in one's head. But it may also be
-done explicitly, when developing a larger software for example. But what is
-software architecture?~\citeauthor{kruchten_rup_2003} defines software
-architecture as follows.
+software development. It may be implicit, for example when developing a smaller
+program where the concepts are intuitively clear and the design decisions are
+self-explanatory. Unfortunately, sometimes momentary~\enquote{self-explanatory}
+decisions are in retrospect deceptive, so that some documentation may be
+necessary. But the architecture may also be developed as an initial conceptual
+process, for instance when developing large and complex programs.
 
-\newthought{``An architecture is the \textit{set of significant
-decisions}} about the organization of a software system, the selection of
-\textit{structural elements} and their interfaces by which the system is
-composed, together with their \textit{behavior} as specified in the
+\newthought{But what is software
+architecture?}~\citeauthor{kruchten_rup_2003}~\cite{kruchten_rup_2003} defines
+software architecture as follows:~\enquote{An architecture is the \textit{set of
+significant decisions} about the organization of a software system, the
+selection of \textit{structural elements} and their interfaces by which the
+system is composed, together with their \textit{behavior} as specified in the
 collaborations among those elements, the \textit{composition} of these elements
 into progressively larger subsystems, and the \textit{architectural style} that
 guides this organization -- these elements and their interfaces, their
-collaborations, and their composition.''~\cite{kruchten_rup_2003}
+collaborations, and their composition.}
 
-Or as~\citeauthor{fowler_architect_2003} puts it:~\enquote{Whether something
-is part of the architecture is entirely based on whether the developers think it
-is important. [...] So, this makes it hard to tell people how to describe their
-architecture.~\enquote{Tell us what is important.} Architecture is about the
-important stuff. Whatever that is.}~\cite{fowler_architect_2003}
+Or as~\citeauthor{fowler_architect_2003}~\cite{folwer_architect_2003} puts
+it:~\enquote{Whether something is part of the architecture is entirely based on
+whether the developers think it is important. [...] So, this makes it hard to
+tell people how to describe their architecture.~\enquote{Tell us what is
+important.} Architecture is about the important stuff. Whatever that
+is.}
 
-\newthought{The envisaged idea of this thesis}, using a node based graph for
+\newthought{The idea envisaged for this thesis} of using a node based graph for
 modeling objects and scenes and rendering them using sphere tracing, was
-developed ahead of this thesis. To ensure that this idea is really feasible, a
-prototype was developed during the former project
-work~\citetitle{osterwalder-volume-2016}. This prototype acted as a proof of
-concept. For this prototype an implicitly defined architecture was used, which
-led to an architecture which is hard to maintain and extend by providing no
-clear segregation between the data model and its representation.
+developed in advance of this thesis. To ensure that this technical
+implementation was really feasible, a prototype was developed during the
+previous project
+work~\enquote{\citetitle{osterwalder-volume-2016}}~\cite{osterwalder-volume-2016}.
 
-\newthought{With the previous project work},~\citetitle{osterwalder-qde-2016}, a
-software architecture was developed to prevent this circumstance. The software
-architecture is based on the unified process, what leads to an iterative
-approach.
+\newthought{The architecture of this prototype} had however evolved implicitly,
+and showed itself as hard to maintain and extend by providing no clear
+segregation between the data model and its representation.
 
-\newthought{Based upon the vision} actors are defined. The actors in turn are
-used in use cases, which define functional requirements for the behavior of a
-system. The definition of use cases shows the extent of the software and define
-its functionality and therefore the requirements. Based on the these
-requirements, the components shown in~\autoref{table:software-components} are
-established.
+\newthought{With the next project
+work},~\enquote{\citetitle{osterwalder-qde-2016}}, a software architecture was
+developed to prevent the occurrence of such problems. The software architecture
+is based on the rational unified process (RUP)~\cite{kruchten_rup_2003} what
+leads to an iterative approach.
+
+\newthought{Based on the vision} of this thesis and using the methodologies of
+RUP, actors are defined. The actors in turn are participants in use cases that
+define functional requirements for the behavior of a system. The definition of
+use cases shows the limitations of the program and define its functionality and
+therefore the requirements.
+
+\newthought{The components}, shown in~\autoref{table:software-components}
+and~\autoref{fig:editor-components}, are established based on these
+requirements.
 
 \begin{table}[h]
   \begin{tabularx}{\textwidth}{lX}
@@ -712,27 +720,35 @@ established.
     \midrule
     Player & Reads objects and scenes defined by the editor component and plays
     them back in the defined chronological order.\\
-    Editor & Allows \textit{modeling} and \textit{composing} of objects and
-    scenes using a node based graphical user interface. \textit{Renders} objects
+    Editor & Allows modeling and composing of objects and
+    scenes using a node based graphical user interface. Renders objects
     and scenes in real time using sphere tracing. \\
-    \midrule
-    Scene graph & Holds scenes in a tree like structure and has at least a root
-    node.\\
-    Node graph & Contains all nodes which define a single scene.\\
-    Parameter & Holds the parameters of a node from the node graph.\\
-    Rendering & Renders a node.\\
-    Time line & Depicts temporal events in terms of scenes which follow a
-    chronological order.\\
     \bottomrule
   \end{tabularx}
-  \caption{Description of the components of the envisaged software.}
+  \caption{Description of the components of the program implemented.}
   \label{table:software-components}
+\end{table}
+
+\begin{table}[h]
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Sub component} & \textbf{Description} \\
+    Scene tree & Holds scenes in a tree like structure.            \\
+    Node graph & Contains all nodes which define a single scene.   \\
+    Parameter  & Holds the parameters of a node of the node graph. \\
+    Rendering  & Renders a node, presenting it for a viewer.       \\
+    Time line  & Depicts temporal events in terms of scenes which follow a
+    chronological order.                                           \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Description of the sub components of the editor component.}
+  \label{table:editor:sub-components}
 \end{table}
 
 \begin{figure}[ht]
   \caption{%
     A mock up of the editor application showing its components.\newline{}
-    1: Scene graph.\newline{}
+    1: Scene tree.\newline{}
     2: Node graph.\newline{}
     3: Parameter view.\newline{}
     4: Rendering view.\newline{}
@@ -742,14 +758,18 @@ established.
   \includegraphics[width=0.95\linewidth]{images/editor-components}
 \end{figure}
 
-\newthought{Identifying the components} helps finding the noteworthy concepts or
-objects. Decomposing a domain into noteworthy concepts or objects
-is~\enquote{the quintessential object-oriented analysis
+\newthought{Identifying the components} helps finding the important conceptual items.
+Decomposing a domain into noteworthy concepts is~\enquote{the quintessential object-oriented analysis
 step}~\cite{larman-applying-2004}.~\enquote{The domain model is a visual
 representation of conceptual classes or real-situation objects in a
-domain.}~\cite{larman-applying-2004} The domain models for the editor and the
-player component are shown in~\autoref{fig:editor-domain-model} and
-in~\autoref{fig:player-domain-model} respectively.
+domain.}~\cite{larman-applying-2004}
+
+\newthought{The editor and player components} are shown
+in~\autoref{fig:editor-domain-model} and in~\autoref{fig:player-domain-model}
+respectively in the form of a domain model. Each domain model is composed of
+components which build the sub components of the parent component, in this case
+the editor and player. These sub components represent the objects of the
+respective domain.
 
 \begin{figure*}[h]
   \caption{Domain model of the editor component.}
@@ -767,42 +787,52 @@ in~\autoref{fig:player-domain-model} respectively.
 % domain model is too small to be read. --> Bigger, scaled and rotated. One
 % figure per page.
 
-\newthought{Identifying the noteworthy concepts or objects} allows the
-definition of the logical architecture, which shows the overall image of
-(software) classes in form of packets, subsystems and layers.
+\newthought{Identifying the important concepts} allows the
+definition of the logical architecture and shows the overall image of
+(software) classes in form of packets, subsystems and layers. For a detailed
+definition of these items the reader is referred to the previous project
+work~\cite[pp. 37 ff.]{osterwalder-volume-2016}.
 
-\newthought{To reduce coupling and dependencies} a relaxed layered architecture
-is used. In contrast to a strict layered architecture, which allows any layer
-calling only services or interfaces from the layer below, the relaxed layered
-architecture allows higher layers to communicate with any lower layer. To ensure
-low coupling and dependencies also for the graphical user interface, the models
-and their views are segregated using the model-view separation principle. This
-principle states that domain objects should have no direct knowledge about
-objects of the graphical user interface. In addition controllers are used, which
-represent workflow objects of the application layer.
+\newthought{To reduce dependencies and the coupling} of components
+a~\enquote{relaxed layered} architecture is used. In contrast to a strict
+layered architecture, which allows any layer to call services or interfaces only
+from the layer below, a relaxed layered architecture allows higher layers to
+communicate with any lower layer. The architecture defines five layers, as shown
+in~\autoref{table:layers}.
+
+\newthought{To ensure low coupling and dependencies} also for the graphical user
+interface, the models and their views are segregated using the principle of
+model-view separation which states that domain objects, which are data models,
+should have no direct knowledge about their corresponding objects of the
+graphical user interface.
+
+\newthought{Workflow objects} control the user interaction with the visual
+objects by keeping track of the data models. Such~\textit{controllers} support the
+model-view separation principle and exist in the application layer.
 
 \begin{table}[h]
-  \caption{Layers of the envisaged software.}
+  \caption{Layers as envisaged during the conceptual phase and as used for
+    program implemented.}
   \label{table:layers}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Layer} & \textbf{Description}\\
     \midrule
-    UI & All elements of the graphical user interface.\\
-    Application & Controller/workflow objects.\\
-    Domain & Models respectively logic of the application.\\
-    Technical services & Technical infrastructure, such as graphics, window
-    creation and so on.\\
-    Foundation & Basic elements and low level services, such as a timer, arrays
-    or other data classes.\\
+    UI                 & All elements of the graphical user interface.                                       \\
+    Application        & Controllers (workflow objects).                                                     \\
+    Domain             & Data models according to the logic of the application.                              \\
+    Technical services & Technical infrastructure, such as graphics, window creation and so on.              \\
+    Foundation         & Basic elements and low level services, such as timer, arrays or other data classes. \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\newthought{Class diagrams provide a software point of view} whereas domain
-models provide rather a conceptual point of view. A class diagram shows classes,
+\newthought{Class diagrams are used to provide a software point of view},
+whereas domain models provide rather a conceptual point of view. A class
+diagram~\footnote{The concepts of RUP and OOP are as used in the previous
+project (QDE) and therefore will not be detailed here.} shows classes,
 interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
-class diagram of the editor component whereas~\autoref{fig:player-class-diagram}
+class diagram of the editor component and~\autoref{fig:player-class-diagram}
 shows the class diagram for the player component.
 
 \begin{figure*}[ht]
@@ -824,49 +854,51 @@ shows the class diagram for the player component.
 \section{Rendering}
 \label{sec:rendering}
 
-\newthought{This~\autoref{sec:rendering}} is a summary of a previous project
+\newthought{This~\autoref{sec:rendering}} is a summary of the previous project
 work of the author,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}. It describes the fundamentals for
-the rendering algorithm that is used for the intended software of this thesis.
+the rendering algorithm that is used for the program implemented in this thesis.
 
-\newthought{Rendering} is one of the main aspects of this thesis, as the main
-objective of the thesis is the design and development of a software for
-modeling, composing and \textit{rendering} real time computer graphics through a
-graphical user interface. \citeauthor{foley_computer_1996} describes rendering
+\newthought{Rendering} is the second main aspect of this thesis, as the
+objective is the design and development of a program for modeling, composing and
+\textit{rendering} real time computer graphics by providing a graphical toolbox.
+
+\newthought{\citeauthor{foley_computer_1996} describes rendering}
 as a~\enquote{process of creating images from
 models}~\cite{foley_computer_1996}. The basic idea of rendering is to determine
-the color of a surface at a certain point. For this task two concepts have
+the color of a surface at each point. For this task two concepts have
 evolved: \textit{illumination models} and \textit{shading models}.
-\newthought{Shading models} define when to use which illumination model and the
-parameters for the illumination model.
 
 \newthought{Illumination models} describe the amount of light that is
 transmitted from a point on a surface to a viewer. There exist two kinds of
 illumination models: local illumination models and global illumination models.
 Whereas local illumination models aggregate local data from adjacent surfaces
-and directly incoming light, global illumination models consider also indirect
-light. The algorithm used for rendering in the intended software is an
-algorithm using a \textit{global illumination model}.
+and directly incoming light from light sources, global illumination models
+consider also indirect light from reflections and refractions. The algorithm
+used for rendering in the implemented program uses a \textit{global illumination
+model}.
+
+\newthought{Shading models} define when and how to use which illumination model.
 
 \newthought{Global illumination models}~\enquote{express the light being
 transferred from one point to another in terms of the intensity of the light
-emitted from the first point to the second}~\cite[pp. 775 and
-776]{foley_computer_1996}. Additionally to this direct intensity the indirect
-intensity is considered, therefore ~\enquote{the intensity of light emitted from
-all other points that reaches the first and is reflected from the first to the
-second}~\cite[pp. 775 and 776]{foley_computer_1996} point is added.
+emitted}~\cite[pp. 775 and 776]{foley_computer_1996}. Additionally to this
+direct intensity, the indirect intensity is considered, meaning~\enquote{the
+intensity of light emitted from all other points that reaches the first and is
+reflected from the first to the second}~\cite[pp. 775 and
+776]{foley_computer_1996} point is added.
 
 \newpage{}
 
-\newthought{In 1986 James~\enquote{Jim}~Kajiya} set up the so called rendering
-equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
+\newthought{In 1986 James Kajiya} set up the so called rendering equation, which
+expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 776]{foley_computer_1996}
 
 \begin{figure}
   \label{eq:rendering-equation}
   \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
   \begin{equation}
-    I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
+    I(x, x') = g(x, x')\left[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx''\right]
   \end{equation}
 \end{figure}
 
@@ -874,21 +906,22 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
   \begin{description}
     \item[$x, x' \text{and } x''$] Points in space.
     \item[$I(x, x')$] Intensity of the light going from point $x'$ to point $x$.
-    \item[$g(x, x')$] A geometrical term.
-      \begin{description}
-        \item[$0$] $x$ and $x'$ are occluded by each other.
-        \item[$\frac{1}{r^2}$] $x$ and $x'$ are visible to one other, $r$ being
-          the distance between the two points.
-      \end{description}
+    \item[$g(x, x')$] A geometrical scaling factor:
+      \begin{itemize}
+        \item[--] $0$ if $x$ or $x'$ are occluded by each other.
+        \item[--] $\frac{1}{r^2}$ if $x$ and $x'$ are visible to one other, $r$ being
+          the distance them.
+      \end{itemize}
     \item[$\varepsilon(x, x')$] Intensity of the light being emitted from point
       $x'$ to point $x$.
     \item[$\rho(x, x', x'')$] Intensity of the light going from $x''$ to $x$, being
-      scattered on the surface of point $x'$.
+      scattered on the surface near point $x'$.
     \item[$\int\limits_{S}$] Integral over the union of all surfaces, hence $S =
       \bigcup\limits_{i=0}^{n} S_{i}$, $n$ being the number of surfaces.
       All points $x$, $x'$ and $x''$ brush all surfaces of all objects within
-      the scene. $S_{0}$ being an additional surface in form of a hemisphere
-      which spans the whole scene and acts as background.
+      the scene. Where $S_{i}$ is the surface of object $i$, and so $S_{0}$
+      being an additional surface in form of a hemisphere which spans the whole
+      scene and acts as background.
   \end{description}
 }
 
@@ -926,24 +959,26 @@ equation, which expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 % \end{table}
 
 \newthought{Implementing a global illumination model} or the rendering equation
-directly for rendering images in viable or even real time is not really
-feasible, even on modern hardware. The procedure is computationally complex and
-very time demanding.
+directly for rendering images in viable (computational feasible in a workflow
+for instance for the production of animated films) or even real time is not
+really feasible, even on the fastest modern hardware (2017). The procedure is
+computationally complex and very time demanding.
 
-\newthought{A simplified approach} to implement global illumination models (or
+\newthought{A simplified approach} to implement global illumination models (and
 the rendering equation) is ray tracing. Ray tracing is able to produce high
 quality, realistic looking images. Although it is still demanding in terms of
-time and computations, the time complexity is reasonable for producing still
-images. For producing images in real time however, the procedure is still too
+time and computations, the time complexity is viable for producing still
+images. For producing images in real time however, the algorithm is still too
 demanding. This is where a special form of ray tracing comes in.
 
 \newthought{Sphere tracing} is a ray tracing approach for implicit surfaces
 introduced in~\citeyear{hart_sphere_1994} by~\citeauthor{hart_sphere_1994} in
 his work~\citetitle{hart_sphere_1994}~\cite{hart_sphere_1994}. 
-Sphere tracing is faster than the classical ray tracing approaches in finding
+Sphere tracing is faster than the classical ray tracing approaches in its method
+of finding
 intersections between rays and objects. In contrast to the classical ray tracing
-approaches, the marching distance on rays is not defined by an absolute or a
-relative distance, instead distance functions are used. The distance functions
+approaches, the~\enquote{marching distance} of rays is not defined by an absolute or a
+relative distance, but instead, distance functions are used. The distance functions
 are used to expand unbounding volumes (in this concrete case spheres, hence the
 name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
@@ -952,9 +987,9 @@ name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
     \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
     \caption{Illustration of the sphere tracing
       algorithm.
-      Ray~\textit{e} hits no objects until reaching the horizon at
-      $d_{max}$. Rays~\textit{f},~\textit{g} and~\textit{h} hit
-      polygon~\textit{poly1}.}
+      Ray~\textit{e} hits no objects until reaching the horizon.
+      Rays~\textit{f},~\textit{g} and~\textit{h} hit
+      the solid~\textit{poly1}.}
       \label{fig:sphere-tracing-1}
 \end{figure}
 
@@ -1794,10 +1829,10 @@ for understanding the following results of this thesis.
 % do and why it is important. In this chapter I will examine.. I will present… I
 % will report … This is crucial in (aim of thesis/research question) in order to….
 \newthought{This chapter} presents the achieved results by means of three
-sections. The first section shows the software architecture, that was developed
-and that is used for the developed software. Aspects of the developed literate
+sections. The first section shows the software architecture that was developed
+and that is used for the program implemented. Aspects of the developed literate
 program are shown in the second section. The main concepts and the components of
-the developed software are shown in the third section.
+the implemented program are shown in the third section.
 
 % Overview: How is it done?
 % The third paragraph simply outlines the way that you are going to achieve the
@@ -2102,13 +2137,40 @@ appendix~\todo{Insert reference to appendix here.} and by outsourcing similar
 and very technical parts and output file definitions into a separate
 file.~\todo{Insert reference to code fragments here.}
 
-\section{Software}
-\label{results:sec:software}
+\section{Program}
+\label{results:sec:program}
 
 \newthought{Using the introduced methodologies}
 (see~\ref{chap:methodologies}) and the developed software architecture
-(see~\ref{results:sec:software-architecture}) the intended software was
-developed.
+(see~\ref{results:sec:software-architecture}) the intended program was
+implemented.
+
+\newthought{The software implemented} is supposed to have two main components:
+the editor and player. Due to time-related reasons however, only the editor
+component was implemented.
+
+\newthought{Subsequent each component of the editor} is shown. This is done by
+showing an adapted component diagram~\cite[pp. 653 -- 654]{larman-applying-2004}
+and an entity relationship diagram~\cite[pp. 501 ff.]{larman-applying-2004}, if
+appropriate, followed by a description of the component. The component diagrams
+is used to show the signals a component emits and receives. The entity
+relationship diagram is used to show the relationships between components.
+
+\subsection{Scene tree}
+\label{results:subsec:program:scene-tree}
+
+\begin{figure*}[ht]
+  \caption{Component diagram of the scene tree component.}
+  \label{fig:scene-graph-component-diagram}
+  \includegraphics[width=0.95\linewidth]{images/scene-graph-component-diagram}
+\end{figure*}
+
+\begin{figure}[ht]
+  \caption{Entity relationship diagram of the scene tree component.}
+  \label{fig:scene-graph-erd}
+  \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
+\end{figure}
+
 % * Software
 % ** Editor
 % ** Player
@@ -2403,7 +2465,7 @@ if __name__ == "__main__":
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb144}{144}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156a}{156a}.
 
 \item{}
 \end{list}
@@ -2453,17 +2515,17 @@ signals.\cite[pp. 37 --- 38]{osterwalder-qde-2016}
 \NWtarget{nuweb?}{} $\langle\,${\itshape Main application declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-  |\normalfont{}\fontfamily{}|common.with_logger
-  class Application(QtWidgets.QApplication):
-      """Main application for QDE."""
+|\normalfont{}\fontfamily{}|common.with_logger
+class Application(QtWidgets.QApplication):
+    """Main application for QDE."""
 
-      |\hbox{$\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-      |\hbox{$\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}||\NWsep|
+    |\hbox{$\langle\,${\itshape Main application constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Main application methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}||\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb146}{146}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
 
 \item{}
 \end{list}
@@ -2584,7 +2646,7 @@ class MainWindow(QtWidgets.QMainWindow):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb149}{149}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -2901,7 +2963,7 @@ class SceneModel(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb151a}{151a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157b}{157b}.
 
 \item{}
 \end{list}
@@ -2989,7 +3051,7 @@ class SceneGraphViewModel(Qt.QObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb151b}{151b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb158a}{158a}.
 
 \item{}
 \end{list}
@@ -3098,7 +3160,7 @@ class SceneGraphController(QtCore.QAbstractItemModel):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb152b}{152b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
 
 \item{}
 \end{list}
@@ -3178,10 +3240,10 @@ def add_root_node(self):
         self.layoutChanged.emit()
         self.logger.debug("Added root node")
     else:
-    self.logger.warn((
-        "Not (re-) adding root node, already"
-        "present!"
-    ))
+        self.logger.warn((
+            "Not (re-) adding root node, already"
+            "present!"
+        ))
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
@@ -3304,7 +3366,7 @@ model for a given row and column below a parent item.
 \vspace{-1ex}
 \begin{pythoncode}
 def index(self, row, column, parent=QtCore.QModelIndex()):
-"""Return the index of the item in the model specified by the
+    """Return the index of the item in the model specified by the
     given row, column and parent index.
 
     :param row: The row for which the index shall be returned.
@@ -3719,7 +3781,7 @@ def node_count(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb151c}{, 151c}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb158b}{, 158b}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -3785,7 +3847,7 @@ Therefore~\verb=QTreeView= is used as basis for the scene graph view.
 \NWtarget{nuweb?}{} $\langle\,${\itshape Scene graph view declarations}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-|\hbox{$\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize \NWlink{nuweb155b}{155b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize \NWlink{nuweb161b}{161b}}$\,\rangle$}|
 class SceneGraphView(QtWidgets.QTreeView):
     """The scene graph view widget.
     A widget for displaying and managing the scene graph.
@@ -3800,7 +3862,7 @@ class SceneGraphView(QtWidgets.QTreeView):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb153}{153}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb159b}{159b}.
 
 \item{}
 \end{list}
@@ -4404,7 +4466,7 @@ self.main_window.scene_graph_view.do_select_item.connect(
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb155d}{, 155d}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -4610,10 +4672,10 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
-\NWtarget{nuweb91a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {91a}}$\,\rangle\equiv$
+\NWtarget{nuweb93a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {93a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-      logger_name = "{module_name}.{class_name}".format(
+logger_name = "{module_name}.{class_name}".format(
     module_name=cls.__module__,
     class_name=cls.__name__
 )|\NWsep|
@@ -4621,7 +4683,7 @@ named~\verb=with_logger=. The method has the following functionality.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb155a}{155a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -4630,17 +4692,17 @@ named~\verb=with_logger=. The method has the following functionality.
 \item Provide an easy to use interface for logging.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
-\NWtarget{nuweb91b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {91b}}$\,\rangle\equiv$
+\NWtarget{nuweb93b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {93b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-      cls.logger = logging.getLogger(logger_name)
+cls.logger = logging.getLogger(logger_name)
 
 return cls|\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb155a}{155a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
 
 \item{}
 \end{list}
@@ -5028,7 +5090,7 @@ class NodeType(enum.Enum):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156a}{156a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162a}{162a}.
 
 \item{}
 \end{list}
@@ -5075,8 +5137,8 @@ class AtomicType(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -5139,8 +5201,8 @@ class AtomicTypes(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -5174,7 +5236,7 @@ class NodeModel(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -5266,7 +5328,7 @@ class NodeViewModel(Qt.QGraphicsObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161b}{161b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167b}{167b}.
 
 \item{}
 \end{list}
@@ -5305,7 +5367,7 @@ def __init__(self, id_, domain_object, parent=None):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb168a}{, 168a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5342,7 +5404,7 @@ def type_(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5368,7 +5430,7 @@ def name(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5447,7 +5509,7 @@ def paint(self, painter, option, widget):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5478,7 +5540,7 @@ node.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb168a}{, 168a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5514,7 +5576,7 @@ def create_cache_key(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5585,7 +5647,7 @@ def status(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5724,7 +5786,7 @@ class SceneView(Qt.QGraphicsView):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb153}{153}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb159b}{159b}.
 
 \item{}
 \end{list}
@@ -5799,7 +5861,7 @@ self.scene_view.setBackgroundBrush(brush)
 self.scene_view.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
 self.scene_view.setDragMode(QtWidgets.QGraphicsView.RubberBandDrag)
 self.scene_view.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
-self.scene_view.setOptimizationFlags(QtWidgets.QGraphicsView.DontAdjustForAntialiag)
+self.scene_view.setOptimizationFlags(QtWidgets.QGraphicsView.DontAdjustForAntialiasing)
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
@@ -5941,7 +6003,7 @@ class SceneController(Qt.QObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb152b}{152b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
 
 \item{}
 \end{list}
@@ -6006,7 +6068,7 @@ class SceneViewModel(Qt.QGraphicsScene):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb151b}{151b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb158a}{158a}.
 
 \item{}
 \end{list}
@@ -6097,7 +6159,7 @@ def drawBackground(self, painter, rect):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb152a}{, 152a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb158c}{, 158c}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6364,7 +6426,7 @@ self.scene_controller.do_change_scene.connect(
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb155d}{, 155d}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -6425,7 +6487,7 @@ at~\autoref{appendix:chap:editor}, a node defining a sphere is implemented.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb164a}{164a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb170a}{170a}.
 
 \item{}
 \end{list}
@@ -6710,7 +6772,7 @@ class NodeController(QtCore.QObject):
     ROOT_NODE_OUTPUT_ID = uuid.UUID("a8fadcfc-4e19-4862-90cf-a262eef2219b")
 
     # Signals
-    |\hbox{$\langle\,${\itshape Node controller signals}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Node controller signals}\nobreak\ {\footnotesize \NWlink{nuweb146}{146}}$\,\rangle$}|
 
     |\hbox{$\langle\,${\itshape Node controller constructor}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
     |\hbox{$\langle\,${\itshape Node controller methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
@@ -6721,7 +6783,7 @@ class NodeController(QtCore.QObject):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb164b}{164b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb170b}{170b}.
 
 \item{}
 \end{list}
@@ -6831,7 +6893,7 @@ class NodeDefinitionPart(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -6946,7 +7008,7 @@ def create_value_function(value):
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
 \item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -7123,7 +7185,7 @@ class NodePart(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -7242,7 +7304,7 @@ class StateChange(enum.Enum):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156a}{156a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162a}{162a}.
 
 \item{}
 \end{list}
@@ -7318,7 +7380,7 @@ class NodeDefinition(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -7677,8 +7739,8 @@ def load_node_definition(cls, node_controller, json_file_handle):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
@@ -7751,8 +7813,8 @@ def build_node_definition_input(cls, node_controller, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
@@ -7878,7 +7940,7 @@ def create_value(type_, value_string):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -7925,7 +7987,7 @@ class ValueInterface(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -7961,7 +8023,7 @@ class Value(ValueInterface):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -8010,7 +8072,7 @@ class FloatValue(Value):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -8049,7 +8111,7 @@ class SceneValue(ValueInterface):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
@@ -8082,7 +8144,7 @@ class NodeDefinitionInput(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -8165,7 +8227,7 @@ def create_default_value_function(value):
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
 \item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -8224,8 +8286,8 @@ def build_node_definition_output(cls, node_controller, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
@@ -8260,7 +8322,7 @@ class NodeDefinitionOutput(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
@@ -8348,8 +8410,8 @@ def build_node_definition(cls, node_controller, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
@@ -8649,8 +8711,8 @@ def build_node_definition_part(cls, node_controller, parent, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
@@ -8743,7 +8805,7 @@ class AddNodeDialog(QtWidgets.QDialog):
 
     |\hbox{$\langle\,${\itshape Add node dialog column declaration}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 
-   def __init__(self, parent=None):
+    def __init__(self, parent=None):
         """Constructor.
 
         :param parent: the parent of this dialog.
@@ -8761,19 +8823,19 @@ class AddNodeDialog(QtWidgets.QDialog):
 
         layout = QtWidgets.QHBoxLayout(self)
         # layout.setContentsMargins(0, 0, 0, 0)
-        # layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
+        ()# layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
         self.setLayout(layout)
 
-    |\hbox{$\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize \NWlink{nuweb153a}{153a}}$\,\rangle$}|
 
     # Slots
-    |\hbox{$\langle\,${\itshape Add node dialog slots}\nobreak\ {\footnotesize ?}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Add node dialog slots}\nobreak\ {\footnotesize \NWlink{nuweb148a}{148a}}$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb169b}{169b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb175b}{175b}.
 
 \item{}
 \end{list}
@@ -8930,201 +8992,375 @@ def event(self, event):
 % new node definition. The signal itself is emitting a view model of the read
 % node definition.
 % 
-% ATd Node controller signals
-% AT{do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)AT}
-% 
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap152}\raggedright\small
+\NWtarget{nuweb146}{} $\langle\,${\itshape Node controller signals}\nobreak\ {\footnotesize {146}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % Now other components may listen and receive view models of newly added node
 % definitions. In this specific case it is is the dialog for adding a node which
 % needs to listen to the added signal. The listening is done by the slot
 %~\verb=on_node_definition_added=.
-% 
-% ATd Add node dialog slots
-% AT{
-% ATATQtCore.pyqtSlot(node_view_model.NodeViewModel)
-% def on_node_definition_added(self, node_view_model):
-%     """Slot which is called whenever a new node definition is being added.
-% 
-%     :param node_view_model: The newly added node definition.
-%     :type  node_view_model: qde.editor.gui_domain.node.NodeDefinitionViewModel
-%     """
-% 
-%     self.logger.debug("Got new node definition: %s", node_view_model)
-% 
-%     node_name = node_view_model.domain_object.name
-%     type_name = node_view_model.domain_object.type_.name
-%     AT<On node definition added implementationAT>AT}
-% 
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap153}\raggedright\small
+\NWtarget{nuweb148a}{} $\langle\,${\itshape Add node dialog slots}\nobreak\ {\footnotesize {148a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\normalfont{}\fontfamily{}|QtCore.pyqtSlot(node_view_model.NodeViewModel)
+def on_node_definition_added(self, node_view_model):
+    """Slot which is called whenever a new node definition is being added.
+
+    :param node_view_model: The newly added node definition.
+    :type  node_view_model: qde.editor.gui_domain.node.NodeDefinitionViewModel
+    """
+
+    self.logger.debug("Got new node definition: %s", node_view_model)
+
+    node_name = node_view_model.domain_object.name
+    type_name = node_view_model.domain_object.type_.name
+    |\hbox{$\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize \NWlink{nuweb148b}{148b}}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % As the idea of the dialog is to have one column per node type, the column needs
 % to be fetched first, based on the type name of the given node definition.
-% 
+%
 % Then a sub frame is created which holds a representation of the node
 % definition. This representation is rendered like an actual instance of a
 % node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
 % meaning it can be clicked. Clicking on a representation of a node definition
 % adds an instance of the clicked node definition to the currently active scene
 % at the cursor position where the dialog for adding a node was opened.
-% 
-% ATd On node definition added implementation
-% AT{
-% AT<Check if the node definition is already knownAT>
-% AT<Get or create column by type nameAT>
-% AT<Create sub frame for given node definitionAT>
-% AT<Create button for given node definition and add to sub frameAT>
-% AT<Add sub frame to columnAT>
-% AT<Save the node definition to list of known nodesAT>AT}
-% 
+
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap154}\raggedright\small
+\NWtarget{nuweb148b}{} $\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize {148b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+|\hbox{$\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize \NWlink{nuweb151a}{151a}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize \NWlink{nuweb151b}{151b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize \NWlink{nuweb154b}{154b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize \NWlink{nuweb154c}{154c}, \ldots\ }$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize \NWlink{nuweb155b}{155b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize \NWlink{nuweb155c}{155c}}$\,\rangle$}||\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148a}{148a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % It might happen, that the node definition is already present. If this is the case
 % the process will be stopped.
-% 
-% ATd Check if the node definition is already known
-% AT{
-% if node_view_model.id_ not in self.node_definitions:
-% AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap155}\raggedright\small
+\NWtarget{nuweb151a}{} $\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize {151a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+if node_view_model.id_ not in self.node_definitions:
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % Getting or creating the column is about calling the corresponding method, as
 % the task is abstracted into a method to maintain readbility.
-% 
-% ATd Get or create column by type name
-% AT{
-%     column = self.get_or_create_column_by_name(type_name)AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap156}\raggedright\small
+\NWtarget{nuweb151b}{} $\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize {151b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    column = self.get_or_create_column_by_name(type_name)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % The~\verb=get_or_create_column_by_name= tries to get a column by the given name
 % and if no column by that name exists, it creates a new column using the given
 % name.
-% 
-% ATd Add node dialog methods
-% AT{
-% def get_or_create_column_by_name(self, column_name):
-%     """Gets the column for the given column name.
-%     If there is no column for the given column name available, a new column
-%     using the given column name is created.
-% 
-%     :param column_name: the name of the column to get or create.
-%     :type  column_name: str
-% 
-%     :return: the column for the given column name.
-%     :rtype:  AddNodeDialog.Column
-%     """
-% 
-%     AT<Get existing column object by nameAT>
-%     AT<Create new column object based on nameAT>
-% 
-%     return columnAT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap157}\raggedright\small
+\NWtarget{nuweb153a}{} $\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize {153a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+def get_or_create_column_by_name(self, column_name):
+    """Gets the column for the given column name.
+    If there is no column for the given column name available, a new column
+    using the given column name is created.
+
+    :param column_name: the name of the column to get or create.
+    :type  column_name: str
+
+    :return: the column for the given column name.
+    :rtype:  AddNodeDialog.Column
+    """
+
+    |\hbox{$\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize \NWlink{nuweb153b}{153b}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize \NWlink{nuweb154a}{154a}}$\,\rangle$}|
+
+    return column|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % Therefore, if a column by the given name already exists, the reference to the
 % found column is returned.
-% 
-% ATd Get existing column object by name
-% AT{
-% if column_name in self.columns:
-%     column = self.columns[column_name]AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap158}\raggedright\small
+\NWtarget{nuweb153b}{} $\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize {153b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+if column_name in self.columns:
+    column = self.columns[column_name]|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb153a}{153a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % If no column by the given name exists, a new column using the given name is
 % being created.
-% 
-% ATd Create new column object based on name
-% AT{
-% else:
-%     frame = QtWidgets.QFrame(self)
-%     self.layout().addWidget(frame)
-%     frame.setContentsMargins(0, 0, 0, 0)
-% 
-%     row = QtWidgets.QVBoxLayout(frame)
-%     row.setContentsMargins(0, 0, 0, 0)
-% 
-%     caption = "<h2>{0}</h2>".format(column_name)
-%     label = QtWidgets.QLabel(caption, frame)
-%     label.setContentsMargins(4, 2, 4, 2)
-%     label_font = QtGui.QFont()
-%     label_font.setFamily(label_font.defaultFamily())
-%     label_font.setBold(True)
-%     label_font.setUnderline(True)
-%     label.setFont(label_font)
-% 
-%     row.addWidget(label)
-%     row.addStretch(1)
-% 
-%     column = AddNodeDialog.Column()
-%     column.frame = frame
-%     column.label = column_name
-%     column.v_box_layout = row
-%     self.columns[column_name] = columnAT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap159}\raggedright\small
+\NWtarget{nuweb154a}{} $\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize {154a}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+else:
+    frame = QtWidgets.QFrame(self)
+    self.layout().addWidget(frame)
+    frame.setContentsMargins(0, 0, 0, 0)
+
+    row = QtWidgets.QVBoxLayout(frame)
+    row.setContentsMargins(0, 0, 0, 0)
+
+    caption = "<h2>{0}</h2>".format(column_name)
+    label = QtWidgets.QLabel(caption, frame)
+    label.setContentsMargins(4, 2, 4, 2)
+    label_font = QtGui.QFont()
+    label_font.setFamily(label_font.defaultFamily())
+    label_font.setBold(True)
+    label_font.setUnderline(True)
+    label.setFont(label_font)
+
+    row.addWidget(label)
+    row.addStretch(1)
+
+    column = AddNodeDialog.Column()
+    column.frame = frame
+    column.label = column_name
+    column.v_box_layout = row
+    self.columns[column_name] = column|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb153a}{153a}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % For adding the representation of the node definition to a column, the
 % creation of a sub frame is necessary.
-% 
-% ATd Create sub frame for given node definition
-% AT{
-%     sub_frame = QtWidgets.QFrame(column.frame)
-%     sub_frame_column = QtWidgets.QHBoxLayout(sub_frame)
-%     sub_frame_column.setContentsMargins(0, 0, 0, 0)
-%     sub_frame_column.setSpacing(0)AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap160}\raggedright\small
+\NWtarget{nuweb154b}{} $\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize {154b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    sub_frame = QtWidgets.QFrame(column.frame)
+    sub_frame_column = QtWidgets.QHBoxLayout(sub_frame)
+    sub_frame_column.setContentsMargins(0, 0, 0, 0)
+    sub_frame_column.setSpacing(0)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % The node representation is then created and added to the above created sub
 % frame. At this moment the presentation is simply a label.
-% 
-% ATd Create button for given node definition and add to sub frame
-% AT{
-%     button_label = gui_helper.ClickableLabel(node_name, sub_frame)
-%     button_label.setContentsMargins(4, 0, 4, 0)
-%     button_label.setSizePolicy(
-%         Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
-%     )
-%     sub_frame_column.addWidget(button_label)AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap161}\raggedright\small
+\NWtarget{nuweb154c}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {154c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    button_label = gui_helper.ClickableLabel(node_name, sub_frame)
+    button_label.setContentsMargins(4, 0, 4, 0)
+    button_label.setSizePolicy(
+        Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
+    )
+    sub_frame_column.addWidget(button_label)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb154c}{154c}\NWlink{nuweb155a}{, 155a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+%
 % On thing that stands out in the above code fragment, is the clickable label
 % class. This label is nothing other than normal label emitting a signal called
 %~\verb=clicked= when receiving a mouse press event. Details may be found
 % at~\todo{add reference here}.
-% 
+%
 % For being able to react whenever such a label is clicked, it is necessary to
 % handle the~\verb=clicked= signal of the label. Up to now all signals emitted
 % the necessary objects. As the~\verb=clicked= signal is very generic, it does
 % not emit an object. It is nevertheless necessary to emit the chosen node
 % definition.
-% 
-% ATd Create button for given node definition and add to sub frame
-% AT{
-% 
-%     def _add_node_button_clicked(node_view_model):
-%         self.chosen_node_definition = node_view_model
-%         self.accept()
-% 
-%     button_label.clicked.connect(functools.partial(
-%         _add_node_button_clicked, node_view_model
-%     ))AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap162}\raggedright\small
+\NWtarget{nuweb155a}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {155a}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+
+    def _add_node_button_clicked(node_view_model):
+        self.chosen_node_definition = node_view_model
+        self.accept()
+
+    button_label.clicked.connect(functools.partial(
+        _add_node_button_clicked, node_view_model
+    ))|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb154c}{154c}\NWlink{nuweb155a}{, 155a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % Finally the created sub frame is added to the found or created column.
-% 
-% ATd Add sub frame to column
-% AT{
-%     column.v_box_layout.insertWidget(
-%         column.v_box_layout.count() - 1, sub_frame
-%     )
-%     column.sub_frames.append(sub_frame)AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap163}\raggedright\small
+\NWtarget{nuweb155b}{} $\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize {155b}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    column.v_box_layout.insertWidget(
+        column.v_box_layout.count() - 1, sub_frame
+    )
+    column.sub_frames.append(sub_frame)|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % If the node definition is not yet known, it is saved to the list of known node
 % definitions. Otherwise a warning is being shown.
-% 
-% ATd Save the node definition to list of known nodes
-% AT{
-%     self.node_definitions[node_view_model.id_] = node_view_model
-%     self.logger.debug("Added node definition %s", node_view_model)
-%     # TODO: Handle shortcuts
-% 
-% else:
-%     self.logger.warn("Node definition %s is already known", node_view_model)
-% AT}
-% 
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap164}\raggedright\small
+\NWtarget{nuweb155c}{} $\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize {155c}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+    self.node_definitions[node_view_model.id_] = node_view_model
+    self.logger.debug("Added node definition %s", node_view_model)
+    # TODO: Handle shortcuts
+
+else:
+    self.logger.warn("Node definition %s is already known", node_view_model)
+|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroRefIn\ \NWlink{nuweb148b}{148b}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % The above defined slot needs to be triggered as soon as a new node definition
 % is being added. This is done within the main window, by connecting the slot with the
 %~\verb=do_add_node_view_definition= signal.
-% 
-% ATd Connect main window components
-% AT{
-% self.node_controller.do_add_node_view_definition.connect(
-%     self.main_window.scene_view.add_node_dialog.on_node_definition_added
-%     )AT}
+%
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap165}\raggedright\small
+\NWtarget{nuweb155d}{} $\langle\,${\itshape Connect main window components}\nobreak\ {\footnotesize {155d}}$\,\rangle+\equiv$
+\vspace{-1ex}
+\begin{pythoncode}
+self.node_controller.do_add_node_view_definition.connect(
+    self.main_window.scene_view.add_node_dialog.on_node_definition_added
+    )|\NWsep|
+\end{pythoncode}
+\vspace{1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb155d}{, 155d}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 % i inc/appendix/test-cases.w
 % i inc/appendix/minutes.w
 % i inc/appendix/work-log.w
@@ -9135,8 +9371,8 @@ def event(self, event):
 \label{sec:code-fragments}
 
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap152}\raggedright\small
-\NWtarget{nuweb144}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {144}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap166}\raggedright\small
+\NWtarget{nuweb156a}{} \verb@"../src/editor.py"@\nobreak\ {\footnotesize {156a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9162,8 +9398,8 @@ from qde.editor.application import application
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap153}\raggedright\small
-\NWtarget{nuweb146}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {146}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap167}\raggedright\small
+\NWtarget{nuweb156b}{} \verb@"../src/qde/editor/application/application.py"@\nobreak\ {\footnotesize {156b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9200,8 +9436,8 @@ from qde.editor.gui import main_window as qde_main_window
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap154}\raggedright\small
-\NWtarget{nuweb149}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {149}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap168}\raggedright\small
+\NWtarget{nuweb157a}{} \verb@"../src/qde/editor/gui/main_window.py"@\nobreak\ {\footnotesize {157a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9232,8 +9468,8 @@ from qde.editor.gui import scene as guiscene
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap155}\raggedright\small
-\NWtarget{nuweb151a}{} \verb@"../src/qde/editor/domain/scene.py"@\nobreak\ {\footnotesize {151a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap169}\raggedright\small
+\NWtarget{nuweb157b}{} \verb@"../src/qde/editor/domain/scene.py"@\nobreak\ {\footnotesize {157b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9261,8 +9497,8 @@ from PyQt5 import QtCore
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap156}\raggedright\small
-\NWtarget{nuweb151b}{} \verb@"../src/qde/editor/gui_domain/scene.py"@\nobreak\ {\footnotesize {151b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap170}\raggedright\small
+\NWtarget{nuweb158a}{} \verb@"../src/qde/editor/gui_domain/scene.py"@\nobreak\ {\footnotesize {158a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 
@@ -9291,8 +9527,8 @@ from qde.editor.foundation import common
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap157}\raggedright\small
-\NWtarget{nuweb151c}{} $\langle\,${\itshape Scene graph view model methods}\nobreak\ {\footnotesize {151c}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap171}\raggedright\small
+\NWtarget{nuweb158b}{} $\langle\,${\itshape Scene graph view model methods}\nobreak\ {\footnotesize {158b}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 def __str__(self):
@@ -9304,7 +9540,7 @@ def __str__(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb151c}{, 151c}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb158b}{, 158b}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -9312,8 +9548,8 @@ def __str__(self):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap158}\raggedright\small
-\NWtarget{nuweb152a}{} $\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize {152a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap172}\raggedright\small
+\NWtarget{nuweb158c}{} $\langle\,${\itshape Scene view model methods}\nobreak\ {\footnotesize {158c}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 def __str__(self):
@@ -9325,7 +9561,7 @@ def __str__(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb152a}{, 152a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb158c}{, 158c}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -9333,8 +9569,8 @@ def __str__(self):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap159}\raggedright\small
-\NWtarget{nuweb152b}{} \verb@"../src/qde/editor/application/scene.py"@\nobreak\ {\footnotesize {152b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap173}\raggedright\small
+\NWtarget{nuweb159a}{} \verb@"../src/qde/editor/application/scene.py"@\nobreak\ {\footnotesize {159a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9365,8 +9601,8 @@ from qde.editor.gui_domain import scene as guidomain_scene
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap160}\raggedright\small
-\NWtarget{nuweb153}{} \verb@"../src/qde/editor/gui/scene.py"@\nobreak\ {\footnotesize {153}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap174}\raggedright\small
+\NWtarget{nuweb159b}{} \verb@"../src/qde/editor/gui/scene.py"@\nobreak\ {\footnotesize {159b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9399,8 +9635,8 @@ from qde.editor.gui import node
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap161}\raggedright\small
-\NWtarget{nuweb154}{} \verb@"../logging.json"@\nobreak\ {\footnotesize {154}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap175}\raggedright\small
+\NWtarget{nuweb160}{} \verb@"../logging.json"@\nobreak\ {\footnotesize {160}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 {
@@ -9457,8 +9693,8 @@ from qde.editor.gui import node
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap162}\raggedright\small
-\NWtarget{nuweb155a}{} \verb@"../src/qde/editor/foundation/common.py"@\nobreak\ {\footnotesize {155a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap176}\raggedright\small
+\NWtarget{nuweb161a}{} \verb@"../src/qde/editor/foundation/common.py"@\nobreak\ {\footnotesize {161a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -9485,8 +9721,8 @@ def with_logger(cls):
     :rtype:  a class of type cls.
     """
 
-    |\hbox{$\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize \NWlink{nuweb91a}{91a}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize \NWlink{nuweb91b}{91b}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize \NWlink{nuweb93a}{93a}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize \NWlink{nuweb93b}{93b}}$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
@@ -9498,8 +9734,8 @@ def with_logger(cls):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap163}\raggedright\small
-\NWtarget{nuweb155b}{} $\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize {155b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap177}\raggedright\small
+\NWtarget{nuweb161b}{} $\langle\,${\itshape Scene graph view decorators}\nobreak\ {\footnotesize {161b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\normalfont{}\fontfamily{}|common.with_logger
@@ -9515,8 +9751,8 @@ def with_logger(cls):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap164}\raggedright\small
-\NWtarget{nuweb156a}{} \verb@"../src/qde/editor/foundation/type.py"@\nobreak\ {\footnotesize {156a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap178}\raggedright\small
+\NWtarget{nuweb162a}{} \verb@"../src/qde/editor/foundation/type.py"@\nobreak\ {\footnotesize {162a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 # -*- coding: utf-8 -*-
@@ -9541,8 +9777,8 @@ import enum
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap165}\raggedright\small
-\NWtarget{nuweb156b}{} \verb@"../src/qde/editor/domain/parameter.py"@\nobreak\ {\footnotesize {156b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap179}\raggedright\small
+\NWtarget{nuweb162b}{} \verb@"../src/qde/editor/domain/parameter.py"@\nobreak\ {\footnotesize {162b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 # -*- coding: utf-8 -*-
@@ -9559,7 +9795,7 @@ from qde.editor.domain import node
 |\hbox{$\langle\,${\itshape Paramater domain model value generic interface}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Paramater domain model value interface}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Paramater domain model float value}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize \NWlink{nuweb158a}{158a}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize \NWlink{nuweb164a}{164a}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Paramater domain model scene value}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Parameter domain module methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\NWsep|
@@ -9573,8 +9809,8 @@ from qde.editor.domain import node
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap166}\raggedright\small
-\NWtarget{nuweb157}{} $\langle\,${\itshape Parameter declarations}\nobreak\ {\footnotesize {157}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap180}\raggedright\small
+\NWtarget{nuweb163}{} $\langle\,${\itshape Parameter declarations}\nobreak\ {\footnotesize {163}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     FloatValue = create_node_definition_part.__func__(
@@ -9621,16 +9857,16 @@ from qde.editor.domain import node
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb157}{, 157}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap167}\raggedright\small
-\NWtarget{nuweb158a}{} $\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize {158a}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap181}\raggedright\small
+\NWtarget{nuweb164a}{} $\langle\,${\itshape Paramater domain model text value}\nobreak\ {\footnotesize {164a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class TextValue(Value):
@@ -9658,15 +9894,15 @@ class TextValue(Value):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb156b}{156b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162b}{162b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap168}\raggedright\small
-\NWtarget{nuweb158b}{} $\langle\,${\itshape Paramater domain model image value}\nobreak\ {\footnotesize {158b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap182}\raggedright\small
+\NWtarget{nuweb164b}{} $\langle\,${\itshape Paramater domain model image value}\nobreak\ {\footnotesize {164b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class ImageValue(ValueInterface):
@@ -9697,8 +9933,8 @@ class ImageValue(ValueInterface):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap169}\raggedright\small
-\NWtarget{nuweb159a}{} $\langle\,${\itshape Paramater domain model generic value}\nobreak\ {\footnotesize {159a}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap183}\raggedright\small
+\NWtarget{nuweb165a}{} $\langle\,${\itshape Paramater domain model generic value}\nobreak\ {\footnotesize {165a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class GenericValue(ValueInterface):
@@ -9729,8 +9965,8 @@ class GenericValue(ValueInterface):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap170}\raggedright\small
-\NWtarget{nuweb159b}{} $\langle\,${\itshape Paramater domain model dynamic value}\nobreak\ {\footnotesize {159b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap184}\raggedright\small
+\NWtarget{nuweb165b}{} $\langle\,${\itshape Paramater domain model dynamic value}\nobreak\ {\footnotesize {165b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class DynamicValue(ValueInterface):
@@ -9761,8 +9997,8 @@ class DynamicValue(ValueInterface):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap171}\raggedright\small
-\NWtarget{nuweb160a}{} $\langle\,${\itshape Paramater domain model mesh value}\nobreak\ {\footnotesize {160a}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap185}\raggedright\small
+\NWtarget{nuweb166a}{} $\langle\,${\itshape Paramater domain model mesh value}\nobreak\ {\footnotesize {166a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class MeshValue(ValueInterface):
@@ -9793,8 +10029,8 @@ class MeshValue(ValueInterface):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap172}\raggedright\small
-\NWtarget{nuweb160b}{} $\langle\,${\itshape Paramater domain model implicit value}\nobreak\ {\footnotesize {160b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap186}\raggedright\small
+\NWtarget{nuweb166b}{} $\langle\,${\itshape Paramater domain model implicit value}\nobreak\ {\footnotesize {166b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class ImplicitValue(ValueInterface):
@@ -9825,8 +10061,8 @@ class ImplicitValue(ValueInterface):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap173}\raggedright\small
-\NWtarget{nuweb161a}{} \verb@"../src/qde/editor/domain/node.py"@\nobreak\ {\footnotesize {161a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap187}\raggedright\small
+\NWtarget{nuweb167a}{} \verb@"../src/qde/editor/domain/node.py"@\nobreak\ {\footnotesize {167a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 # -*- coding: utf-8 -*-
@@ -9845,9 +10081,9 @@ from qde.editor.foundation import flag
 |\hbox{$\langle\,${\itshape Node definition part domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Node definition input domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Node definition output domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb166}{166}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb167b}{167b}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb168b}{168b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb172}{172}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb173b}{173b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize \NWlink{nuweb174b}{174b}}$\,\rangle$}|
 |\hbox{$\langle\,${\itshape Node domain module methods}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}, \ldots\ }$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
@@ -9860,8 +10096,8 @@ from qde.editor.foundation import flag
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap174}\raggedright\small
-\NWtarget{nuweb161b}{} \verb@"../src/qde/editor/gui_domain/node.py"@\nobreak\ {\footnotesize {161b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap188}\raggedright\small
+\NWtarget{nuweb167b}{} \verb@"../src/qde/editor/gui_domain/node.py"@\nobreak\ {\footnotesize {167b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 # -*- coding: utf-8 -*-
@@ -9888,8 +10124,8 @@ from qde.editor.foundation import common
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap175}\raggedright\small
-\NWtarget{nuweb162a}{} $\langle\,${\itshape Node view model constructor}\nobreak\ {\footnotesize {162a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap189}\raggedright\small
+\NWtarget{nuweb168a}{} $\langle\,${\itshape Node view model constructor}\nobreak\ {\footnotesize {168a}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     self.setPos(self.position)
@@ -9903,7 +10139,7 @@ from qde.editor.foundation import common
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb162a}{, 162a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb168a}{, 168a}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -9911,8 +10147,8 @@ from qde.editor.foundation import common
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap176}\raggedright\small
-\NWtarget{nuweb162b}{} \verb@"../src/qde/editor/foundation/flag.py"@\nobreak\ {\footnotesize {162b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap190}\raggedright\small
+\NWtarget{nuweb168b}{} \verb@"../src/qde/editor/foundation/flag.py"@\nobreak\ {\footnotesize {168b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 # -*- coding: utf-8 -*-
@@ -9946,8 +10182,8 @@ class NodeStatus(enum.Enum):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap177}\raggedright\small
-\NWtarget{nuweb163}{} $\langle\,${\itshape Node view model methods}\nobreak\ {\footnotesize {163}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap191}\raggedright\small
+\NWtarget{nuweb169}{} $\langle\,${\itshape Node view model methods}\nobreak\ {\footnotesize {169}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 def boundingRect(self):
@@ -10012,7 +10248,7 @@ def create_pixmap(self):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb163}{, 163}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb169}{, 169}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -10020,8 +10256,8 @@ def create_pixmap(self):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap178}\raggedright\small
-\NWtarget{nuweb164a}{} \verb@"../nodes/16d90b34-a728-4caa-b07d-a3244ecc87e3.node"@\nobreak\ {\footnotesize {164a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap192}\raggedright\small
+\NWtarget{nuweb170a}{} \verb@"../nodes/16d90b34-a728-4caa-b07d-a3244ecc87e3.node"@\nobreak\ {\footnotesize {170a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\hbox{$\langle\,${\itshape Implicit sphere node}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}||\NWsep|
@@ -10035,8 +10271,8 @@ def create_pixmap(self):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap179}\raggedright\small
-\NWtarget{nuweb164b}{} \verb@"../src/qde/editor/application/node.py"@\nobreak\ {\footnotesize {164b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap193}\raggedright\small
+\NWtarget{nuweb170b}{} \verb@"../src/qde/editor/application/node.py"@\nobreak\ {\footnotesize {170b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -10074,8 +10310,8 @@ from qde.editor.gui_domain import node as node_view_model
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap180}\raggedright\small
-\NWtarget{nuweb165a}{} \verb@"../src/qde/editor/technical/json.py"@\nobreak\ {\footnotesize {165a}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap194}\raggedright\small
+\NWtarget{nuweb171a}{} \verb@"../src/qde/editor/technical/json.py"@\nobreak\ {\footnotesize {171a}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -10095,7 +10331,7 @@ from qde.editor.domain import node
 from qde.editor.domain import parameter
 
 
-|\hbox{$\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize \NWlink{nuweb165b}{165b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize \NWlink{nuweb171b}{171b}}$\,\rangle$}|
 |\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
@@ -10107,8 +10343,8 @@ from qde.editor.domain import parameter
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap181}\raggedright\small
-\NWtarget{nuweb165b}{} $\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize {165b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap195}\raggedright\small
+\NWtarget{nuweb171b}{} $\langle\,${\itshape JSON module declarations}\nobreak\ {\footnotesize {171b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\normalfont{}\fontfamily{}|common.with_logger
@@ -10122,15 +10358,15 @@ class Json(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165a}{165a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171a}{171a}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap182}\raggedright\small
-\NWtarget{nuweb166}{} $\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize {166}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap196}\raggedright\small
+\NWtarget{nuweb172}{} $\langle\,${\itshape Node definition connection domain model declarations}\nobreak\ {\footnotesize {172}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class NodeDefinitionConnection(object):
@@ -10162,15 +10398,15 @@ class NodeDefinitionConnection(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap183}\raggedright\small
-\NWtarget{nuweb167a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {167a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap197}\raggedright\small
+\NWtarget{nuweb173a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {173a}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\normalfont{}\fontfamily{}|classmethod
@@ -10204,16 +10440,16 @@ def build_node_definition_connection(cls, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap184}\raggedright\small
-\NWtarget{nuweb167b}{} $\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize {167b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap198}\raggedright\small
+\NWtarget{nuweb173b}{} $\langle\,${\itshape Node definition definition domain model declarations}\nobreak\ {\footnotesize {173b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class NodeDefinitionDefinition(object):
@@ -10234,15 +10470,15 @@ class NodeDefinitionDefinition(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap185}\raggedright\small
-\NWtarget{nuweb168a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {168a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap199}\raggedright\small
+\NWtarget{nuweb174a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {174a}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\normalfont{}\fontfamily{}|classmethod
@@ -10272,16 +10508,16 @@ def build_node_definition_definition(cls, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap186}\raggedright\small
-\NWtarget{nuweb168b}{} $\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize {168b}}$\,\rangle\equiv$
+\begin{minipage}{\linewidth}\label{scrap200}\raggedright\small
+\NWtarget{nuweb174b}{} $\langle\,${\itshape Node definition invocation domain model declarations}\nobreak\ {\footnotesize {174b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 class NodeDefinitionInvocation(object):
@@ -10302,15 +10538,15 @@ class NodeDefinitionInvocation(object):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb161a}{161a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb167a}{167a}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap187}\raggedright\small
-\NWtarget{nuweb169a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {169a}}$\,\rangle+\equiv$
+\begin{minipage}{\linewidth}\label{scrap201}\raggedright\small
+\NWtarget{nuweb175a}{} $\langle\,${\itshape JSON methods}\nobreak\ {\footnotesize {175a}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 |\normalfont{}\fontfamily{}|classmethod
@@ -10340,16 +10576,16 @@ def build_node_definition_invocation(cls, json_input):
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167a}{, 167a}\NWlink{nuweb168a}{, 168a}\NWlink{nuweb169a}{, 169a}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb165b}{165b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb?}{, ?}\NWlink{nuweb173a}{, 173a}\NWlink{nuweb174a}{, 174a}\NWlink{nuweb175a}{, 175a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb171b}{171b}.
 
 \item{}
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap188}\raggedright\small
-\NWtarget{nuweb169b}{} \verb@"../src/qde/editor/gui/node.py"@\nobreak\ {\footnotesize {169b}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap202}\raggedright\small
+\NWtarget{nuweb175b}{} \verb@"../src/qde/editor/gui/node.py"@\nobreak\ {\footnotesize {175b}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
@@ -10382,8 +10618,8 @@ from qde.editor.gui_domain import helper as gui_helper
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap189}\raggedright\small
-\NWtarget{nuweb170}{} \verb@"../src/qde/editor/gui_domain/helper.py"@\nobreak\ {\footnotesize {170}}$\equiv$
+\begin{minipage}{\linewidth}\label{scrap203}\raggedright\small
+\NWtarget{nuweb176}{} \verb@"../src/qde/editor/gui_domain/helper.py"@\nobreak\ {\footnotesize {176}}$\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 #!/usr/bin/python
