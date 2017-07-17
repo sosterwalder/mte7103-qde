@@ -27,10 +27,10 @@ for understanding the following results of this thesis.
 % do and why it is important. In this chapter I will examine.. I will present… I
 % will report … This is crucial in (aim of thesis/research question) in order to….
 \newthought{This chapter} presents the achieved results by means of three
-sections. The first section shows the software architecture, that was developed
-and that is used for the developed software. Aspects of the developed literate
+sections. The first section shows the software architecture that was developed
+and that is used for the program implemented. Aspects of the developed literate
 program are shown in the second section. The main concepts and the components of
-the developed software are shown in the third section.
+the implemented program are shown in the third section.
 
 % Overview: How is it done?
 % The third paragraph simply outlines the way that you are going to achieve the
@@ -335,13 +335,40 @@ appendix~\todo{Insert reference to appendix here.} and by outsourcing similar
 and very technical parts and output file definitions into a separate
 file.~\todo{Insert reference to code fragments here.}
 
-\section{Software}
-\label{results:sec:software}
+\section{Program}
+\label{results:sec:program}
 
 \newthought{Using the introduced methodologies}
 (see~\ref{chap:methodologies}) and the developed software architecture
-(see~\ref{results:sec:software-architecture}) the intended software was
-developed.
+(see~\ref{results:sec:software-architecture}) the intended program was
+implemented.
+
+\newthought{The software implemented} is supposed to have two main components:
+the editor and player. Due to time-related reasons however, only the editor
+component was implemented.
+
+\newthought{Subsequent each component of the editor} is shown. This is done by
+showing an adapted component diagram~\cite[pp. 653 -- 654]{larman-applying-2004}
+and an entity relationship diagram~\cite[pp. 501 ff.]{larman-applying-2004}, if
+appropriate, followed by a description of the component. The component diagrams
+is used to show the signals a component emits and receives. The entity
+relationship diagram is used to show the relationships between components.
+
+\subsection{Scene tree}
+\label{results:subsec:program:scene-tree}
+
+\begin{figure*}[ht]
+  \caption{Component diagram of the scene tree component.}
+  \label{fig:scene-graph-component-diagram}
+  \includegraphics[width=0.95\linewidth]{images/scene-graph-component-diagram}
+\end{figure*}
+
+\begin{figure}[ht]
+  \caption{Entity relationship diagram of the scene tree component.}
+  \label{fig:scene-graph-erd}
+  \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
+\end{figure}
+
 % * Software
 % ** Editor
 % ** Player
