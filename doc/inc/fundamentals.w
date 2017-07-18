@@ -130,7 +130,8 @@ requirements.
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Sub component} & \textbf{Description} \\
-    Scene tree & Holds scenes in a tree like structure.            \\
+    Scene tree & Holds scenes in a tree like structure. A scene is a directed
+    graph holding nodes.                                           \\
     Node graph & Contains all nodes which define a single scene.   \\
     Parameter  & Holds the parameters of a node of the node graph. \\
     Rendering  & Renders a node, presenting it for a viewer.       \\
