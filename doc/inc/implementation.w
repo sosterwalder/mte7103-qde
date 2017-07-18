@@ -352,7 +352,33 @@ showing an adapted component diagram~\cite[pp. 653 -- 654]{larman-applying-2004}
 and an entity relationship diagram~\cite[pp. 501 ff.]{larman-applying-2004}, if
 appropriate, followed by a description of the component. The component diagrams
 is used to show the signals a component emits and receives. The entity
-relationship diagram is used to show the relationships between components.
+relationship diagram is used to show the relationships between components. Not
+all relationships are shown however, only the relations immediately related to
+the presented component are shown as the diagrams would otherwise be too crowded
+and confusing.
+
+\subsection{Editor}
+\label{results:subsec:program:editor}
+
+\begin{figure*}[ht]
+  \caption{Component diagram of the editor component.}
+  \label{fig:editor-component-diagram}
+  \includegraphics[width=0.95\linewidth]{images/editor-component-diagram}
+\end{figure*}
+
+\begin{figure}[ht]
+  \caption{Entity relationship diagram of the editor component.}
+  \label{fig:editor-erd}
+  \includegraphics[width=0.75\linewidth]{images/editor-erd}
+\end{figure}
+
+\newthought{The editor component} is the main component, which acts as entry
+point for the application and ties all components together.
+The~\verb=Application= class sets up all the controllers and the main window.
+The~\verb=MainWindow= class sets up all the view-related components, therefore
+the scene graph view, the scene view and the renderer.
+
+\todo[inline]{Elaborate more? Is this really necessary? I think it will be rather boring.}
 
 \subsection{Scene tree}
 \label{results:subsec:program:scene-tree}
@@ -369,7 +395,23 @@ relationship diagram is used to show the relationships between components.
   \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
 \end{figure}
 
-% * Software
-% ** Editor
-% ** Player
-% ** Components
+\newthought{The scene tree component} allows to manage the scenes of the system.
+User interaction is provided by a tree-like view, which lets the user add,
+remove and select scenes.
+
+\todo[inline]{Elaborate more? Is this really necessary? I think it will be rather boring.}
+
+% \subsection{Node graph}
+% \label{results:subsec:program:node-graph}
+% 
+% \begin{figure*}[ht]
+%   \caption{Component diagram of the node graph component.}
+%   \label{fig:node-graph-component-diagram}
+%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
+% \end{figure*}
+% 
+% \begin{figure}[ht]
+%   \caption{Entity relationship diagram of the node graph component.}
+%   \label{fig:node-graph-erd}
+%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
+% \end{figure}
