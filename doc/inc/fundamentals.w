@@ -209,8 +209,8 @@ objects by keeping track of the data models. Such~\textit{controllers} support t
 model-view separation principle and exist in the application layer.
 
 \begin{table}[h]
-  \caption{Layers as envisaged during the conceptual phase and as used for
-    program implemented.}
+  \caption{Layers as envisaged during the conceptual phase and used for
+    the program implemented.}
   \label{table:layers}
   \begin{tabularx}{\textwidth}{lX}
     \toprule

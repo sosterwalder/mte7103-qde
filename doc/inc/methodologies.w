@@ -239,7 +239,6 @@ class NodeDefinition(object):
   \label{lst:node-def-class-decl}
 \end{figure}
 
-\vspace*{-2\baselineskip}
 \newthought{The constructor} might be the first thing to implement, following
 the developed pattern. In Python the constructor defines the properties of a
 class~\sidenote[][-10pt]{Properties do not need to be defined in the constructor,
@@ -349,7 +348,6 @@ def load_node_definitions(self):
   \label{lst:load-node-definitions}
 \end{figure}
 
-\vspace*{-2\baselineskip}
 \newthought{When loading the node definitions}, there are two cases (and
 consequences) at the first instance:
 \begin{enumerate*}
@@ -372,7 +370,6 @@ else:
   \label{lst:nodes-controller-load-nodes-2}
 \end{figure}
 
-\vspace*{-2\baselineskip}
 \newthought{In the first case}, when the directory containing the node
 definitions exists, files containing node definitions are searched. The files
 are searched by wildcard pattern matching the extension:~\verb|*.node|.
@@ -391,7 +388,6 @@ num_node_definitions = len(node_definition_files)@}
   \label{lst:nodes-controller-find-node-def-files}
 \end{figure}
 
-\vspace*{-2\baselineskip}
 \newthought{Having searched for node definition files}, there are again two
 cases, similar as before:
 \begin{enumerate*}
