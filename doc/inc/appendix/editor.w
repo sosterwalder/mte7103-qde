@@ -34,8 +34,6 @@ There shall be an animation of ten seconds duration. During this animation the
 sphere shall move towards the cube and they shall merge into a blob-like object.
 The camera shall move 5 units towards the two objects during this time.
 
-\todo[inline]{Scene: Composition of nodes. Define scene already here.}
-
 \newthought{To achieve this overall goal}, while providing an user-friendly
 experience, several components are needed. These are the following, being
 defined in~\citetitle[pp. 29
@@ -64,10 +62,10 @@ section~\enquote{\nameref{soarch}}. A model is (at least at this point) not
 necessary. The view component shall be called~\emph{main window} and its
 controller shall be called~\emph{main application}.
 
-\newthought{To preserve clarity} all components described in discrete chapters.
-Although the implementation of the components is very specific, in terms of the
-programming language, their logic may be reused later on when developing the
-player component.
+\newthought{To preserve clarity} all components are described in discrete
+chapters. Although the implementation of the components is very specific, in
+terms of the programming language, their logic may be reused later on when
+developing the player component.
 
 \newthought{Before implementing} any of these components however, the editor
 application needs an entry point, that is a point where the application starts

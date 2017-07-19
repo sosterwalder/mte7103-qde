@@ -232,6 +232,7 @@ will have:
   \item{Image}
   \item{Dynamic}
   \item{Mesh}
+  \item{Implicit}
 \end{itemize}
 
 As these atomic types are the foundation of all other nodes, the system must

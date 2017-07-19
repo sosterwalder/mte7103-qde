@@ -20,7 +20,7 @@
 % answering my research question (repeat question) .. was to.. . In the last
 % chapter I …
 \newthought{The previous chapter} introduced the methodologies that are required
-for understanding the following results of this thesis.
+for understanding the following implementation of this thesis.
 
 % Focus: What does this chapter specifically do?
 % Now focus the reader’s attention on what this chapter is specifically going to
@@ -338,14 +338,181 @@ file.~\todo{Insert reference to code fragments here.}
 \section{Program}
 \label{results:sec:program}
 
+\newthought{To recall}, the objective of this thesis is the design and
+development of a program for modeling, composing and rendering real-time
+computer graphics by providing a graphical toolbox.
+
 \newthought{Using the introduced methodologies}
 (see~\ref{chap:methodologies}) and the developed software architecture
-(see~\ref{results:sec:software-architecture}) the intended program was
+(see~\ref{results:sec:software-architecture}) this intended program was
 implemented.
 
-\newthought{The software implemented} is supposed to have two main components:
-the editor and player. Due to time-related reasons however, only the editor
-component was implemented.
+\newthought{The program implemented} is supposed to have two main components:
+the~\textit{editor} and~\textit{player}.
+
+\newthought{The editor component} provides a graphical system for modeling,
+composing and rendering of scenes. It allows composing scenes to an animation
+and to save an animation in an external file as a structure in a specific
+format. Rendering is done using the shown sphere tracing algorithm combined with
+Phong shading.
+
+\newthought{The player component} simply plays an animation created with the
+editor component.
+
+\newthought{Due to time-related reasons} however, only the editor component was
+implemented.~\autoref{fig:editor} shows an image of the program implemented.
+
+\begin{figure}[ht]
+  \caption{The implemented editor component.}
+  \label{fig:editor}
+  \includegraphics[width=0.95\linewidth]{images/editor-components}
+\end{figure}
+
+\newthought{The quintessence of both components} is to output respectively to
+read a data structure in the JSON~\cite{ecma-json-2013} format which defines an
+animation. This data structure provides the following elements:
+\begin{enumerate*}
+  \item an animation which contains
+  \item scenes, which contain
+  \item nodes.
+\end{enumerate*}
+This data structure is evaluated and the result at the end of that evaluation
+is nothing else than shader-specific code which gets executed on the graphical
+processing unit (GPU).
+
+\newthought{An animation} is simply a composition of scenes which run in a
+sequential order within a defined time span.
+
+\newthought{A scene} is a composition of nodes in form of a directed graph.
+
+\newthought{Nodes} are instances of node definitions and define the content of a
+scene and therefore of an animation.
+
+\newthought{Node definitions} provide content in a specific structure, shown
+in~\autoref{table:node-definition-components}.
+
+\begin{table}\centering
+  \ra{1.3}
+  \begin{tabularx}{\textwidth}{@@{}lX@@{}}
+    \toprule
+    \textbf{Property}    & \textbf{Description}                                         \\
+    \hline
+    \textit{ID}          & A global unique identifier (UUID\protect\footnotemark[1]{}). \\
+    \textit{Name}        & The name of the node, e.g. "Sphere".                         \\
+    \textit{Description} & A description of the node's purpose.                         \\
+    \textit{Inputs}      & Parameters given to the node as inputs. This may be
+    distinct types, e.g. float values or text input, references to other
+    nodes.                                                                              \\
+    \textit{Outputs}     & Values delivered by the node as outputs.                     \\
+    \textit{Definitions} & A list of the node's definitions. This may be an
+    actual definition of a (shader-) function in terms of an implicit surface.          \\
+    \textit{Invocation}  & The format of a call to the node definition, including
+    placeholders which will be replaced by parameters.                                  \\
+    \textit{Parts}       & Defines text that may be processed when calling the node.
+    Contains code which can be interpreted directly.                                    \\
+    \textit{Nodes}       & The children a node has (child nodes). These entries are
+    references to other nodes only.                                                     \\
+    \textit{Parameters}  & A list of the node's inputs and outputs in form of
+    tuples.
+    Each tuple is composed of two parts:~\begin{enumerate*}
+      \item a reference to another node and
+      \item a reference to an input parameter or an output value of that node.
+    \end{enumerate*} If the first reference is not set, this means that the
+    parameter is internal.                                                              \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Properties/attributes of a node definition.}
+  \label{table:node-definition-components}
+\end{table}
+\footnotetext[1]{https://docs.python.org/3/library/uuid.html}
+
+\newthought{Content} is whatever a node definition provides in terms of the
+definitions but the output has always to be an atomic type as defined
+in~\autoref{table:node-definition-atomic-types}.
+
+\begin{table}\centering
+  \ra{1.3}
+  \begin{tabularx}{\textwidth}{@@{}lX@@{}}
+    \toprule
+    \textbf{Type}    & \textbf{Description}                                         \\
+    \hline
+    \textit{Generic}          & A global unique identifier (UUID\protect\footnotemark[1]{}). \\
+    \textit{Float}        & The name of the node, e.g. "Sphere".                         \\
+    \textit{Text} & A description of the node's purpose.                         \\
+    \textit{Scene}      & Parameters given to the node as inputs. This may be \\
+    \textit{Image}     & Values delivered by the node as outputs.                     \\
+    \textit{Dynamic} & A list of the node's definitions. This may be an \\
+    \textit{Mesh}  & The format of a call to the node definition, including \\
+    \textit{Implicit}       & Defines text that may be processed when calling the node.\\
+    \bottomrule
+  \end{tabularx}
+  \caption{Atomic types, that define a node (definition).}
+  \label{lst:node-definition-atomic-types}
+\end{table}
+
+\newthought{An example} of an node definition of type~\emph{implicit} for
+rendering a sphere is given in~\autoref{fig:implicit-sphere-node-definition}.
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+{
+    "name": "Implicit sphere",
+    "id_": "16d90b34-a728-4caa-b07d-a3244ecc87e3",
+    "description": "Definition of a sphere by using implicit surfaces",
+    "inputs": [
+        @<Implicit sphere node inputs@>
+    ],
+    "outputs": [
+        @<Implicit sphere node outputs@>
+    ],
+    "definitions": [
+        @<Implicit sphere node definitions@>
+    ],
+  \end{minted}
+  \label{fig:node-definition-atomic-type}
+  \caption{Teh cap.}
+\end{figure*}
+
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+    "invocations": [
+        @<Implicit sphere node invocations@>
+    ],
+    "parts": [
+        @<Implicit sphere node parts@>
+    ],
+  \end{minted}
+  \label{fig:node-definition-atomic-type-2}
+  \caption{Teh cap 2.}
+\end{figure*}
+
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+    "nodes": [
+        @<Implicit sphere node nodes@>
+    ],
+    "connections": [
+        @<Implicit sphere node connections@>
+    ]
+}
+  \end{minted}
+  \label{fig:node-definition-atomic-type-3}
+  \caption{Teh cap 3.}
+\end{figure*}
 
 \newthought{Subsequent each component of the editor} is shown. This is done by
 showing an adapted component diagram~\cite[pp. 653 -- 654]{larman-applying-2004}
@@ -356,6 +523,11 @@ relationship diagram is used to show the relationships between components. Not
 all relationships are shown however, only the relations immediately related to
 the presented component are shown as the diagrams would otherwise be too crowded
 and confusing.
+
+\newthought{To preserve clarity} all components are described in discrete
+sections. Although the implementation of the components is very specific, in
+terms of the programming language, their logic may be reused later on when
+developing the player component.
 
 \subsection{Editor}
 \label{results:subsec:program:editor}
