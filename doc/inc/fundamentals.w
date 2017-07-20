@@ -391,38 +391,44 @@ name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
       \label{fig:sphere-tracing-1}
 \end{figure}
 
-\newthought{Unbounding volumes} contrast with bounding volumes, which enclose a
-solid. Unbounding volumes enclose a part of space without including certain
-objects (whereas including means touching). For calculating a unbounding volume,
-the distance between an object and the origin is being searched. Is this
-distance known, it can be taken as a radius of a sphere. Sphere tracing defines
-objects as implicit surfaces using distance functions. Therefore the distance
-from every point in space to every other point in space and to every surface of
-every object is known. These distances build a so called distance field.
+\newthought{Bounding volumes} are defined as the enclosure of a sold. On the
+other hand, unbounding volumes are the space outside of a bounding volume,
+including the surface of the solid itself. For calculating a unbounding volume,
+the distance between an object and any defined origin point is evaluated. If
+this distance is known, it can be taken as the radius of a sphere centered at
+the origin point.
 
-\newthought{The sphere tracing algorithm} is as follows. A ray is being shot
-from a viewer (an eye or a pinhole camera) through the image plane into a scene.
-The radius of an unbounding volume in form of a sphere is being calculated at
-the origin, as described above. This radius builds an intersection with the ray
-and represents the distance, that the ray will travel in a first step. From this
-intersection the next unbounding volume is being expanded and its radius is
-being calculated, which gives the next intersection with the ray. This procedure
-continues until an object is being hit or until a predefined maximum distance of
-the ray $d_{max}$ is being reached. An object is being hit, whenever the
+\newthought{Sphere tracing} defines objects as implicit surfaces using distance
+functions. Therefore the distance from every point in space to every other point
+in space and to every surface of every object can be calculated. These distances
+build a so called distance field.
+
+\newthought{The sphere tracing algorithm} is as follows. A ray is shot
+from an origin point (for example, the viewer such as an eye or a pinhole camera) into a scene.
+The radius of an unbounding volume in form of a sphere is calculated from
+the origin, as described above. They ray intersects with the sphere, which gives
+the distance that the ray will travel in a first step. From this
+intersection the next unbounding volume (sphere) is expanded and its radius is
+calculated, which gives the next intersection of the ray. This procedure
+continues until an object is hit or until a predefined maximum distance of
+the ray is being reached, defined as the~\enquote{horizon}. An object is
+considered as~\enquote{hit} whenever the
 returned radius of the distance function is below a predefined constant
-$\epsilon$. A possible implementation of the sphere tracing algorithm is shown
-in~\autoref{alg:sphere-tracing}. This~\autoref{alg:sphere-tracing} is although
-only showing the distance estimation. Shading is done outside, for example in a
-render method which calls the sphere trace method. Shading means in this context
-the determination of a surface's respectively a pixel's color.
+$\epsilon$, the~\enquote{convergence precision}.
 
- \begin{figure*}
-   \label{alg:sphere-tracing}
-   \caption{%
-     An abstract implementation of the sphere tracing algorithm. Algorithm in
-     pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
-   }
-   \begin{pythoncode}
+\newthought{A possible implementation} of the sphere tracing algorithm is shown
+in~\autoref{alg:sphere-tracing}, although this shows only the distance
+estimation. Shading is done in another implementation, for example in a
+render method which calls the sphere trace method. Shading means in this context
+the determination of the color of a surface or pixel.
+
+\begin{figure*}
+  \label{alg:sphere-tracing}
+  \caption{%
+    An abstract implementation of the sphere tracing algorithm. Algorithm in
+    pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
+  }
+  \begin{pythoncode}
 def sphere_trace():
     ray_distance          = 0
     estimated_distance    = 0
@@ -447,32 +453,57 @@ def sphere_trace():
     # When we reach this point, there was no intersection between the ray and a
     # implicit surface, so simply return 0
     return 0
-   \end{pythoncode}
+  \end{pythoncode}
 \end{figure*}
 
 \newthought{Shading} is done as proposed by~\citeauthor{whitted_improved_1980}
 in~\citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}. This means,
-that the sphere tracing algorithm needs to return which object was hit and the
-material of this object. Depending on the objects material, three cases can
-occur:
+that the sphere tracing algorithm must return which object was hit and its material.
+Depending on the material, four cases can occur. The material may be:
 \begin{enumerate*}
-  \item the material is reflective and refractive,
-  \item the material is only reflective or
-  \item the material is diffuse.
+  \item reflective and refractive,
+  \item reflective only,
+  \item diffuse or
+  \item emissive.
 \end{enumerate*}
-For simplicity only the last case is being taken into account. For the actual
-shading a local illumination method is used:~\textit{phong shading}.
+For simplicity only the third case is being taken into account. For the actual
+shading a local illumination method is used, called~\textit{Phong shading}.
 
-\newthought{The phong illumination model} describes (reflected) light intensity
+\newthought{The Phong illumination model}~\cite[p. 123]{foley_computer_1996} describes (reflected) light intensity
 $I$ as a composition of the ambient, the diffuse and the perfect specular
 reflection of a surface.
 
 \begin{figure}
   \label{eq:phong-equation}
-  \caption{The phong illumination model as defined by Phong Bui-Tuong. Note that
-  the emissive term was left out intentionally as it is mainly used to achieve
-  special effects.}
+  \caption{%
+    The Phong illumination model as defined by Phong Bui-Tuong.~\cite[p. 123]{foley_computer_1996} Note that
+    the emissive term was left out intentionally as it is mainly used to achieve
+    special effects.\newline{}
+    \newline{}
+    Foo.
+  }
   \begin{equation}
     I(\vv{V}) = k_{a} \cdot L_{a} + k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) + k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
   \end{equation}
 \end{figure}
+
+% \marginnote[-130pt]{
+\marginnote{
+  \begin{description}
+    \item[$I(x, x')$] Intensity of the light at point $\vv{V}$.
+    \item[$k_{a}$] A constant defining the ratio of reflection of the ambient
+      term of all points in the scene.
+    \item[$L_{a}$] Intensity of the ambient light.
+    \item[$k_{d}$] A constant defining the ratio of the diffuse term of incoming
+      light.
+    \item[$\displaystyle\sum_{i=0}^{n-1}$] Sum over all light sources in the scene.
+    \item[$L_{i}$] Intensity of the~\emph{i}-th light source.
+    \item[$\vv{S_{i}}$] Direction vector from the point on the surface toward
+      light source~\emph{i}.
+    \item[$\vv{N}$] Normal vector at the point of the surface.
+    \item[$\vv{R_{i}}$] Direction that a perfectly reflected ray of light would
+      take from this point on the surface.
+    \item[$\vv{V}$] Direction pointing toward the viewer.
+    \item[$k_{e}$] Shininess constant for the material.
+  \end{description}
+}
