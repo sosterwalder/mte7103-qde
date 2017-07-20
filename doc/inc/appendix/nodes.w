@@ -1828,29 +1828,36 @@ def event(self, event):
 % % node_definition
 % % )
 % 
-% Pressing the tabulator key within the scene view brings up an empty dialog.
-% This is due to the circumstance, that the node controller is not informing
-% whenever he receives a new node definition and that no other component is
-% listening.
-% 
-% This means, that the node controller has to emit a signal whenever he reads a
-% new node definition. The signal itself is emitting a view model of the read
-% node definition.
-% 
+\newthought{Pressing the tabulator key} when the scene view is active, brings up
+the dialog to add a node, but the dialog is empty. This is due to the
+circumstance, that the node controller is not informing whenever he receives a
+new node definition and that no other component is listening.
+
+\newthought{The node controller has to emit} a signal whenever he reads a
+new node definition. The signal itself is emitting a view model of the read node
+definition.
+
+\begin{figure}
 @d Node controller signals
 @{
 do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)@}
+\caption{The signal of the node controller that is emitted whenever a node
+  definition was read.
+  \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$ Signals}
+\label{editor:lst:node-controller:signals:do-add-node-view-definition}
+\end{figure}
 
-% Now other components may listen and receive view models of newly added node
-% definitions. In this specific case it is is the dialog for adding a node which
-% needs to listen to the added signal. The listening is done by the slot
-%~\verb=on_node_definition_added=.
+\newthought{Now other components may listen} and receive view models of newly
+added node definitions. In this specific case it is is the dialog for adding a
+node which needs to listen to the added signal. The listening is done by the
+slot~\verb=on_node_definition_added=.
 
+\begin{figure}
 @d Add node dialog slots
 @{
 @@QtCore.pyqtSlot(node_view_model.NodeViewModel)
 def on_node_definition_added(self, node_view_model):
-    """Slot which is called whenever a new node definition is being added.
+    """Slot which is called whenever a new node definition is added.
 
     :param node_view_model: The newly added node definition.
     :type  node_view_model: qde.editor.gui_domain.node.NodeDefinitionViewModel
@@ -1861,10 +1868,16 @@ def on_node_definition_added(self, node_view_model):
     node_name = node_view_model.domain_object.name
     type_name = node_view_model.domain_object.type_.name
     @<On node definition added implementation@>@}
+\caption{The slot of the dialog to add a new node that is called whenever a new
+  node definition is added.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
+\label{editor:lst:add-node-dialog:slots:on-node-definition-added}
+\end{figure}
 
-% As the idea of the dialog is to have one column per node type, the column needs
-% to be fetched first, based on the type name of the given node definition.
-%
+\newthought{As the idea of the dialog} is to have one column per node type, the
+column needs to be fetched first, based on the type name of the given node
+definition.
+
 % Then a sub frame is created which holds a representation of the node
 % definition. This representation is rendered like an actual instance of a
 % node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
