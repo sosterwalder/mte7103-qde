@@ -418,8 +418,8 @@ class NodeViewModel(Qt.QGraphicsObject):
     """Class representing a single node within GUI."""
 
     # Constants
-    WIDTH = 20
-    HEIGHT = 17
+    WIDTH = 120
+    HEIGHT = 40
 
     # Signals
     @<Node view model signals@>
@@ -452,7 +452,9 @@ def __init__(self, id_, domain_object, parent=None):
     self.domain_object = domain_object
 
     self.position = QtCore.QPoint(0, 0)
-    self.width = 4
+
+    self.width  = NodeViewModel.WIDTH
+    self.height = NodeViewModel.HEIGHT
 @}
 \caption{Constructor of the node view model.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
@@ -475,7 +477,7 @@ def type_(self):
     :rtype: types.NodeType
     """
 
-    return self.domain_model.type_
+    return self.domain_object.type_
 @}
 
 @d Node view model methods
@@ -488,7 +490,7 @@ def name(self):
     :rtype: str
     """
 
-    return self.domain_model.name
+    return self.domain_object.name
 @}
 \caption{The type and name attributes of the node view model as properties.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
@@ -503,19 +505,18 @@ node has no outputs at all, its type is assumed to be generic.
 \begin{figure}
 @d Node domain model methods
 @{
-    @@property
-    def type_(self):
-        """Return the type of the node, determined by its primary output.
-        If no primary output is given, it is assumed that the node is of
-        generic type."""
+@@property
+def type_(self):
+    """Return the type of the node, determined by its primary output.
+    If no primary output is given, it is assumed that the node is of
+    generic type."""
 
-        type_ = types.NodeType.GENERIC
+    type_ = types.NodeType.GENERIC
 
-        if len(self.outputs) > 0:
-            type_ = self.outputs[0].type_
+    if len(self.outputs) > 0:
+        type_ = self.outputs[0].type_
 
-        return type_
-@}
+    return type_@}
 \caption{The type attributes of the node domain model as property.
   \newline{}\newline{}Editor $\rightarrow$ Node (domain) model $\rightarrow$
   Methods}
@@ -652,7 +653,7 @@ The cache key itself is then used to find a corresponding pixmap.
 \begin{figure}
 @d Node view model methods paint
 @{
-    pixmap = Qt.QPixMapCache.find(self.cache_key)
+pixmap = QtGui.QPixmapCache.find(self.cache_key)
 @}
 \caption{Based on the created or retrieved cache key a pixmap is being searched
   for.
@@ -667,9 +668,9 @@ added to the cache using the cache key created before.
 \begin{figure}
 @d Node view model methods paint
 @{
-    if pixmap is None:
-        pixmap = self.create_pixmap()
-        Qt.QPixmapCache.insert(self.cache_key, pixmap)
+if pixmap is None:
+    pixmap = self.create_pixmap()
+    QtGui.QPixmapCache.insert(self.cache_key, pixmap)
 @}
 \caption{If no pixmap is found, a new pixmap is being created for the provided
   key and stored.

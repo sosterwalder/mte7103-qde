@@ -228,8 +228,8 @@ def add_root_node(self):
     """
 
     if self.root_node is None:
-        root_node = domain_scene.SceneModel()
-        self.view_root_node = guidomain_scene.SceneGraphViewModel(
+        root_node = scene_domain.SceneModel()
+        self.view_root_node = scene_gui_domain.SceneGraphViewModel(
             row=0,
             domain_object=root_node,
             name=QtCore.QCoreApplication.translate(
@@ -331,18 +331,9 @@ def index(self, row, column, parent=QtCore.QModelIndex()):
     """
 
     if not parent.isValid():
-        self.logger.debug((
-            "Getting index for row {0}, col {1}, root node"
-        ).format(row, column))
         return self.createIndex(row, column, self.view_root_node)
 
     parent_node = parent.internalPointer()
-    self.logger.debug((
-        "Getting index for row {0}, col {1}, "
-        "parent {2}. Children: {3}"
-    ).format(
-        row, column, parent_node, len(parent_node.children())
-    ))
     child_nodes = parent_node.children()
 
     # It may happen, that the index is called at the same time as
@@ -427,7 +418,6 @@ def columnCount(self, parent):
     """
 
     column_count = len(self.header_data) - 1
-    self.logger.debug("Getting column count: %s", column_count)
 
     return column_count
 @}
@@ -458,7 +448,6 @@ def rowCount(self, parent):
     """
 
     if not parent.isValid():
-        self.logger.debug("Parent is not valid")
         row_count = 1
     else:
         # Get the actual object stored by the parent. In this case
@@ -471,7 +460,6 @@ def rowCount(self, parent):
         else:
             row_count = len(node.children())
 
-    self.logger.debug("Getting row count: %s", row_count)
     return row_count
 @}
 \caption{Implementation of QAbstractItemModel's rowCount method for the scene
@@ -1031,8 +1019,8 @@ def insertRows(self, row, count, parent=QtCore.QModelIndex()):
 
     parent_node = parent.internalPointer()
     self.beginInsertRows(parent, row, row + count - 1)
-    domain_model  = domain_scene.SceneModel(parent_node.domain_object)
-    view_model = guidomain_scene.SceneGraphViewModel(
+    domain_model  = scene_domain.SceneModel(parent_node.domain_object)
+    view_model = scene_gui_domain.SceneGraphViewModel(
         row=row,
         domain_object=domain_model,
         parent=parent_node
@@ -1120,9 +1108,9 @@ being added, removed or selected respectively.
 \begin{figure}
 @d Scene graph controller signals
 @{
-do_add_scene    = QtCore.pyqtSignal(domain_scene.SceneModel)
-do_remove_scene = QtCore.pyqtSignal(domain_scene.SceneModel)
-do_select_scene = QtCore.pyqtSignal(domain_scene.SceneModel)
+do_add_scene    = QtCore.pyqtSignal(scene_domain.SceneModel)
+do_remove_scene = QtCore.pyqtSignal(scene_domain.SceneModel)
+do_select_scene = QtCore.pyqtSignal(scene_domain.SceneModel)
 @}
 \caption{Signals emitted by the scene graph controller, in terms of domain
   models, whenever a scene is added, removed or selected.

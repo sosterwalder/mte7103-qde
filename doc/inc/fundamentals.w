@@ -66,7 +66,7 @@ necessary. But the architecture may also be developed as an initial conceptual
 process, for instance when developing large and complex programs.
 
 \newthought{But what is software
-architecture?}~\citeauthor{kruchten_rup_2003}~\cite{kruchten_rup_2003} defines
+architecture?}~\citeauthorfin{kruchten_rup_2003}~\cite{kruchten_rup_2003} defines
 software architecture as follows:~\enquote{An architecture is the \textit{set of
 significant decisions} about the organization of a software system, the
 selection of \textit{structural elements} and their interfaces by which the
@@ -76,7 +76,7 @@ into progressively larger subsystems, and the \textit{architectural style} that
 guides this organization -- these elements and their interfaces, their
 collaborations, and their composition.}
 
-Or as~\citeauthor{fowler_architect_2003}~\cite{folwer_architect_2003} puts
+Or as~\citeauthorfin{fowler_architect_2003}~\cite{folwer_architect_2003} puts
 it:~\enquote{Whether something is part of the architecture is entirely based on
 whether the developers think it is important. [...] So, this makes it hard to
 tell people how to describe their architecture.~\enquote{Tell us what is
@@ -261,7 +261,7 @@ the rendering algorithm that is used for the program implemented in this thesis.
 objective is the design and development of a program for modeling, composing and
 \textit{rendering} real time computer graphics by providing a graphical toolbox.
 
-\newthought{\citeauthor{foley_computer_1996} describes rendering}
+\newthought{\citeauthorfin{foley_computer_1996} describes rendering}
 as a~\enquote{process of creating images from
 models}~\cite{foley_computer_1996}. The basic idea of rendering is to determine
 the color of a surface at each point. For this task two concepts have
@@ -370,7 +370,7 @@ images. For producing images in real time however, the algorithm is still too
 demanding. This is where a special form of ray tracing comes in.
 
 \newthought{Sphere tracing} is a ray tracing approach for implicit surfaces
-introduced in~\citeyear{hart_sphere_1994} by~\citeauthor{hart_sphere_1994} in
+introduced in~\citeyear{hart_sphere_1994} by~\citeauthorfin{hart_sphere_1994} in
 his work~\citetitle{hart_sphere_1994}~\cite{hart_sphere_1994}. 
 Sphere tracing is faster than the classical ray tracing approaches in its method
 of finding
@@ -456,7 +456,7 @@ def sphere_trace():
   \end{pythoncode}
 \end{figure*}
 
-\newthought{Shading} is done as proposed by~\citeauthor{whitted_improved_1980}
+\newthought{Shading} is done as proposed by~\citeauthorfin{whitted_improved_1980}
 in~\citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}. This means,
 that the sphere tracing algorithm must return which object was hit and its material.
 Depending on the material, four cases can occur. The material may be:

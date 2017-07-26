@@ -529,19 +529,21 @@ class NodePart(object):
 \begin{figure}
 @d Node part domain model constructor
 @{
-def __init__(self, id_, default_function):
-    """Constructor.
+def __init__(self, id_, default_function, type_=types.NodeType.GENERIC):
+    """constructor.
 
     :param id_: the identifier of the node part.
     :type  id_: uuid.uuid4
     :param default_function: the default function of the part
-    :type default_function: Function
+    :type default_function: function
+    :param type_: the type of the node part.
+    :type type_: qde.editor.foundation.types.NodeType
     """
 
     self.id_              = id_
     self.function_        = default_function
     self.default_function = default_function
-    self.type_            = types.NodeType.GENERIC@}
+    self.type_            = type_@}
 \caption{Constructor of the node part class.
   \newline{}\newline{}Editor $\rightarrow$ Node part}
 \label{editor:lst:node-part:constructor}
@@ -735,7 +737,7 @@ if os.path.exists(self.nodes_path):
             )
             node_definition = self.load_node_definition_from_file_name(file_name)
             if node_definition is not None:
-                node_definition_view_model = node_view_model.NodeViewModel(
+                node_definition_view_model = node_gui_domain.NodeViewModel(
                     id_=node_definition.id_,
                     domain_object=node_definition
                 )
@@ -1461,7 +1463,7 @@ def get_node_definition(self, id_):
             file_name
         )
         if node_definition is not None:
-            node_definition_view_model = node_view_model.NodeViewModel(
+            node_definition_view_model = node_gui_domain.NodeViewModel(
                 id_=node_definition.id_,
                 domain_object=node_definition
             )
@@ -1489,12 +1491,12 @@ graph.
 @d Node controller constructor
 @{
     # TODO: Load from coonfiguration?
-    self.root_node = node.NodeDefinition(NodeController.ROOT_NODE_ID)
+    self.root_node = node_domain.NodeDefinition(NodeController.ROOT_NODE_ID)
     self.root_node.name = QtCore.QCoreApplication.translate(
         __class__.__name__,
         'Root'
     )
-    root_node_output = node.NodeDefinitionOutput(
+    root_node_output = node_domain.NodeDefinitionOutput(
         NodeController.ROOT_NODE_OUTPUT_ID,
         QtCore.QCoreApplication.translate(
             __class__.__name__,
@@ -1717,8 +1719,8 @@ class AddNodeDialog(QtWidgets.QDialog):
         self.setWindowTitle("Add node")
 
         layout = QtWidgets.QHBoxLayout(self)
-        # layout.setContentsMargins(0, 0, 0, 0)
-        ()# layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
         self.setLayout(layout)
 
     @<Add node dialog methods@>
@@ -1767,7 +1769,7 @@ the add node dialog is added to the scene view.
 \begin{figure}
 @d Scene view constructor
 @{
-    self.add_node_dialog = node.AddNodeDialog(self)
+    self.add_node_dialog = node.AddNodeDialog(self.parent())
 @}
 \caption{The dialog for adding new node instances is initialized by the scene
   view.
@@ -1794,9 +1796,10 @@ def event(self, event):
             current_scene = self.scene()
             assert current_scene is not None
             insert_at = current_scene.insert_at
+            self.logger.debug("Cursor at %s", insert_at)
             insert_position = QtCore.QPoint(
-                insert_at.x() * node_view_model.NodeViewModel.WIDTH,
-                insert_at.y() * node_view_model.NodeViewModel.HEIGHT
+                insert_at.x() * node_gui_domain.NodeViewModel.WIDTH,
+                insert_at.y() * node_gui_domain.NodeViewModel.HEIGHT
             )
             insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
             self.add_node_dialog.move(insert_position)
@@ -1821,13 +1824,6 @@ def event(self, event):
 \label{editor:lst:scene-view:methods:event}
 \end{figure}
 
-% % TODO: Continue here
-% % node_definition = self.add_node_dialog.chosen_node_definition
-% % self.logger.debug(
-% % "Node instance shall be added: %s",
-% % node_definition
-% % )
-% 
 \newthought{Pressing the tabulator key} when the scene view is active, brings up
 the dialog to add a node, but the dialog is empty. This is due to the
 circumstance, that the node controller is not informing whenever he receives a
@@ -1840,7 +1836,7 @@ definition.
 \begin{figure}
 @d Node controller signals
 @{
-do_add_node_view_definition = QtCore.pyqtSignal(node_view_model.NodeViewModel)@}
+do_add_node_view_definition = QtCore.pyqtSignal(node_gui_domain.NodeViewModel)@}
 \caption{The signal of the node controller that is emitted whenever a node
   definition was read.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$ Signals}
@@ -1855,7 +1851,7 @@ slot~\verb=on_node_definition_added=.
 \begin{figure}
 @d Add node dialog slots
 @{
-@@QtCore.pyqtSlot(node_view_model.NodeViewModel)
+@@QtCore.pyqtSlot(node_gui_domain.NodeViewModel)
 def on_node_definition_added(self, node_view_model):
     """Slot which is called whenever a new node definition is added.
 
@@ -1876,14 +1872,12 @@ def on_node_definition_added(self, node_view_model):
 
 \newthought{As the idea of the dialog} is to have one column per node type, the
 column needs to be fetched first, based on the type name of the given node
-definition.
-
-% Then a sub frame is created which holds a representation of the node
-% definition. This representation is rendered like an actual instance of a
-% node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
-% meaning it can be clicked. Clicking on a representation of a node definition
-% adds an instance of the clicked node definition to the currently active scene
-% at the cursor position where the dialog for adding a node was opened.
+definition. Then a sub frame is created which holds a representation of the node
+definition. This representation is rendered like an actual instance of a
+node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
+meaning it can be clicked. Clicking on a representation of a node definition
+adds an instance of the clicked node definition to the currently active scene at
+the cursor position where the dialog for adding a node was opened.
 
 @d On node definition added implementation
 @{
@@ -1894,25 +1888,25 @@ definition.
 @<Add sub frame to column@>
 @<Save the node definition to list of known nodes@>@}
 
-% It might happen, that the node definition is already present. If this is the case
-% the process will be stopped.
-%
+\newthought{A node definition may already be present} although. If this is the
+case the process will be stopped.
+
 @d Check if the node definition is already known
 @{
 if node_view_model.id_ not in self.node_definitions:
 @}
 
-% Getting or creating the column is about calling the corresponding method, as
-% the task is abstracted into a method to maintain readbility.
-%
+\newthought{Getting or creating a column} is about calling the corresponding
+method, as the task is abstracted into a method to maintain readability.
+
 @d Get or create column by type name
 @{
     column = self.get_or_create_column_by_name(type_name)@}
 
-% The~\verb=get_or_create_column_by_name= tries to get a column by the given name
-% and if no column by that name exists, it creates a new column using the given
-% name.
-%
+\newthought{The method to get a column},~\verb=get_or_create_column_by_name=,
+tries to get a column by the given name and if no column by that name exists, it
+creates a new column using the given name.
+
 @d Add node dialog methods
 @{
 def get_or_create_column_by_name(self, column_name):
@@ -1932,17 +1926,17 @@ def get_or_create_column_by_name(self, column_name):
 
     return column@}
 
-% Therefore, if a column by the given name already exists, the reference to the
-% found column is returned.
-%
+\newthought{Therefore, if a column by the given name already exists}, the
+reference to the found column is returned.
+
 @d Get existing column object by name
 @{
 if column_name in self.columns:
     column = self.columns[column_name]@}
 
-% If no column by the given name exists, a new column using the given name is
-% being created.
-%
+\newthought{If no column by the given name exists}, a new column using the given
+name is created.
+
 @d Create new column object based on name
 @{
 else:
@@ -1971,9 +1965,9 @@ else:
     column.v_box_layout = row
     self.columns[column_name] = column@}
 
-% For adding the representation of the node definition to a column, the
-% creation of a sub frame is necessary.
-%
+\newthought{For adding the representation} of the node definition to a column,
+the creation of a sub frame is necessary.
+
 @d Create sub frame for given node definition
 @{
     sub_frame = QtWidgets.QFrame(column.frame)
@@ -1981,9 +1975,9 @@ else:
     sub_frame_column.setContentsMargins(0, 0, 0, 0)
     sub_frame_column.setSpacing(0)@}
 
-% The node representation is then created and added to the above created sub
-% frame. At this moment the presentation is simply a label.
-%
+\newthought{The node representation is then created} and added to the above
+created sub frame. At this moment the presentation is simply a label.
+
 @d Create button for given node definition and add to sub frame
 @{
     button_label = gui_helper.ClickableLabel(node_name, sub_frame)
@@ -1992,18 +1986,18 @@ else:
         Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
     )
     sub_frame_column.addWidget(button_label)@}
-%
-% On thing that stands out in the above code fragment, is the clickable label
-% class. This label is nothing other than normal label emitting a signal called
-%~\verb=clicked= when receiving a mouse press event. Details may be found
-% at~\todo{add reference here}.
-%
-% For being able to react whenever such a label is clicked, it is necessary to
-% handle the~\verb=clicked= signal of the label. Up to now all signals emitted
-% the necessary objects. As the~\verb=clicked= signal is very generic, it does
-% not emit an object. It is nevertheless necessary to emit the chosen node
-% definition.
-%
+
+\newthought{On thing that stands out} in the above code fragment, is the
+clickable label class. This label is nothing other than normal label emitting a
+signal called ~\verb=clicked= when receiving a mouse press event. Details may be
+found at~\todo{add reference here}.
+
+\newthought{For being able to react} whenever such a label is clicked, it is
+necessary to handle the~\verb=clicked= signal of the label. Up to now all
+signals emitted the necessary objects. As the~\verb=clicked= signal is very
+generic, it does not emit an object. It is nevertheless necessary to emit the
+chosen node definition.
+
 @d Create button for given node definition and add to sub frame
 @{
 
@@ -2011,12 +2005,13 @@ else:
         self.chosen_node_definition = node_view_model
         self.accept()
 
-    button_label.clicked.connect(functools.partial(
+    button_label.do_add_node.connect(functools.partial(
         _add_node_button_clicked, node_view_model
     ))@}
 
-% Finally the created sub frame is added to the found or created column.
-%
+\newthought{Finally the created sub frame is added} to the found or created
+column.
+
 @d Add sub frame to column
 @{
     column.v_box_layout.insertWidget(
@@ -2024,9 +2019,9 @@ else:
     )
     column.sub_frames.append(sub_frame)@}
 
-% If the node definition is not yet known, it is saved to the list of known node
-% definitions. Otherwise a warning is being shown.
-%
+\newthought{If the node definition is not yet known}, it is saved to the list of
+known node definitions. Otherwise a warning is being shown.
+
 @d Save the node definition to list of known nodes
 @{
     self.node_definitions[node_view_model.id_] = node_view_model
@@ -2037,12 +2032,12 @@ else:
     self.logger.warn("Node definition %s is already known", node_view_model)
 @}
 
-% The above defined slot needs to be triggered as soon as a new node definition
-% is being added. This is done within the main window, by connecting the slot with the
-%~\verb=do_add_node_view_definition= signal.
-%
+\newthought{The above defined slot} needs to be triggered as soon as a new node
+definition is being added. This is done within the main window, by connecting
+the slot with the ~\verb=do_add_node_view_definition= signal.
+
 @d Connect main window components
 @{
 self.node_controller.do_add_node_view_definition.connect(
     self.main_window.scene_view.add_node_dialog.on_node_definition_added
-    )@}
+)@}

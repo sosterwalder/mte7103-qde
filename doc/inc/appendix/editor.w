@@ -308,6 +308,7 @@ inherited~\verb=quit= slot.
 @d Set up main window for main application
 @{
 self.main_window = qde_main_window.MainWindow()
+self.main_window.move(100, 100)
 self.main_window.do_close.connect(self.quit)
 @<Connect main window components@>@}
 \caption{Set up of the editor main window and its signals from within the main
@@ -360,7 +361,6 @@ def setup_ui(self):
     self.setObjectName('MainWindow')
     self.setWindowTitle('QDE')
     self.resize(1024, 768)
-    self.move(100, 100)
     # Ensure that the window is not hidden behind other windows
     self.activateWindow()
 
@@ -382,7 +382,7 @@ def setup_ui(self):
     horizontal_layout.setObjectName('horizontal_layout')
     horizontal_layout.setContentsMargins(0, 0, 0, 0)
 
-    self.scene_graph_view = guiscene.SceneGraphView()
+    self.scene_graph_view = guiscene.SceneGraphView(self)
     self.scene_graph_view.setObjectName('scene_graph_view')
     self.scene_graph_view.setMaximumWidth(300)
     horizontal_layout.addWidget(self.scene_graph_view)

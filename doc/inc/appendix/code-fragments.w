@@ -91,9 +91,12 @@ from PyQt5 import QtCore
 # System imports
 from PyQt5 import Qt
 from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
 # Project imports
 from qde.editor.foundation import common
+from qde.editor.gui_domain import node as node_gui_domain
 
 @<Scene graph view model declarations@>
 @<Scene view model declarations@>
@@ -128,8 +131,10 @@ from PyQt5 import QtCore
 
 # Project imports
 from qde.editor.foundation import common
-from qde.editor.domain     import scene as domain_scene
-from qde.editor.gui_domain import scene as guidomain_scene
+from qde.editor.domain     import node  as node_domain
+from qde.editor.gui_domain import node  as node_gui_domain
+from qde.editor.domain     import scene as scene_domain
+from qde.editor.gui_domain import scene as scene_gui_domain
 
 @<Scene graph controller declarations@>
 @<Scene controller declarations@>
@@ -143,13 +148,14 @@ from qde.editor.gui_domain import scene as guidomain_scene
 """
 
 # System imports
+import uuid
 from PyQt5 import Qt
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 
 # Project imports
 from qde.editor.foundation import common
-from qde.editor.gui_domain import node as node_view_model
+from qde.editor.gui_domain import node as node_gui_domain
 from qde.editor.gui_domain import scene
 from qde.editor.gui import node
 
@@ -213,6 +219,7 @@ from qde.editor.gui import node
 import logging
 from PyQt5 import Qt
 from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 # Project imports
@@ -230,6 +237,8 @@ def with_logger(cls):
 
     @<Set logger name@>
     @<Logger interface@>
+
+@<Common methods@>
 @}
 
 @d Scene graph view decorators
@@ -268,6 +277,7 @@ from qde.editor.domain import node
 @<Paramater domain model float value@>
 @<Paramater domain model text value@>
 @<Paramater domain model scene value@>
+@<Paramater domain model implicit value@>
 @<Parameter domain module methods@>
 @}
 
@@ -470,9 +480,11 @@ from qde.editor.foundation import flag
 # System imports
 from PyQt5 import Qt
 from PyQt5 import QtCore
+from PyQt5 import QtGui
 
 # Project imports
 from qde.editor.foundation import common
+from qde.editor.foundation import flag
 
 @@common.with_logger
 @<Node view model declarations@>
@@ -485,8 +497,7 @@ from qde.editor.foundation import common
     self.setFlag(Qt.QGraphicsObject.ItemIsFocusable)
     self.setFlag(Qt.QGraphicsObject.ItemIsMovable)
     self.setFlag(Qt.QGraphicsObject.ItemIsSelectable)
-    self.setFlag(Qt.QGraphicsObject.ItemClipsToShape)
-@}
+    self.setFlag(Qt.QGraphicsObject.ItemClipsToShape)@}
 
 @o ../src/qde/editor/foundation/flag.py
 @{# -*- coding: utf-8 -*-
@@ -521,50 +532,50 @@ def boundingRect(self):
     """
 
     return Qt.QRectF(
-        0, 0, self.width * NodeViewModel.WIDTH, NodeViewModel.HEIGHT
+        0, 0, self.width, self.height
     )
 
 def create_pixmap(self):
-    """Creation of the pixmap (=bitmap, the actual 'image')"""
+    """"Creation of the pixmap (=bitmap, the actual 'image')"""
 
-    image = QImage(self.boundingRect().size().toSize(),
-                    QImage.Format_ARGB32_Premultiplied)
-    pixmap = QPixmap.fromImage(image)
-    pixmap.fill(Qt.transparent)
+    image = QtGui.QImage(self.boundingRect().size().toSize(),
+                         QtGui.QImage.Format_ARGB32_Premultiplied)
+    pixmap = QtGui.QPixmap.fromImage(image)
+    pixmap.fill(QtCore.Qt.transparent)
 
     rect = self.boundingRect()
 
-    painter = QPainter()
+    painter = QtGui.QPainter()
     painter.begin(pixmap)
-    painter.setRenderHint(QPainter.Antialiasing)
+    painter.setRenderHint(QtGui.QPainter.Antialiasing)
 
     # Shape
-    path = QPainterPath()
+    path = QtGui.QPainterPath()
     path.addRect(rect)
     # path.addRoundedRect(rect, 5, 5)
     painter.drawPath(path)
 
     # Color / gradient
-    color = QColor(255, 0, 0, 128)
+    color = QtGui.QColor(255, 0, 0, 128)
     color.setHsv(color.hsvHue(), 160, 255)
     color_desaturated = color
     color_desaturated.setHsv(color.hsvHue(), 40, 255)
-    top_color = QColor(60, 70, 80)
+    top_color = QtGui.QColor(60, 70, 80)
     if self.status is not flag.NodeStatus.OK:
-        top_color = QColor(255, 0, 0)
-    gradient_top_color = cmn.multiply_colors(
+        top_color = QtGui.QColor(255, 0, 0)
+    gradient_top_color = common.multiply_colors(
         top_color, color_desaturated
     )
-    gradient_bottom_color = cmn.multiply_colors(
-        QColor(110, 120, 130), color_desaturated
+    gradient_bottom_color = common.multiply_colors(
+        QtGui.QColor(110, 120, 130), color_desaturated
     )
-    rect_gradient = QLinearGradient(
-        QPoint(0.0, 0.0), QPoint(0.0, rect.height())
+    rect_gradient = QtGui.QLinearGradient(
+        QtCore.QPoint(0.0, 0.0), QtCore.QPoint(0.0, rect.height())
     )
     rect_gradient.setColorAt(0.0, gradient_top_color)
     rect_gradient.setColorAt(1.0, gradient_bottom_color)
 
-    brush = QBrush(rect_gradient)
+    brush = QtGui.QBrush(rect_gradient)
 
     painter.fillPath(path, brush)
     painter.end()
@@ -584,6 +595,7 @@ def create_pixmap(self):
 
 # System imports
 import glob
+import inspect
 import os
 import time
 import uuid
@@ -595,8 +607,8 @@ from qde.editor.foundation import common
 from qde.editor.foundation import type as types
 from qde.editor.technical  import json
 from qde.editor.domain     import parameter
-from qde.editor.domain     import node
-from qde.editor.gui_domain import node as node_view_model
+from qde.editor.domain     import node as node_domain
+from qde.editor.gui_domain import node as node_gui_domain
 
 
 @<Node controller declarations@>
@@ -792,7 +804,7 @@ from PyQt5 import QtWidgets
 
 # Project imports
 from qde.editor.foundation import common
-from qde.editor.gui_domain import node   as node_view_model
+from qde.editor.gui_domain import node   as node_gui_domain
 from qde.editor.gui_domain import helper as gui_helper
 
 
@@ -823,7 +835,7 @@ class ClickableLabel(QtWidgets.QLabel):
     when receiving a mouse press event."""
 
     # Signals
-    clicked = QtCore.pyqtSignal()
+    do_add_node = QtCore.pyqtSignal()
 
     def __init__(self, text, parent):
         """Constructor.
@@ -857,13 +869,194 @@ class ClickableLabel(QtWidgets.QLabel):
 
     def mousePressEvent(self, event):
         """Event handler when a mouse button was pressed on this label. Emits a
-        signal called 'clicked'.
+        signal called 'do_add_node'.
 
         :param event: the event which occurred.
         :type event: Qt.QMouseEvent
         """
 
-        self.logger.debug("Button clicked?")
-        self.clicked.emit()
+        self.do_add_node.emit()
         super(ClickableLabel, self).mousePressEvent(event)
+@}
+
+@d Scene view signals
+@{
+do_add_node = QtCore.pyqtSignal(uuid.UUID)@}
+
+% Coming from: Scene view methods
+@d Handle node definition chosen
+@{
+node_definition_vm = self.add_node_dialog.chosen_node_definition
+self.logger.debug(
+    "Node instance shall be added: %s",
+    node_definition_vm
+)
+self.do_add_node.emit(node_definition_vm.id_)@}
+
+@d Node controller signals
+@{
+do_add_node_model = QtCore.pyqtSignal(node_domain.NodeModel, node_gui_domain.NodeViewModel)@}
+
+@d Node controller slots
+@{
+@@QtCore.pyqtSlot(uuid.UUID)
+def on_node_added(self, id):
+    if id in self.node_definitions:
+        node_definitions = self.node_definitions[id]
+
+        domain_model = node_definitions[0]
+        view_model   = node_definitions[1]
+
+        # Create node domain model
+        node_domain_model = node_domain.NodeModel(
+            id_=domain_model.id_,
+            name=domain_model.name
+        )
+
+        inputs = []
+        for input in domain_model.inputs:
+            self.logger.debug("Creating input %s", input.id_)
+            input = node_domain.NodePart(input.id_, input.default_function)
+            inputs.append(input)
+        node_domain_model.inputs = inputs
+
+        outputs = []
+        for output in domain_model.outputs:
+            self.logger.debug("Creating output %s of type %s", output.id_, output.type_)
+            value = parameter.create_value(
+                output.type_.name, ""
+            )
+            value_function = node_domain.create_value_function(value)
+            output = node_domain.NodePart(output.id_, value_function, output.type_)
+            outputs.append(output)
+        node_domain_model.outputs = outputs
+
+        # Create node view model
+        node_view_model = node_gui_domain.NodeViewModel(
+            id_=node_domain_model.id_,
+            domain_object=node_domain_model
+        )
+
+        # Inform other components about creation
+        self.do_add_node_model.emit(node_domain_model, node_view_model)
+        self.logger.debug("Added new node %s" % (node_domain_model))
+    else:
+        self.logger.warn("%s: Node definition %s not found!" % (__name__, id))@}
+
+@d Connect main window components
+@{
+self.main_window.scene_view.do_add_node.connect(
+    self.node_controller.on_node_added
+)
+self.node_controller.do_add_node_model.connect(
+    self.scene_controller.on_node_model_added
+)@}
+
+@d Scene controller slots
+@{
+@@QtCore.pyqtSlot(node_domain.NodeModel, node_gui_domain.NodeViewModel)
+def on_node_model_added(self, node_domain_model, node_view_model):
+    self.logger.debug("Shall add node domain model: %s", node_domain_model)
+
+    assert self.current_scene is not None
+
+    # Add node view model to scene view model
+    self.current_scene.addItem(node_view_model)
+    insert_pos_x = self.current_scene.insert_at.x() * node_gui_domain.NodeViewModel.WIDTH
+    insert_pos_y = self.current_scene.insert_at.y() * node_gui_domain.NodeViewModel.HEIGHT
+    node_view_model.setPos(insert_pos_x, insert_pos_y)
+
+    # Add node domain model to scene domain model
+    self.current_scene.nodes.append(node_domain_model)
+
+    self.logger.debug(
+        "Node instance '%s' was added to current scene (%s) at %s",
+        node_view_model,
+        self.current_scene,
+        node_view_model.pos()
+    )
+    # TODO
+    # self.node_added.emit(self.current_scene)@}
+
+@d Common methods
+@{
+def multiply_colors(color1, color2):
+    red   = (color1.redF()   * color2.redF()  ) * 255
+    blue  = (color1.blueF()  * color2.blueF() ) * 255
+    green = (color1.greenF() * color2.greenF()) * 255
+
+    return QtGui.QColor(red, blue, green)
+@}
+
+@d Node view model methods paint
+@{
+painter.setClipRect(option.exposedRect)
+painter.drawPixmap(0, 0, pixmap)
+
+if self.isSelected():
+    color = QtGui.QColor(23, 135, 84)
+    painter.setPen(color)
+    painter.setBrush(QtGui.QBrush(color, QtCore.Qt.SolidPattern))
+    painter.drawRect(0, 0, 2, self.boundingRect().height())
+
+# TODO: Use another color if bypassed or hidden
+painter.setPen(QtCore.Qt.white)
+
+# Label
+painter.drawText(self.boundingRect().adjusted(1, -9, -9, -1), QtCore.Qt.AlignCenter, self.name)
+painter.drawText(self.boundingRect().adjusted(1, 20, -9, -1), QtCore.Qt.AlignCenter, self.type_.name)@}
+
+@d Scene view model methods
+@{
+def mouseReleaseEvent(self, event):
+    super(SceneViewModel, self).mouseReleaseEvent(event)
+
+    # TODO: Check boundary conditions
+    # * Boundaries of scene
+    # * Other nodes
+
+    if (
+            event.button() & QtCore.Qt.LeftButton
+    ):
+        new_x = event.scenePos().x() / node_gui_domain.NodeViewModel.WIDTH
+        new_y = event.scenePos().y() / node_gui_domain.NodeViewModel.HEIGHT
+        self.insert_at.setX(new_x)
+        self.insert_at.setY(new_y)
+        self.logger.debug(
+            "Set insert at to %s, %s",
+            new_x, new_y
+        )
+        self.invalidate()@}
+
+@d Paramater domain model implicit value
+@{
+class ImplicitValue(ValueInterface):
+    """A class holding values for implicit types."""
+
+    def __init__(self):
+        """Constructor."""
+
+        super(ImplicitValue, self).__init__()
+        self.function_type = types.NodeType.IMPLICIT
+
+    def clone(self):
+        """Clones the currently set value.
+
+        :return: a clone of the currently set value
+        :rtype:  qde.editor.domain.parameter.ValueInterface
+        """
+
+        return ImplicitValue()@}
+
+@d Node definition output domain model methods
+@{
+@@property
+def type_(self):
+    """Returns the type of the node definition output.
+
+    :return: the type of the output given by the node definition part
+    :rtype:  qde.editor.foundation.types.NodeType
+    """
+
+    return self.node_definition_part.type_
 @}

@@ -85,6 +85,7 @@ pdf:
 	$(PDFLATEX) -jobname $(JOB) -shell-escape -interaction=nonstopmode $(TEX_HALT) $(BUILD) ${TEX_VERBOSE}
 
 src:
+	find . -name "*.pyc" -exec rm -f {} \;
 	# -t suppresses the generation of tex files
 	${NUWEB} -t -S $(JOB).$(NUWEB_EXT)
 

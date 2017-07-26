@@ -63,7 +63,7 @@ persons? All these concerns show that documenting software is critical. No
 documentation at all, or outdated or irrelevant documentation, can lead to
 unforeseen and costly efforts concerning work and time.
 
-\newthought{\citeauthor{hoare-hpl-1973} states~\citeyear{hoare-hpl-1973}} in his
+\newthought{\citeauthorfin{hoare-hpl-1973} states~\citeyear{hoare-hpl-1973}} in his
 work~\citetitle{hoare-hpl-1973} that~\enquote{documentation must be regarded as
 an integral part of the process of design and coding}~\cite[p.
 195]{hoare-hpl-1973}: ~\enquote{The purpose of program documentation is to
@@ -80,11 +80,11 @@ of writing. The readability of programs is immeasurably more important than
 their writeability.}~\cite[p. 195]{hoare-hpl-1973}
 
 \newthought{Literate programming}, a paradigm proposed
-in~\citeyear{knuth-lp-1984} by~\citeauthor{knuth-lp-1984}, goes even further.
-\citeauthor{knuth-lp-1984} believes that \enquote{significantly better
+in~\citeyear{knuth-lp-1984} by~\citeauthorfin{knuth-lp-1984}, goes even further.
+\citeauthorfin{knuth-lp-1984} believes that \enquote{significantly better
 documentation of programs} can be best achieved~\enquote{by considering programs
 to be works of literature}~\cite[p.
-1]{knuth-lp-1984}.~\citeauthor{knuth-lp-1984} proposes to change
+1]{knuth-lp-1984}.~\citeauthorfin{knuth-lp-1984} proposes to change
 the~\enquote{traditional attitude to the construction of programs}~\cite[p.
 1]{knuth-lp-1984}. Instead of imagining that the main task is to instruct a
 computer what to do, one should concentrate on explaining to human beings what
@@ -92,7 +92,7 @@ the computer shall do.~\cite[p. 1]{knuth-lp-1984}
 
 \newthought{The ideas of literate programming} have been embodied in several
 software systems, the first being~\emph{WEB}, introduced
-by~\citeauthor{knuth-lp-1984} himself. These systems are a combination of two
+by~\citeauthorfin{knuth-lp-1984} himself. These systems are a combination of two
 languages:
 \begin{enumerate*}
   \item a document formatting language and
@@ -178,7 +178,7 @@ source code. They may also contain for instance paragraphs for formatted text or
 mathematical equations.
 
 \newthought{Literate programming can be very expressive} when all concepts are
-explicitly defined before implementation.~\citeauthor{knuth-lp-1984} sees this
+explicitly defined before implementation.~\citeauthorfin{knuth-lp-1984} sees this
 expressiveness an advantage as one is forced to clarify thoughts before
 programming~\cite[p. 13]{knuth-lp-1984}. This is surely very true for small
 software but only partly true for larger software. The problem with larger

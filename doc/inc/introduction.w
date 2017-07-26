@@ -25,10 +25,10 @@ realistic depictions of the observable reality.
 \newthought{Over time various approaches} for creating artificial images (the so
 called rendering) have evolved. One of these approaches is ray tracing. This was
 introduced in~\citeyear{appel_techniques_1968}
-by~\citeauthor{appel_techniques_1968} in the
+by~\citeauthorfin{appel_techniques_1968} in the
 article~\citetitle{appel_techniques_1968}~\cite{appel_techniques_1968}. In
 \citeyear{whitted_improved_1980} this methods were improved
-by~\citeauthor{whitted_improved_1980} in his work
+by~\citeauthorfin{whitted_improved_1980} in his work
 \citetitle{whitted_improved_1980}~\cite{whitted_improved_1980}.
 
 \newthought{Ray tracing captivates} through simplicity while providing a very
@@ -39,7 +39,7 @@ second. Otherwise, due to the human anatomy, the output is perceived as either
 still and jerky images or as a too slow animation.
 
 \newthought{Sphere tracing} is a ray tracing approach introduced
-in~\citeyear{hart_sphere_1994} by~\citeauthor{hart_sphere_1994} in his
+in~\citeyear{hart_sphere_1994} by~\citeauthorfin{hart_sphere_1994} in his
 work~\citetitle{hart_sphere_1994}~\cite{hart_sphere_1994}. This approach is
 faster than the classical ray tracing approaches in its method of finding
 intersections between rays and objects.

@@ -54,7 +54,7 @@ vertical splitter.
 \begin{figure}
 @d Set up scene view in main window
 @{
-self.scene_view = guiscene.SceneView()
+self.scene_view = guiscene.SceneView(self)
 self.scene_view.setObjectName('scene_view')
 size_policy = QtWidgets.QSizePolicy(
     QtWidgets.QSizePolicy.Expanding,
@@ -242,20 +242,17 @@ will be drawn at the top left position.
 @d Scene view model methods
 @{
 def drawBackground(self, painter, rect):
-    # io = Qt.QGraphicsTextItem()
-    # io.setPos(0, 0)
-    # io.setDefaultTextColor(Qt.QColor(102, 102, 102))
-    # io.setPlainText(
-    #     "Scene: {0}".format(str(self))
-    # )
-    # self.addItem(io)
+    super(SceneViewModel, self).drawBackground(painter, rect)
 
     scene_rect = self.sceneRect()
+
+    # Draw scene identifier
     text_rect = QtCore.QRectF(scene_rect.left()   + 4,
                               scene_rect.top()    + 4,
                               scene_rect.width()  - 4,
                               scene_rect.height() - 4)
     message = str(self)
+    painter.save()
     font = painter.font()
     font.setBold(True)
     font.setPointSize(14)
@@ -263,7 +260,33 @@ def drawBackground(self, painter, rect):
     painter.setPen(QtCore.Qt.lightGray)
     painter.drawText(text_rect.translated(2, 2), message)
     painter.setPen(QtCore.Qt.black)
-    painter.drawText(text_rect, message)@}
+    painter.drawText(text_rect, message)
+    painter.restore()
+
+    # Draw insert at marker
+    width    = node_gui_domain.NodeViewModel.WIDTH
+    height   = node_gui_domain.NodeViewModel.HEIGHT
+    gradient = Qt.QLinearGradient(0, 0, width, 0)
+    color    = self.palette().highlight().color()
+    color.setAlpha(127)
+    gradient.setColorAt(0, color)
+    color.setAlpha(0)
+    gradient.setColorAt(1, color)
+    brush = QtGui.QBrush(gradient)
+    painter.save()
+    painter.translate(QtCore.QPoint(
+        self.insert_at.x() * node_gui_domain.NodeViewModel.WIDTH,
+        self.insert_at.y() * node_gui_domain.NodeViewModel.HEIGHT
+    ))
+    QtWidgets.qDrawPlainRect(painter, 0, 0, width + 1, height + 1, color, 0, brush)
+    gradient.setColorAt(0, color)
+    painter.setPen(QtGui.QPen(QtGui.QBrush(gradient), 0))
+    painter.drawLine(0, 0, 0, height)
+    painter.drawLine(0, 0, width, 0)
+    painter.drawLine(0, height, width, height)
+    painter.restore()
+
+@}
 \caption{The method to draw the background of a scene. It is used to draw the
   identifier of a scene at the top left position of it.
   \newline{}\newline{}Editor $\rightarrow$ Scene view model $\rightarrow$
@@ -306,7 +329,7 @@ scene.
 \begin{figure}
 @d Scene controller slots
 @{
-@@QtCore.pyqtSlot(domain_scene.SceneModel)
+@@QtCore.pyqtSlot(scene_domain.SceneModel)
 def on_scene_added(self, scene_domain_model):
     """React when a scene was added.
 
@@ -315,7 +338,7 @@ def on_scene_added(self, scene_domain_model):
     """
 
     if scene_domain_model.id_ not in self.scenes:
-        scene_view_model = guidomain_scene.SceneViewModel(
+        scene_view_model = scene_gui_domain.SceneViewModel(
             domain_object=scene_domain_model
         )
         self.scenes[scene_domain_model.id_] = scene_view_model
@@ -336,7 +359,7 @@ known scenes as well.
 \begin{figure}
 @d Scene controller slots
 @{
-@@QtCore.pyqtSlot(domain_scene.SceneModel)
+@@QtCore.pyqtSlot(scene_domain.SceneModel)
 def on_scene_removed(self, scene_domain_model):
     """React when a scene was removed/deleted.
 
@@ -367,7 +390,7 @@ the~\verb=do_select_scene= signal sent by the scene graph controller.
 \begin{figure}
 @d Scene controller slots
 @{
-@@QtCore.pyqtSlot(domain_scene.SceneModel)
+@@QtCore.pyqtSlot(scene_domain.SceneModel)
 def on_scene_changed(self, scene_domain_model):
     """Gets triggered when the scene was changed by the view.
 
@@ -398,7 +421,7 @@ view model of the new scene.
 \begin{figure}
 @d Scene controller signals
 @{
-do_change_scene = QtCore.pyqtSignal(guidomain_scene.SceneViewModel)
+do_change_scene = QtCore.pyqtSignal(scene_gui_domain.SceneViewModel)
 @}
 \caption{The signal which is emitted when the scene has been changed by the
   scene graph controller and that scene is known to the scene controller.

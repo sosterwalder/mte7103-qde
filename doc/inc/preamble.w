@@ -1,5 +1,31 @@
 % -*- mode: latex; coding: utf-8 -*-
 
+\makeatletter
+% textwidth Tuftian float for listings
+\newenvironment{listing}[1][htbp]
+  {\ifvmode\else\unskip\fi\begin{@@tufte@@float}[#1]{lstlisting}{}}
+  {\end{@@tufte@@float}}
+% fullwidth Tuftian float for listings
+\newenvironment{listing*}[1][htbp]%
+  {\ifvmode\else\unskip\fi\begin{@@tufte@@float}[#1]{lstlisting}{star}}
+  {\end{@@tufte@@float}}
+% enable re-use of \listoflistings facility
+\def\ext@@lstlisting{lol}
+% show listing number in caption even though \lst@@@@caption is empty
+\def\fnum@@lstlisting{\lstlistingname~\thelstlisting}
+\makeatother
+
+\renewcommand{\label}[1]{\@@tufte@@label{##1}}%
+% Handle subfigure package compatibility
+\ifthenelse{\boolean{@@tufte@@packages@@subfigure}}{%
+  % don't move the label while inside a \subfigure or \subtable command
+  \global\let\label\@@tufte@@orig@@label%
+}{}% subfigure package is not loaded
+
+\makeatletter
+\setboolean{@@tufte@@packages@@subfigure}{true}
+\makeatother
+
 % Load packages
 % ---------------------------------------------------------------------------
 \usepackage[usenames,dvipsnames,svgnames]{xcolor}
