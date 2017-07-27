@@ -333,6 +333,7 @@ def __init__(self, id_):
     self.id_    = id_
     self.type_  = None
     self.name   = None
+    self.script = None
     self.parent = None
 
     # This property is used when evaluating node instances using this node
@@ -529,20 +530,23 @@ class NodePart(object):
 \begin{figure}
 @d Node part domain model constructor
 @{
-def __init__(self, id_, default_function, type_=types.NodeType.GENERIC):
+def __init__(self, id_, default_function, type_=types.NodeType.GENERIC, script=None):
     """constructor.
 
     :param id_: the identifier of the node part.
     :type  id_: uuid.uuid4
-    :param default_function: the default function of the part
+    :param default_function: the default function of the part.
     :type default_function: function
     :param type_: the type of the node part.
     :type type_: qde.editor.foundation.types.NodeType
+    :param script: the script of the part.
+    :type script: str
     """
 
     self.id_              = id_
     self.function_        = default_function
     self.default_function = default_function
+    self.script           = script
     self.type_            = type_@}
 \caption{Constructor of the node part class.
   \newline{}\newline{}Editor $\rightarrow$ Node part}
@@ -1635,6 +1639,7 @@ def build_node_definition_part(cls, node_controller, parent, json_input):
     node_definition_part = node.NodeDefinitionPart(part_id)
     node_definition_part.name = name
     node_definition_part.type_ = type_
+    node_definition_part.script = script
     node_definition_part.parent = parent
 
     node_controller.node_definition_parts[part_id] = node_definition_part

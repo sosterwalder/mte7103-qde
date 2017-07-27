@@ -467,7 +467,7 @@ Depending on the material, four cases can occur. The material may be:
   \item emissive.
 \end{enumerate*}
 For simplicity only the third case is being taken into account. For the actual
-shading a local illumination method is used, called~\textit{Phong shading}.
+shading a local illumination method is used, called~\emph{Phong shading}.
 
 \newthought{The Phong illumination model}~\cite[p. 123]{foley_computer_1996} describes (reflected) light intensity
 $I$ as a composition of the ambient, the diffuse and the perfect specular

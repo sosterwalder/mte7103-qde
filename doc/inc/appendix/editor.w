@@ -382,7 +382,7 @@ def setup_ui(self):
     horizontal_layout.setObjectName('horizontal_layout')
     horizontal_layout.setContentsMargins(0, 0, 0, 0)
 
-    self.scene_graph_view = guiscene.SceneGraphView(self)
+    self.scene_graph_view = gui_scene.SceneGraphView(self)
     self.scene_graph_view.setObjectName('scene_graph_view')
     self.scene_graph_view.setMaximumWidth(300)
     horizontal_layout.addWidget(self.scene_graph_view)

@@ -54,7 +54,7 @@ vertical splitter.
 \begin{figure}
 @d Set up scene view in main window
 @{
-self.scene_view = guiscene.SceneView(self)
+self.scene_view = gui_scene.SceneView(self)
 self.scene_view.setObjectName('scene_view')
 size_policy = QtWidgets.QSizePolicy(
     QtWidgets.QSizePolicy.Expanding,

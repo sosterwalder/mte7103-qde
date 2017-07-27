@@ -495,6 +495,7 @@ in~\autoref{table:node-definition-components}.
 definitions but the output has always to be an atomic type as defined
 in~\autoref{table:node-definition-atomic-types}.
 
+\todo[inline]{Finish describing atomic types.}
 \begin{table}\centering
   \ra{1.3}
   \begin{tabularx}{\textwidth}{@@{}lX@@{}}
@@ -516,68 +517,8 @@ in~\autoref{table:node-definition-atomic-types}.
 \end{table}
 
 \newthought{An example} of an node definition of type~\emph{implicit} for
-rendering a sphere is given in~\autoref{fig:implicit-sphere-node-definition}.
-\begin{figure*}
-  \begin{minted}[%
-    bgcolor=LightGray,
-    escapeinside=||,
-    linenos=true,
-    mathescape=true,
-    tabsize=4]{js}
-{
-    "name": "Implicit sphere",
-    "id_": "16d90b34-a728-4caa-b07d-a3244ecc87e3",
-    "description": "Definition of a sphere by using implicit surfaces",
-    "inputs": [
-        @<Implicit sphere node inputs@>
-    ],
-    "outputs": [
-        @<Implicit sphere node outputs@>
-    ],
-    "definitions": [
-        @<Implicit sphere node definitions@>
-    ],
-  \end{minted}
-  \label{fig:node-definition-atomic-type}
-  \caption{Teh cap.}
-\end{figure*}
-
-\begin{figure*}
-  \begin{minted}[%
-    bgcolor=LightGray,
-    escapeinside=||,
-    linenos=true,
-    mathescape=true,
-    tabsize=4]{js}
-    "invocations": [
-        @<Implicit sphere node invocations@>
-    ],
-    "parts": [
-        @<Implicit sphere node parts@>
-    ],
-  \end{minted}
-  \label{fig:node-definition-atomic-type-2}
-  \caption{Teh cap 2.}
-\end{figure*}
-
-\begin{figure*}
-  \begin{minted}[%
-    bgcolor=LightGray,
-    escapeinside=||,
-    linenos=true,
-    mathescape=true,
-    tabsize=4]{js}
-    "nodes": [
-        @<Implicit sphere node nodes@>
-    ],
-    "connections": [
-        @<Implicit sphere node connections@>
-    ]
-}
-  \end{minted}
-  \label{fig:node-definition-atomic-type-3}
-  \caption{Teh cap 3.}
-\end{figure*}
+rendering a sphere is given
+in~\cref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
 
 \newthought{Subsequent each component of the editor} is shown in a component
 diagram in adapted form \cite[pp. 653 -- 654]{larman-applying-2004} and an
@@ -633,17 +574,337 @@ the scene tree view, the scene view and the renderer.
 managed. User interaction is provided through a tree-like view, which lets the
 user add, remove and select scenes.
 
-% \subsection{Node graph}
-% \label{results:subsec:program:node-graph}
-% 
+\subsection{Node graph}
+\label{results:subsec:program:node-graph}
+
 % \begin{figure*}[ht]
 %   \caption{Component diagram of the node graph component.}
 %   \label{fig:node-graph-component-diagram}
 %   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
 % \end{figure*}
-% 
+%
 % \begin{figure}[ht]
 %   \caption{Entity relationship diagram of the node graph component.}
 %   \label{fig:node-graph-erd}
 %   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
 % \end{figure}
+
+\newthought{The node graph component} enables the nodes of a scene to be
+managed. The nodes of a scene define its content.
+
+\newthought{Each node has parameters} which define the properties of a node.
+Such a parameter is for example the radius of a sphere for a node providing a
+sphere of type implicit.
+
+\newthought{Nodes have multiple inputs and one output} where each is of a
+specific type, as described
+in~\cref{lst:node-definition-atomic-types}~\enquote{\nameref{lst:node-definition-atomic-types}}.
+Inputs point to parameters of a node whereas outputs provide values. An output
+of a node may be connected to the input of another node. Every scene has a fixed
+input by default which is currently limited to implicit types (outputs) and acts
+as output of the scene.
+
+\newthought{The~\emph{content} of a node} is depending on the type of the
+node. The basis of the content is built by three things however:
+\begin{enumerate*}
+  \item its~\emph{definition},
+  \item its~\emph{invocation} and
+  \item its so called~\emph{part}.
+\end{enumerate*}
+
+\newthought{A definition of a node} is essentially a method written in OpenGL
+Shading Language which defines the function of the
+node.~\cref{fig:node-definition-example} shows an example of such a definition.
+It defines an implicit sphere with a certain radius at a certain position.
+
+\begin{figure}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+{
+    "id_": "99d20a26-f233-4310-adb2-5e540726d079",
+    "script": [
+        "// Returns the signed distance to a sphere with",
+        "//given radius for the given position.",
+        "float sphere(vec3 position, float radius)",
+        "{",
+        "    return length(position) - radius;",
+        "}"
+    ]
+}
+  \end{minted}
+\caption{Implementation of an implicit sphere in the OpenGL Shading Language
+  (GLSL) as definition in JSON format.}
+\label{fig:node-definition-example}
+\end{figure}
+
+\newthought{The~\emph{invocation} of a node} is the call to a method defined by
+the definition of a node. Invocations are also written in the OpenGL Shading
+Language.~\cref{fig:node-invocation-example} shows an example of a invocation.
+
+\begin{figure}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+{
+    "id_": "4cd369d2-c245-49d8-9388-6b9387af8376",
+    "type": "implicit",
+    "script": [
+        "float s = sphere(",
+        "  16d90b34-a728-4caa-b07d-a3244ecc87e3-position,",
+        "  5c6a538-1dbc-4add-a15d-ddc4a5e553da",
+        ");"
+    ]
+}
+  \end{minted}
+\caption{Calling of the previously defined GLSL function of an implicit sphere
+  as invocation in JSON format.}
+\label{fig:node-invocation-example}
+\end{figure}
+
+\newthought{A~\emph{part} of a node} defines what happens when a node is
+evaluated. This means usually evaluating the inputs of the node and use them as
+parameters.~\cref{fig:node-invocation-example} shows an example of a part.
+
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    escapeinside=||,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{js}
+{
+    "id_": "74b73ce7-8c9d-4202-a533-c77aba9035a6",
+    "name": "Implicit sphere node function",
+    "type_": "implicit",
+    "script": [
+      "# -*- coding: utf-8 -*-",
+      "",
+      "from PyQt5 import QtGui",
+      "",
+      "",
+      "class Class_ImplicitSphere(object):",
+      "    def __init__(self):",
+      "        self.position = QtGui.QVector3D()",
+      "",
+      "    def process(self, context, inputs):",
+      "      shader = context.current_shader.program",
+      "      ",
+      "      radius = inputs[0].process(context).value",
+      "      shader_radius_location = shader.uniformLocation(",
+      "          \"f5c6a538-1dbc-4add-a15d-ddc4a5e553da\"",
+      "      )",
+      "      shader.setUniformValue(",
+      "          shader_radius_location, radius",
+      "      )",
+      "      ",
+      "      position = self.position",
+      "      shader_position_location = shader.uniformLocation(",
+      "          \"16d90b34-a728-4caa-b07d-a3244ecc87e3-position\"",
+      "      )",
+      "      shader.setUniformValue(",
+      "          shader_position_location,",
+      "          position",
+      "      )",
+      "      ",
+      "      return context"
+    ]
+}
+  \end{minted}
+\caption{The~\emph{part} of the node providing an implicit sphere in JSON
+  format. Here the node node has two parameters: a radius and a position. The
+  value for the radius is derived from the first input of the node, the position
+  is a fixed vector. As the node is of type implicit it will be executed by a
+  shader on the graphics processing unit.}
+\label{fig:node-part-example}
+\end{figure*}
+
+\newthought{Evaluation of nodes} is done in two ways, the node is
+\begin{enumerate*}
+  \item directly selected or
+  \item connected to a scene (either through another node or
+    through the scene's input) and that scene is evaluated.
+\end{enumerate*}
+
+\newthought{Nodes are derived from} node definitions. The workflow object of the
+component, the~\verb=NodeController= class, reads node definitions from the file
+system. A dialog window allows to add the read node definitions as instances to
+a scene. When a node is selected it is rendered by the renderer component
+(see~\cref{results:subsec:program:renderer}~\enquote{\nameref{results:subsec:program:renderer}}).
+
+\subsection{Rendering}
+\label{results:subsec:program:rendering}
+
+% \begin{figure*}[ht]
+%   \caption{Component diagram of the node graph component.}
+%   \label{fig:node-graph-component-diagram}
+%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
+% \end{figure*}
+%
+% \begin{figure}[ht]
+%   \caption{Entity relationship diagram of the node graph component.}
+%   \label{fig:node-graph-erd}
+%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
+% \end{figure}
+
+\newthought{The rendering component} renders nodes and scenes. Nodes are
+rendered according to their type whereby only nodes of type implicit are
+currently supported. For rendering scenes the fixed input is evaluated
+recursively.
+
+\newthought{OpenGL is used for rendering}. Due to the usage of~\enquote{modern}
+OpenGL, everything that is rendered is rendered through a shader defined in the
+OpenGL Shading Language (GLSL).
+
+\newthought{As algorithm for rendering} the sphere tracing algorithm is used as
+described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+and shown in~\cref{fig:sphere-tracing-implementation}.
+
+\begin{figure}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{glsl}
+// Casts a ray from given origin in given direction. Stops
+// at given maximal distance and after the given amount of
+// steps. Maintains given precision.
+vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection,
+             in float maxDistance,
+             in float precision, in int steps)
+{
+    float latest          = precision * 2.0;
+    float currentDistance = 0.0;
+    float result          = -1.0;
+    vec3  ray             = vec3(0);
+
+    for(int i = 0; i < steps; i++) {
+        if (abs(latest)     < precision ||
+            currentDistance > maxDistance) {
+                continue;
+        }
+
+        ray = rayOrigin + rayDirection * currentDistance;
+        latest = scene1(ray);
+        currentDistance += latest;
+    }
+
+    if (currentDistance < maxDistance) {
+        result = currentDistance;
+    }
+
+    return result;
+}
+  \end{minted}
+\caption{The sphere tracing algorithm as implemented.}
+\label{fig:sphere-tracing-implementation}
+\end{figure}
+
+
+\newthought{For the shading} of objects Phong shading is used as
+described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+and shown in~\cref{fig:phong-shading-implementation}.
+
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{glsl}
+// Calculates the lighting for the given position, normal and direction,
+// the given light (position and color) respecting the 'material'.
+//
+// This is mainly applying the phong lighting model.
+//
+// Returns the calculated color as three-dimensional vector.
+vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection,
+                  in vec3 material, in vec3 lightPosition, in vec3 lightColor,
+                  in float currentDistance)
+{
+    vec3 color             = material;
+
+    vec3 lightDirection    = normalize(lightPosition);
+    vec3 reflection        = reflect(rayDirection, normal);
+
+    vec3  directColor      = vec3(1.0, 1.0, 1.0);
+    float kDirectLight     = 0.1;
+    vec3  direct           = kDirectLight * directColor;
+
+    vec3  ambientColor     = vec3(0.5, 0.7, 1.0);
+    float kAmbient         = 1.2;
+    float ambientExponent  = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
+    vec3  ambient          = kAmbient * ambientExponent * ambientColor;
+
+    vec3  diffuseColor     = vec3(1.0, 0.85, 0.55);
+    float kDiffuse         = 1.20;
+    float expDiffuse       = clamp(dot(lightDirection, normal), 0.0, 1.0);
+    vec3  diffuse          = kDiffuse * expDiffuse * diffuseColor;
+
+    vec3  specularColor    = vec3(1.0, 0.85, 0.55);
+    float kSpecular        = 1.2;
+    float specularFactor   = 160.0;
+    float specularExponent = pow(
+                                 clamp(dot(reflection, normal), 0.0, 1.0),
+                                 specularFactor
+                             );
+    vec3  specular         = kSpecular * specularExponent * specularColor * expDiffuse;
+
+    vec3 light             = direct + diffuse + specular + ambient;
+    color                  = color * light;
+    color                  = mix(
+                                 color,
+                                 vec3(0.8, 0.9, 1.0),
+                                 1.0 - exp(-0.002 * currentDistance * currentDistance)
+                             );
+
+    return color;
+}
+  \end{minted}
+\caption{Phong shading as implemented.}
+\label{fig:phong-shading-implementation}
+\end{figure*}
+
+\newthought{Lighting and materials} are currently implemented statically. For
+lighting a light source is hard-coded within the
+shader.~\Cref{fig:lights-implementation} shows the implementation of the light
+source. Concerning materials currently the same material for all objects is
+used.~\Cref{fig:material-implementation} shows the implementation of the
+material.
+
+\begin{figure}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{glsl}
+vec3 light1Color = vec3(0.9, 0.49, 0.83);
+vec3 light1Position = vec3(0.6, 0.7, 1.5);
+color = calcLighting(position, normal, rayDirection,
+                     material, light1Position,
+                     light1Color, currentDistance);
+  \end{minted}
+\caption{The hard-coded light source as implemented in the shader.}
+\label{fig:lights-implementation}
+\end{figure}
+
+\begin{figure*}
+  \begin{minted}[%
+    bgcolor=LightGray,
+    linenos=true,
+    mathescape=true,
+    tabsize=4]{glsl}
+// Calculates the material based on a given distance.
+vec3 calcMaterial(in float currentDistance)
+{
+    return 0.45 + 0.3 * sin(vec3(0.05, 0.08, 0.10) * (currentDistance - 10.0));
+}
+  \end{minted}
+\caption{The hard-coded material as implemented in the shader.}
+\label{fig:material-implementation}
+\end{figure*}
