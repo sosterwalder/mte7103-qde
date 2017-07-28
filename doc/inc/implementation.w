@@ -222,9 +222,6 @@ the layers visually for the reader.
 \subsection{Coupling and cohesion, signals and slots}
 \label{results:subsec:signals}
 
-% Signals:  Explain what signals are and how they are used, maybe draw an
-% illustrative diagram.
-
 \newthought{Whenever designing and developing} software, coupling and cohesion
 can occur and may pose a problem if not considered early and well enough.
 
@@ -269,7 +266,7 @@ class Observer:
         """Listens on the signal 'signal'. Expects the
         signal to send the parameter 'parameter' of
         type 'type'."""
-      
+
         ...
   \end{pythoncode}
   \label{lst:signal-slot:observer-slot}
