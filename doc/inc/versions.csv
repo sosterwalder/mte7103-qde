@@ -1,0 +1,15 @@
+89c75448dfcab055edc91b9244f0aeff3aa1c65a;89c7544;SO;2017-02-28 17:09:43;Set up initial project structure, provide first content
+10192d855b06780b7d04fad77e210011d84cc98e;10192d8;SO;2017-03-02 22:37:17;Set up project schedule
+54f4b23ff30767f6e0ba89e96f5c2a4a9d0de7cf;54f4b23;SO;2017-03-05 22:53:15;Set up project structure, implement main entry point and main window
+ffda0e55bbc70ab923f779460aba2595199933c5;ffda0e5;SO;2017-03-15 10:58:51;Scene graph, logging, adapt project schedule
+34b09b7b62081c1bb4228e6679ce6cecd4bddef5;34b09b7;SO;2017-03-24 17:08:22;Update meeting minutes, thoughts about node implementation
+06fe2680b24e561889ce020f0b0b4da97c5a9480;06fe268;SO;2017-04-03 23:00:35;Add requirements, node graph implemenetation
+d26417531534820cb72a280060510d837656b94c;d264175;SO;2017-04-10 16:07:01;Conversion from Org-Mode to Nuweb, revise editor implementation
+f8b524b27ed63e0d5be2c7e9e14f0d645fcdb8db;f8b524b;SO;2017-04-30 23:42:57;Approach node graph and nodes
+2f46832481234edf6a1b15fa9d4ef0bafd2d1efc;2f46832;SO;2017-05-04 21:13:41;Impel node definitions further
+ae34fc57eb9529b20762b7732fc5298429bdf9c2;ae34fc5;SO;2017-05-24 13:56:31;Change class to tufte-book, title page, introduction, further implementation
+
+27c549c589a5793e17b67d73641fad915948e084;27c549c;SO;2017-05-24 22:28:41;Change document structure, re-work admin. aspects
+6772ef95e2dd8062f9ca3f1d5a409ac8bf27f707;6772ef9;SO;2017-05-27 14:18:09;Adapt document structure, fundamentals: introduction and rendering
+399669db280b5a5e66cb9452440e595d8e1b8f83;399669d;SO;2017-05-29 09:10:48;Finish fundamentals
+66f44210fce37be3f05b05517b5a539b02b54759;66f4421;SO;2017-06-11 22:41:25;Add methodologies, begin adding results
