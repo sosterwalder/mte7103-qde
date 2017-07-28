@@ -37,96 +37,95 @@
 	.st31{font-size:12px;}
 	.st32{fill:#FFFFFF;}
 	.st33{font-size:7.3714px;}
-	.st34{font-size:6.996px;}
 </style>
 <g id="spheres">
 	<g id="layer7" transform="translate(33.297185,8.4084075)">
 		
-			<radialGradient id="path9470_1_" cx="-36.4039" cy="158.9919" r="186.7723" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="path9470_1_" cx="-69.7011" cy="392.5997" r="186.7723" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<path id="path9470" class="st0" d="M-3.2,31.7c86.4,0,156.4,70,156.4,156.4l0,0c0,86.4-70,156.4-156.4,156.4"/>
 		
-			<radialGradient id="path9490_1_" cx="95.153" cy="213.9916" r="28.149" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="path9490_1_" cx="61.8558" cy="337.6" r="28.149" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="path9490" class="st1" cx="143.3" cy="133.6" r="14.9"/>
 		
-			<radialGradient id="circle9492_1_" cx="110.6065" cy="203.0167" r="6.0685" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9492_1_" cx="77.3093" cy="348.5749" r="6.0685" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9492" class="st2" cx="147.1" cy="144.6" r="3.2"/>
 		
-			<radialGradient id="circle9496_1_" cx="111.5332" cy="219.0645" r="22.9331" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9496_1_" cx="78.236" cy="332.5271" r="22.9331" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9496" class="st3" cx="157" cy="128.5" r="12.1"/>
 		
-			<radialGradient id="circle9500_1_" cx="124.6822" cy="223.3649" r="19.5294" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9500_1_" cx="91.385" cy="328.2267" r="19.5294" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9500" class="st4" cx="168.3" cy="124.2" r="10.3"/>
 		
-			<radialGradient id="circle9504_1_" cx="136.0074" cy="226.9916" r="16.4121" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9504_1_" cx="102.7102" cy="324.6" r="16.4121" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9504" class="st5" cx="178" cy="120.6" r="8.7"/>
 		
-			<radialGradient id="circle9508_1_" cx="145.4869" cy="230.0526" r="13.8565" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9508_1_" cx="112.1897" cy="321.539" r="13.8565" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9508" class="st6" cx="186.1" cy="117.5" r="7.3"/>
 		
-			<radialGradient id="circle9512_1_" cx="152.3524" cy="232.6272" r="13.8565" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9512_1_" cx="119.0552" cy="318.9644" r="13.8565" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9512" class="st7" cx="193" cy="114.9" r="7.3"/>
 		
-			<radialGradient id="circle9516_1_" cx="154.1211" cy="235.1916" r="23.4976" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9516_1_" cx="120.8239" cy="316.4" r="23.4976" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9516" class="st8" cx="199.8" cy="112.4" r="12.4"/>
 		
-			<radialGradient id="circle9520_1_" cx="154.3719" cy="239.5117" r="45.0574" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9520_1_" cx="121.0747" cy="312.0799" r="45.0574" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9520" class="st9" cx="211.5" cy="108" r="23.8"/>
 		
-			<radialGradient id="circle9524_1_" cx="154.0126" cy="247.8059" r="87.9787" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9524_1_" cx="120.7154" cy="303.7857" r="87.9787" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9524" class="st10" cx="233.8" cy="99.6" r="46.6"/>
 		
-			<radialGradient id="circle9528_1_" cx="229.8277" cy="264.2627" r="27.0063" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9528_1_" cx="196.5305" cy="287.3289" r="27.0063" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9528" class="st11" cx="277.4" cy="83.3" r="14.3"/>
 		
-			<radialGradient id="circle9530_1_" cx="112.7739" cy="184.6916" r="9.6171" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9530_1_" cx="79.4767" cy="366.9" r="9.6171" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9530" class="st12" cx="151.2" cy="162.9" r="5.1"/>
 		
-			<radialGradient id="circle9539_1_" cx="104.2202" cy="158.9153" r="29.3637" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9539_1_" cx="70.923" cy="392.6763" r="29.3637" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
 		<circle id="circle9539" class="st13" cx="153" cy="188.6" r="15.5"/>
 		
-			<radialGradient id="circle9548_1_" cx="132.8553" cy="158.96" r="4.5829" gradientTransform="matrix(1 0 0 -1 33.2972 347.5916)" gradientUnits="userSpaceOnUse">
+			<radialGradient id="circle9548_1_" cx="99.5581" cy="392.6316" r="4.5829" gradientTransform="matrix(1 0 0 1 66.5944 -204)" gradientUnits="userSpaceOnUse">
 			<stop  offset="0" style="stop-color:#FFFFFF"/>
 			<stop  offset="1" style="stop-color:#000000"/>
 		</radialGradient>
@@ -229,13 +228,13 @@
 </g>
 <g id="layer1" transform="translate(27.167565,33.167368)">
 	
-		<linearGradient id="rect4273_1_" gradientUnits="userSpaceOnUse" x1="162.9093" y1="324.6869" x2="213.0593" y2="324.6869" gradientTransform="matrix(1.2312 0 0 1.2312 16.9235 -237.1545)">
+		<linearGradient id="rect4273_1_" gradientUnits="userSpaceOnUse" x1="141.9386" y1="17.2997" x2="192.0886" y2="17.2997" gradientTransform="matrix(1.2312 0 0 -1.2312 42.7426 183.8994)">
 		<stop  offset="0" style="stop-color:#004455"/>
 		<stop  offset="1" style="stop-color:#004455;stop-opacity:0"/>
 	</linearGradient>
 	<rect id="rect4273" x="217.7" y="150.3" class="st22" width="24.6" height="24.6"/>
 	
-		<linearGradient id="rect4291_1_" gradientUnits="userSpaceOnUse" x1="-48.1858" y1="323.9199" x2="11.0258" y2="323.9199" gradientTransform="matrix(1.0663 -0.6156 0.6156 1.0663 18.8538 -229.9963)">
+		<linearGradient id="rect4291_1_" gradientUnits="userSpaceOnUse" x1="-106.9851" y1="42.5683" x2="-47.7735" y2="42.5683" gradientTransform="matrix(1.0663 -0.6156 -0.6156 -1.0663 307.1616 124.5932)">
 		<stop  offset="0" style="stop-color:#FF6600"/>
 		<stop  offset="1" style="stop-color:#FF6600;stop-opacity:0"/>
 	</linearGradient>
@@ -463,7 +462,6 @@
 <text transform="matrix(1 0 0 1 133.97 175.4638)" class="st30 st31">f</text>
 <text transform="matrix(1 0 0 1 121.8533 188.0579)" class="st30 st31">g</text>
 <text transform="matrix(1 0 0 1 108.293 209.7001)" class="st30 st31">h</text>
-<text transform="matrix(1 0 0 1 281.3997 249.4654)" class="st30 st31">Horizon, d</text>
-<text transform="matrix(1 0 0 1 338.3404 254.1545)" class="st30 st34">max</text>
+<text transform="matrix(1 0 0 1 302.4194 253.3201)" class="st30 st31">Horizon</text>
 <text transform="matrix(1 0 0 1 10.5328 210.7534)" class="st30 st31">Origin</text>
 </svg>
