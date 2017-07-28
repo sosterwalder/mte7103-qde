@@ -76,7 +76,7 @@ into progressively larger subsystems, and the \textit{architectural style} that
 guides this organization -- these elements and their interfaces, their
 collaborations, and their composition.}
 
-Or as~\citeauthorfin{fowler_architect_2003}~\cite{folwer_architect_2003} puts
+Or as~\citeauthorfin{fowler_architect_2003}~\cite{fowler_architect_2003} puts
 it:~\enquote{Whether something is part of the architecture is entirely based on
 whether the developers think it is important. [...] So, this makes it hard to
 tell people how to describe their architecture.~\enquote{Tell us what is

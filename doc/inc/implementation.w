@@ -515,7 +515,7 @@ in~\autoref{table:node-definition-atomic-types}.
 
 \newthought{An example} of an node definition of type~\emph{implicit} for
 rendering a sphere is given
-in~\cref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
+in~\autoref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
 
 \newthought{Subsequent each component of the editor} is shown in a component
 diagram in adapted form \cite[pp. 653 -- 654]{larman-applying-2004} and an
@@ -557,13 +557,13 @@ the scene tree view, the scene view and the renderer.
 
 \begin{figure*}[ht]
   \caption{Component diagram of the scene tree component.}
-  \label{fig:scene-graph-component-diagram}
+\label{fig:scene-graph-component-diagram}
   \includegraphics[width=0.95\linewidth]{images/scene-graph-component-diagram}
 \end{figure*}
 
 \begin{figure}[ht]
   \caption{Entity relationship diagram of the scene tree component.}
-  \label{fig:scene-graph-erd}
+\label{fig:scene-graph-erd}
   \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
 \end{figure}
 
@@ -574,17 +574,17 @@ user add, remove and select scenes.
 \subsection{Node graph}
 \label{results:subsec:program:node-graph}
 
-% \begin{figure*}[ht]
-%   \caption{Component diagram of the node graph component.}
-%   \label{fig:node-graph-component-diagram}
-%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
-% \end{figure*}
-%
-% \begin{figure}[ht]
-%   \caption{Entity relationship diagram of the node graph component.}
-%   \label{fig:node-graph-erd}
-%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
-% \end{figure}
+\begin{figure*}[ht]
+  \caption{Component diagram of the node graph component.}
+\label{fig:node-graph-component-diagram}
+  \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
+\end{figure*}
+
+\begin{figure}[ht]
+  \caption{Entity relationship diagram of the node graph component.}
+\label{fig:node-graph-erd}
+  \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
+\end{figure}
 
 \newthought{The node graph component} enables the nodes of a scene to be
 managed. The nodes of a scene define its content.
@@ -733,22 +733,16 @@ parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 component, the~\verb=NodeController= class, reads node definitions from the file
 system. A dialog window allows to add the read node definitions as instances to
 a scene. When a node is selected it is rendered by the renderer component
-(see~\cref{results:subsec:program:renderer}~\enquote{\nameref{results:subsec:program:renderer}}).
+(see~\autoref{results:subsec:program:renderer}~\enquote{\nameref{results:subsec:program:renderer}}).
 
 \subsection{Rendering}
 \label{results:subsec:program:rendering}
 
-% \begin{figure*}[ht]
-%   \caption{Component diagram of the node graph component.}
-%   \label{fig:node-graph-component-diagram}
-%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
-% \end{figure*}
-%
-% \begin{figure}[ht]
-%   \caption{Entity relationship diagram of the node graph component.}
-%   \label{fig:node-graph-erd}
-%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
-% \end{figure}
+\begin{figure}[ht]
+  \caption{Entity relationship diagram of the renderer component.}
+\label{fig:renderer-erd}
+  \includegraphics[width=0.75\linewidth]{images/renderer-erd}
+\end{figure}
 
 \newthought{The rendering component} renders nodes and scenes. Nodes are
 rendered according to their type whereby only nodes of type implicit are
@@ -760,7 +754,7 @@ OpenGL, everything that is rendered is rendered through a shader defined in the
 OpenGL Shading Language (GLSL).
 
 \newthought{As algorithm for rendering} the sphere tracing algorithm is used as
-described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rending}}
 and shown in~\cref{fig:sphere-tracing-implementation}.
 
 \begin{figure}
@@ -805,7 +799,7 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection,
 
 
 \newthought{For the shading} of objects Phong shading is used as
-described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rending}}
 and shown in~\cref{fig:phong-shading-implementation}.
 
 \begin{figure*}
