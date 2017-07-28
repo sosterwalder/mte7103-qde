@@ -60,6 +60,7 @@
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{cleveref}
+\usepackage[figuresright]{rotating}
 
 % Settings
 %---------------------------------------------------------------------------

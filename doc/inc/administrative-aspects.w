@@ -64,13 +64,15 @@ including meetings, phases and milestones as well as the work schedule.
   \caption{List of deliverables.}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
-    \textbf{Deliverable} & \textbf{Description} \\
+    \textbf{Deliverable}    & \textbf{Description}                            \\
     \midrule
-    \textit{Report} & The report contains the theoretical and technical details for
-    implementing a system for composing real time computer graphics. \\
+    \textit{Report}         & The report contains the theoretical and technical details for
+    implementing a system for composing real time computer graphics.          \\
     \midrule
     \textit{Implementation} & The implementation of the system for composing real time
-    computer graphics, developed during this project. \\
+    computer graphics, developed during this project.                         \\
+    \midrule
+    \textit{Presentation}   & The presentation of the defense of this thesis. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -84,8 +86,7 @@ including meetings, phases and milestones as well as the work schedule.
 \newthought{Various meetings} with the supervisor and the expert helped to reach
 the defined goals and to prevent erroneous directions during the project. The
 supervisor and the expert supported the author by providing suggestions
-throughout the work period. The minutes of some meetings may be
-found under the appendix meeting minutes.~\todo{Add correct reference}
+throughout the work period. 
 
 \subsection{Phases and milestones}
 \label{subsec:project-phases-milestones}

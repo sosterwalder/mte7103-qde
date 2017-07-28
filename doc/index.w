@@ -50,10 +50,8 @@
 % \addcontentsline{toc}{chapter}{Glossary}
 % \glsaddall{}
 % \printglossaries{}
-\todo[inline]{Fix glossaries}
 
 % Index
 % \printindex{}
-\todo[inline]{Print index}
 
 \end{document}

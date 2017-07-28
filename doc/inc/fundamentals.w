@@ -73,29 +73,29 @@ selection of \textit{structural elements} and their interfaces by which the
 system is composed, together with their \textit{behavior} as specified in the
 collaborations among those elements, the \textit{composition} of these elements
 into progressively larger subsystems, and the \textit{architectural style} that
-guides this organization -- these elements and their interfaces, their
+guides this organization --- these elements and their interfaces, their
 collaborations, and their composition.}
 
 Or as~\citeauthorfin{fowler_architect_2003}~\cite{fowler_architect_2003} puts
 it:~\enquote{Whether something is part of the architecture is entirely based on
-whether the developers think it is important. [...] So, this makes it hard to
+whether the developers think it is important. [\ldots] So, this makes it hard to
 tell people how to describe their architecture.~\enquote{Tell us what is
 important.} Architecture is about the important stuff. Whatever that
 is.}
 
 \newthought{The idea envisaged for this thesis} of using a node based graph for
-modeling objects and scenes and rendering them using sphere tracing, was
+modeling objects and scenes and rendering them using sphere tracing was
 developed in advance of this thesis. To ensure that this technical
 implementation was really feasible, a prototype was developed during the
-previous project
-work~\enquote{\citetitle{osterwalder-volume-2016}}~\cite{osterwalder-volume-2016}.
+previous project work~\enquote{Volume ray casting --- basics \&
+principles}~\cite{osterwalder-volume-2016}.
 
 \newthought{The architecture of this prototype} had however evolved implicitly,
 and showed itself as hard to maintain and extend by providing no clear
 segregation between the data model and its representation.
 
-\newthought{With the next project
-work},~\enquote{\citetitle{osterwalder-qde-2016}}, a software architecture was
+\newthought{With the next project work},~\enquote{QDE --- a visual animation
+system, architecture}~\cite{osterwalder-qde-2016}, a software architecture was
 developed to prevent the occurrence of such problems. The software architecture
 is based on the rational unified process (RUP)~\cite{kruchten_rup_2003} what
 leads to an iterative approach.
@@ -117,13 +117,14 @@ requirements.
     \midrule
     Player & Reads objects and scenes defined by the editor component and plays
     them back in the defined chronological order.\\
+    \midrule
     Editor & Allows modeling and composing of objects and
     scenes using a node based graphical user interface. Renders objects
     and scenes in real time using sphere tracing. \\
     \bottomrule
   \end{tabularx}
   \caption{Description of the components of the program implemented.}
-  \label{table:software-components}
+\label{table:software-components}
 \end{table}
 
 \begin{table}[h]
@@ -140,7 +141,7 @@ requirements.
     \bottomrule
   \end{tabularx}
   \caption{Description of the sub components of the editor component.}
-  \label{table:editor:sub-components}
+\label{table:editor:sub-components}
 \end{table}
 
 \begin{figure}[ht]
@@ -152,7 +153,7 @@ requirements.
     4: Rendering view.\newline{}
     5: Time line.
   }
-  \label{fig:editor-components}
+\label{fig:editor-components}
   \includegraphics[width=0.95\linewidth]{images/editor-components}
 \end{figure}
 
@@ -169,21 +170,20 @@ components which build the sub components of the parent component, in this case
 the editor and player. These sub components represent the objects of the
 respective domain.
 
-\begin{figure*}[h]
+%\begin{figure*}[h]
+\begin{sidewaysfigure}
+  \centering
   \caption{Domain model of the editor component.}
-  \label{fig:editor-domain-model}
+\label{fig:editor-domain-model}
   \includegraphics[width=0.95\linewidth]{images/editor-domain-model}
-\end{figure*}
+\end{sidewaysfigure}
+%\end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}
   \caption{Domain model of the player component.}
-  \label{fig:player-domain-model}
-  \includegraphics[width=0.95\linewidth]{images/player-domain-model}
+\label{fig:player-domain-model}
+  \includegraphics[width=0.85\linewidth]{images/player-domain-model}
 \end{figure*}
-
-% TODO: Add may be a reference to the documentation? The image of the editor
-% domain model is too small to be read. --> Bigger, scaled and rotated. One
-% figure per page.
 
 \newthought{Identifying the important concepts} allows the
 definition of the logical architecture and shows the overall image of
@@ -211,7 +211,7 @@ model-view separation principle and exist in the application layer.
 \begin{table}[h]
   \caption{Layers as envisaged during the conceptual phase and used for
     the program implemented.}
-  \label{table:layers}
+\label{table:layers}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Layer} & \textbf{Description}\\
@@ -233,26 +233,27 @@ interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
 class diagram of the editor component and~\autoref{fig:player-class-diagram}
 shows the class diagram for the player component.
 
-\begin{figure*}[ht]
+\begin{sidewaysfigure}
   \caption{Class diagram of the editor component.}
-  \label{fig:editor-class-diagram}
-  \includegraphics[width=0.95\linewidth]{images/editor-class-diagram}
-\end{figure*}
+\label{fig:editor-class-diagram}
+  \includegraphics[width=0.85\linewidth]{images/editor-class-diagram}
+\end{sidewaysfigure}
 
-\begin{figure*}[ht]
+%\begin{figure*}[ht]
+\begin{sidewaysfigure}
+  \centering
   \caption{Class diagram of the player component.}
-  \label{fig:player-class-diagram}
-  \includegraphics[width=0.95\linewidth]{images/player-class-diagram}
-\end{figure*}
+\label{fig:player-class-diagram}
+  \includegraphics[width=0.9\linewidth]{images/player-class-diagram}
+\end{sidewaysfigure}
+%\end{figure*}
 
-% TODO: Add may be a reference to the documentation? The images of the class
-% diagrams are too small to be read. --> Bigger, scaled and rotated. One figure
-% per page.
+\newpage{}
 
 \section{Rendering}
 \label{sec:rendering}
 
-\newthought{This~\autoref{sec:rendering}} is a summary of the previous project
+\newthought{This section} is a summary of the previous project
 work of the author,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}. It describes the fundamentals for
 the rendering algorithm that is used for the program implemented in this thesis.
@@ -290,14 +291,15 @@ reflected from the first to the second}~\cite[pp. 775 and
 
 \newthought{In 1986 James Kajiya} set up the so called rendering equation, which
 expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
-776]{foley_computer_1996}
+776]{foley_computer_1996} The rendering equation is shown
+in~\autoref{eq:rendering-equation}.
 
 \begin{figure}
-  \label{eq:rendering-equation}
-  \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
   \begin{equation}
     I(x, x') = g(x, x')\left[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx''\right]
   \end{equation}
+  \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
+\label{eq:rendering-equation}
 \end{figure}
 
 \marginnote{%-130pt
@@ -359,8 +361,8 @@ expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 \newthought{Implementing a global illumination model} or the rendering equation
 directly for rendering images in viable (computational feasible in a workflow
 for instance for the production of animated films) or even real time is not
-really feasible, even on the fastest modern hardware (2017). The procedure is
-computationally complex and very time demanding.
+really feasible, even on the fastest modern hardware (as of 2017). The procedure
+is computationally complex and very time demanding.
 
 \newthought{A simplified approach} to implement global illumination models (and
 the rendering equation) is ray tracing. Ray tracing is able to produce high
@@ -381,17 +383,17 @@ are used to expand unbounding volumes (in this concrete case spheres, hence the
 name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
-    \caption{Illustration of the sphere tracing
-      algorithm.
-      Ray~\textit{e} hits no objects until reaching the horizon.
-      Rays~\textit{f},~\textit{g} and~\textit{h} hit
-      the solid~\textit{poly1}.}
-      \label{fig:sphere-tracing-1}
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
+  \caption{Illustration of the sphere tracing
+    algorithm.
+    Ray~\textit{e} hits no objects until reaching the horizon.
+    Rays~\textit{f},~\textit{g} and~\textit{h} hit
+    the solid~\textit{poly1}.}
+\label{fig:sphere-tracing-1}
 \end{figure}
 
-\newthought{Bounding volumes} are defined as the enclosure of a sold. On the
+\newthought{Bounding volumes} are defined as the enclosure of a solid. On the
 other hand, unbounding volumes are the space outside of a bounding volume,
 including the surface of the solid itself. For calculating a unbounding volume,
 the distance between an object and any defined origin point is evaluated. If
@@ -406,7 +408,7 @@ build a so called distance field.
 \newthought{The sphere tracing algorithm} is as follows. A ray is shot
 from an origin point (for example, the viewer such as an eye or a pinhole camera) into a scene.
 The radius of an unbounding volume in form of a sphere is calculated from
-the origin, as described above. They ray intersects with the sphere, which gives
+the origin, as described above. The ray intersects with the sphere, which gives
 the distance that the ray will travel in a first step. From this
 intersection the next unbounding volume (sphere) is expanded and its radius is
 calculated, which gives the next intersection of the ray. This procedure
@@ -423,11 +425,6 @@ render method which calls the sphere trace method. Shading means in this context
 the determination of the color of a surface or pixel.
 
 \begin{figure*}
-  \label{alg:sphere-tracing}
-  \caption{%
-    An abstract implementation of the sphere tracing algorithm. Algorithm in
-    pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
-  }
   \begin{pythoncode}
 def sphere_trace():
     ray_distance          = 0
@@ -454,6 +451,11 @@ def sphere_trace():
     # implicit surface, so simply return 0
     return 0
   \end{pythoncode}
+  \caption{%
+    An abstract implementation of the sphere tracing algorithm. Algorithm in
+    pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
+  }
+\label{alg:sphere-tracing}
 \end{figure*}
 
 \newthought{Shading} is done as proposed by~\citeauthorfin{whitted_improved_1980}
@@ -469,26 +471,27 @@ Depending on the material, four cases can occur. The material may be:
 For simplicity only the third case is being taken into account. For the actual
 shading a local illumination method is used, called~\emph{Phong shading}.
 
+\newpage{}
+
 \newthought{The Phong illumination model}~\cite[p. 123]{foley_computer_1996} describes (reflected) light intensity
 $I$ as a composition of the ambient, the diffuse and the perfect specular
-reflection of a surface.
+reflection of a surface.~\autoref{eq:phong-equation} shows the Phong
+illumination model.
 
 \begin{figure}
-  \label{eq:phong-equation}
-  \caption{%
-    The Phong illumination model as defined by Phong Bui-Tuong.~\cite[p. 123]{foley_computer_1996} Note that
-    the emissive term was left out intentionally as it is mainly used to achieve
-    special effects.\newline{}
-    \newline{}
-    Foo.
-  }
   \begin{equation}
     I(\vv{V}) = k_{a} \cdot L_{a} + k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) + k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
   \end{equation}
+  \caption{%
+    The Phong illumination model as defined by Phong Bui-Tuong.~\cite[p. 123]{foley_computer_1996} Note that
+    the emissive term was left out intentionally as it is mainly used to achieve
+    special effects.
+  }
+\label{eq:phong-equation}
 \end{figure}
 
-% \marginnote[-130pt]{
-\marginnote{
+\marginnote[20pt]{
+% \marginnote{
   \begin{description}
     \item[$I(x, x')$] Intensity of the light at point $\vv{V}$.
     \item[$k_{a}$] A constant defining the ratio of reflection of the ambient

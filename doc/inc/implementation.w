@@ -66,9 +66,10 @@ shown in the third section.
 \newthought{The software architecture} defines the significant decisions of the
 program implemented, such as the selection of structural elements, their
 behavior and their interfaces.~\cite{kruchten_rup_2003} The architecture is
-derived from the experiences based on the former
-projects,~\citetitle{osterwalder-volume-2016}
-and~\citetitle{osterwalder-qde-2016}, which build the fundamentals of this
+derived from the experiences based on the former projects,~\enquote{Volume ray
+casting --- basics \& principles}~\cite{osterwalder-volume-2016}
+and~\enquote{QDE --- a visual animation system,
+architecture}~\cite{osterwalder-qde-2016}, which build the fundamentals of this
 thesis, see~\autoref{chap:fundamentals}~\enquote{\nameref{chap:fundamentals}}.
 
 \newthought{Three aspects} define the software architecture:
@@ -136,21 +137,23 @@ in~\cref{fig:software-design-pattern-components-player}.
   \end{tabularx}
   \caption{Description of the types of components of the software design
     pattern used.~\cite{fowler-presentation-2004, gossman-mvvm-2005}}
-  \label{table:software-design-pattern-components}
+\label{table:software-design-pattern-components}
 \end{table*}
 
-\begin{figure*}[ht]
+\vspace{5mm}
+  
+\begin{figure*}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/mvvmc}
   \caption{Components of the used pattern for the editor and their
     communication.}
-  \label{fig:software-design-pattern-components-editor}
+\label{fig:software-design-pattern-components-editor}
 \end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/mvvmc-player}
   \caption{Components of the used pattern for the player and their
     communication.}
-  \label{fig:software-design-pattern-components-player}
+\label{fig:software-design-pattern-components-player}
 \end{figure*}
 
 \newthought{The Qt framework} which is used, offers a very similar pattern
@@ -168,7 +171,7 @@ this model/view pattern.
 \begin{figure}[ht]
   \includegraphics[width=0.6\linewidth]{images/model-view-pattern}
   \caption{Qt's model/view pattern.~\cite{qt-mvp-2017}}
-  \label{fig:software-design-pattern-qt-mvp}
+\label{fig:software-design-pattern-qt-mvp}
 \end{figure}
 
 \newthought{Although offering advantages}, such as to customize the presentation
@@ -206,7 +209,7 @@ the layers visually for the reader.
     \toprule
     \textbf{Layer} & \textbf{Description} & \textbf{Examples} \\
     \midrule
-    \includegraphics[width=0.9\linewidth]{images/layers-gui}         & All elements of the graphical user interface, views.                                & Scene tree view, scene view, render view                                   \\
+    \includegraphics[width=1.0\linewidth]{images/layers-gui}         & All elements of the graphical user interface, views.                                & Scene tree view, scene view, render view                                   \\
     \includegraphics[width=1.0\linewidth]{images/layers-gui-domain}  & View models.                                                                        & Scene tree view model, node view model                                     \\
     \includegraphics[width=1.0\linewidth]{images/layers-application} & Controller (workflow objects).                                                      & Main application, scene tree controller, scene controller, node controller \\
     \includegraphics[width=1.0\linewidth]{images/layers-domain}      & Data models according to the logic of the application.                              & Scene model, parameter model, node definition model, node domain model     \\
@@ -216,7 +219,7 @@ the layers visually for the reader.
   \end{tabularx}
   \vspace*{\baselineskip}
   \caption{Layers of the program implemented.}
-  \label{table:results:layers}
+\label{table:results:layers}
 \end{table*}
 
 \subsection{Coupling and cohesion, signals and slots}
@@ -248,16 +251,17 @@ implementation of the observer pattern, which can be seen informally
 in~\cref{fig:signals-observer-pattern}
 and~\cref{fig:signal-and-slot-relationship}.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/observer-pattern}
   \caption{The observer pattern.~\cite{gamma-dpe-1995}}
-  \label{fig:signals-observer-pattern}
+\label{fig:signals-observer-pattern}
 \end{figure}
 
 \newthought{A signal is an observable event.} A slot is a potential observer,
-typically a method of an object.
+typically a method of an object. An example of an observer is given
+in~\cref{lst:signal-slot:observer-slot}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 class Observer:
 
@@ -269,40 +273,41 @@ class Observer:
 
         ...
   \end{pythoncode}
-  \label{lst:signal-slot:observer-slot}
   \caption{An example of a class called~\enquote{Observer} with a slot
     called~\enquote{on\_signal}. The slot expects the signal to send a parameter
     of type~\enquote{type}.
   }
+\label{lst:signal-slot:observer-slot}
 \end{figure}
 
-\newthought{Slots are registered as observers} to signals.
+\newthought{Slots are registered as observers} to signals as shown
+in~\cref{lst:signal-slot:connect}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 subject.signal.connect(
     observer.on_signal
 )
   \end{pythoncode}
-  \label{lst:signal-slot:connect}
   \caption{The~\enquote{on\_signal} slot (which is a method of the
     object~\enquote{observer}) is registered to the signal~\enquote{signal} of
     the object~\enquote{subject}.}
+\label{lst:signal-slot:connect}
 \end{figure}
 
 \newthought{Whenever a signal is emitted}, the emitting class must call all the
-registered observers for that signal.
+registered observers for that signal as shown in~\cref{lst:signal-slot:emit}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 subject.signal.emit(some_parameter)
   \end{pythoncode}
-  \label{lst:signal-slot:emit}
   \caption{The signal~\enquote{signal} of the object~\enquote{subject} is
     emitted. The signal contains a parameter called~\enquote{some\_parameter}.
     This means that the emitting class,~\enquote{Signal}, will call the
     registered method~\enquote{on\_signal} of the observer
     called~\enquote{observer}.}
+\label{lst:signal-slot:emit}
 \end{figure}
 
 \newthought{The relationship between signals and slots} is a many-to-many
@@ -310,12 +315,12 @@ relationship. One signal may be connected to any number of slots and a slot may
 listen to any number of signals. A relationship between a signal and a slot is
 shown in~\cref{fig:signal-and-slot-relationship}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/signal-and-slot}
   \caption{An observer is listening to a signal sent by a subject. The subject
     emits the signal and calls then the observers that are registered for that
     signal (or the registered slots of the observers respectively).}
-  \label{fig:signal-and-slot-relationship}
+\label{fig:signal-and-slot-relationship}
 \end{figure}
 
 \newthought{Signals can carry additional information}, such as single values or
@@ -330,17 +335,17 @@ signal 1
 This information could for example be used in a dialog showing the progress of
 loading from the file system.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 self.total_node_definitions.emit(num_node_definitions)
   \end{pythoncode}
-  \label{lst:signal-slot-example-1}
   \caption{%
     An example of emitting a signal including a value.
   }
+\label{lst:signal-slot-example-1}
 \end{figure}
 
-\begin{figure*}
+\begin{figure*}[!htbp]
   \begin{pythoncode}
 for index, definition_file in enumerate(node_definition_files):
     node_definition = self.load_node_definition_from_file(
@@ -348,11 +353,11 @@ for index, definition_file in enumerate(node_definition_files):
     )
     self.node_definition_loaded(index, node_definition)
   \end{pythoncode}
-  \label{lst:signal-slot-example-2}
   \caption{%
     An example of emitting a signal including a value and a reference to an
     object.
   }
+\label{lst:signal-slot-example-2}
 \end{figure*}
 
 \section{Literate programming}
@@ -427,13 +432,13 @@ bindings~\protect\footnote{version 5.7,
 \url{https://riverbankcomputing.com/software/pyqt/intro}} for Qt and
 OpenGL~\protect\footnote{version 3.3, \url{https://www.opengl.org/}}.
 
-\begin{figure}[ht]
+\vspace{10mm}
+
+\begin{figure}[!htbp]
+  \includegraphics[width=0.95\linewidth]{images/editor}
   \caption{The implemented editor component.}
-  \label{fig:editor}
-  \includegraphics[width=0.95\linewidth]{images/editor-components}
+\label{fig:editor}
 \end{figure}
-\todo[inline]{Provide real image of the component, but use numbering for the
-  components.}
 
 \newthought{The quintessence of both components} is to output respectively to
 read a data structure in the JSON~\cite{ecma-json-2013} format which defines an
@@ -454,7 +459,7 @@ scene and therefore of an animation.
 \newthought{Node definitions} provide content in a specific structure, shown
 in~\autoref{table:node-definition-components}.
 
-\begin{table}\centering
+\begin{table}[!htbp]\centering
   \ra{1.3}
   \begin{tabularx}{\textwidth}{@@{}lX@@{}}
     \toprule
@@ -485,32 +490,31 @@ in~\autoref{table:node-definition-components}.
     \bottomrule
   \end{tabularx}
   \caption{Properties/attributes of a node definition.}
-  \label{table:node-definition-components}
+\label{table:node-definition-components}
 \end{table}
 
 \newthought{Content} is whatever a node definition provides in terms of the
 definitions but the output has always to be an atomic type as defined
-in~\autoref{table:node-definition-atomic-types}.
+in~\cref{table:node-definition-atomic-types}.
 
-\todo[inline]{Finish describing atomic types.}
-\begin{table}\centering
+\begin{table}[!htbp]\centering
   \ra{1.3}
   \begin{tabularx}{\textwidth}{@@{}lX@@{}}
     \toprule
-    \textbf{Atomic type} & \textbf{Description}                                         \\
-    \hline
-    \textit{Generic}     & A global unique identifier (UUID\protect\footnotemark[1]{}). \\
-    \textit{Float}       & The name of the node, e.g. "Sphere".                         \\
-    \textit{Text}        & A description of the node's purpose.                         \\
-    \textit{Scene}       & Parameters given to the node as inputs. This may be          \\
-    \textit{Image}       & Values delivered by the node as outputs.                     \\
-    \textit{Dynamic}     & A list of the node's definitions. This may be an             \\
-    \textit{Mesh}        & The format of a call to the node definition, including       \\
-    \textit{Implicit}    & Defines text that may be processed when calling the node.    \\
+    \textbf{Atomic type} & \textbf{Description}                       \\
+    \midrule
+    \textit{Generic}     & A global unique identifier.                \\
+    \textit{Float}       & A floating point value.                    \\
+    \textit{Text}        & Characters as text string.                 \\
+    \textit{Scene}       & Used for nesting scenes.                   \\
+    \textit{Image}       & An image, typically a texture.             \\
+    \textit{Dynamic}     & Dynamic values, e.g.\ time or sine values. \\
+    \textit{Mesh}        & Triangle based meshes.                     \\
+    \textit{Implicit}    & Implicit objects.                          \\
     \bottomrule
   \end{tabularx}
   \caption{Atomic types, that define a node (definition).}
-  \label{lst:node-definition-atomic-types}
+\label{table:node-definition-atomic-types}
 \end{table}
 
 \newthought{An example} of an node definition of type~\emph{implicit} for
@@ -518,7 +522,7 @@ rendering a sphere is given
 in~\autoref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
 
 \newthought{Subsequent each component of the editor} is shown in a component
-diagram in adapted form \cite[pp. 653 -- 654]{larman-applying-2004} and an
+diagram in adapted form~\cite[pp. 653 -- 654]{larman-applying-2004} and an
 entity relationship diagram~\cite[pp. 501 ff.]{larman-applying-2004} (if
 appropriate), followed by a description of the component. The component diagram
 is used to show the signals that a component emits and receives. The entity
@@ -531,19 +535,21 @@ sections of this chapter. Although the implementation of the components is very
 specific, in terms of the programming language, their logic may be reused later
 for the player component.
 
+\newpage{}
+
 \subsection{Editor}
 \label{results:subsec:program:editor}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
+  \includegraphics[width=0.55\linewidth]{images/editor-component-diagram}
   \caption{Component diagram of the editor component.}
-  \label{fig:editor-component-diagram}
-  \includegraphics[width=0.95\linewidth]{images/editor-component-diagram}
+\label{fig:editor-component-diagram}
 \end{figure*}
 
-\begin{figure}[ht]
-  \caption{Entity relationship diagram of the editor component.}
-  \label{fig:editor-erd}
+\begin{figure}[!htbp]
   \includegraphics[width=0.75\linewidth]{images/editor-erd}
+  \caption{Entity relationship diagram of the editor component.}
+\label{fig:editor-erd}
 \end{figure}
 
 \newthought{The editor component} is the main component, which acts as entry
@@ -555,16 +561,16 @@ the scene tree view, the scene view and the renderer.
 \subsection{Scene tree}
 \label{results:subsec:program:scene-tree}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \caption{Component diagram of the scene tree component.}
 \label{fig:scene-graph-component-diagram}
-  \includegraphics[width=0.95\linewidth]{images/scene-graph-component-diagram}
+  \includegraphics[width=0.5\linewidth]{images/scene-graph-component-diagram}
 \end{figure*}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \caption{Entity relationship diagram of the scene tree component.}
 \label{fig:scene-graph-erd}
-  \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
+  \includegraphics[width=0.5\linewidth]{images/scene-graph-erd}
 \end{figure}
 
 \newthought{The scene tree component} enables the scenes of the animation to be
@@ -574,16 +580,16 @@ user add, remove and select scenes.
 \subsection{Node graph}
 \label{results:subsec:program:node-graph}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \caption{Component diagram of the node graph component.}
 \label{fig:node-graph-component-diagram}
-  \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
+  \includegraphics[width=0.5\linewidth]{images/node-graph-component-diagram}
 \end{figure*}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \caption{Entity relationship diagram of the node graph component.}
 \label{fig:node-graph-erd}
-  \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
+  \includegraphics[width=0.5\linewidth]{images/node-graph-erd}
 \end{figure}
 
 \newthought{The node graph component} enables the nodes of a scene to be
@@ -594,10 +600,9 @@ Such a parameter is for example the radius of a sphere for a node providing a
 sphere of type implicit.
 
 \newthought{Nodes have multiple inputs and one output} where each is of a
-specific type, as described
-in~\cref{lst:node-definition-atomic-types}~\enquote{\nameref{lst:node-definition-atomic-types}}.
-Inputs point to parameters of a node whereas outputs provide values. An output
-of a node may be connected to the input of another node. Every scene has a fixed
+specific type, as described in~\cref{table:node-definition-atomic-types}. Inputs
+point to parameters of a node whereas outputs provide values. An output of a
+node may be connected to the input of another node. Every scene has a fixed
 input by default which is currently limited to implicit types (outputs) and acts
 as output of the scene.
 
@@ -614,7 +619,7 @@ Shading Language which defines the function of the
 node.~\cref{fig:node-definition-example} shows an example of such a definition.
 It defines an implicit sphere with a certain radius at a certain position.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -638,11 +643,13 @@ It defines an implicit sphere with a certain radius at a certain position.
 \label{fig:node-definition-example}
 \end{figure}
 
+\newpage{}
+
 \newthought{The~\emph{invocation} of a node} is the call to a method defined by
 the definition of a node. Invocations are also written in the OpenGL Shading
 Language.~\cref{fig:node-invocation-example} shows an example of a invocation.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -669,7 +676,7 @@ Language.~\cref{fig:node-invocation-example} shows an example of a invocation.
 evaluated. This means usually evaluating the inputs of the node and use them as
 parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 
-\begin{figure*}
+\begin{figure*}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -722,6 +729,8 @@ parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 \label{fig:node-part-example}
 \end{figure*}
 
+\newpage{}
+
 \newthought{Evaluation of nodes} is done in two ways, the node is
 \begin{enumerate*}
   \item directly selected or
@@ -732,16 +741,15 @@ parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 \newthought{Nodes are derived from} node definitions. The workflow object of the
 component, the~\verb=NodeController= class, reads node definitions from the file
 system. A dialog window allows to add the read node definitions as instances to
-a scene. When a node is selected it is rendered by the renderer component
-(see~\autoref{results:subsec:program:renderer}~\enquote{\nameref{results:subsec:program:renderer}}).
+a scene. When a node is selected it is rendered by the renderer component.
 
 \subsection{Rendering}
 \label{results:subsec:program:rendering}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \caption{Entity relationship diagram of the renderer component.}
 \label{fig:renderer-erd}
-  \includegraphics[width=0.75\linewidth]{images/renderer-erd}
+  \includegraphics[width=0.95\linewidth]{images/renderer-erd}
 \end{figure}
 
 \newthought{The rendering component} renders nodes and scenes. Nodes are
@@ -754,10 +762,10 @@ OpenGL, everything that is rendered is rendered through a shader defined in the
 OpenGL Shading Language (GLSL).
 
 \newthought{As algorithm for rendering} the sphere tracing algorithm is used as
-described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rendering}}
 and shown in~\cref{fig:sphere-tracing-implementation}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     linenos=true,
@@ -797,9 +805,10 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection,
 \label{fig:sphere-tracing-implementation}
 \end{figure}
 
+\newpage{}
 
 \newthought{For the shading} of objects Phong shading is used as
-described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rendering}}
 and shown in~\cref{fig:phong-shading-implementation}.
 
 \begin{figure*}

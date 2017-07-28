@@ -84,6 +84,7 @@
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{cleveref}
+\usepackage[figuresright]{rotating}
 
 % Settings
 %---------------------------------------------------------------------------
@@ -287,19 +288,39 @@
 \restoregeometry
 \thispagestyle{empty}%
 \clearpage%
-% -*- coding: utf-8 -*-
+
+% -*- mode: latex; coding: utf-8 -*-
+
+% Versions:
+% -----------------------------------------------
+
+\chapter*{}
+\label{chap:versions}
+
+\begin{versionhistory}
+    \vhEntry{ 89c7544 }{ 2017-02-28 17:09:43 }{ SO }{ Set up initial project structure, provide first content }
+    \vhEntry{ 10192d8 }{ 2017-03-02 22:37:17 }{ SO }{ Set up project schedule }
+    \vhEntry{ 54f4b23 }{ 2017-03-05 22:53:15 }{ SO }{ Set up project structure, implement main entry point and main window }
+    \vhEntry{ ffda0e5 }{ 2017-03-15 10:58:51 }{ SO }{ Scene graph, logging, adapt project schedule }
+    \vhEntry{ 34b09b7 }{ 2017-03-24 17:08:22 }{ SO }{ Update meeting minutes, thoughts about node implementation }
+    \vhEntry{ 06fe268 }{ 2017-04-03 23:00:35 }{ SO }{ Add requirements, node graph implemenetation }
+    \vhEntry{ d264175 }{ 2017-04-10 16:07:01 }{ SO }{ Conversion from Org-Mode to Nuweb, revise editor implementation }
+    \vhEntry{ f8b524b }{ 2017-04-30 23:42:57 }{ SO }{ Approach node graph and nodes }
+    \vhEntry{ 2f46832 }{ 2017-05-04 21:13:41 }{ SO }{ Impel node definitions further }
+    \vhEntry{ ae34fc5 }{ 2017-05-24 13:56:31 }{ SO }{ Change class to tufte-book, title page, introduction, further implementation }
+    \vhEntry{ 27c549c }{ 2017-05-24 22:28:41 }{ SO }{ Change document structure, re-work admin. aspects }
+    \vhEntry{ 6772ef9 }{ 2017-05-27 14:18:09 }{ SO }{ Adapt document structure, fundamentals: introduction and rendering }
+    \vhEntry{ 399669d }{ 2017-05-29 09:10:48 }{ SO }{ Finish fundamentals }
+    \vhEntry{ 66f4421 }{ 2017-06-11 22:41:25 }{ SO }{ Add methodologies, begin adding results }
+    \vhEntry{ a1e709d }{ 2017-06-27 12:43:16 }{ SO }{ Update meeting minutes, restructure appendix, add results }
+    \vhEntry{ 52bb736 }{ 2017-07-11 17:16:21 }{ SO }{ Remove obsolete parts, first corrections }
+    \vhEntry{ 2a95fb7 }{ 2017-07-20 16:19:39 }{ SO }{ Finish corrections and implementation }
+    \vhEntry{ 9f4da06 }{ 2017-07-28 23:56:18 }{ SO }{ Final version of the main part }
+    
+\end{versionhistory}% -*- coding: utf-8; mode: latex; -*-
 
 \chapter*{Abstract}
 \label{chap:abstract}
-
-\todo[inline]{Provide correct abstract.}
-A highly optimized rendering algorithm based on ray
-tracing is presented. It outperforms the classical ray tracing methods and
-allows the rendering of ray traced scenes in real-time on the GPU.~The
-classical approach for modelling scenes using triangulated meshes is replaced
-by mathematical descriptions based on signed distance functions. The
-effectiveness of the algorithm is demonstrated using a prototype application
-which renders a simple scene in real-time.
 
 % Richtet sich der Bericht an eine breitere Öffentlichkeit oder an technische Laien, die aufgrund fehlender
 % Sachkenntnis nicht den ganzen Bericht lesen wollen, dann kann die Zusammenfassung zum
@@ -317,6 +338,62 @@ which renders a simple scene in real-time.
 % Zusammenfassung.
 % Die Zusammenfassung wird erst am Ende des Arbeitsprozesses verfasst.
 
+\newthought{Computer science has always strived} to create representations of
+scenes and models as near to human reality as possible. One such representation
+is~\emph{ray tracing}, based on the physics of light as well as the properties
+of surface materials. In contrast to ray tracing,~\emph{sphere tracing} allows
+the rendering of ray traced images in real-time.
+
+\newthought{The de facto way of representing objects} however, using triangle
+based meshes, cannot be used directly with this method. Instead, an alternative
+basis uses distance fields defined by implicit functions. At present there are
+no solutions known to the author that provide a convenient way to use implicit
+functions for modeling and sphere tracing for rendering.
+
+\newthought{This thesis presents the design and development} of a program which
+provides both a modular, node based approach for modeling and animating objects
+using implicit functions, and allows rendering in real-time using sphere
+tracing.
+
+\newthought{To reach the intended goal}, the approach was to develop a software
+architecture and to use literate programming and the agile methodology of
+extreme programming for development.~\emph{Literate programming} considers
+programs as works of literature. A literate program includes documentation which
+explains in human terms what the computer must do.
+% To overcome one of the main
+% challenges when developing the software --- continual change --- an adapted
+% version of extreme programming was used. This methodology was selected because
+% of experiences with projects involving continual adaption in which exact
+% planning, analysis and design (as traditional methodologies require) would not
+% have been very practical.
+
+\newthought{The results of this thesis} are an architecture for a software
+program, and the program itself, written using the literate programming
+paradigm.
+\newthought{Three aspects define the software architecture}:
+\begin{enumerate*}
+  \item the model-view-view model software design pattern using controllers in
+    addition,
+  \item the layered software architectural pattern and
+  \item the observer software design pattern, allowing communication between
+    components of the software.
+\end{enumerate*}
+
+\newthought{The software itself} is an editor which allows modeling objects,
+composing objects to scenes and rendering scenes in real-time. Scenes are stored
+in a scene graph structure and are represented by a tree view. Each scene can
+contain one or more objects, defined by external files and represented as nodes
+in the graph structure. The parameters of objects are used for interconnections
+between nodes. For rendering, the sphere tracing algorithm established in the
+preceding project work was used.
+
+\newthought{Literate programming takes some accustomization} as it requires a
+different way of thinking to that of conventional software development. Despite
+this, the basic goals could be reached. Sphere tracing is a very interesting and
+promising approach to rendering which is coming into use in the industry, for
+example for calculating ambient occlusion or soft shadows. Time will tell if the
+method will establish itself further and become practicable for rendering
+conventional meshes.
 % Table of contents / Lists of
 %---------------------------------------------------------------------------
 \tableofcontents{}
@@ -559,13 +636,15 @@ including meetings, phases and milestones as well as the work schedule.
   \caption{List of deliverables.}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
-    \textbf{Deliverable} & \textbf{Description} \\
+    \textbf{Deliverable}    & \textbf{Description}                            \\
     \midrule
-    \textit{Report} & The report contains the theoretical and technical details for
-    implementing a system for composing real time computer graphics. \\
+    \textit{Report}         & The report contains the theoretical and technical details for
+    implementing a system for composing real time computer graphics.          \\
     \midrule
     \textit{Implementation} & The implementation of the system for composing real time
-    computer graphics, developed during this project. \\
+    computer graphics, developed during this project.                         \\
+    \midrule
+    \textit{Presentation}   & The presentation of the defense of this thesis. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -579,8 +658,7 @@ including meetings, phases and milestones as well as the work schedule.
 \newthought{Various meetings} with the supervisor and the expert helped to reach
 the defined goals and to prevent erroneous directions during the project. The
 supervisor and the expert supported the author by providing suggestions
-throughout the work period. The minutes of some meetings may be
-found under the appendix meeting minutes.~\todo{Add correct reference}
+throughout the work period. 
 
 \subsection{Phases and milestones}
 \label{subsec:project-phases-milestones}
@@ -718,29 +796,29 @@ selection of \textit{structural elements} and their interfaces by which the
 system is composed, together with their \textit{behavior} as specified in the
 collaborations among those elements, the \textit{composition} of these elements
 into progressively larger subsystems, and the \textit{architectural style} that
-guides this organization -- these elements and their interfaces, their
+guides this organization --- these elements and their interfaces, their
 collaborations, and their composition.}
 
-Or as~\citeauthorfin{fowler_architect_2003}~\cite{folwer_architect_2003} puts
+Or as~\citeauthorfin{fowler_architect_2003}~\cite{fowler_architect_2003} puts
 it:~\enquote{Whether something is part of the architecture is entirely based on
-whether the developers think it is important. [...] So, this makes it hard to
+whether the developers think it is important. [\ldots] So, this makes it hard to
 tell people how to describe their architecture.~\enquote{Tell us what is
 important.} Architecture is about the important stuff. Whatever that
 is.}
 
 \newthought{The idea envisaged for this thesis} of using a node based graph for
-modeling objects and scenes and rendering them using sphere tracing, was
+modeling objects and scenes and rendering them using sphere tracing was
 developed in advance of this thesis. To ensure that this technical
 implementation was really feasible, a prototype was developed during the
-previous project
-work~\enquote{\citetitle{osterwalder-volume-2016}}~\cite{osterwalder-volume-2016}.
+previous project work~\enquote{Volume ray casting --- basics \&
+principles}~\cite{osterwalder-volume-2016}.
 
 \newthought{The architecture of this prototype} had however evolved implicitly,
 and showed itself as hard to maintain and extend by providing no clear
 segregation between the data model and its representation.
 
-\newthought{With the next project
-work},~\enquote{\citetitle{osterwalder-qde-2016}}, a software architecture was
+\newthought{With the next project work},~\enquote{QDE --- a visual animation
+system, architecture}~\cite{osterwalder-qde-2016}, a software architecture was
 developed to prevent the occurrence of such problems. The software architecture
 is based on the rational unified process (RUP)~\cite{kruchten_rup_2003} what
 leads to an iterative approach.
@@ -762,13 +840,14 @@ requirements.
     \midrule
     Player & Reads objects and scenes defined by the editor component and plays
     them back in the defined chronological order.\\
+    \midrule
     Editor & Allows modeling and composing of objects and
     scenes using a node based graphical user interface. Renders objects
     and scenes in real time using sphere tracing. \\
     \bottomrule
   \end{tabularx}
   \caption{Description of the components of the program implemented.}
-  \label{table:software-components}
+\label{table:software-components}
 \end{table}
 
 \begin{table}[h]
@@ -785,7 +864,7 @@ requirements.
     \bottomrule
   \end{tabularx}
   \caption{Description of the sub components of the editor component.}
-  \label{table:editor:sub-components}
+\label{table:editor:sub-components}
 \end{table}
 
 \begin{figure}[ht]
@@ -797,7 +876,7 @@ requirements.
     4: Rendering view.\newline{}
     5: Time line.
   }
-  \label{fig:editor-components}
+\label{fig:editor-components}
   \includegraphics[width=0.95\linewidth]{images/editor-components}
 \end{figure}
 
@@ -814,21 +893,20 @@ components which build the sub components of the parent component, in this case
 the editor and player. These sub components represent the objects of the
 respective domain.
 
-\begin{figure*}[h]
+%\begin{figure*}[h]
+\begin{sidewaysfigure}
+  \centering
   \caption{Domain model of the editor component.}
-  \label{fig:editor-domain-model}
+\label{fig:editor-domain-model}
   \includegraphics[width=0.95\linewidth]{images/editor-domain-model}
-\end{figure*}
+\end{sidewaysfigure}
+%\end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}
   \caption{Domain model of the player component.}
-  \label{fig:player-domain-model}
-  \includegraphics[width=0.95\linewidth]{images/player-domain-model}
+\label{fig:player-domain-model}
+  \includegraphics[width=0.85\linewidth]{images/player-domain-model}
 \end{figure*}
-
-% TODO: Add may be a reference to the documentation? The image of the editor
-% domain model is too small to be read. --> Bigger, scaled and rotated. One
-% figure per page.
 
 \newthought{Identifying the important concepts} allows the
 definition of the logical architecture and shows the overall image of
@@ -856,7 +934,7 @@ model-view separation principle and exist in the application layer.
 \begin{table}[h]
   \caption{Layers as envisaged during the conceptual phase and used for
     the program implemented.}
-  \label{table:layers}
+\label{table:layers}
   \begin{tabularx}{\textwidth}{lX}
     \toprule
     \textbf{Layer} & \textbf{Description}\\
@@ -878,26 +956,27 @@ interfaces and their relationships.~\autoref{fig:editor-class-diagram} shows the
 class diagram of the editor component and~\autoref{fig:player-class-diagram}
 shows the class diagram for the player component.
 
-\begin{figure*}[ht]
+\begin{sidewaysfigure}
   \caption{Class diagram of the editor component.}
-  \label{fig:editor-class-diagram}
-  \includegraphics[width=0.95\linewidth]{images/editor-class-diagram}
-\end{figure*}
+\label{fig:editor-class-diagram}
+  \includegraphics[width=0.85\linewidth]{images/editor-class-diagram}
+\end{sidewaysfigure}
 
-\begin{figure*}[ht]
+%\begin{figure*}[ht]
+\begin{sidewaysfigure}
+  \centering
   \caption{Class diagram of the player component.}
-  \label{fig:player-class-diagram}
-  \includegraphics[width=0.95\linewidth]{images/player-class-diagram}
-\end{figure*}
+\label{fig:player-class-diagram}
+  \includegraphics[width=0.9\linewidth]{images/player-class-diagram}
+\end{sidewaysfigure}
+%\end{figure*}
 
-% TODO: Add may be a reference to the documentation? The images of the class
-% diagrams are too small to be read. --> Bigger, scaled and rotated. One figure
-% per page.
+\newpage{}
 
 \section{Rendering}
 \label{sec:rendering}
 
-\newthought{This~\autoref{sec:rendering}} is a summary of the previous project
+\newthought{This section} is a summary of the previous project
 work of the author,~\enquote{Volume ray casting --- basics \&
 principles}~\cite{osterwalder-volume-2016}. It describes the fundamentals for
 the rendering algorithm that is used for the program implemented in this thesis.
@@ -935,14 +1014,15 @@ reflected from the first to the second}~\cite[pp. 775 and
 
 \newthought{In 1986 James Kajiya} set up the so called rendering equation, which
 expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
-776]{foley_computer_1996}
+776]{foley_computer_1996} The rendering equation is shown
+in~\autoref{eq:rendering-equation}.
 
 \begin{figure}
-  \label{eq:rendering-equation}
-  \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
   \begin{equation}
     I(x, x') = g(x, x')\left[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx''\right]
   \end{equation}
+  \caption{The rendering equation as defined by James~\enquote{Jim} Kajiya.}
+\label{eq:rendering-equation}
 \end{figure}
 
 \marginnote{%-130pt
@@ -1004,8 +1084,8 @@ expresses this behavior.~\parencites{kajiya_rendering_1986}[p.
 \newthought{Implementing a global illumination model} or the rendering equation
 directly for rendering images in viable (computational feasible in a workflow
 for instance for the production of animated films) or even real time is not
-really feasible, even on the fastest modern hardware (2017). The procedure is
-computationally complex and very time demanding.
+really feasible, even on the fastest modern hardware (as of 2017). The procedure
+is computationally complex and very time demanding.
 
 \newthought{A simplified approach} to implement global illumination models (and
 the rendering equation) is ray tracing. Ray tracing is able to produce high
@@ -1026,17 +1106,17 @@ are used to expand unbounding volumes (in this concrete case spheres, hence the
 name) along rays.~\autoref{fig:sphere-tracing-1} illustrates this procedure.
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
-    \caption{Illustration of the sphere tracing
-      algorithm.
-      Ray~\textit{e} hits no objects until reaching the horizon.
-      Rays~\textit{f},~\textit{g} and~\textit{h} hit
-      the solid~\textit{poly1}.}
-      \label{fig:sphere-tracing-1}
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/sphere-tracing-principle}
+  \caption{Illustration of the sphere tracing
+    algorithm.
+    Ray~\textit{e} hits no objects until reaching the horizon.
+    Rays~\textit{f},~\textit{g} and~\textit{h} hit
+    the solid~\textit{poly1}.}
+\label{fig:sphere-tracing-1}
 \end{figure}
 
-\newthought{Bounding volumes} are defined as the enclosure of a sold. On the
+\newthought{Bounding volumes} are defined as the enclosure of a solid. On the
 other hand, unbounding volumes are the space outside of a bounding volume,
 including the surface of the solid itself. For calculating a unbounding volume,
 the distance between an object and any defined origin point is evaluated. If
@@ -1051,7 +1131,7 @@ build a so called distance field.
 \newthought{The sphere tracing algorithm} is as follows. A ray is shot
 from an origin point (for example, the viewer such as an eye or a pinhole camera) into a scene.
 The radius of an unbounding volume in form of a sphere is calculated from
-the origin, as described above. They ray intersects with the sphere, which gives
+the origin, as described above. The ray intersects with the sphere, which gives
 the distance that the ray will travel in a first step. From this
 intersection the next unbounding volume (sphere) is expanded and its radius is
 calculated, which gives the next intersection of the ray. This procedure
@@ -1068,11 +1148,6 @@ render method which calls the sphere trace method. Shading means in this context
 the determination of the color of a surface or pixel.
 
 \begin{figure*}
-  \label{alg:sphere-tracing}
-  \caption{%
-    An abstract implementation of the sphere tracing algorithm. Algorithm in
-    pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
-  }
   \begin{pythoncode}
 def sphere_trace():
     ray_distance          = 0
@@ -1099,6 +1174,11 @@ def sphere_trace():
     # implicit surface, so simply return 0
     return 0
   \end{pythoncode}
+  \caption{%
+    An abstract implementation of the sphere tracing algorithm. Algorithm in
+    pseudo code, after~\cite{hart_sphere_1994}[S. 531, Fig. 1]
+  }
+\label{alg:sphere-tracing}
 \end{figure*}
 
 \newthought{Shading} is done as proposed by~\citeauthorfin{whitted_improved_1980}
@@ -1114,26 +1194,27 @@ Depending on the material, four cases can occur. The material may be:
 For simplicity only the third case is being taken into account. For the actual
 shading a local illumination method is used, called~\emph{Phong shading}.
 
+\newpage{}
+
 \newthought{The Phong illumination model}~\cite[p. 123]{foley_computer_1996} describes (reflected) light intensity
 $I$ as a composition of the ambient, the diffuse and the perfect specular
-reflection of a surface.
+reflection of a surface.~\autoref{eq:phong-equation} shows the Phong
+illumination model.
 
 \begin{figure}
-  \label{eq:phong-equation}
-  \caption{%
-    The Phong illumination model as defined by Phong Bui-Tuong.~\cite[p. 123]{foley_computer_1996} Note that
-    the emissive term was left out intentionally as it is mainly used to achieve
-    special effects.\newline{}
-    \newline{}
-    Foo.
-  }
   \begin{equation}
     I(\vv{V}) = k_{a} \cdot L_{a} + k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) + k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
   \end{equation}
+  \caption{%
+    The Phong illumination model as defined by Phong Bui-Tuong.~\cite[p. 123]{foley_computer_1996} Note that
+    the emissive term was left out intentionally as it is mainly used to achieve
+    special effects.
+  }
+\label{eq:phong-equation}
 \end{figure}
 
-% \marginnote[-130pt]{
-\marginnote{
+\marginnote[20pt]{
+% \marginnote{
   \begin{description}
     \item[$I(x, x')$] Intensity of the light at point $\vv{V}$.
     \item[$k_{a}$] A constant defining the ratio of reflection of the ambient
@@ -1199,7 +1280,7 @@ methodologies, that are used to implement this thesis.
 \label{sec:literate-programming}
 
 \newthought{Software may be documented in different ways.} It may be in terms of
-a documentation, e.g. in the form of a software architecture which
+a documentation, e.g.\ in the form of a software architecture which
 describes the software conceptually and hints at its implementation. Or it may
 be in terms of documenting within the software itself through inline comments.
 Frequently both methodologies are used. However, all too
@@ -1219,7 +1300,7 @@ unforeseen and costly efforts concerning work and time.
 \newthought{\citeauthorfin{hoare-hpl-1973} states~\citeyear{hoare-hpl-1973}} in his
 work~\citetitle{hoare-hpl-1973} that~\enquote{documentation must be regarded as
 an integral part of the process of design and coding}~\cite[p.
-195]{hoare-hpl-1973}: ~\enquote{The purpose of program documentation is to
+195]{hoare-hpl-1973}:~\enquote{The purpose of program documentation is to
 explain to a human reader the way in which a program works so that it can be
 successfully adapted after it goes into service, to meet the changing
 requirements of its users, or to improve it in the light of increased knowledge,
@@ -1256,17 +1337,14 @@ multiple parts) and generates two outputs:
 \begin{enumerate*}
   \item a document in a formatting language, such as
     Knuth's~\LaTeX{}~\cite{knuth-tex-1987} (which may then be converted in a
-    printable and viewable form, such as PDF).
+    printable and viewable form, such as PDF) and
   \item a compilable program in a programming language, such as Python or C
     (which may then be converted into an executable program).
 \end{enumerate*}~\cite{knuth-lp-1984}
 The first process is called~\emph{weaving} and the second~\emph{tangling}. This
-process is illustrated in~\autoref{fig:weave-and-tangle}.
+process is illustrated in~\cref{fig:weave-and-tangle}.
 
 \begin{figure}
-  \label{fig:weave-and-tangle}
-  \caption{Illustration showing the processes of~\emph{weaving}
-    and~\emph{tangling} documents from a input document.~\cite{knuth-lp-1984}}
   \begin{tikzpicture}
     \begin{scope}[every node/.style={minimum size=4em,circle,thick,draw}]
       \node (input) at (0,  0) {Input};
@@ -1284,6 +1362,9 @@ process is illustrated in~\autoref{fig:weave-and-tangle}.
       \path [->] (c) edge node {compile} (bin); 
     \end{scope}
   \end{tikzpicture}
+  \caption{Illustration showing the processes of~\emph{weaving}
+    and~\emph{tangling} documents from an input document.~\cite{knuth-lp-1984}}
+\label{fig:weave-and-tangle}
 \end{figure}
 
 \newthought{Several literate programming (LP) systems were evaluated} during the
@@ -1298,7 +1379,7 @@ tools have their strengths and weaknesses.
 However, none of these systems fulfill all the needed requirements of this
 project:
 \begin{enumerate*}
-  \item Provide \enquote{pretty printing}~\protect\footnotemark[1]{} of the program parts.
+  \item Provide~\enquote{pretty printing}~\footnotemark[8]{} of the program parts.
   \item Provide automatic references between the definition of program parts and
     their usage.
   \item Expand program parts having the same name instead of redefining them.
@@ -1306,7 +1387,7 @@ project:
   \item Allow the inclusion of files for both parts, the document formatting
     language and the programming language.
 \end{enumerate*}
-\footnote{pretty printing refers to content-based formatting (e.g. line color
+\footnote{pretty printing refers to content-based formatting (e.g.\ line color
   and indentation to improve readability).}
 
 \newthought{Ultimately a further literate programming system},
@@ -1322,7 +1403,7 @@ code within~\LaTeX{}.
 
 \newthought{The nuweb system provides several commands to process files.} All
 commands begin with an at sign (@). Whenever a file or part does not contain
-any commands the file is copied unprocessed. nuweb provides a single executable
+any commands the file is copied unprocessed.\ nuweb provides a single executable
 program, which processes the input files and generates the output files (weaving
 and tangling, in document formatting language and as source code respectively).
 
@@ -1331,14 +1412,14 @@ source code. They may also contain for instance paragraphs for formatted text or
 mathematical equations.
 
 \newthought{Literate programming can be very expressive} when all concepts are
-explicitly defined before implementation.~\citeauthorfin{knuth-lp-1984} sees this
-expressiveness an advantage as one is forced to clarify thoughts before
+explicitly defined before implementation.~\citeauthorfin{knuth-lp-1984} sees
+this expressiveness an advantage as one is forced to clarify thoughts before
 programming~\cite[p. 13]{knuth-lp-1984}. This is surely very true for small
 software but only partly true for larger software. The problem with larger
 software is, that when using literate programming, the documentation tends to be
 correspondingly large. \emph{To overcome this problem} in this project, the
-actual implementation of the software is placed into to the
-appendix~\todo{insert reference to appendix here}.
+actual implementation of the software is placed into to the appendix,
+see appendix~\enquote{\nameref{sec:code-fragments}}.
 
 \newthought{Another problematic aspect} is the implementation of repeating
 fragments or parts with similar but not identical technical details (such as imports
@@ -1346,15 +1427,15 @@ or getter and setter methods). This might be interesting only for
 software developers or technically oriented readers who want to grasp all the
 details.~\emph{This aspect can
 be overcome} by moving recurring or uninteresting fragments to a separate
-file (see~\todo{add reference to code fragments}).
+file (see appendix~\enquote{\nameref{sec:code-fragments}}).
 
-\newthought{To show the principles of literate programming},
-without annoying the reader, only an excerpt of some details is given here.
+\newthought{To show the principles of literate programming}, without annoying
+the reader, only an excerpt of some details is given here.
 
-\newthought{One of the more interesting things} of the software might
-be the definition of a node~\todo{add reference to the node concept within
-appendix} and its loading from external files. These two aspects are shown
-below. More details of this example would go beyond the scope of this thesis.
+\newthought{One of the more interesting things} of the software might be the
+definition of a node and its loading from external files. These two aspects are
+shown below. More details of this example would go beyond the scope of this
+thesis.
 
 \newthought{Some essential thoughts about classes and objects} may help to stay
 consistent when developing the software, before implementing the node class.
@@ -1369,11 +1450,12 @@ This structure is applied to the declaration of the node class.
 
 \newpage{}
 
-\newthought{Implementing the node class} means simply defining a~\emph{scrap}
-called~\enquote{\emph{Node definition declaration}} using the above pattern.
-The~\emph{scrap} does not have any content at the moment, except references to
-other scraps, which build the body of the scrap and which will be defined later
-on.
+\newthought{Implementing the class called~\enquote{NodeDefinition}} means simply
+defining a scrap called~\enquote{\emph{Node definition declaration}}
+using the above structure. The scrap does not have any content at the
+moment, except references to other scraps, that build the body of the scrap.
+These will be defined later on.~\autoref{lst:node-def-class-decl} shows the
+scrap.
 
 \begin{figure}[h]
   \begin{flushleft} \small
@@ -1402,58 +1484,56 @@ class NodeDefinition(object):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \caption{Declaration of the node definition class.}
-  \label{lst:node-def-class-decl}
+\label{lst:node-def-class-decl}
 \end{figure}
 
-\newthought{The constructor} might be the first thing to implement, following
-the developed pattern. In Python the constructor defines the properties of a
-class~\sidenote[][-10pt]{Properties do not need to be defined in the constructor,
-they may be defined anywhere within the class. However, this can lead to
-confusion and it is therefore considered as good practice to define the
-properties of a class in its constructor.}, therefore it defines what a class
-actually is or represents --- the concept. After some thinking, and in context
-of the intended software, one might come up with the properties
+\newthought{The constructor} might be the first thing to implement. In Python
+the constructor defines properties of a class~\sidenote[][-20pt]{Properties do
+not need to be defined in the constructor, they may be defined anywhere within
+the class. However, this can lead to confusion and it is therefore considered as
+good practice to define the properties of a class in its constructor.}. In
+context of the program, one might come up with the properties
 in~\autoref{table:node-properties} defining a node definition.
 
-\begin{table*}[!htp]
-  \begin{tabularx}{\linewidth}{lX}
+\begin{table*}[!htp]\centering
+%\begin{table}\centering
+  \ra{1.3}
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
     \toprule
-    \textbf{Property} & \textbf{Description}\\
-    \midrule
-    ID          & A globally unique identifier for the node definition.          \\
-    Name        & The name of the definition.                                    \\
-    Description & The description of the definition. What does that definition
-                  provide?                                                       \\
-    Parent      & The parent object of the current node definition.              \\
-    Inputs      & Inputs of the node definition. This may be distinct types or
-                  references to other nodes.                                     \\
-    Outputs     & The same as for inputs.                                        \\
-    Invocation  & A list of the node's invocations or calls respectively.        \\
-    Parts       & Defines parts that may be processed when evaluating the node.
-                  Contains code which can be interpreted directly.               \\
-    Connections & A list of connections of the node's inputs and outputs. Each
-                  connection is composed by two parts:
-                  \begin{enumerate*}
-                    \item a reference to another node and
-                    \item a reference to an input or an output of that node.
-                  \end{enumerate*}
-                  Is the reference not set, that is, its value is zero, this
-                  means that the connection is internal.                         \\
-    Instances   & A list of node instances from a certain node definition.       \\
-    Was changed & Flag, which indicates whether a definition was changed or not. \\
+    \textbf{Property}    & \textbf{Description}                                \\
+    \hline
+    \textit{ID}          & A global unique identifier.                         \\
+    \textit{Name}        & The name of the node, e.g. "Sphere".                \\
+    \textit{Description} & A description of the node's purpose.                \\
+    \textit{Inputs}      & Parameters given to the node. These may have 
+    distinct types, e.g. scalars as floating point numbers or character strings
+    of type text, references to other nodes.                                   \\
+    \textit{Outputs}     & Values delivered by the node.                       \\
+    \textit{Definitions} & A list of the node's definitions. This may be an
+    actual definition of a (shader-) function in terms of an implicit surface. \\
+    \textit{Invocation}  & The format of a call to the node definition, including
+    placeholders which will be replaced by parameters.                         \\
+    \textit{Parts}       & Defines text that may be processed when calling the node.
+    Contains code which can be interpreted directly.                           \\
+    \textit{Nodes}       & The children a node has (child nodes). These entries are
+    references to other nodes only.                                            \\
+    \textit{Parameters}  & A list of the node's inputs and outputs in form of
+    tuples.
+    Each tuple is composed of two parts:~\begin{enumerate*}
+      \item a reference to another node and
+      \item a reference to an input parameter or an output value of that node.
+    \end{enumerate*} If the first reference is not set, this means that the
+    parameter is internal.                                                     \\
     \bottomrule
-  \vspace*{\baselineskip}
-  \caption{Properties/attributes of the node class.}
-  \label{table:node-properties}
   \end{tabularx}
+  \caption{Properties/attributes of a node definition.}
+\label{table:node-properties}
 \end{table*}
 
 \newthought{Implementing the constructor} of the node definition may now follow
-from the properties defined in~\autoref{table:node-properties}. As the name of
-the constructor definition was already given, by using it
-within~\autoref{lst:node-def-class-decl}
-(\verb|@<Node definition constructor@>|), the very same name will be used for
-actually defining the scrap itself.
+from the properties defined
+in~\autoref{table:node-properties}.~\autoref{lst:node-def-constructor} shows the
+scrap containing the definition of the constructor.
 
 \begin{figure}[!htbp]
   \begin{flushleft} \small
@@ -1494,26 +1574,26 @@ def __init__(self, id_):
 \caption{Constructor of the node definition class. Note that the
     identifier is given by a corresponding parameter. Identifiers have to be
     generated when defining a node using an external file.}
-  \label{lst:node-def-constructor}
+\label{lst:node-def-constructor}
 \end{figure}
 
 \newthought{One of the problems mentioned before} can be seen
-in~\cref{lst:node-def-constructor}: it shows a rather dull constructor without
-any logic which is not interesting. Additionally importing of modules would be
-needed, e.g. PyQt or system modules. This was left out deliberately. At this
-point the implementation of node definitions will not be shown further, as this
-is beyond scope. Further implementation can be seen at~\todo{insert
-reference(s) to node domain model here}.
+in~\cref{lst:node-def-constructor}: it shows a rather simple constructor without
+any useful logic. Additional modules would be needed, e.g.\ Qt bindings for
+Python or system modules. At this point the implementation of node definitions
+will not be detailed further, as this is beyond the scope of this thesis.
+
+\newthought{The following pages} demonstrate the use of literate programming to
+document and manage the code of the loading of node definitions.
 
 \newthought{Node definitions will be loaded from external files} in JSON format.
-This happens within the node controller component, which will not be shown here
-as this would go beyond the scope. Required attributes will be mentioned
-explicitly although. The method for loading the nodes,
+This happens within the node controller component (not shown here).
+The method for loading the nodes,
 \mintinline{python}{load_node_definitions}, defined
 in~\cref{lst:load-node-definitions}, does not have any arguments. Everything
 needed for loading nodes is encapsulated in the node controller.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap3}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Load node definitions}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
@@ -1537,21 +1617,22 @@ def load_node_definitions(self):
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \caption{Head of the method that loads node definitions from external JSON
-    files.}
-  \label{lst:load-node-definitions}
+    files. Words written in uppercase are class constants.}
+\label{lst:load-node-definitions}
 \end{figure}
 
-\newthought{When loading the node definitions}, there are two cases (and
+\newthought{When loading node definitions}, there are two cases (and
 consequences) at the first instance:
 \begin{enumerate*}
-  \item the directory containing the node definitions exists, the load
+  \item the directory containing the node definitions exists, so the node
     definitions may be loaded or
   \item the directory does not exit.
 \end{enumerate*}
 In the first case the directory possibly containing node definitions is being
-searched for such files, in the second case a warning message is logged.
+searched for such files, in the second case a warning message is logged. This is
+shown in~\autoref{lst:nodes-controller-load-nodes-2}.
 
-\begin{figure}[!h]
+\begin{figure*}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap4}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Load node definitions}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
@@ -1574,14 +1655,18 @@ else:
 \end{flushleft}
 \caption{Check whether the path containing the node definition files exist or
     not.}
-  \label{lst:nodes-controller-load-nodes-2}
-\end{figure}
+\label{lst:nodes-controller-load-nodes-2}
+\end{figure*}
 
 \newthought{In the first case}, when the directory containing the node
 definitions exists, files containing node definitions are searched. The files
-are searched by wildcard pattern matching the extension:~\verb|*.node|.
+are searched by wildcard pattern matching the extension:~\verb|*.node|. This can
+be seen in~\autoref{lst:nodes-controller-find-node-def-files}.
 
-\begin{figure}[!h]
+\newthought{In the second case}, a warning or error message must be generated.
+This is detailed at the end of this section.
+
+\begin{figure}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap5}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Find and load node definition files}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
@@ -1606,19 +1691,20 @@ num_node_definitions = len(node_definition_files)|\NWsep|
 \end{flushleft}
 \caption{When the directory containing the node definitions exists, files
     matching the pattern~\emph{*.node} are searched.}
-  \label{lst:nodes-controller-find-node-def-files}
+\label{lst:nodes-controller-find-node-def-files}
 \end{figure}
 
 \newthought{Having searched for node definition files}, there are again two
 cases, similar as before:
 \begin{enumerate*}
-  \item files (possibly) containing node definitions exist or
-  \item no files with the ending \verb|.node| exist within the source directory.
+  \item files (possibly) containing node definitions exist within the source
+    directory, or
+  \item no files with the ending \verb|.node| exist.
 \end{enumerate*}
 Again, as before, in the first case the node definitions will be loaded, in the
-second case a warning message will be logged.
+second case a warning message will be logged, which is shown in~\autoref{lst:nodes-controller-find-node-def-files-2}.
 
-\begin{figure}[!h]
+\begin{figure}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap6}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Find and load node definition files}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
@@ -1639,23 +1725,21 @@ else:
 \end{list}
 \end{minipage}\vspace{4ex}
 \end{flushleft}
-\caption{When files (possibly) containing node definition files are found,
-    they are tried being loaded. When no such files are found, a warning message
-    is being logged.}
-  \label{lst:nodes-controller-find-node-def-files-2}
+\caption{When files containing node definition files are found, they are
+    loaded (if possible). When no such files are found, a warning message is
+    logged.}
+\label{lst:nodes-controller-find-node-def-files-2}
 \end{figure}
 
-\newthought{Given that node definitions are present}, they are loaded from the
-file system, parsed and then stored internally as domain model. To maintain
-readability, all this is encapsulated in a
-method,\\
-\mintinline{python}{load_node_definition_from_file_name}, which is
-deliberately not\\
-shown here as this would go beyond scope. If the node
-definition cannot be loaded or parsed~\mintinline{python}{None} is being
-returned.
+\newthought{In the case (1) when node definitions are present}, they are loaded
+from the file system, parsed and then stored in an object in memory. To maintain
+readability, these text parts (fragments or scraps) are is encapsulated in a
+method,~\mintinline{python}{load_node_definition_from_file_name}, which is not
+shown here. If the node definition cannot be loaded or parsed a null object
+(Python~\mintinline{python}{None}) is being returned. This can be seen
+in~\autoref{lst:nodes-controller-load-node-defs}.
 
-\begin{figure}[!h]
+\begin{figure}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap7}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Load found node definitions}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
@@ -1686,9 +1770,8 @@ for file_name in node_definition_files:
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \caption{Loading and parsing of the node definitions found within the folder
-    containing (possibly) node definition files. If a node definition cannot be
-    loaded or parsed,~\textit{None} is being returned.}
-  \label{lst:nodes-controller-load-node-defs}
+    containing (possibly) node definition files.}
+\label{lst:nodes-controller-load-node-defs}
 \end{figure}
 
 \newpage{}
@@ -1696,9 +1779,10 @@ for file_name in node_definition_files:
 \newthought{When a node definition could be loaded}, a view model based on the
 domain model is being created. Both models are then stored internally and a
 signal about the loaded node definition is being emitted, to inform other
-components which are interested in this event.
+components which are interested in this event. This process is explained in
+detail in the next chapter.
 
-\begin{figure}[!h]
+\begin{figure*}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap8}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Load found node definitions}\nobreak\ {\footnotesize {?}}$\,\rangle+\equiv$
@@ -1734,20 +1818,20 @@ self.logger.info(
 \caption{A view model, based on the domain model, for the node definition is
     being created. Both models are then stored internally and the signal, that a
     node definition was loaded is being emitted.}
-  \label{lst:nodes-controller-load-node-defs-2}
-\end{figure}
+\label{lst:nodes-controller-load-node-defs-2}
+\end{figure*}
 
 \newpage{}
 
-\newthought{The implementation of the edge cases} is still remaining at this
-point. When such an edge case happens, a corresponding message is logged. The
-edge cases are:
+\newthought{The implementation of the warnings} is still remaining at this
+point. When such an event happens, a corresponding message is logged. The
+warnings are:
 
 \begin{enumerate}
   \item the directory holding the node definitions does not exist
 \end{enumerate}
 
-\begin{figure}[!h]
+\begin{figure*}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Output warning when directory with node definitions does not exist}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
@@ -1770,8 +1854,8 @@ edge cases are:
 \end{flushleft}
 \caption{Output a warning when the path containing the node definition files
     does not exist.}
-  \label{lst:nodes-controller-load-node-defs-warning}
-\end{figure}
+\label{lst:nodes-controller-load-node-defs-warning}
+\end{figure*}
 
 \tuftebreak{}or
 
@@ -1779,7 +1863,7 @@ edge cases are:
   \item no files containing node definitions are found.
 \end{enumerate}
   
-\begin{figure}[!h]
+\begin{figure*}[!htbp]
   \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape Output warning when no node definitions are found}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
@@ -1801,17 +1885,17 @@ edge cases are:
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \caption{Output a warning when no node definitions are being found.}
-  \label{lst:nodes-controller-load-node-defs-warning-2}
-\end{figure}
+\label{lst:nodes-controller-load-node-defs-warning-2}
+\end{figure*}
 
 \section{Agile software development}
 \label{sec:agile-software-development}
 
-\newthought{Software engineering invokes always a methodology,} be it wittingly
+\newthought{Software engineering always invokes a methodology,} be it wittingly
 or unwittingly. For a (very) small project the methodology may follow intuitively,
 by experience and it may be a mixture of methodologies. For medium to large
-projects however, using certain methodologies or principles becomes inevitable
-for being able to evaluate (the success of) a project.
+projects however, using certain methodologies or principles is necessary to
+ensure (the success of) a project.
 
 \newthought{Every commonly used software engineering methodology} has advantages
 but buries also certain risks. Be it a traditional method like the waterfall
@@ -1820,55 +1904,57 @@ method like agile development. It depends largely on the project what
 methodology fits best and buries the least risks.~\cite{haneen-risk-2012,
 mens-se-2008}
 
-\newthought{Risk is the basic problem of software
-development.}~\cite{beck-xp-2004} Examples of risks are: schedule slips,
-canceled projects, increased defect rates, misunderstood domain/business,
-changes, false feature rich.~\cite{beck-xp-2004}
+\newthought{Examples of risks of software development}~\cite{beck-xp-2004} are:
+incomplete and misunderstood needs, delays and schedule slippage, increased
+error rate, new changes requested, superfluity of features,
+etc.~\cite{beck-xp-2004}
 
 \newthought{Traditional software engineering methodologies}, such as the
-waterfall model or incremental development, struggle with change. In case of the
-waterfall model they embrace change not at all or, in the case of incremental
-development, the phases are rather long what allows only slow reaction.
+waterfall model or incremental development, struggle with the management of change. In case of the
+waterfall model changes are deprecated or lead to followup projects. In the case of incremental
+development, the phases can be very long, which allows only slow reaction to
+change requests.~\autoref{fig:waterfall} and~\autoref{fig:iterative-dev}
+illustrate these methodologies.
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \includegraphics[width=0.95\linewidth]{images/waterfall}
   \caption{Phases of the water fall methodology.~\cite[p. 16]{shore-aad-2007}}
-  \label{fig:waterfall}
+\label{fig:waterfall}
 \end{figure*}
 
 \begin{figure*}[ht]
   \includegraphics[width=0.95\linewidth]{images/iterative-dev}
   \caption{Phases of iterative development.~\cite[p. 16]{shore-aad-2007}}
-  \label{fig:iterative-dev}
+\label{fig:iterative-dev}
 \end{figure*}
 
-\newthought{By applying basic principles}, agile development methodologies try
-to overcome this problem. These principles may vary depending on the used
-methodology, but the fundamental principles are:
+\newthought{By applying some alternative basic principles}, agile development
+methodologies try
+to overcome these problems. These principles may vary depending on the used
+methodology, but the fundamental ones are:
 \begin{enumerate*}
   \item rapid feedback,
-  \item assume simplicity,
+  \item minimize complexity,
   \item incremental change,
-  \item embracing change and
-  \item quality work.
+  \item no fear of changes and
+  \item high quality work.
 \end{enumerate*}~\cite{beck-xp-2004}
 Further details can be found at~\cite{beck-xp-2004, shore-aad-2007}.
 
 \newthought{An adapted version of extreme programming} is used for this thesis.
-This methodology was chosen as after the preceding project
-work,~\citetitle{osterwalder-qde-2016}, several things were still subject to
-change and therefore an exact planning, analysis and design, as traditional
-methodologies require it, would not be very practical.
-% TODO: Mention what exactly was modified.
+This methodology was chosen as at the end of the work of the previous project
+(\enquote{QDE --- a visual animation system,
+architecture}~\cite{osterwalder-qde-2016}), some needs were still continuously
+changing or even not yet well-defined. An exact planning, analysis and design,
+as traditional methodologies require it, would not be very practical. The
+following~\autoref{fig:xp} illustrates the use of an agile methodology.
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \includegraphics[width=0.95\linewidth]{images/xp}
   \caption{Iterations in the extreme programming methodology and phases of an
     interation.~\cite[p. 18]{shore-aad-2007}}
-  \label{fig:xp}
+\label{fig:xp}
 \end{figure*}
-
-% TODO: Check if this is enough or elaborate more otherwise.
 % -*- mode: latex; coding: utf-8 -*-
 
 \chapter{Implementation}
@@ -1937,9 +2023,10 @@ shown in the third section.
 \newthought{The software architecture} defines the significant decisions of the
 program implemented, such as the selection of structural elements, their
 behavior and their interfaces.~\cite{kruchten_rup_2003} The architecture is
-derived from the experiences based on the former
-projects,~\citetitle{osterwalder-volume-2016}
-and~\citetitle{osterwalder-qde-2016}, which build the fundamentals of this
+derived from the experiences based on the former projects,~\enquote{Volume ray
+casting --- basics \& principles}~\cite{osterwalder-volume-2016}
+and~\enquote{QDE --- a visual animation system,
+architecture}~\cite{osterwalder-qde-2016}, which build the fundamentals of this
 thesis, see~\autoref{chap:fundamentals}~\enquote{\nameref{chap:fundamentals}}.
 
 \newthought{Three aspects} define the software architecture:
@@ -2007,21 +2094,23 @@ in~\cref{fig:software-design-pattern-components-player}.
   \end{tabularx}
   \caption{Description of the types of components of the software design
     pattern used.~\cite{fowler-presentation-2004, gossman-mvvm-2005}}
-  \label{table:software-design-pattern-components}
+\label{table:software-design-pattern-components}
 \end{table*}
 
-\begin{figure*}[ht]
+\vspace{5mm}
+  
+\begin{figure*}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/mvvmc}
   \caption{Components of the used pattern for the editor and their
     communication.}
-  \label{fig:software-design-pattern-components-editor}
+\label{fig:software-design-pattern-components-editor}
 \end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/mvvmc-player}
   \caption{Components of the used pattern for the player and their
     communication.}
-  \label{fig:software-design-pattern-components-player}
+\label{fig:software-design-pattern-components-player}
 \end{figure*}
 
 \newthought{The Qt framework} which is used, offers a very similar pattern
@@ -2039,7 +2128,7 @@ this model/view pattern.
 \begin{figure}[ht]
   \includegraphics[width=0.6\linewidth]{images/model-view-pattern}
   \caption{Qt's model/view pattern.~\cite{qt-mvp-2017}}
-  \label{fig:software-design-pattern-qt-mvp}
+\label{fig:software-design-pattern-qt-mvp}
 \end{figure}
 
 \newthought{Although offering advantages}, such as to customize the presentation
@@ -2077,7 +2166,7 @@ the layers visually for the reader.
     \toprule
     \textbf{Layer} & \textbf{Description} & \textbf{Examples} \\
     \midrule
-    \includegraphics[width=0.9\linewidth]{images/layers-gui}         & All elements of the graphical user interface, views.                                & Scene tree view, scene view, render view                                   \\
+    \includegraphics[width=1.0\linewidth]{images/layers-gui}         & All elements of the graphical user interface, views.                                & Scene tree view, scene view, render view                                   \\
     \includegraphics[width=1.0\linewidth]{images/layers-gui-domain}  & View models.                                                                        & Scene tree view model, node view model                                     \\
     \includegraphics[width=1.0\linewidth]{images/layers-application} & Controller (workflow objects).                                                      & Main application, scene tree controller, scene controller, node controller \\
     \includegraphics[width=1.0\linewidth]{images/layers-domain}      & Data models according to the logic of the application.                              & Scene model, parameter model, node definition model, node domain model     \\
@@ -2087,7 +2176,7 @@ the layers visually for the reader.
   \end{tabularx}
   \vspace*{\baselineskip}
   \caption{Layers of the program implemented.}
-  \label{table:results:layers}
+\label{table:results:layers}
 \end{table*}
 
 \subsection{Coupling and cohesion, signals and slots}
@@ -2119,16 +2208,17 @@ implementation of the observer pattern, which can be seen informally
 in~\cref{fig:signals-observer-pattern}
 and~\cref{fig:signal-and-slot-relationship}.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/observer-pattern}
   \caption{The observer pattern.~\cite{gamma-dpe-1995}}
-  \label{fig:signals-observer-pattern}
+\label{fig:signals-observer-pattern}
 \end{figure}
 
 \newthought{A signal is an observable event.} A slot is a potential observer,
-typically a method of an object.
+typically a method of an object. An example of an observer is given
+in~\cref{lst:signal-slot:observer-slot}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 class Observer:
 
@@ -2140,40 +2230,41 @@ class Observer:
 
         ...
   \end{pythoncode}
-  \label{lst:signal-slot:observer-slot}
   \caption{An example of a class called~\enquote{Observer} with a slot
     called~\enquote{on\_signal}. The slot expects the signal to send a parameter
     of type~\enquote{type}.
   }
+\label{lst:signal-slot:observer-slot}
 \end{figure}
 
-\newthought{Slots are registered as observers} to signals.
+\newthought{Slots are registered as observers} to signals as shown
+in~\cref{lst:signal-slot:connect}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 subject.signal.connect(
     observer.on_signal
 )
   \end{pythoncode}
-  \label{lst:signal-slot:connect}
   \caption{The~\enquote{on\_signal} slot (which is a method of the
     object~\enquote{observer}) is registered to the signal~\enquote{signal} of
     the object~\enquote{subject}.}
+\label{lst:signal-slot:connect}
 \end{figure}
 
 \newthought{Whenever a signal is emitted}, the emitting class must call all the
-registered observers for that signal.
+registered observers for that signal as shown in~\cref{lst:signal-slot:emit}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 subject.signal.emit(some_parameter)
   \end{pythoncode}
-  \label{lst:signal-slot:emit}
   \caption{The signal~\enquote{signal} of the object~\enquote{subject} is
     emitted. The signal contains a parameter called~\enquote{some\_parameter}.
     This means that the emitting class,~\enquote{Signal}, will call the
     registered method~\enquote{on\_signal} of the observer
     called~\enquote{observer}.}
+\label{lst:signal-slot:emit}
 \end{figure}
 
 \newthought{The relationship between signals and slots} is a many-to-many
@@ -2181,12 +2272,12 @@ relationship. One signal may be connected to any number of slots and a slot may
 listen to any number of signals. A relationship between a signal and a slot is
 shown in~\cref{fig:signal-and-slot-relationship}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \includegraphics[width=0.8\linewidth]{images/signal-and-slot}
   \caption{An observer is listening to a signal sent by a subject. The subject
     emits the signal and calls then the observers that are registered for that
     signal (or the registered slots of the observers respectively).}
-  \label{fig:signal-and-slot-relationship}
+\label{fig:signal-and-slot-relationship}
 \end{figure}
 
 \newthought{Signals can carry additional information}, such as single values or
@@ -2201,17 +2292,17 @@ signal 1
 This information could for example be used in a dialog showing the progress of
 loading from the file system.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{pythoncode}
 self.total_node_definitions.emit(num_node_definitions)
   \end{pythoncode}
-  \label{lst:signal-slot-example-1}
   \caption{%
     An example of emitting a signal including a value.
   }
+\label{lst:signal-slot-example-1}
 \end{figure}
 
-\begin{figure*}
+\begin{figure*}[!htbp]
   \begin{pythoncode}
 for index, definition_file in enumerate(node_definition_files):
     node_definition = self.load_node_definition_from_file(
@@ -2219,11 +2310,11 @@ for index, definition_file in enumerate(node_definition_files):
     )
     self.node_definition_loaded(index, node_definition)
   \end{pythoncode}
-  \label{lst:signal-slot-example-2}
   \caption{%
     An example of emitting a signal including a value and a reference to an
     object.
   }
+\label{lst:signal-slot-example-2}
 \end{figure*}
 
 \section{Literate programming}
@@ -2298,13 +2389,13 @@ bindings~\protect\footnote{version 5.7,
 \url{https://riverbankcomputing.com/software/pyqt/intro}} for Qt and
 OpenGL~\protect\footnote{version 3.3, \url{https://www.opengl.org/}}.
 
-\begin{figure}[ht]
+\vspace{10mm}
+
+\begin{figure}[!htbp]
+  \includegraphics[width=0.95\linewidth]{images/editor}
   \caption{The implemented editor component.}
-  \label{fig:editor}
-  \includegraphics[width=0.95\linewidth]{images/editor-components}
+\label{fig:editor}
 \end{figure}
-\todo[inline]{Provide real image of the component, but use numbering for the
-  components.}
 
 \newthought{The quintessence of both components} is to output respectively to
 read a data structure in the JSON~\cite{ecma-json-2013} format which defines an
@@ -2325,7 +2416,7 @@ scene and therefore of an animation.
 \newthought{Node definitions} provide content in a specific structure, shown
 in~\autoref{table:node-definition-components}.
 
-\begin{table}\centering
+\begin{table}[!htbp]\centering
   \ra{1.3}
   \begin{tabularx}{\textwidth}{@{}lX@{}}
     \toprule
@@ -2356,40 +2447,39 @@ in~\autoref{table:node-definition-components}.
     \bottomrule
   \end{tabularx}
   \caption{Properties/attributes of a node definition.}
-  \label{table:node-definition-components}
+\label{table:node-definition-components}
 \end{table}
 
 \newthought{Content} is whatever a node definition provides in terms of the
 definitions but the output has always to be an atomic type as defined
-in~\autoref{table:node-definition-atomic-types}.
+in~\cref{table:node-definition-atomic-types}.
 
-\todo[inline]{Finish describing atomic types.}
-\begin{table}\centering
+\begin{table}[!htbp]\centering
   \ra{1.3}
   \begin{tabularx}{\textwidth}{@{}lX@{}}
     \toprule
-    \textbf{Atomic type} & \textbf{Description}                                         \\
-    \hline
-    \textit{Generic}     & A global unique identifier (UUID\protect\footnotemark[1]{}). \\
-    \textit{Float}       & The name of the node, e.g. "Sphere".                         \\
-    \textit{Text}        & A description of the node's purpose.                         \\
-    \textit{Scene}       & Parameters given to the node as inputs. This may be          \\
-    \textit{Image}       & Values delivered by the node as outputs.                     \\
-    \textit{Dynamic}     & A list of the node's definitions. This may be an             \\
-    \textit{Mesh}        & The format of a call to the node definition, including       \\
-    \textit{Implicit}    & Defines text that may be processed when calling the node.    \\
+    \textbf{Atomic type} & \textbf{Description}                       \\
+    \midrule
+    \textit{Generic}     & A global unique identifier.                \\
+    \textit{Float}       & A floating point value.                    \\
+    \textit{Text}        & Characters as text string.                 \\
+    \textit{Scene}       & Used for nesting scenes.                   \\
+    \textit{Image}       & An image, typically a texture.             \\
+    \textit{Dynamic}     & Dynamic values, e.g.\ time or sine values. \\
+    \textit{Mesh}        & Triangle based meshes.                     \\
+    \textit{Implicit}    & Implicit objects.                          \\
     \bottomrule
   \end{tabularx}
   \caption{Atomic types, that define a node (definition).}
-  \label{lst:node-definition-atomic-types}
+\label{table:node-definition-atomic-types}
 \end{table}
 
 \newthought{An example} of an node definition of type~\emph{implicit} for
 rendering a sphere is given
-in~\cref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
+in~\autoref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
 
 \newthought{Subsequent each component of the editor} is shown in a component
-diagram in adapted form \cite[pp. 653 -- 654]{larman-applying-2004} and an
+diagram in adapted form~\cite[pp. 653 -- 654]{larman-applying-2004} and an
 entity relationship diagram~\cite[pp. 501 ff.]{larman-applying-2004} (if
 appropriate), followed by a description of the component. The component diagram
 is used to show the signals that a component emits and receives. The entity
@@ -2402,19 +2492,21 @@ sections of this chapter. Although the implementation of the components is very
 specific, in terms of the programming language, their logic may be reused later
 for the player component.
 
+\newpage{}
+
 \subsection{Editor}
 \label{results:subsec:program:editor}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
+  \includegraphics[width=0.55\linewidth]{images/editor-component-diagram}
   \caption{Component diagram of the editor component.}
-  \label{fig:editor-component-diagram}
-  \includegraphics[width=0.95\linewidth]{images/editor-component-diagram}
+\label{fig:editor-component-diagram}
 \end{figure*}
 
-\begin{figure}[ht]
-  \caption{Entity relationship diagram of the editor component.}
-  \label{fig:editor-erd}
+\begin{figure}[!htbp]
   \includegraphics[width=0.75\linewidth]{images/editor-erd}
+  \caption{Entity relationship diagram of the editor component.}
+\label{fig:editor-erd}
 \end{figure}
 
 \newthought{The editor component} is the main component, which acts as entry
@@ -2426,16 +2518,16 @@ the scene tree view, the scene view and the renderer.
 \subsection{Scene tree}
 \label{results:subsec:program:scene-tree}
 
-\begin{figure*}[ht]
+\begin{figure*}[!htbp]
   \caption{Component diagram of the scene tree component.}
-  \label{fig:scene-graph-component-diagram}
-  \includegraphics[width=0.95\linewidth]{images/scene-graph-component-diagram}
+\label{fig:scene-graph-component-diagram}
+  \includegraphics[width=0.5\linewidth]{images/scene-graph-component-diagram}
 \end{figure*}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \caption{Entity relationship diagram of the scene tree component.}
-  \label{fig:scene-graph-erd}
-  \includegraphics[width=0.75\linewidth]{images/scene-graph-erd}
+\label{fig:scene-graph-erd}
+  \includegraphics[width=0.5\linewidth]{images/scene-graph-erd}
 \end{figure}
 
 \newthought{The scene tree component} enables the scenes of the animation to be
@@ -2445,17 +2537,17 @@ user add, remove and select scenes.
 \subsection{Node graph}
 \label{results:subsec:program:node-graph}
 
-% \begin{figure*}[ht]
-%   \caption{Component diagram of the node graph component.}
-%   \label{fig:node-graph-component-diagram}
-%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
-% \end{figure*}
-%
-% \begin{figure}[ht]
-%   \caption{Entity relationship diagram of the node graph component.}
-%   \label{fig:node-graph-erd}
-%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
-% \end{figure}
+\begin{figure*}[!htbp]
+  \caption{Component diagram of the node graph component.}
+\label{fig:node-graph-component-diagram}
+  \includegraphics[width=0.5\linewidth]{images/node-graph-component-diagram}
+\end{figure*}
+
+\begin{figure}[!htbp]
+  \caption{Entity relationship diagram of the node graph component.}
+\label{fig:node-graph-erd}
+  \includegraphics[width=0.5\linewidth]{images/node-graph-erd}
+\end{figure}
 
 \newthought{The node graph component} enables the nodes of a scene to be
 managed. The nodes of a scene define its content.
@@ -2465,10 +2557,9 @@ Such a parameter is for example the radius of a sphere for a node providing a
 sphere of type implicit.
 
 \newthought{Nodes have multiple inputs and one output} where each is of a
-specific type, as described
-in~\cref{lst:node-definition-atomic-types}~\enquote{\nameref{lst:node-definition-atomic-types}}.
-Inputs point to parameters of a node whereas outputs provide values. An output
-of a node may be connected to the input of another node. Every scene has a fixed
+specific type, as described in~\cref{table:node-definition-atomic-types}. Inputs
+point to parameters of a node whereas outputs provide values. An output of a
+node may be connected to the input of another node. Every scene has a fixed
 input by default which is currently limited to implicit types (outputs) and acts
 as output of the scene.
 
@@ -2485,7 +2576,7 @@ Shading Language which defines the function of the
 node.~\cref{fig:node-definition-example} shows an example of such a definition.
 It defines an implicit sphere with a certain radius at a certain position.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -2509,11 +2600,13 @@ It defines an implicit sphere with a certain radius at a certain position.
 \label{fig:node-definition-example}
 \end{figure}
 
+\newpage{}
+
 \newthought{The~\emph{invocation} of a node} is the call to a method defined by
 the definition of a node. Invocations are also written in the OpenGL Shading
 Language.~\cref{fig:node-invocation-example} shows an example of a invocation.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -2540,7 +2633,7 @@ Language.~\cref{fig:node-invocation-example} shows an example of a invocation.
 evaluated. This means usually evaluating the inputs of the node and use them as
 parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 
-\begin{figure*}
+\begin{figure*}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     escapeinside=||,
@@ -2593,6 +2686,8 @@ parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 \label{fig:node-part-example}
 \end{figure*}
 
+\newpage{}
+
 \newthought{Evaluation of nodes} is done in two ways, the node is
 \begin{enumerate*}
   \item directly selected or
@@ -2603,23 +2698,16 @@ parameters.~\cref{fig:node-invocation-example} shows an example of a part.
 \newthought{Nodes are derived from} node definitions. The workflow object of the
 component, the~\verb=NodeController= class, reads node definitions from the file
 system. A dialog window allows to add the read node definitions as instances to
-a scene. When a node is selected it is rendered by the renderer component
-(see~\cref{results:subsec:program:renderer}~\enquote{\nameref{results:subsec:program:renderer}}).
+a scene. When a node is selected it is rendered by the renderer component.
 
 \subsection{Rendering}
 \label{results:subsec:program:rendering}
 
-% \begin{figure*}[ht]
-%   \caption{Component diagram of the node graph component.}
-%   \label{fig:node-graph-component-diagram}
-%   \includegraphics[width=0.95\linewidth]{images/node-graph-component-diagram}
-% \end{figure*}
-%
-% \begin{figure}[ht]
-%   \caption{Entity relationship diagram of the node graph component.}
-%   \label{fig:node-graph-erd}
-%   \includegraphics[width=0.75\linewidth]{images/node-graph-erd}
-% \end{figure}
+\begin{figure}[!htbp]
+  \caption{Entity relationship diagram of the renderer component.}
+\label{fig:renderer-erd}
+  \includegraphics[width=0.95\linewidth]{images/renderer-erd}
+\end{figure}
 
 \newthought{The rendering component} renders nodes and scenes. Nodes are
 rendered according to their type whereby only nodes of type implicit are
@@ -2631,10 +2719,10 @@ OpenGL, everything that is rendered is rendered through a shader defined in the
 OpenGL Shading Language (GLSL).
 
 \newthought{As algorithm for rendering} the sphere tracing algorithm is used as
-described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rendering}}
 and shown in~\cref{fig:sphere-tracing-implementation}.
 
-\begin{figure}
+\begin{figure}[!htbp]
   \begin{minted}[%
     bgcolor=LightGray,
     linenos=true,
@@ -2674,9 +2762,10 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection,
 \label{fig:sphere-tracing-implementation}
 \end{figure}
 
+\newpage{}
 
 \newthought{For the shading} of objects Phong shading is used as
-described in~\cref{sec:rendering}~\enquote{\nameref{sec:rending}}
+described in~\autoref{sec:rendering}~\enquote{\nameref{sec:rendering}}
 and shown in~\cref{fig:phong-shading-implementation}.
 
 \begin{figure*}
@@ -2826,12 +2915,44 @@ prevents high coupling and low cohesion.
 \subsection{Literate program}
 \label{subsec:discussion-conclusion:discussion:literate-program}
 
-TBD.
+\newthought{The developed literate program} explains how a program for modeling,
+composing and rendering real time computer graphics using sphere tracing is
+developed. The used literate programming paradigm allows to explain to human
+beings what the computer shall do instead of focusing on instructing the
+computer what to do by writing program code and forcing readers to read the
+program code.
+
+\newthought{The literate program starts} with a description of what will be
+achieved. From this description the main components are derived and then
+subsequently implemented. This shows also the overall structure of the literate
+program: a certain concept is first introduced by describing it and then
+implemented.
 
 \subsection{Program}
 \label{subsec:discussion-conclusion:discussion:program}
 
-TBD.
+\newthought{Using the introduced methodologies} and the developed software
+architecture the editor component of the program was implemented.
+
+\newthought{Animations are the building blocks} of the editor component and
+contain scenes, which contain nodes. Currently the developed editor component
+allows one animation to be managed.
+
+\newthought{Scenes build the basis} of an animation. They can be managed using a
+tree like structure. Each scene holds nodes in a graph structure.
+
+\newthought{Nodes represent the content} of a scene and therefore of an
+animation. Nodes are defined by node definitions which are read from the file
+system. The program implemented supports currently only nodes which define
+implicit objects.
+
+\newthought{Animations are evaluated} for rendering. Evaluating an animation means
+evaluating scenes which means evaluating nodes. The result is OpenGL Shading
+Language specific code which is executed by the graphical processing unit (GPU)
+and seen by the viewer.
+
+\newthought{Rendering is done} using the sphere tracing algorithm. For shading
+the Phong shading technique is used.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -2847,18 +2968,73 @@ TBD.
 % Folgerungen verlangt, können diese auch als Schlussteil in die Diskussion
 % integriert werden.
 
-% \newthought{Optional objectives} are the following:
-% \begin{itemize}
-%   \item Additional features for the editor, as follows.
-%   \begin{itemize}
-%     \item A sequencer, allowing a time-based scheduling of defined scenes.
-%     \item Additional nodes, such as operations (e.g. replication of objects)
-%       or post-processing effects (glow/glare, color grading and so on).
-%   \end{itemize}
-%   \item Development of a standalone player application. The player allows the
-%     playback of animations (time-based, compounded scenes in sequential order)
-%     created with the editor.
-% \end{itemize}
+\newthought{The main objective of this thesis} is the design and development of
+a program for modeling, composing and rendering real time computer graphics by
+providing a graphical toolbox. To reach this main objective additional
+objectives were defined, which can be found
+at~\autoref{subsec:objectives}~\enquote{\nameref{subsec:objectives}}
+
+\newthought{All of the objectives could be reached}, not all of the objectives
+and components are as elaborated as originally intended however. The program
+implemented provides at this time no possibility to store and load animations
+and supports only nodes which define implicit objects. As the whole node
+structure is very generalized (by using definitions for nodes) new node types
+can be implemented without much effort. At this time no connections between
+nodes are possible, the program implemented only allows the evaluation of a
+single node at a time. Point light sources are directly implemented (hard-coded)
+within the shader and not as nodes as intended. The same applies for materials
+of objects.
+
+\newthought{The use of the literate programming paradigm} was a whole new
+experience to the author.
+
+\newthought{Literate programming has a lot of advantages}, such as focusing on
+explaining to human beings what the computer shall do in terms of ideas and
+concepts instead of instructing the computer what to do by writing only program
+code. As combining the documentation with code in a single document builds the
+basis of literate programming, the documentation of the program is inherent.
+This prevents unforeseen cost and time overruns.
+
+\newthought{Literate programming faces also several problems however}: it
+requires a different way of thinking from traditional methodologies, it is very
+expressive and verbose, and the documentation can become lengthy and hard to
+read, especially when including the full implementation of technical details.
+Although these problems were overcome in the writing of this thesis, they led to
+significant overhead which affected the whole thesis in terms of less
+productivity. When someone is used to the paradigm these problems can be
+prevented upfront and the paradigm may be not much more costly than using
+traditional methodologies (at least for smaller programs).
+
+\newthought{Sphere tracing}, the algorithm used for rendering, is able to
+produce high quality, realistic looking images in real time without being overly
+complex. It has however a clear disadvantage: the de facto way of representing
+the surface of objects using triangle based meshes cannot be used directly.
+Instead, distance functions have to be used for modeling the surfaces as seen
+from any view point. This disadvantage may be the reason that sphere tracing
+seems not to be used production. However, the algorithm seems to coming into use
+in production, for example for calculating ambient
+occlusion~\cite{epic-games-ao-2017} or soft
+shadows~\cite{epic-games-soft-shadows-2017}. Time will tell if the method will
+establish itself further and become practicable for rendering conventional
+meshes.
+
+\newthought{As this thesis has a limited time frame} of one semester, not all
+desired topics could be treated and not all of the set objectives and
+components are as elaborated as originally intended.
+
+\newthought{Further topics} for the continuation of this thesis might be
+additional features for the editor component and the development of the player
+component, which can be used as standalone program.
+
+\newthought{Additional features for the editor} component could be the
+following: a sequencer, allowing a time-based scheduling of defined scenes.
+Additional nodes, such as operations (e.g.\ replication of objects) or
+post-processing effects (glow/glare, color grading and so on).
+
+\newthought{Additional features for rendering} could be the implementation of
+ambient occlusion, the implementation of realistic materials based on the
+bidirectional reflectance distribution function and the acceleration of the
+sphere tracing algorithm.
 % Backmatter
 %---------------------------------------------------------------------------
 \backmatter{}
@@ -5100,7 +5276,7 @@ self.main_window.scene_graph_view.do_select_item.connect(
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167b}{, 167b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb165b}{, 165b}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -5306,7 +5482,7 @@ named~\verb=with_logger=. The method has the following functionality.
   \item Provide a name based on the current module and class.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap57}\raggedright\small
-\NWtarget{nuweb103a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {103a}}$\,\rangle\equiv$
+\NWtarget{nuweb101a}{} $\langle\,${\itshape Set logger name}\nobreak\ {\footnotesize {101a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 logger_name = "{module_name}.{class_name}".format(
@@ -5326,7 +5502,7 @@ logger_name = "{module_name}.{class_name}".format(
 \item Provide an easy to use interface for logging.
     \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap58}\raggedright\small
-\NWtarget{nuweb103b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {103b}}$\,\rangle\equiv$
+\NWtarget{nuweb101b}{} $\langle\,${\itshape Logger interface}\nobreak\ {\footnotesize {101b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 cls.logger = logging.getLogger(logger_name)
@@ -7084,7 +7260,7 @@ self.scene_controller.do_change_scene.connect(
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167b}{, 167b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb165b}{, 165b}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -9491,7 +9667,7 @@ class AddNodeDialog(QtWidgets.QDialog):
         layout.setSizeConstraint(Qt.QLayout.SetFixedSize)
         self.setLayout(layout)
 
-    |\hbox{$\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize \NWlink{nuweb164a}{164a}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize \NWlink{nuweb162a}{162a}}$\,\rangle$}|
 
     # Slots
     |\hbox{$\langle\,${\itshape Add node dialog slots}\nobreak\ {\footnotesize \NWlink{nuweb?}{?}}$\,\rangle$}|
@@ -9697,7 +9873,7 @@ def on_node_definition_added(self, node_view_model):
 
     node_name = node_view_model.domain_object.name
     type_name = node_view_model.domain_object.type_.name
-    |\hbox{$\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize \NWlink{nuweb159a}{159a}}$\,\rangle$}||\NWsep|
+    |\hbox{$\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize \NWlink{nuweb157a}{157a}}$\,\rangle$}||\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
@@ -9725,15 +9901,15 @@ the cursor position where the dialog for adding a node was opened.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap154}\raggedright\small
-\NWtarget{nuweb159a}{} $\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize {159a}}$\,\rangle\equiv$
+\NWtarget{nuweb157a}{} $\langle\,${\itshape On node definition added implementation}\nobreak\ {\footnotesize {157a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
-|\hbox{$\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize \NWlink{nuweb159b}{159b}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize \NWlink{nuweb162}{162}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize \NWlink{nuweb165b}{165b}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize \NWlink{nuweb166a}{166a}, \ldots\ }$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize \NWlink{nuweb166c}{166c}}$\,\rangle$}|
-|\hbox{$\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize \NWlink{nuweb167a}{167a}}$\,\rangle$}||\NWsep|
+|\hbox{$\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize \NWlink{nuweb157b}{157b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize \NWlink{nuweb160}{160}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize \NWlink{nuweb163b}{163b}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize \NWlink{nuweb164a}{164a}, \ldots\ }$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize \NWlink{nuweb164c}{164c}}$\,\rangle$}|
+|\hbox{$\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize \NWlink{nuweb165a}{165a}}$\,\rangle$}||\NWsep|
 \end{pythoncode}
 \vspace{1.5ex}
 \footnotesize
@@ -9749,7 +9925,7 @@ case the process will be stopped.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap155}\raggedright\small
-\NWtarget{nuweb159b}{} $\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize {159b}}$\,\rangle\equiv$
+\NWtarget{nuweb157b}{} $\langle\,${\itshape Check if the node definition is already known}\nobreak\ {\footnotesize {157b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 if node_view_model.id_ not in self.node_definitions:
@@ -9758,7 +9934,7 @@ if node_view_model.id_ not in self.node_definitions:
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9769,7 +9945,7 @@ method, as the task is abstracted into a method to maintain readability.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap156}\raggedright\small
-\NWtarget{nuweb162}{} $\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize {162}}$\,\rangle\equiv$
+\NWtarget{nuweb160}{} $\langle\,${\itshape Get or create column by type name}\nobreak\ {\footnotesize {160}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     column = self.get_or_create_column_by_name(type_name)|\NWsep|
@@ -9777,7 +9953,7 @@ method, as the task is abstracted into a method to maintain readability.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9789,7 +9965,7 @@ creates a new column using the given name.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap157}\raggedright\small
-\NWtarget{nuweb164a}{} $\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize {164a}}$\,\rangle\equiv$
+\NWtarget{nuweb162a}{} $\langle\,${\itshape Add node dialog methods}\nobreak\ {\footnotesize {162a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 def get_or_create_column_by_name(self, column_name):
@@ -9804,8 +9980,8 @@ def get_or_create_column_by_name(self, column_name):
     :rtype:  AddNodeDialog.Column
     """
 
-    |\hbox{$\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize \NWlink{nuweb164b}{164b}}$\,\rangle$}|
-    |\hbox{$\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize \NWlink{nuweb165a}{165a}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize \NWlink{nuweb162b}{162b}}$\,\rangle$}|
+    |\hbox{$\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize \NWlink{nuweb163a}{163a}}$\,\rangle$}|
 
     return column|\NWsep|
 \end{pythoncode}
@@ -9823,7 +9999,7 @@ reference to the found column is returned.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap158}\raggedright\small
-\NWtarget{nuweb164b}{} $\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize {164b}}$\,\rangle\equiv$
+\NWtarget{nuweb162b}{} $\langle\,${\itshape Get existing column object by name}\nobreak\ {\footnotesize {162b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 if column_name in self.columns:
@@ -9832,7 +10008,7 @@ if column_name in self.columns:
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb164a}{164a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162a}{162a}.
 
 \item{}
 \end{list}
@@ -9843,7 +10019,7 @@ name is created.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap159}\raggedright\small
-\NWtarget{nuweb165a}{} $\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize {165a}}$\,\rangle\equiv$
+\NWtarget{nuweb163a}{} $\langle\,${\itshape Create new column object based on name}\nobreak\ {\footnotesize {163a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 else:
@@ -9875,7 +10051,7 @@ else:
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb164a}{164a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb162a}{162a}.
 
 \item{}
 \end{list}
@@ -9886,7 +10062,7 @@ the creation of a sub frame is necessary.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap160}\raggedright\small
-\NWtarget{nuweb165b}{} $\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize {165b}}$\,\rangle\equiv$
+\NWtarget{nuweb163b}{} $\langle\,${\itshape Create sub frame for given node definition}\nobreak\ {\footnotesize {163b}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     sub_frame = QtWidgets.QFrame(column.frame)
@@ -9897,7 +10073,7 @@ the creation of a sub frame is necessary.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9908,7 +10084,7 @@ created sub frame. At this moment the presentation is simply a label.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap161}\raggedright\small
-\NWtarget{nuweb166a}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {166a}}$\,\rangle\equiv$
+\NWtarget{nuweb164a}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {164a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     button_label = gui_helper.ClickableLabel(node_name, sub_frame)
@@ -9921,8 +10097,8 @@ created sub frame. At this moment the presentation is simply a label.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb166a}{166a}\NWlink{nuweb166b}{b}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb164a}{164a}\NWlink{nuweb164b}{b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9941,7 +10117,7 @@ chosen node definition.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap162}\raggedright\small
-\NWtarget{nuweb166b}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {166b}}$\,\rangle+\equiv$
+\NWtarget{nuweb164b}{} $\langle\,${\itshape Create button for given node definition and add to sub frame}\nobreak\ {\footnotesize {164b}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 
@@ -9956,8 +10132,8 @@ chosen node definition.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb166a}{166a}\NWlink{nuweb166b}{b}.
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb164a}{164a}\NWlink{nuweb164b}{b}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9968,7 +10144,7 @@ column.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap163}\raggedright\small
-\NWtarget{nuweb166c}{} $\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize {166c}}$\,\rangle\equiv$
+\NWtarget{nuweb164c}{} $\langle\,${\itshape Add sub frame to column}\nobreak\ {\footnotesize {164c}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     column.v_box_layout.insertWidget(
@@ -9979,7 +10155,7 @@ column.
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -9990,7 +10166,7 @@ known node definitions. Otherwise a warning is being shown.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap164}\raggedright\small
-\NWtarget{nuweb167a}{} $\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize {167a}}$\,\rangle\equiv$
+\NWtarget{nuweb165a}{} $\langle\,${\itshape Save the node definition to list of known nodes}\nobreak\ {\footnotesize {165a}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
     self.node_definitions[node_view_model.id_] = node_view_model
@@ -10004,7 +10180,7 @@ else:
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroRefIn\ \NWlink{nuweb159a}{159a}.
+\item \NWtxtMacroRefIn\ \NWlink{nuweb157a}{157a}.
 
 \item{}
 \end{list}
@@ -10016,7 +10192,7 @@ the slot with the ~\verb=do_add_node_view_definition= signal.
 
 \begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap165}\raggedright\small
-\NWtarget{nuweb167b}{} $\langle\,${\itshape Connect main window components}\nobreak\ {\footnotesize {167b}}$\,\rangle+\equiv$
+\NWtarget{nuweb165b}{} $\langle\,${\itshape Connect main window components}\nobreak\ {\footnotesize {165b}}$\,\rangle+\equiv$
 \vspace{-1ex}
 \begin{pythoncode}
 self.node_controller.do_add_node_view_definition.connect(
@@ -10026,7 +10202,7 @@ self.node_controller.do_add_node_view_definition.connect(
 \vspace{1.5ex}
 \footnotesize
 \begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb167b}{, 167b}.
+\item \NWtxtMacroDefBy\ \NWlink{nuweb?}{?}\NWlink{nuweb?}{, ?}\NWlink{nuweb165b}{, 165b}.
 \item \NWtxtMacroRefIn\ \NWlink{nuweb?}{?}.
 
 \item{}
@@ -10127,10 +10303,8 @@ self.node_controller.do_add_node_view_definition.connect(
 % \addcontentsline{toc}{chapter}{Glossary}
 % \glsaddall{}
 % \printglossaries{}
-\todo[inline]{Fix glossaries}
 
 % Index
 % \printindex{}
-\todo[inline]{Print index}
 
 \end{document}
