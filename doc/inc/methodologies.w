@@ -185,7 +185,7 @@ software but only partly true for larger software. The problem with larger
 software is, that when using literate programming, the documentation tends to be
 correspondingly large. \emph{To overcome this problem} in this project, the
 actual implementation of the software is placed into to the appendix,
-see appendix~\enquote{\nameref{sec:code-fragments}}.
+see appendix~\enquote{\nameref{chap:code-fragments}}.
 
 \newthought{Another problematic aspect} is the implementation of repeating
 fragments or parts with similar but not identical technical details (such as imports
@@ -193,7 +193,7 @@ or getter and setter methods). This might be interesting only for
 software developers or technically oriented readers who want to grasp all the
 details.~\emph{This aspect can
 be overcome} by moving recurring or uninteresting fragments to a separate
-file (see appendix~\enquote{\nameref{sec:code-fragments}}).
+file (see appendix~\enquote{\nameref{chap:code-fragments}}).
 
 \newthought{To show the principles of literate programming}, without annoying
 the reader, only an excerpt of some details is given here.
@@ -220,25 +220,28 @@ This structure is applied to the declaration of the node class.
 defining a scrap called~\enquote{\emph{Node definition declaration}}
 using the above structure. The scrap does not have any content at the
 moment, except references to other scraps, that build the body of the scrap.
-These will be defined later on.~\autoref{lst:node-def-class-decl} shows the
+These will be defined later on.~\Cref{scrap1} shows the
 scrap.
 
 \begin{figure}[h]
   @d Node definition declaration
   @{
 class NodeDefinition(object):
-    """Represents a definition of a node."""
+    """Represents a definition of a node.
+    """
 
     # Signals
-    @<Node definition signals@>
+
     @<Node definition constructor@>
-    @<Node definition methods@>
+
+    # Methods
 
     # Slots
-    @<Node definition methods@>@}
+@}
   \caption{Declaration of the node definition class.}
-\label{lst:node-def-class-decl}
+% \label{lst:node-def-class-decl}
 \end{figure}
+\phantomsection{}
 
 \newthought{The constructor} might be the first thing to implement. In Python
 the constructor defines properties of a class~\sidenote[][-20pt]{Properties do
@@ -285,7 +288,7 @@ in~\autoref{table:node-properties} defining a node definition.
 
 \newthought{Implementing the constructor} of the node definition may now follow
 from the properties defined
-in~\autoref{table:node-properties}.~\autoref{lst:node-def-constructor} shows the
+in~\autoref{table:node-properties}.~\Cref{scrap2} shows the
 scrap containing the definition of the constructor.
 
 \begin{figure}[!htbp]
@@ -314,11 +317,11 @@ def __init__(self, id_):
   \caption{Constructor of the node definition class. Note that the
     identifier is given by a corresponding parameter. Identifiers have to be
     generated when defining a node using an external file.}
-\label{lst:node-def-constructor}
+% \label{lst:node-def-constructor}
 \end{figure}
 
 \newthought{One of the problems mentioned before} can be seen
-in~\cref{lst:node-def-constructor}: it shows a rather simple constructor without
+in~\cref{scrap2}: it shows a rather simple constructor without
 any useful logic. Additional modules would be needed, e.g.\ Qt bindings for
 Python or system modules. At this point the implementation of node definitions
 will not be detailed further, as this is beyond the scope of this thesis.
@@ -330,7 +333,7 @@ document and manage the code of the loading of node definitions.
 This happens within the node controller component (not shown here).
 The method for loading the nodes,
 \mintinline{python}{load_node_definitions}, defined
-in~\cref{lst:load-node-definitions}, does not have any arguments. Everything
+in~\cref{scrap3}, does not have any arguments. Everything
 needed for loading nodes is encapsulated in the node controller.
 
 \begin{figure}[!htbp]
@@ -344,7 +347,7 @@ def load_node_definitions(self):
 @}
   \caption{Head of the method that loads node definitions from external JSON
     files. Words written in uppercase are class constants.}
-\label{lst:load-node-definitions}
+% \label{lst:load-node-definitions}
 \end{figure}
 
 \newthought{When loading node definitions}, there are two cases (and
@@ -356,7 +359,7 @@ consequences) at the first instance:
 \end{enumerate*}
 In the first case the directory possibly containing node definitions is being
 searched for such files, in the second case a warning message is logged. This is
-shown in~\autoref{lst:nodes-controller-load-nodes-2}.
+shown in~\cref{scrap4}.
 
 \begin{figure*}[!htbp]
   @d Load node definitions
@@ -367,13 +370,13 @@ else:
     @<Output warning when directory with node definitions does not exist@>@}
   \caption{Check whether the path containing the node definition files exist or
     not.}
-\label{lst:nodes-controller-load-nodes-2}
+% \label{lst:nodes-controller-load-nodes-2}
 \end{figure*}
 
 \newthought{In the first case}, when the directory containing the node
 definitions exists, files containing node definitions are searched. The files
 are searched by wildcard pattern matching the extension:~\verb|*.node|. This can
-be seen in~\autoref{lst:nodes-controller-find-node-def-files}.
+be seen in~\cref{scrap5}.
 
 \newthought{In the second case}, a warning or error message must be generated.
 This is detailed at the end of this section.
@@ -389,7 +392,7 @@ node_definition_files = glob.glob("{path}{sep}*.{ext}".format(
 num_node_definitions = len(node_definition_files)@}
   \caption{When the directory containing the node definitions exists, files
     matching the pattern~\emph{*.node} are searched.}
-\label{lst:nodes-controller-find-node-def-files}
+% \label{lst:nodes-controller-find-node-def-files}
 \end{figure}
 
 \newthought{Having searched for node definition files}, there are again two
@@ -400,7 +403,7 @@ cases, similar as before:
   \item no files with the ending \verb|.node| exist.
 \end{enumerate*}
 Again, as before, in the first case the node definitions will be loaded, in the
-second case a warning message will be logged, which is shown in~\autoref{lst:nodes-controller-find-node-def-files-2}.
+second case a warning message will be logged, which is shown in~\cref{scrap6}.
 
 \begin{figure}[!htbp]
   @d Find and load node definition files
@@ -412,7 +415,7 @@ else:
   \caption{When files containing node definition files are found, they are
     loaded (if possible). When no such files are found, a warning message is
     logged.}
-\label{lst:nodes-controller-find-node-def-files-2}
+% \label{lst:nodes-controller-find-node-def-files-2}
 \end{figure}
 
 \newthought{In the case (1) when node definitions are present}, they are loaded
@@ -421,7 +424,7 @@ readability, these text parts (fragments or scraps) are is encapsulated in a
 method,~\mintinline{python}{load_node_definition_from_file_name}, which is not
 shown here. If the node definition cannot be loaded or parsed a null object
 (Python~\mintinline{python}{None}) is being returned. This can be seen
-in~\autoref{lst:nodes-controller-load-node-defs}.
+in~\cref{scrap7}.
 
 \begin{figure}[!htbp]
   @d Load found node definitions
@@ -441,7 +444,7 @@ for file_name in node_definition_files:
     )@}
   \caption{Loading and parsing of the node definitions found within the folder
     containing (possibly) node definition files.}
-\label{lst:nodes-controller-load-node-defs}
+% \label{lst:nodes-controller-load-node-defs}
 \end{figure}
 
 \newpage{}
@@ -474,7 +477,7 @@ self.logger.info(
   \caption{A view model, based on the domain model, for the node definition is
     being created. Both models are then stored internally and the signal, that a
     node definition was loaded is being emitted.}
-\label{lst:nodes-controller-load-node-defs-2}
+% \label{lst:nodes-controller-load-node-defs-2}
 \end{figure*}
 
 \newpage{}
@@ -497,7 +500,7 @@ warnings are:
     self.logger.fatal(message)@}
   \caption{Output a warning when the path containing the node definition files
     does not exist.}
-\label{lst:nodes-controller-load-node-defs-warning}
+% \label{lst:nodes-controller-load-node-defs-warning}
 \end{figure*}
 
 \tuftebreak{}or
@@ -505,7 +508,7 @@ warnings are:
 \begin{enumerate}[resume]
   \item no files containing node definitions are found.
 \end{enumerate}
-  
+
 \begin{figure*}[!htbp]
   @d Output warning when no node definitions are found
   @{
@@ -515,7 +518,7 @@ warnings are:
     )
     self.logger.fatal(message)@}
   \caption{Output a warning when no node definitions are being found.}
-\label{lst:nodes-controller-load-node-defs-warning-2}
+% \label{lst:nodes-controller-load-node-defs-warning-2}
 \end{figure*}
 
 \section{Agile software development}

@@ -56,6 +56,11 @@ class ClickableLabel(QtWidgets.QLabel):
 
         return False
 
+    @<Mouse press event of clickable label@>
+@}
+
+@d Mouse press event of clickable label
+@{
     def mousePressEvent(self, event):
         """Event handler when a mouse button was pressed on this label. Emits a
         signal called 'do_add_node'.
@@ -67,5 +72,4 @@ class ClickableLabel(QtWidgets.QLabel):
         self.do_add_node.emit()
         super(ClickableLabel, self).mousePressEvent(event)
 @}
-
 

@@ -1,7 +1,7 @@
 % -*- mode: latex; coding: utf-8 -*-
 
 \chapter{Administrative aspects}
-\label{chap:administrative_aspects}
+\label{chap:administrative-aspects}
 
 % Link to previous
 % Make a connection to what has immediately gone before. Recap the last chapter.

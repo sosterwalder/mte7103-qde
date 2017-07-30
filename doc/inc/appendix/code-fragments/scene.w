@@ -119,8 +119,10 @@ self.logger.debug(
 self.do_add_node.emit(node_definition_vm.id_)@}
 
 @d Scene controller signals
-@{do_select_node = QtCore.pyqtSignal(node_gui_domain.NodeViewModel)
-do_deselect_node = QtCore.pyqtSignal()  # TODO: Send deselected node as well?@}
+@{
+do_select_node = QtCore.pyqtSignal(node_gui_domain.NodeViewModel)
+do_deselect_node = QtCore.pyqtSignal()  # TODO: Send deselected node as well?
+@}
 
 @d Scene controller slots
 @{
@@ -191,3 +193,8 @@ def mouseReleaseEvent(self, event):
             new_x, new_y
         )
         self.invalidate()@}
+
+@d Scene graph controller methods
+@{
+@<Scene graph controller add root node@>
+@}

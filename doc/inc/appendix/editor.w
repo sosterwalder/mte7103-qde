@@ -13,7 +13,7 @@ the JSON format or even in bytecode, which defines an animation.
 \newthought{An animation} is simply a composition of scenes which run in a
 sequential order within a time span. A scene is then a composition of nodes,
 which are at the end of their evaluation nothing else as shader specific code
-which gets executed on the GPU. As this definition is rather abstract, it may be
+which gets executed on the GPU.\@@As this definition is rather abstract, it may be
 easier to define what shall be achieved in terms of content and then work
 towards this definition.
 
@@ -76,7 +76,7 @@ when being called.
 
 \newthought{An entry point} is a point where an application starts when being
 called. Python does this by evaluating a special variable within a module,
-called~\verb=__name__+. Its value is set to~\verb+'__main__'= if the module
+called~\verb=__name__=. Its value is set to~\verb='__main__'= if the module
 is~\enquote{read from standard input, a script, or from an interactive
 prompt.}~\footnote{\url{https://docs.python.org/3/library/__main__.html}}
 
@@ -84,7 +84,7 @@ prompt.}~\footnote{\url{https://docs.python.org/3/library/__main__.html}}
 application, is spawning the editor application, execute it and exit again, as
 can be seen below.
 
-\begin{figure}[h]
+\begin{figure}[!htpb]
   @d Main entry point
   @{
 if __name__ == "__main__":
@@ -94,7 +94,7 @@ if __name__ == "__main__":
   @}
   \caption{Main entry point of the editor application.\newline{}\newline{}Editor
     $\rightarrow$ Main entry point}
-  \label{editor:lst:main}
+% \label{editor:lst:main}
 \end{figure}
 
 \newthought{But where to place the main entry point?} A very direct approach
@@ -103,7 +103,7 @@ controller. But when running the editor application by calling it from the
 command line, calling a controller directly may rather be confusing. Instead it
 is more intuitive to have only a minimal entry point which is clearly visible as
 such. Therefore the main entry point will be put in a file
-called~\verb=editor.py+ which is at the top level of the~\verb+src= directory.
+called~\verb=editor.py= which is at the top level of the~\verb=src= directory.
 
 \section{Main application}
 \label{appendix:sec:editor:app}
@@ -124,13 +124,13 @@ the end it frees the allocated resources again.
 
 Due to the usage of~\verb=QApplication= as super class it is not necessary to
 implement a main (event-) loop, as such is provided by Qt
-itself~\footnote{http://doc.qt.io/Qt-5/qapplication.html\#exec}.
+itself~\footnote{\url{http://doc.qt.io/Qt-5/qapplication.html\#exec}}.
 
 As the main application initializes resources, it act as central node between the
 various layers of the architecture, initializing them and connecting them using
 signals.\cite[pp. 37 --- 38]{osterwalder-qde-2016}
 
-\begin{figure}[h]
+\begin{figure}[!htpb]
   @d Main application declarations
   @{
 @@common.with_logger
@@ -141,7 +141,7 @@ class Application(QtWidgets.QApplication):
     @<Main application methods@>@}
   \caption{Main application class of the editor
     application.\newline{}\newline{}Editor $\rightarrow$ Application}
-  \label{editor:lst:app}
+% \label{editor:lst:app}
 \end{figure}
 
 Therefore it needs to do at least three things:
@@ -153,7 +153,7 @@ Therefore it needs to do at least three things:
 This all happens when the main application is being initialized through its
 constructor.
 
-\begin{figure}[h]
+\begin{figure}[!htpb]
 @d Main application constructor
 @{
 def __init__(self, arguments):
@@ -172,14 +172,15 @@ def __init__(self, arguments):
     self.main_window.show()@}
   \caption{Constructor of the editor application
     class.\newline{}\newline{}Editor $\rightarrow$ Application $\rightarrow$
-    Constructor} \label{editor:lst:app:constructor}
+    Constructor}
+% \label{editor:lst:app:constructor}
 \end{figure}
 
 \newthought{Setting up the internals} is straight forward: Passing any given
 arguments directly to~\verb=QApplication=, setting an application icon, a name
 as well as a display name.
 
-\begin{figure}[h]
+\begin{figure}[!htpb]
 @d Set up internals for main application
 @{
 super(Application, self).__init__(arguments)
@@ -188,7 +189,8 @@ self.setApplicationName("QDE")
 self.setApplicationDisplayName("QDE")@}
 \caption{Setting up the internals for the main application class.
   \newline{}\newline{}Editor $\rightarrow$ Application $\rightarrow$
-  Constructor} \label{editor:lst:app:constructor:internals}
+  Constructor}
+% \label{editor:lst:app:constructor:internals}
 \end{figure}
 
 The other two steps, setting up the components and connecting them can however
@@ -207,7 +209,7 @@ the main application.
 user interface, containing all the views of the components. Qt offers the class
 \verb=QMainWindow= from which~\verb=MainWindow= may inherit.
 
-\begin{figure}
+\begin{figure}[!htpb]
 @d Main window declarations
 @{
 @@common.with_logger
@@ -222,9 +224,8 @@ class MainWindow(QtWidgets.QMainWindow):
 @}
 \caption{Main window class of the editor application.
   \newline{}\newline{}Editor $\rightarrow$ Main window}
-  \label{editor:lst:main-window}
+% \label{editor:lst:main-window}
 \end{figure}
-% AT<Main window slotsAT>
 
 \newthought{For being able to shut down} the main application and therefore the
 main window, they need to react to a request for shutting down, either by a
@@ -238,13 +239,13 @@ exactly such cross-layer communication without coupling components tightly.
 introduced, which tells the main application to shut down. A fitting name for
 the signal might be~\verb=do_close=.
 
-\begin{figure}
+\begin{figure}[!htpb]
 @d Main window signals
 @{
 do_close = QtCore.pyqtSignal()@}
 \caption{Definition of the~\texttt{do\_close} signal of the main window class.
   \newline{}\newline{}Editor $\rightarrow$ Main window $\rightarrow$ Signals}
-\label{editor:lst:main-window:signals}
+% \label{editor:lst:main-window:signals}
 \end{figure}
 
 Now, that the signal for closing the window and the application is defined, two
@@ -256,7 +257,7 @@ The signal shall be emitted when the escape key on the keyboard is pressed or
 when the corresponding menu item was selected. As there is no menu at the
 moment, only the key pressed event is implemented by now.
 
-\begin{figure}
+\begin{figure}[!htpb]
 @d Main window methods
 @{
 def __init__(self, parent=None):
@@ -279,7 +280,7 @@ def keyPressEvent(self, event):
 @}
 \caption{Definition of methods for the main window class.
   \newline{}\newline{}Editor $\rightarrow$ Main window $\rightarrow$ Methods}
-\label{editor:lst:main-window:methods}
+% \label{editor:lst:main-window:methods}
 \end{figure}
 
 % For emitting the signal when selecting a menu entry, an action needs to be
@@ -292,7 +293,7 @@ def keyPressEvent(self, event):
 controller, which also listens to the~\verb=do_close= signal through the
 inherited~\verb=quit= slot.
 
-\begin{figure}
+\begin{figure}[!htpb]
 @d Set up components for main application
 @{
 @<Set up controllers for main application@>
@@ -301,10 +302,10 @@ inherited~\verb=quit= slot.
 \caption{Setting up of components for the main application class.
   \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
   Constructor}
-\label{editor:lst:main-application:constructor:methods}
+% \label{editor:lst:main-application:constructor:methods}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htpb]
 @d Set up main window for main application
 @{
 self.main_window = qde_main_window.MainWindow()
@@ -314,12 +315,12 @@ self.main_window.do_close.connect(self.quit)
 \caption{Set up of the editor main window and its signals from within the main
   application. \newline{}\newline{}Editor $\rightarrow$ Main application
   $\rightarrow$ Constructor}
-\label{editor:lst:main-application:constructor:main-window}
+% \label{editor:lst:main-application:constructor:main-window}
 \end{figure}
 
 The used view component for the main window,~\verb=QMainWindow=, needs at least
 a central widget with a layout for being
-rendered.~\footnote{http://doc.qt.io/qt-5/qmainwindow.html\#creating-main-window-components}
+rendered.~\footnote{\url{http://doc.qt.io/qt-5/qmainwindow.html\#creating-main-window-components}}
 
 \newthought{As the main window will set up and hold} the whole layout for the
 application through multiple view components, a method~\verb=setup_ui= is
@@ -331,7 +332,7 @@ containing a grid layout.
 possibilities. Instead a horizontal box layout in combination with splitters is
 used.
 
-Recalling the components, the following layout is approached:
+Recalling the components, the following layout is approached, which can be seen in~\cref{fig:appendix:editor-components}:
 
 \begin{itemize}
 \item{%
@@ -350,9 +351,20 @@ Recalling the components, the following layout is approached:
     at the bottom of the window, covering as much width as possible}
 \end{itemize}
 
-\todo[inline]{Provide a picture of the layout here.}
+\begin{figure}[ht]
+  \caption{%
+    A mock up of the editor application showing its components.\newline{}
+    1: Scene tree.\newline{}
+    2: Node graph.\newline{}
+    3: Parameter view.\newline{}
+    4: Rendering view.\newline{}
+    5: Time line.
+  }
+\label{fig:appendix:editor-components}
+  \includegraphics[width=0.95\linewidth]{images/editor-components}
+\end{figure}
 
-\begin{figure*}
+\begin{figure*}[!htpb]
 @d Main window methods
 @{
 def setup_ui(self):
@@ -388,12 +400,12 @@ def setup_ui(self):
     horizontal_layout.addWidget(self.scene_graph_view)
 
     @<Set up scene view in main window@>
-    @<Set up parameter view in main window@>
+    # Set up parameter view in main window
     @<Set up render view in main window@>
 
     horizontal_splitter = QtWidgets.QSplitter()
     @<Add render view to horizontal splitter in main window@>
-    @<Add parameter view to horizontal splitter in main window@>
+    # Add parameter view to horizontal splitter in main window
 
     vertical_splitter = QtWidgets.QSplitter()
     vertical_splitter.setOrientation(QtCore.Qt.Vertical)
@@ -405,7 +417,7 @@ def setup_ui(self):
 \caption{Set up of the user interface of the editor's  main window.
   \newline{}\newline{}Editor $\rightarrow$ Main window
   $\rightarrow$ Methods}
-\label{editor:lst:main-window:methods:setup-ui}
+% \label{editor:lst:main-window:methods:setup-ui}
 \end{figure*}
 
 All the above taken actions to lay out the main window change nothing in the

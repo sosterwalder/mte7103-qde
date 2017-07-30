@@ -15,11 +15,11 @@ but not exported.
 
 \newthought{When dealing with directories and files}, Python uses the
 term~\emph{package} for (sub-) directories and~\emph{module} for files within
-directories.\footnote{https://docs.python.org/3/reference/import.html\#packages}
+directories.\footnote{\url{https://docs.python.org/3/reference/import.html\#packages}}
 
 \newthought{To prevent having multiple modules having the same name,} name
 spaces are
-used.\footnote{https://docs.python.org/3/tutorial/classes.html\#python-scopes-and-namespaces}
+used.\footnote{\url{https://docs.python.org/3/tutorial/classes.html\#python-scopes-and-namespaces}}
 The main name space shall be analogous to the project's name:~\verb+qde+.
 Underneath the source code folder~\verb+src+, each sub-folder represents a
 package and acts therefore also as a name space.
@@ -53,19 +53,19 @@ coding style is applied which is defined as follows.
 \subsection{Importing of modules}
 \label{appendix:subsec:imports}
 
-\newthought{For the implementation python is used}, as mentioned
-in section~\enquote{\nameref{appendix:sec:requirements}}.
-Python has~\enquote{batteries included}, which means that it offers a lot of
+\newthought{For the implementation python is used}, as mentioned in
+section~\enquote{\nameref{appendix:sec:requirements}}. Python
+has~\enquote{batteries included}, which means that it offers a lot of
 functionality through various modules, which have to be imported first before
 using them. The same applies of course for self written modules. Python offers
-multiple possibilities concerning imports, for details
-see~\url{https://docs.python.org/3/tutorial/modules.html}. \todo[inline]{Is
-direct url reference ok or does this need to be citation?}
+multiple possibilities concerning
+imports~\footnote{\url{https://docs.python.org/3/tutorial/modules.html}}.
 
 However, PEP number 8 recommends to either import modules directly or to import
 the needed functionality
 directly.~\footnote{\url{https://www.python.org/dev/peps/pep-0020/}}. As defined
-by the coding style,~\autoref{subsec:appendix-implementation-coding-style},
+by the coding
+style,~\autoref{appendix:subsec:framework}~\enquote{\nameref{appendix:subsec:framework}},
 imports are done by the \verb+from Foo import Bar+ syntax.
 
 \newthought{The imported modules are always split up:} first the system modules

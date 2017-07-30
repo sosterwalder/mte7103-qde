@@ -44,14 +44,4 @@
 % Bibliography
 \printbibliography{}
 
-% Glossary
-% \cleardoublepage{}
-% \phantomsection{}
-% \addcontentsline{toc}{chapter}{Glossary}
-% \glsaddall{}
-% \printglossaries{}
-
-% Index
-% \printindex{}
-
 \end{document}

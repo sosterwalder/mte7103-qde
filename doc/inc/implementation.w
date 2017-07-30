@@ -394,7 +394,7 @@ read, especially when including the full implementation of technical details.
 moving the implementation into the appendix,
 see~\autoref{part:appendix}~\enquote{\nameref{part:appendix}} and by outsourcing
 technical parts into a separate file,
-see~\autoref{sec:code-fragments}~\enquote{\nameref{sec:code-fragments}}.
+see~\autoref{chap:code-fragments}~\enquote{\nameref{chap:code-fragments}}.
 
 \section{Program}
 \label{results:sec:program}

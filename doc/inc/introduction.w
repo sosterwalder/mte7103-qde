@@ -142,7 +142,7 @@ the project, including the persons involved, the deliverables, and phases and
 milestones.
 
 \newthought{The administrative aspects are followed by} the
-chapter~\enquote{\nameref{fundamentals}}. The purpose of this chapter is to
+chapter~\enquote{\nameref{chap:fundamentals}}. The purpose of this chapter is to
 present the principles, based on the previous project works mentioned above that
 this thesis is built upon.
 
@@ -153,15 +153,12 @@ principles for implementation of the developed software.
 
 \newthought{The following chapter} on~\enquote{\nameref{chap:implementation}}
 describes the editor component.
-% TODO: Elaborate more? OK like this.
 
 \newthought{The last chapter}~\enquote{\nameref{chap:discussion-conclusion}}
 considers the methodologies as well as the results. Some further work on the
 editor and the player components is proposed as well.
 
 \newthought{After the regular content} follow appendices,
-see~\enquote{\nameref{part:appendix}}, detailing the requirements for building the
-above-mentioned components, and the actual source code in form of a literal
+see~\enquote{\nameref{part:appendix}}, detailing the requirements for building
+the above-mentioned components, and the actual source code in form of a literal
 program.
-
-% TODO: Add missing content, if content _is_ missing.

@@ -12,12 +12,16 @@ from qde.editor.foundation import type as types
 from qde.editor.domain import node
 
 @<Parameter declarations@>
-@<Paramater domain model value generic interface@>
-@<Paramater domain model value interface@>
-@<Paramater domain model float value@>
-@<Paramater domain model text value@>
-@<Paramater domain model scene value@>
-@<Paramater domain model implicit value@>
+@<Parameter domain model value generic interface@>
+@<Parameter domain model value interface@>
+@<Parameter domain model dynamic value@>
+@<Parameter domain model float value@>
+@<Parameter domain model generic value@>
+@<Parameter domain model image value@>
+@<Parameter domain model mesh value@>
+@<Parameter domain model text value@>
+@<Parameter domain model scene value@>
+@<Parameter domain model implicit value@>
 @<Parameter domain module methods@>
 @}
 
@@ -64,7 +68,7 @@ from qde.editor.domain import node
 
 @}
 
-@d Paramater domain model text value
+@d Parameter domain model text value
 @{
 class TextValue(Value):
     """A class holding values for text/string nodes."""
@@ -88,7 +92,7 @@ class TextValue(Value):
 
         return TextValue(self.value)@}
 
-@d Paramater domain model image value
+@d Parameter domain model image value
 @{
 class ImageValue(ValueInterface):
     """A class holding values for image nodes."""
@@ -108,7 +112,7 @@ class ImageValue(ValueInterface):
 
         return ImageValue()@}
 
-@d Paramater domain model generic value
+@d Parameter domain model generic value
 @{
 class GenericValue(ValueInterface):
     """A class holding values for generic nodes."""
@@ -128,7 +132,7 @@ class GenericValue(ValueInterface):
 
         return GenericValue()@}
 
-@d Paramater domain model dynamic value
+@d Parameter domain model dynamic value
 @{
 class DynamicValue(ValueInterface):
     """A class holding values for dynamic nodes."""
@@ -148,7 +152,7 @@ class DynamicValue(ValueInterface):
 
         return DynamicValue()@}
 
-@d Paramater domain model mesh value
+@d Parameter domain model mesh value
 @{
 class MeshValue(ValueInterface):
     """A class holding values for mesh nodes."""
@@ -168,7 +172,7 @@ class MeshValue(ValueInterface):
 
         return MeshValue()@}
 
-@d Paramater domain model implicit value
+@d Parameter domain model implicit value
 @{
 class ImplicitValue(ValueInterface):
     """A class holding values for implicit surface nodes."""
@@ -188,7 +192,7 @@ class ImplicitValue(ValueInterface):
 
         return ImplicitValue()@}
 
-@d Paramater domain model implicit value
+@d Parameter domain model implicit value
 @{
 class ImplicitValue(ValueInterface):
     """A class holding values for implicit types."""

@@ -29,116 +29,16 @@ class RenderView(QtWidgets.QOpenGLWidget):
     OPENGL_MINOR        = 1
 
 
-    def __init__(self, parent=None):
-        """Constructor."""
-
-        super(RenderView, self).__init__(parent)
-
-        self.current_node  = None
-        self.render_target = None
-        self.renderer      = None
-
-        self.has_view_changed = False
-
-        self.surface_format = QtGui.QSurfaceFormat()
-        self.surface_format.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        self.surface_format.setVersion(self.OPENGL_MAJOR, self.OPENGL_MINOR)
-
-        self.version_profile = QtGui.QOpenGLVersionProfile(self.surface_format)
-        self.version_profile.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        self.version_profile.setVersion(self.OPENGL_MAJOR, self.OPENGL_MINOR)
-
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setFormat(self.surface_format)
-
-    def initializeGL(self):
-        """Initializes OpenGL."""
-
-        try:
-            version_functions = self.context().versionFunctions(
-                self.version_profile
-            )
-            if version_functions is None:
-                message = (
-                    'Could not initialize OpenGL with profile {0}'
-                ).format(
-                    self.surface_format.version()
-                )
-                self.logger.fatal(message)
-                raise Exception(message)
-
-        except Exception as e:
-                message = (
-                    'Could not initialize OpenGL with profile {0} ({1})'
-                ).format(
-                    self.surface_format.version(),
-                    e
-                )
-                self.logger.fatal(message)
-                raise Exception(message)
-
-        self.ctx = self.context()
-        self.ctx.version_functions = version_functions
-        self.ctx.size = self.frameSize()
-        self.gfx = graphics.Graphics.create(self.ctx, self.size())
-        self.renderer = render.RayMarchingRenderer(self.ctx)
-
-        # Seems to happen under OS X (10.11) using PyQt5.7 on an Intel
-        # Iris 6100 only.
-        # The main render target seem to need the ID 1, as otherwise
-        # the render target is empty. Well, there _is_ data, but somehow
-        # it is not usable, although it has the same properties as when
-        # the render target is set up first.
-        self.setup_render_target()
-
-        color = QtGui.QColor(QtCore.Qt.black)
-        self.gfx.set_clear_color(color)
-
-        self.logger.info('Initialized OpenGL with profile {0} at ({1})'.format(
-            self.surface_format.version(),
-            self.size()
-        ))
-        self.logger.info("Size: %s", self.frameSize())
-
-    def has_valid_render_target(self):
-        """Returns wether the render target is valid or not.
-
-        :return: the validity of the render target.
-        :rtype:  bool
-        """
-
-        if self.render_target is None:
-            return False
-
-        if self.render_target.size() != self.size():
-            return False
-
-        return True
+    @<Render view constructor@>
+    @<Render view initialize OpenGL@>
+    @<Render view check for valid render target@>
 
     def paintGL(self):
         """Renders the currently set content."""
 
         self.render_current_node()
 
-    def render_current_node(self):
-        """Renders the currently selected node."""
-
-        # TODO: Process node (time-wise)
-        # TODO: Set view changed to True if node has been processed/
-
-        if self.has_view_changed:
-            if self.current_node is None:
-                self.render_none()
-                self.logger.warn("No node set for rendering")
-            elif self.current_node.type_ == node_types.NodeType.IMPLICIT:
-                self.render_implicit(self.current_node)
-            else:
-                self.render_none()
-                self.logger.warn("Rendered unknown node")
-
-            self.has_view_changed = False
-        else:
-            self.logger.debug("No change, not rendering")
+    @<Render view render current node@>
 
     def render_none(self):
         """Renders nothing except a solid background color."""
@@ -152,22 +52,7 @@ class RenderView(QtWidgets.QOpenGLWidget):
         self.logger.debug("Rendering implicit")
         self.render_scene(scene=None, camera=None, time=0.0)
 
-    def render_scene(self, scene, camera, time):
-        """Renders the given scene using the given camera at the given time.
-
-        :param scene: TODO
-        :type scene: TODO
-        :param camera: TODO
-        :type camera: TODO
-        :param time: TODO
-        :type time: TODO
-        """
-
-        assert(time >= 0.0)
-
-        self.renderer.render_scene(scene, camera, None, time)
-        # self.renderer.render_scene(scene, camera, self.render_target, time)
-        # self.copy_render_target_to_screen()
+    @<Render view render scene@>
 
     def resizeGL(self, w, h):
         """Gets triggered whenever the widget's view port is resized."""
@@ -186,37 +71,185 @@ class RenderView(QtWidgets.QOpenGLWidget):
 
     # Slots
 
-    @@QtCore.pyqtSlot(node_gui_domain.NodeViewModel)
-    def on_node_selected(self, node_view_model):
-        """Slot that gets triggered whenever a node gets selected within the
-        node graph view.
+    @<Render view handle node selection@>
+    @<Render view handle node deselection@>
+@}
 
-        :param node_view_model: view model of the selected node
-        :type  node_view_model: qde.editor.gui_domain.node.NodeViewModel
-        """
+@d Render view constructor
+@{
+def __init__(self, parent=None):
+    """Constructor."""
 
-        self.logger.debug("Set selected node for rendering: %s" % node_view_model)
+    super(RenderView, self).__init__(parent)
 
-        # TODO: Check if node is valid
-        self.current_node = node_view_model
+    self.current_node  = None
+    self.render_target = None
+    self.renderer      = None
 
-        # TODO: Remove this and process time wise
-        # This must get done in render_current_node
-        self.has_view_changed = True
-        self.update()
+    self.has_view_changed = False
 
-    @@QtCore.pyqtSlot()
-    def on_node_deselected(self):
-        """Slot that gets triggered whenever a node gets deselected within the
-        node graph view.
-        """
+    self.surface_format = QtGui.QSurfaceFormat()
+    self.surface_format.setProfile(QtGui.QSurfaceFormat.CoreProfile)
+    self.surface_format.setVersion(self.OPENGL_MAJOR, self.OPENGL_MINOR)
 
-        self.current_node = None
+    self.version_profile = QtGui.QOpenGLVersionProfile(self.surface_format)
+    self.version_profile.setProfile(QtGui.QSurfaceFormat.CoreProfile)
+    self.version_profile.setVersion(self.OPENGL_MAJOR, self.OPENGL_MINOR)
 
-        # TODO: Remove this and process time wise
-        # This must get done in render_current_node
-        self.has_view_changed = True
-        self.update()
+    self.setFocusPolicy(QtCore.Qt.StrongFocus)
+    self.setFormat(self.surface_format)
+@}
+
+@d Render view initialize OpenGL
+@{
+def initializeGL(self):
+    """Initializes OpenGL."""
+
+    try:
+        version_functions = self.context().versionFunctions(
+            self.version_profile
+        )
+        if version_functions is None:
+            message = (
+                'Could not initialize OpenGL with profile {0}'
+            ).format(
+                self.surface_format.version()
+            )
+            self.logger.fatal(message)
+            raise Exception(message)
+
+    except Exception as e:
+            message = (
+                'Could not initialize OpenGL with profile {0} ({1})'
+            ).format(
+                self.surface_format.version(),
+                e
+            )
+            self.logger.fatal(message)
+            raise Exception(message)
+
+    self.ctx = self.context()
+    self.ctx.version_functions = version_functions
+    self.ctx.size = self.frameSize()
+    self.gfx = graphics.Graphics.create(self.ctx, self.size())
+    self.renderer = render.RayMarchingRenderer(self.ctx)
+
+    # Seems to happen under OS X (10.11) using PyQt5.7 on an Intel
+    # Iris 6100 only.
+    # The main render target seem to need the ID 1, as otherwise
+    # the render target is empty. Well, there _is_ data, but somehow
+    # it is not usable, although it has the same properties as when
+    # the render target is set up first.
+    self.setup_render_target()
+
+    color = QtGui.QColor(QtCore.Qt.black)
+    self.gfx.set_clear_color(color)
+
+    self.logger.info('Initialized OpenGL with profile {0} at ({1})'.format(
+        self.surface_format.version(),
+        self.size()
+    ))
+    self.logger.info("Size: %s", self.frameSize())
+
+@}
+
+@d Render view check for valid render target
+@{
+def has_valid_render_target(self):
+    """Returns wether the render target is valid or not.
+
+    :return: the validity of the render target.
+    :rtype:  bool
+    """
+
+    if self.render_target is None:
+        return False
+
+    if self.render_target.size() != self.size():
+        return False
+
+    return True
+@}
+
+@d Render view render current node
+@{
+def render_current_node(self):
+    """Renders the currently selected node."""
+
+    # TODO: Process node (time-wise)
+    # TODO: Set view changed to True if node has been processed/
+
+    if self.has_view_changed:
+        if self.current_node is None:
+            self.render_none()
+            self.logger.warn("No node set for rendering")
+        elif self.current_node.type_ == node_types.NodeType.IMPLICIT:
+            self.render_implicit(self.current_node)
+        else:
+            self.render_none()
+            self.logger.warn("Rendered unknown node")
+
+        self.has_view_changed = False
+    else:
+        self.logger.debug("No change, not rendering")
+@}
+
+@d Render view render scene
+@{
+def render_scene(self, scene, camera, time):
+    """Renders the given scene using the given camera at the given time.
+
+    :param scene: TODO
+    :type scene: TODO
+    :param camera: TODO
+    :type camera: TODO
+    :param time: TODO
+    :type time: TODO
+    """
+
+    assert(time >= 0.0)
+
+    self.renderer.render_scene(scene, camera, None, time)
+    # self.renderer.render_scene(scene, camera, self.render_target, time)
+    # self.copy_render_target_to_screen()
+@}
+
+@d Render view handle node selection
+@{
+@@QtCore.pyqtSlot(node_gui_domain.NodeViewModel)
+def on_node_selected(self, node_view_model):
+    """Slot that gets triggered whenever a node gets selected within the
+    node graph view.
+
+    :param node_view_model: view model of the selected node
+    :type  node_view_model: qde.editor.gui_domain.node.NodeViewModel
+    """
+
+    self.logger.debug("Set selected node for rendering: %s" % node_view_model)
+
+    # TODO: Check if node is valid
+    self.current_node = node_view_model
+
+    # TODO: Remove this and process time wise
+    # This must get done in render_current_node
+    self.has_view_changed = True
+    self.update()
+@}
+
+@d Render view handle node deselection
+@{
+@@QtCore.pyqtSlot()
+def on_node_deselected(self):
+    """Slot that gets triggered whenever a node gets deselected within the
+    node graph view.
+    """
+
+    self.current_node = None
+
+    # TODO: Remove this and process time wise
+    # This must get done in render_current_node
+    self.has_view_changed = True
+    self.update()
 @}
 
 @o ../src/qde/editor/technical/render.py
@@ -236,6 +269,12 @@ from qde.editor.technical  import geometry
 from qde.editor.technical  import graphics
 
 
+@<Renderer class@>
+@<Ray marching renderer class@>
+@}
+
+@d Renderer class
+@{
 @@common.with_logger
 class Renderer(object):
     """Renderer base class."""
@@ -264,8 +303,10 @@ class Renderer(object):
         raise NotImplemented(
             "%s must be implemented in child class." % __name__
         )
+@}
 
-
+@d Ray marching renderer class
+@{
 class RayMarchingRenderer(Renderer):
     """Provides a ray marching renderer using sphere tracing."""
 

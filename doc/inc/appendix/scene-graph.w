@@ -10,24 +10,14 @@ in chapter~\enquote{\nameref{appendix:chap:editor}}:
   \item its data structure.
 \end{enumerate*}
 
-\todo[inline]{Define what a scene is by prose and code.}
-
 As described in subsection~\enquote{\nameref{results:subsec:software-design}},
 two kinds of models are used. A domain model, containing the actual data and a
 view model, which holds a reference to its corresponding domain model.
 
-% \todo[inline]{Check whether to move into procedure.}
-% Both models are managed by the same controller. View models are displayed by views,
-% e.g. node view models in the node graph view.
-%
-% Therefore the controller of the scene graph will manage instances of scene
-% domain models whereas the view of the scene graph will display a tree of scene
-% view models.
-
 As the domain model builds the basis for the whole (data-) structure, it is
 implemented first.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene model declarations
 @{
 class SceneModel(object):
@@ -36,20 +26,23 @@ class SceneModel(object):
     whole system.
     """
 
-    @<Scene model signals@>
+    # Signals
+
     @<Scene model methods@>
-    @<Scene model slots@>@}
+
+    # Slots
+@}
 \caption{Definition of the scene model class, which acts as a base class for
 scene instances within the whole application.
   \newline{}\newline{}Editor $\rightarrow$ Scene model}
-\label{editor:lst:scene-model}
+% \label{editor:lst:scene-model}
 \end{figure}
 
 \newthought{The only known fact} at this point is, that a scene is a composition
 of nodes and therefore holds its nodes as a list. Additionally it holds a
 reference to its parent.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene model methods
 @{
 def __init__(self, parent=None):
@@ -65,7 +58,7 @@ def __init__(self, parent=None):
     self.parent = parent@}
 \caption{The constructor of the scene model.
   \newline{}\newline{}Editor $\rightarrow$ Scene model $\rightarrow$ Constructor}
-\label{editor:lst:scene-model:constructor}
+% \label{editor:lst:scene-model:constructor}
 \end{figure}
 
 \newthought{The counter part of the domain model} is the view model. View models
@@ -85,7 +78,7 @@ uses its own data model.
 Therefore~\verb=QObject= will be used for the scene graph view model
 and~\verb=QGraphicsScene= will be used for the scene view model.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view model declarations
 @{
 class SceneGraphViewModel(Qt.QObject):
@@ -96,21 +89,23 @@ class SceneGraphViewModel(Qt.QObject):
     must therefore at least provide a name and a row.
     """
 
-    @<Scene graph view model signals@>
+    # Signals
+
     @<Scene graph view model constructor@>
     @<Scene graph view model methods@>
-    @<Scene graph view model slots@>
+
+    # Slots
 @}
 \caption{Definition of the scene graph view model class, which corresponds to an
   entry within the scene graph.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view model}
-\label{editor:lst:scene-graph-view-model}
+% \label{editor:lst:scene-graph-view-model}
 \end{figure}
 
 In terms of the scene graph, the view model must provide at least a name and a
 row. In addition, as written above, it holds a reference to the domain model.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view model constructor
 @{
 def __init__(
@@ -147,7 +142,7 @@ def __init__(
 \caption{The constructor of the scene graph view model.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view model $\rightarrow$
   Constructor}
-\label{editor:lst:scene-graph-view-model:constructor}
+% \label{editor:lst:scene-graph-view-model:constructor}
 \end{figure}
 
 \newthought{Scenes may now be instantiated,} it is although necessary to manage
@@ -161,14 +156,14 @@ representation, as stated by Qt:~\enquote{Developers who do not need the flexibi
 the Model/View framework can use this class to create simple hierarchical lists
 very easily. A more flexible approach involves combining a QTreeView with a
 standard item model. This allows the storage of data to be separated from its
-representation.}\footnote{http://doc.qt.io/qt-5/qtreewidget.html\#details}
+representation.}\footnote{\url{http://doc.qt.io/qt-5/qtreewidget.html\#details}}
 
 \newthought{Such a standard item model}
 is~\verb=QAbstractItemModel=\footnote{\label{footnote:qabstractitemmodel}
 http://doc.qt.io/qt-5/qabstractitemmodel.html}, which is used as a base class
 for the scene graph controller.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller declarations
 @{
 @@common.with_logger
@@ -183,16 +178,16 @@ class SceneGraphController(QtCore.QAbstractItemModel):
     @<Scene graph controller methods@>
     @<Scene graph controller slots@>
 @}
-\caption{The scene graph controller, inherting from~\texttt{QAbstractItemModel}.
+\caption{The scene graph controller, inheriting from~\texttt{QAbstractItemModel}.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller}
-\label{editor:lst:scene-graph-controller}
+% \label{editor:lst:scene-graph-controller}
 \end{figure}
 
 \newthought{As at this point the functionality} of the scene graph controller is
 not fully known, the constructor simply initializes its parent class and an
 empty list of scenes.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller constructor
 @{
 def __init__(self, parent=None):
@@ -208,7 +203,7 @@ def __init__(self, parent=None):
 \caption{Constructor of the scene graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Constructor}
-\label{editor:lst:scene-graph-controller:constructor}
+% \label{editor:lst:scene-graph-controller:constructor}
 \end{figure}
 
 \newthought{The scene graph controller holds and manages scene data.} Therefore
@@ -220,7 +215,7 @@ constructor, as components depending on the scene graph controller may not be
 listening to its signals at this point. Therefore this is done in a separate
 method called~\verb=add_root_node=.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller add root node
 @{
 def add_root_node(self):
@@ -245,20 +240,16 @@ def add_root_node(self):
             "present!"
         ))
 @}
-@d Scene graph controller methods
-@{
-@<Scene graph controller add root node@>
-@}
 \caption{A method to add the root node from within the scene graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:add-root-node}
+% \label{editor:lst:scene-graph-controller:methods:add-root-node}
 \end{figure}
 
 The root scene can now be added by the main application, as all necessary
 components are set up.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Add root node for main application
 @{
 self.scene_graph_controller.add_root_node()
@@ -266,12 +257,12 @@ self.scene_graph_controller.add_root_node()
 \caption{The root node of the scene graph being added by the main application.
   \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
   Constructor}
-\label{editor:lst:main-application:constructor:add-root-node}
+% \label{editor:lst:main-application:constructor:add-root-node}
 \end{figure}
 
 \newthought{The scene graph controller must also provide the header data,} which
 is used to display the header within the view (due to the usage of the Qt view
-model~\todo{Add reference to Qt's view model}). As header data the name of the
+model~\cite{qt-mvp-2017}). As header data the name of the
 scenes as well as the number of nodes a scene contains shall be displayed.
 
 \begin{figure}
@@ -290,17 +281,12 @@ scenes as well as the number of nodes a scene contains shall be displayed.
 \caption{Initialization of the header data and the root node of the scene graph.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Constructor}
-\label{editor:lst:scene-graph-controller:constructor:header-data}
+% \label{editor:lst:scene-graph-controller:constructor:header-data}
 \end{figure}
-
-% TODO: Check if needed
-% Before implementing the actual methods, it is important to think about the
-% attributes, that the scene graph controller will have, as attributes define and
-% influence the methods.
 
 \newthought{As QAbstractItemModel is used as a basis} for the scene graph
 controller, some methods must be implemented at very least:~\enquote{When
-subclassing QAbstractItemModel, at the very least you must implement index(),
+sub classing QAbstractItemModel, at the very least you must implement index(),
 parent(), rowCount(), columnCount(), and data(). These functions are used in all
 read-only models, and form the basis of editable
 models.}\footref{footnote:qabstractitemmodel}
@@ -308,7 +294,7 @@ models.}\footref{footnote:qabstractitemmodel}
 \newthought{The method index} returns the position of an item in the (data-)
 model for a given row and column below a parent item.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def index(self, row, column, parent=QtCore.QModelIndex()):
@@ -349,14 +335,14 @@ def index(self, row, column, parent=QtCore.QModelIndex()):
   controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:index}
+% \label{editor:lst:scene-graph-controller:methods:index}
 \end{figure}
 
 \newthought{The method parent} returns the parent item of an item identified by
 a provided index. If that index is invalid, an invalid index is returned as
 well.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def parent(self, model_index):
@@ -394,14 +380,14 @@ def parent(self, model_index):
   controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:parent}
+% \label{editor:lst:scene-graph-controller:methods:parent}
 \end{figure}
 
 \newthought{Implementing the columnCount and rowCount methods} is straight
 forward. The former returns simply the number of columns, in this case the
 number of headers, therefore 2.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def columnCount(self, parent):
@@ -425,13 +411,13 @@ def columnCount(self, parent):
   graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:column-count}
+% \label{editor:lst:scene-graph-controller:methods:column-count}
 \end{figure}
 
 The method~\verb=rowCount= returns the number of nodes for a given parent
 item (identified by its index within the data model).
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def rowCount(self, parent):
@@ -466,11 +452,11 @@ def rowCount(self, parent):
   graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:row-count}
+% \label{editor:lst:scene-graph-controller:methods:row-count}
 \end{figure}
 
-\newthought{The last method} that has to be implemented due to the usage of
-~\verb=QAbstractItemModel=, is the~\verb=data= method. It returns the data for
+\newthought{The last method} that has to be implemented due to the usage
+of~\verb=QAbstractItemModel=, is the~\verb=data= method. It returns the data for
 an item identified by the given index for the given role.
 
 A role indicates what type of data is provided. Currently the only role
@@ -480,7 +466,7 @@ at~\url{http://doc.qt.io/qt-5/qt.html#ItemDataRole-enum}).
 Depending on the column of the model index, the method returns either the name
 of the scene graph node or the number of nodes a scene contains.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def data(self, model_index, role=QtCore.Qt.DisplayRole):
@@ -525,16 +511,16 @@ def data(self, model_index, role=QtCore.Qt.DisplayRole):
   graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:data}
+% \label{editor:lst:scene-graph-controller:methods:data}
 \end{figure}
 
 \newthought{In addition to the above mentioned methods,}
 the~\verb=QAbstractItemModel= offers the method~\verb=headerData=,
 which~\enquote{returns the data for the given role and section in the header
 with the specified
-orientation.}\footnote{http://doc.qt.io/qt-5/qabstractitemmodel.html\#headerData}
+orientation.}\footnote{\url{http://doc.qt.io/qt-5/qabstractitemmodel.html\#headerData}}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def headerData(self, section, orientation=QtCore.Qt.Horizontal,
@@ -575,12 +561,12 @@ def headerData(self, section, orientation=QtCore.Qt.Horizontal,
   graph controller.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-controller:methods:header-data}
+% \label{editor:lst:scene-graph-controller:methods:header-data}
 \end{figure}
 
 One thing, that may stand out, is, that the above defined~\verb=data= method
-returns the number of graph nodes within a scene by accessing the
-~\verb=node_count= property of the~\emph{scene graph view model}.
+returns the number of graph nodes within a scene by accessing
+the~\verb=node_count= property of the~\emph{scene graph view model}.
 
 The~\emph{scene graph view model} does therefore need to keep track of the nodes it
 contains, in form of a list, analogous to the domain model.
@@ -590,7 +576,7 @@ as the view model will hold references to graphical objects where as the domain
 model holds only pure data objects. Therefore it is necessary, that the scene
 view model keeps track of its nodes separately.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view model constructor
 @{
     self.nodes = []
@@ -598,13 +584,13 @@ view model keeps track of its nodes separately.
 \caption{Scene graph view models hold references to the nodes they contain.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view model $\rightarrow$
   Constructor}
-\label{editor:lst:scene-graph-view-model:constructor:nodes}
+% \label{editor:lst:scene-graph-view-model:constructor:nodes}
 \end{figure}
 
 \newthought{The method node\_count} then simply returns the length of the node
 list.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view model methods
 @{
 @@property
@@ -617,26 +603,19 @@ def node_count(self):
   implemented as a property.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view model $\rightarrow$
   Methods}
-\label{editor:lst:scene-graph-view-model:methods:node-count}
+% \label{editor:lst:scene-graph-view-model:methods:node-count}
 \end{figure}
-
-% The object~\verb=node= is in this case a scene graph view model, which holds a
-% reference to scene graph view model. This may be confusing at first, as they seem very
-% similar. But as stated before, view models are used to visually represent
-% something within the graphical user interface. Therefore the \textit{scene graph
-% view model} stands for an entry within the scene graph where as the
-% \textit{scene graph view model} represents a
 
 The scene graph controller can now be set up by the main application controller.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Set up controllers for main application
 @{
 self.scene_graph_controller = scene.SceneGraphController(self)@}
 \caption{The scene graph controller gets initialized within the main application.
   \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
   Constructor}
-\label{editor:lst:main-application:constructor:scene-graph-controller}
+% \label{editor:lst:main-application:constructor:scene-graph-controller}
 \end{figure}
 
 At this point data structures in terms of a (data-) model and a view model
@@ -645,14 +624,14 @@ the flow of the data for both models is implemented.
 
 \newthought{What is still missing,} is the actual representation of the scene
 graph in terms of a view. Qt offers a plethora of widgets for implementing
-views. One such widget is ~\verb=QTreeView=, which~\enquote{implements a tree
+views. One such widget is~\verb=QTreeView=, which~\enquote{implements a tree
 representation of items from a model. This class is used to provide standard
 hierarchical lists that were previously provided by the QListView class, but
 using the more flexible approach provided by Qt's model/view
 architecture.}~\footnote{fn:f377826acb87691:http://doc.qt.io/qt-5/qtreeview.html\#details}
 Therefore~\verb=QTreeView= is used as basis for the scene graph view.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view declarations
 @{
 @<Scene graph view decorators@>
@@ -668,13 +647,13 @@ class SceneGraphView(QtWidgets.QTreeView):
 @}
 \caption{Scene graph view, based on Qt's QTreeView.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view}
-\label{editor:lst:scene-graph-view}
+% \label{editor:lst:scene-graph-view}
 \end{figure}
 
 \newthought{The constructor} simply initializes its parent class, as at this
 point the functionality of the scene graph view is not fully known.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view constructor
 @{
 def __init__(self, parent=None):
@@ -688,16 +667,16 @@ def __init__(self, parent=None):
 \caption{Constructor of the scene graph view.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Constructor}
-\label{editor:lst:scene-graph-view:constructor}
+% \label{editor:lst:scene-graph-view:constructor}
 \end{figure}
 
 \newthought{For being able to display something,} the scene graph view needs a
 controller to work with. In terms of Qt, the controller is called a model, as
 due its model/view architecture. This model may although not be set too early,
 as otherwise problems arise. It may only then be added, when the depending
-components are properly initialized, e.g. when the root node has been added.
+components are properly initialized, e.g.\ when the root node has been added.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Set model for scene graph view
 @{
 self.main_window.scene_graph_view.setModel(
@@ -708,7 +687,7 @@ self.main_window.scene_graph_view.setModel(
   model.
   \newline{}\newline{}Editor $\rightarrow$ Main application
   $\rightarrow$ Constructor}
-\label{editor:lst:main-application:constructor:set-model}
+% \label{editor:lst:main-application:constructor:set-model}
 \end{figure}
 
 \newthought{But scenes shall not only be displayed,} instead it shall be
@@ -732,7 +711,7 @@ components if the selected scene is emitted directly. To emit the selected index
 of the currently selected scene directly, the slot~\verb=on_tree_item_selected=
 is introduced.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view slots
 @{
 @@QtCore.pyqtSlot(QtCore.QItemSelection, QtCore.QItemSelection)
@@ -742,7 +721,7 @@ def on_tree_item_selected(self, selected, deselected):
 
     The previous selection (which may be empty) is specified by
     the deselected parameter, the new selection by the selected
-    paramater.
+    parameter.
 
     This method emits the selected scene graph item as scene
     graph view model.
@@ -763,7 +742,7 @@ def on_tree_item_selected(self, selected, deselected):
   changed.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Slots}
-\label{editor:lst:scene-graph-view:slots:on-tree-item-selected}
+% \label{editor:lst:scene-graph-view:slots:on-tree-item-selected}
 \end{figure}
 
 The~\verb=on_tree_item_selected= slot needs to be triggered as soon as the
@@ -774,7 +753,7 @@ the scene graph view (which is given by the usage of~\verb=QTreeView=). The
 selection model can although only be accessed when setting the data model of the
 view, which needs therefore to be expanded.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view methods
 @{
 def setModel(self, model):
@@ -805,14 +784,14 @@ def setModel(self, model):
   whenever the selection in the scene graph view has changed.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Methods}
-\label{editor:lst:scene-graph-view:methods:set-model}
+% \label{editor:lst:scene-graph-view:methods:set-model}
 \end{figure}
 
 As stated in the above code fragment,~\verb=on_tree_item_selected= emits another
 signal containing a reference to the currently selected scene, which needs to be
 implemented as well.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view signals
 @{
 do_select_item = QtCore.pyqtSignal(QtCore.QModelIndex)
@@ -822,7 +801,7 @@ view was selected. Note that the signal includes the model index of the selected
 item.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Signals}
-\label{editor:lst:scene-graph-view:signals:do-select-item}
+% \label{editor:lst:scene-graph-view:signals:do-select-item}
 \end{figure}
 
 \newthought{Adding and removing of a scene} are implemented in a similar manner
@@ -830,7 +809,7 @@ as the selection of an item was implemented. However, the tree widget does not
 provide direct signals for those cases as it is the case when selecting a tree
 item, instead own signals, slots and actions have to be used.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view signals
 @{
 do_add_item = QtCore.pyqtSignal(QtCore.QModelIndex)
@@ -839,7 +818,7 @@ do_remove_item = QtCore.pyqtSignal(QtCore.QModelIndex)
 \caption{Signals that get emitted whenever a scene is added or removed.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Signals}
-\label{editor:lst:scene-graph-view:signals:do-add-remove-item}
+% \label{editor:lst:scene-graph-view:signals:do-add-remove-item}
 \end{figure}
 
 An action gets triggered, typically by hovering over some item (in terms of a
@@ -849,7 +828,7 @@ adding and the removal, a keyboard shortcut will be used.
 \newthought{Adding of a scene item} shall happen when pressing the~\verb=a= key
 on the keyboard.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view constructor
 @{
     new_action_label = QtCore.QCoreApplication.translate(
@@ -865,13 +844,13 @@ on the keyboard.
   the~\enquote{A} key being pressed on the keyboard.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Constructor}
-\label{editor:lst:scene-graph-view:constructor:new-action}
+% \label{editor:lst:scene-graph-view:constructor:new-action}
 \end{figure}
 
 \newthought{The removal of a selected node} shall be triggered upon the press of
-the ~\verb=delete+ and the~\verb+backspace= key on the keyboard.
+the~\verb=delete= and the~\verb=backspace= key on the keyboard.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view constructor
 @{
     remove_action_label = QtCore.QCoreApplication.translate(
@@ -888,7 +867,7 @@ the ~\verb=delete+ and the~\verb+backspace= key on the keyboard.
   the~\enquote{delete} key being pressed on the keyboard.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Constructor}
-\label{editor:lst:scene-graph-view:constructor:remove-action}
+% \label{editor:lst:scene-graph-view:constructor:remove-action}
 \end{figure}
 
 As can be seen in the two above listings, the~\verb=triggered= signals are
@@ -896,7 +875,7 @@ connected with a corresponding slot. All these slots do is emitting another
 signal, but this time it contains a scene graph view model, which may be used by
 other components, instead of a model index.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view slots
 @{
 @@QtCore.pyqtSlot()
@@ -945,15 +924,15 @@ def on_tree_item_removed(self):
   scene graph or removed respectively.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Slots}
-\label{editor:lst:scene-graph-view:slots:on-tree-item-added-removed}
+% \label{editor:lst:scene-graph-view:slots:on-tree-item-added-removed}
 \end{figure}
 
-\newthought{One of the mentioned other components}~\todo{which exactly?} is the
+\newthought{One of the mentioned other components} is the
 scene graph controller. He needs to be informed whenever a scene was added,
 removed or selected, so that he is able to manage his data model
 correspondingly.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller slots
 @{
 @@QtCore.pyqtSlot(QtCore.QModelIndex)
@@ -986,29 +965,31 @@ def on_tree_item_selected(self, selected_item):
         return False
 
     selected_scene_view_model = selected_item.internalPointer()
-    selected_scene_domain_model  = selected_scene_view_model.domain_object
+    selected_scene_domain_model  = selected_scene_view_model.\
+        domain_object
     self.do_select_scene.emit(selected_scene_domain_model)@}
 \caption{Slots to handle adding, removing and selecting of tree items within the
   scene graph. The slots take a model index as argument (coming from
   QAbstractItemModel). This is analogous to the scene graph view.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller
   $\rightarrow$ Slots}
-\label{editor:lst:scene-graph-controller:slots:on-tree-item-added-removed-selected}
+% \label{editor:lst:scene-graph-controller:slots:on-tree-item-added-removed-selected}
 \end{figure}
 
 \newthought{Despite having the slots for adding, removing and selecting} scene
-graph items implemented, the actual methods for adding and removing scenes,
-~\verb=on_tree_item_added+ and~\verb+on_tree_item_removed=, are still missing.
+graph items implemented, the actual methods for adding and removing
+scenes,~\verb=on_tree_item_added= and~\verb=on_tree_item_removed=, are still
+missing.
 
 When inserting a new scene graph item, actually a row must be inserted, as the
 data model (Qt's) is using rows to represent the data. At the same time the
 controller has to keep track of the domain model.
 
 As can be seen in the implementation below, it is not necessary to add the
-created model instances to a list of nodes, the usage of
-~\verb=QAbstractItemModel= keeps already track of this.
+created model instances to a list of nodes, the usage
+of~\verb=QAbstractItemModel= keeps already track of this.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def insertRows(self, row, count, parent=QtCore.QModelIndex()):
@@ -1019,7 +1000,9 @@ def insertRows(self, row, count, parent=QtCore.QModelIndex()):
 
     parent_node = parent.internalPointer()
     self.beginInsertRows(parent, row, row + count - 1)
-    domain_model  = scene_domain.SceneModel(parent_node.domain_object)
+    domain_model  = scene_domain.SceneModel(
+        parent_node.domain_object
+    )
     view_model = scene_gui_domain.SceneGraphViewModel(
         row=row,
         domain_object=domain_model,
@@ -1036,12 +1019,12 @@ def insertRows(self, row, count, parent=QtCore.QModelIndex()):
   scene graph view model.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller
   $\rightarrow$ Methods}
-\label{editor:lst:scene-graph-controller:methods:insert-rows}
+% \label{editor:lst:scene-graph-controller:methods:insert-rows}
 \end{figure}
 
 The same logic applies when removing a scene.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller methods
 @{
 def removeRows(self, row, count, parent=QtCore.QModelIndex()):
@@ -1058,11 +1041,13 @@ def removeRows(self, row, count, parent=QtCore.QModelIndex()):
     node.setParent(None)
     # TODO: parent_node.child_nodes.remove(node)
     self.endRemoveRows()
-    self.logger.debug(
-        "Removed {0} rows starting from {1} for parent {2}. Children: {3}".format(
-            count, row, parent_node, len(parent_node.children())
-        )
-    )
+    self.logger.debug((
+        "Removed {0} rows starting from {1}"
+        "for parent {2}. Children: {3}"
+    ).format(
+        count,row, parent_node,
+        len(parent_node.children())
+    ))
 
     self.layoutChanged.emit()
     self.do_remove_scene.emit(node.domain_object)
@@ -1074,13 +1059,13 @@ def removeRows(self, row, count, parent=QtCore.QModelIndex()):
   object to a nil object.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller
   $\rightarrow$ Methods}
-\label{editor:lst:scene-graph-controller:methods:remove-rows}
+% \label{editor:lst:scene-graph-controller:methods:remove-rows}
 \end{figure}
 
 \newthought{As before, the main application needs connect the components,} in
 this case the scene graph view with the scene graph controller.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Connect main window components
 @{
 self.main_window.scene_graph_view.do_add_item.connect(
@@ -1098,14 +1083,14 @@ self.main_window.scene_graph_view.do_select_item.connect(
   by the user interface.
   \newline{}\newline{}Editor $\rightarrow$ Main application
   $\rightarrow$ Constructor}
-\label{editor:lst:main-application:constructor:connect-scene-graph-view}
+% \label{editor:lst:main-application:constructor:connect-scene-graph-view}
 \end{figure}
 
 \newthought{To inform other components about the new models}, such as the node
 graph for example, the scene graph controller emits signals when a scene is
 being added, removed or selected respectively.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph controller signals
 @{
 do_add_scene    = QtCore.pyqtSignal(scene_domain.SceneModel)
@@ -1116,7 +1101,7 @@ do_select_scene = QtCore.pyqtSignal(scene_domain.SceneModel)
   models, whenever a scene is added, removed or selected.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph controller
   $\rightarrow$ Signals}
-\label{editor:lst:scene-graph-controller:signals}
+% \label{editor:lst:scene-graph-controller:signals}
 \end{figure}
 
 % TODO: EDIT MODELS
@@ -1135,22 +1120,21 @@ intended. But how does one ensure, that it really does? Without a doubt, unit
 and integration tests are one of the best instruments to ensure functionality of
 code.
 
-\todo[inline]{Check if the paragraph is still correct.}
-As stated before, in~\autoref{subsec:literate-programming}, it was an intention
-of this project to develop the application test driven. Due to the required amount
-of work when developing test driven, it was abstained from this intention and
-regular unit tests are written instead, which can be found in
-appendix,~\autoref{sec:test-cases}.
+As stated before,
+in~\autoref{sec:literate-programming}~\enquote{\nameref{sec:literate-programming}},
+it was an intention of this project to develop the application test driven. Due
+to the required amount of work when developing test driven, it was abstained
+from this intention.
 
 But nevertheless, it would be very handy to have at least some idea what the
 code is doing at certain places and at certain times.
 
 One of the simplest approaches to achieve this, is a verbose output at various
-places of the application, which may be as simple as using Python's
-~\verb=print= function. Using the~\verb=print= function may allow
-printing something immediately, but it lacks of flexibility and demands each
-time a bit of effort to format the output accordingly (e.g. adding the class and
-the function name and so on).
+places of the application, which may be as simple as using Python's~\verb=print=
+function. Using the~\verb=print= function may allow printing something
+immediately, but it lacks of flexibility and demands each time a bit of effort
+to format the output accordingly (e.g.\ adding the class and the function name
+and so on).
 
 Python's logging facility provides much more functionality while being able to
 keep things simple as well --- if needed. The usage of the logging facility to

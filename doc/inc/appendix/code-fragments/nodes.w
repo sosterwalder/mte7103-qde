@@ -148,7 +148,6 @@ class NodeDefinitionConnection(object):
     """Represents a connection of a definition of a node."""
 
     # Signals
-    @<Node definition connection domain model signals@>
 
     def __init__(self,
                  source_node_id, source_part_id,
@@ -271,7 +270,9 @@ def on_node_added(self, id):
                 types.NodeType.FLOAT.name, 0.0
             )
             value_function = node_domain.create_value_function(value)
-            definition = node_domain.NodePart(definition.id_, value_function, types.NodeType.FLOAT, definition.script)
+            definition = node_domain.NodePart(
+                definition.id_, value_function, types.NodeType.FLOAT, definition.script
+            )
             definitions.append(definition)
         node_domain_model.definitions = definition
 
@@ -282,7 +283,9 @@ def on_node_added(self, id):
                 types.NodeType.FLOAT.name, 0.0
             )
             value_function = node_domain.create_value_function(value)
-            invocation = node_domain.NodePart(invocation.id_, value_function, types.NodeType.FLOAT, invocation.script)
+            invocation = node_domain.NodePart(
+                invocation.id_, value_function, types.NodeType.FLOAT, invocation.script
+            )
             invocations.append(invocation)
         node_domain_model.invocations = invocations
 
@@ -318,7 +321,12 @@ if self.isSelected():
     color = QtGui.QColor(23, 135, 84)
     painter.setPen(color)
     painter.setBrush(QtGui.QBrush(color, QtCore.Qt.SolidPattern))
-    painter.drawRect(0, self.boundingRect().height() - 2, self.boundingRect().width(), self.boundingRect().height())
+    painter.drawRect(
+        0,
+        self.boundingRect().height() - 2,
+        self.boundingRect().width(),
+        self.boundingRect().height()
+    )
 
 # TODO: Use another color if bypassed or hidden
 painter.setPen(QtCore.Qt.white)
@@ -341,7 +349,8 @@ def type_(self):
 @}
 
 @d Node view model signals
-@{do_select_node = QtCore.pyqtSignal()
+@{
+do_select_node = QtCore.pyqtSignal()
 do_deselect_node = QtCore.pyqtSignal()@}
 
 @d Node view model methods

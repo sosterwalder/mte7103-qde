@@ -6,7 +6,7 @@
 \newthought{Thinking of the definition of what shall be achieved}, as defined
 at~\autoref{appendix:chap:editor}, a node defining a sphere is implemented.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Implicit sphere node
 @{
 {
@@ -29,7 +29,6 @@ at~\autoref{appendix:chap:editor}, a node defining a sphere is implemented.
         @<Implicit sphere node parts@>
     ],
     "nodes": [
-        @<Implicit sphere node nodes@>
     ],
     "connections": [
         @<Implicit sphere node connections@>
@@ -37,17 +36,17 @@ at~\autoref{appendix:chap:editor}, a node defining a sphere is implemented.
 }@}
 \caption{Definition of a node for an implicitly defined sphere.
   \newline{}\newline{}Implicit sphere node}
-\label{editor:lst:nodes:sphere-node}
-\end{figure}
+% \label{editor:lst:nodes:sphere-node}
+\end{figure*}
 
 At the current point the sphere node will only have one input: the radius of
-the sphere. The positition of the sphere will be at the center (meaning the
+the sphere. The position of the sphere will be at the center (meaning the
 X-, the Y- and the Z-position are all 0).
 
 \newthought{For being able to change the position}, another node will be
 introduced.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Implicit sphere node inputs
 @{
 {
@@ -64,13 +63,13 @@ introduced.
 }@}
 \caption{Radius of the implicit sphere node as input.
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Inputs}
-\label{editor:lst:nodes:sphere-node:inputs:radius}
+% \label{editor:lst:nodes:sphere-node:inputs:radius}
 \end{figure}
 
 \newthought{The output of the sphere node} is of type implicit as the node
 represents an implicit surface.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Implicit sphere node outputs
 @{
 {
@@ -81,20 +80,20 @@ represents an implicit surface.
 \caption{The output of the implicit sphere node, which is of the atomic type
   implicit.
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Outputs}
-\label{editor:lst:nodes:sphere-node:outputs:implicit}
+% \label{editor:lst:nodes:sphere-node:outputs:implicit}
 \end{figure}
 
 \newthought{The definition of the node is the actual implementation} of a sphere
 as a implicit surface.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Implicit sphere node definitions
 @{
 {
     "id_": "99d20a26-f233-4310-adb2-5e540726d079",
     "script": [
-        "// Returns the signed distance to a sphere with given radius for the",
-        "// given position.",
+        "// Returns the signed distance to a sphere with given",
+        "// radius for the given position.",
         "float sphere(vec3 position, float radius)",
         "{",
         "    return length(position) - radius;",
@@ -103,7 +102,7 @@ as a implicit surface.
 }@}
 \caption{Implementation of the sphere in the OpenGL Shading Language (GLSL).
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Definitions}
-\label{editor:lst:nodes:sphere-node:definition}
+% \label{editor:lst:nodes:sphere-node:definition}
 \end{figure}
 
 \newthought{The invocation of the node} is simply calling the above definition
@@ -112,12 +111,12 @@ using the parameters of the node, which is in this case the radius.
 \newthought{The parameters are in case of implicit surfaces} uniform variables
 of the type of the parameter, as implicit surfaces are rendered by the fragment
 shader. The uniform variables are defined by a type and an identifier, whereas
-in the case of paramaters their identifier is used.
+in the case of parameters their identifier is used.
 
 The position of the node is an indirect parameter, which is not defined by the
 node's inputs. It will be setup by the node's parts.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Implicit sphere node invocations
 @{
 {
@@ -132,16 +131,16 @@ node's inputs. It will be setup by the node's parts.
 }@}
 \caption{The position of the implicit sphere node as invocation.
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Invocations}
-\label{editor:lst:nodes:sphere-node:invocations:position}
+% \label{editor:lst:nodes:sphere-node:invocations:position}
 \end{figure}
 
 \newthought{The parts of the node}, in this case it is only one part, contain
 the body of the node. The body is about evaluating the inputs and passing them
 on to a shader.
 
-\todo[inline]{Change this to C and use CFFI.}
+% TODO: Change this to C and use CFFI.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Implicit sphere node parts
 @{
 {
@@ -162,26 +161,34 @@ on to a shader.
         "        shader = context.current_shader.program",
         "        ",
         "        radius = inputs[0].process(context).value",
-        "        shader_radius_location = shader.uniformLocation(\"f5c6a538-1dbc-4add-a15d-ddc4a5e553da\")",
-        "        shader.setUniformValue(shader_radius_location, radius)",
+        "        shader_radius_location = shader.uniformLocation(",
+        "            \"f5c6a538-1dbc-4add-a15d-ddc4a5e553da\"",
+        "        )",
+        "        shader.setUniformValue(",
+        "            shader_radius_location, radius",
+        "        )",
         "        ",
         "        position = self.position",
         "        shader_position_location = shader.uniformLocation(",
         "            \"16d90b34-a728-4caa-b07d-a3244ecc87e3-position\"",
         "        )",
-        "        shader.setUniformValue(shader_position_location, position)",
+        "        shader.setUniformValue(",
+        "            shader_position_location, position",
+        "        )",
         "        ",
         "        return context"
     ]
 }@}
 \caption{The~\enquote{body} of the implicit sphere node as node part.
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Parts}
-\label{editor:lst:nodes:sphere-node:parts:body}
-\end{figure}
+% \label{editor:lst:nodes:sphere-node:parts:body}
+\end{figure*}
 
 \newthought{Connections are composed of an input and an output} plus a reference
-to a part, as stated in \todo{Add reference}. In this case there is exactly one
-input, the radius, and one output, an object defined by implicit functions.
+to a part, as stated
+in~\autoref{results:subsec:program:node-graph}~\enquote{\nameref{results:subsec:program:node-graph}}.
+In this case there is exactly one input, the radius, and one output, an object
+defined by implicit functions.
 
 The radius is being defined by an input, which is therefore being referenced as
 source. There is although no external node being referenced, as the radius is
@@ -193,7 +200,7 @@ consumed by the first part of the node's part (which has only this part). As
 this definition is within the same node, the target node is also 0. The part is
 then being referenced by its identifier.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Implicit sphere node connections
 @{
 {
@@ -205,10 +212,10 @@ then being referenced by its identifier.
 \caption{Mapping of the connections of the implicit sphere node. Note that the
   inputs and outputs are internal, therefore the node references are 0.
   \newline{}\newline{}Implicit sphere node $\rightarrow$ Connections}
-\label{editor:lst:nodes:sphere-node:connections}
+% \label{editor:lst:nodes:sphere-node:connections}
 \end{figure}
 
-\newthought{Now a very basic node is avaialble}, but the node does not get
+\newthought{Now a very basic node is available}, but the node does not get
 recognized by the application yet. As nodes are defined by external files, they
 need to be searched, loaded and registered to make them available to the
 application.
@@ -216,7 +223,7 @@ application.
 \newthought{Therefore the node controller is introduced}, which will manage the
 node definitions.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller declarations
 @{
 @@common.with_logger
@@ -229,8 +236,12 @@ class NodeController(QtCore.QObject):
     # Constants
     NODES_PATH = "nodes"
     NODES_EXTENSION = "node"
-    ROOT_NODE_ID = uuid.UUID("026c04d0-36d2-49d5-ad15-f4fb87fe8eeb")
-    ROOT_NODE_OUTPUT_ID = uuid.UUID("a8fadcfc-4e19-4862-90cf-a262eef2219b")
+    ROOT_NODE_ID = uuid.UUID(
+        "026c04d0-36d2-49d5-ad15-f4fb87fe8eeb"
+    )
+    ROOT_NODE_OUTPUT_ID = uuid.UUID(
+        "a8fadcfc-4e19-4862-90cf-a262eef2219b"
+    )
 
     # Signals
     @<Node controller signals@>
@@ -242,14 +253,14 @@ class NodeController(QtCore.QObject):
 @}
 \caption{Definition of the node controller.
   \newline{}\newline{}Editor $\rightarrow$ Node controller}
-\label{editor:lst:node-controller}
+% \label{editor:lst:node-controller}
 \end{figure}
 
 \newthought{The node controller assumes}, that all node definitions are placed
-within the~\verb=nodes= subdirectory of the application's working directory.
+within the~\verb=nodes= sub directory of the application's working directory.
 Further it assumes, that node definition files use the~\verb=node= extension.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller constructor
 @{
 def __init__(self, parent=None):
@@ -270,19 +281,20 @@ def __init__(self, parent=None):
 \caption{Constructor of the node controller.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Constructor}
-\label{editor:lst:node-controller:constructor}
+% \label{editor:lst:node-controller:constructor}
 \end{figure}
 
 \newthought{The node controller will then scan} that directory containing the
 node definitions and load each one.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller methods
 @{
 def load_nodes(self):
-    """Loads all files with the ending NodeController.NODES_EXTENSION
-    within the NodeController.NODES_PATH directory, relative to the current
-    working directory.
+    """Loads all files with the ending
+    NodeController.NODES_EXTENSION
+    within the NodeController.NODES_PATH directory, relative to
+    the current working directory.
     """
 
     @<Node controller load nodes method@>@}
@@ -290,28 +302,31 @@ def load_nodes(self):
   the node controller.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods}
-\label{editor:lst:node-controller:methods:load-nodes}
+% \label{editor:lst:node-controller:methods:load-nodes}
 \end{figure}
 
-\newthought{Node definitons will contain parts.} The parts within a node
+\newthought{Node definitions will contain parts.} The parts within a node
 definition are used to create corresponding parts within instances of
 themselves. The parts are able to create values based on the atomic types
 through functions.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition part domain model declarations
 @{
 class NodeDefinitionPart(object):
     """Represents a part of the definition of a node."""
 
     # Signals
-    @<Node definition part domain model signals@>
 
     @<Node definition part domain model constructor@>
-    @<Node definition part domain model methods@>@}
+
+    # Methods
+
+    # Slots
+@}
 \caption{Definition of a part of a node definition.
   \newline{}\newline{}Editor $\rightarrow$ Node definition part}
-\label{editor:lst:node-definition-part}
+% \label{editor:lst:node-definition-part}
 \end{figure}
 
 \newthought{The part of a node definition} holds an identifier as well as an
@@ -319,14 +334,14 @@ expression to create a function for creating and handling values which will be
 used when evaluating a node. Further it provides a function which allows to
 instantiate itself as part of a node (instance).
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition part domain model constructor
 @{
 def __init__(self, id_):
     """Constructor.
 
-    :param id_: the globally unique identifier of the part of the node
-                definition.
+    :param id_: the globally unique identifier of the part of
+                the node definition.
     :type  id_: uuid.uuid4
     """
 
@@ -336,25 +351,25 @@ def __init__(self, id_):
     self.script = None
     self.parent = None
 
-    # This property is used when evaluating node instances using this node
-    # definition
+    # This property is used when evaluating node instances using
+    # this node definition
     self.function_creator = lambda: create_value_function(
         parameter.FloatValue(0)
     )
 
-    # This property will be used to create/instantiate a part of a node
-    # instance
+    # This property will be used to create/instantiate a part of
+    # a node instance
     self.creator_function = None
     @}
 \caption{Constructor of the node definition part.
   \newline{}\newline{}Editor $\rightarrow$ Node definition part}
-\label{editor:lst:node-definition-part:constructor}
+% \label{editor:lst:node-definition-part:constructor}
 \end{figure}
 
 \newthought{The node controller needs to keep track} of node definition parts, as
 they are a central aspect and may be reused.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller constructor
 @{
     self.node_definition_parts = {}
@@ -362,14 +377,14 @@ they are a central aspect and may be reused.
 \caption{The node controller keeps track of node definition parts.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Constructor}
-\label{editor:lst:node-controller:constructor:node-definition-parts}
+% \label{editor:lst:node-controller:constructor:node-definition-parts}
 \end{figure}
 
 The code snippet defining the constructor of a node definition
-part,~\autoref{editor:lst:node-definition-part:constructor}, uses a function
+part,~\cref{scrap109}, uses a function
 called~\verb=create_value_function= of the~\verb=functions= module.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain module methods
 @{
 def create_value_function(value):
@@ -387,14 +402,14 @@ def create_value_function(value):
 \caption{Helper function which creates a value function from the given value.
   \newline{}\newline{}Editor $\rightarrow$ Node domain model $\rightarrow$
   Module methods}
-\label{editor:lst:node-domain-model:module-methods:create-value-function}
+% \label{editor:lst:node-domain-model:module-methods:create-value-function}
 \end{figure}
 
 \newthought{That brings up the concept of value functions.} Value functions are
 one of the building blocks of a node. They are used to evaluate a node
 value-wise through its inputs.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node part domain model value function declarations
 @{
 class ValueFunction(Function):
@@ -419,14 +434,15 @@ class ValueFunction(Function):
         return new_function
 
     def process(self, context, inputs, output_index):
-        """Processes the value function for the given context, the given inputs
-        and the given index of the output.
+        """Processes the value function for the given context,
+        the given inputs and the given index of the output.
 
         :param context: the context of the processing
         :type  context: qde.editor.domain.node.NodePartContext
         :param inputs: a list of inputs to process
         :type inputs: list
-        :param output_index: the index of the output which shall be used
+        :param output_index: the index of the output which shall
+                             be used
         :type output_index: int
 
         :return: the context
@@ -449,7 +465,7 @@ class ValueFunction(Function):
         return context@}
 \caption{Definition of the value function class which is used within nodes.
   \newline{}\newline{}Editor $\rightarrow$ Value function}
-\label{editor:lst:value-function}
+% \label{editor:lst:value-function}
 \end{figure}
 
 \newthought{The value function of a node} may not be clear during the
@@ -457,7 +473,7 @@ initialization of the node or it may be simply be subject to change.
 Therefore it makes sense to provide a default value function which gets used by
 default.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node part domain model default value function declarations
 @{
 class DefaultValueFunction(ValueFunction):
@@ -469,7 +485,8 @@ class DefaultValueFunction(ValueFunction):
         super(NodePart.DefaultValueFunction, self).__init__()
 
     def clone(self):
-        """Returns itself as a default value function may not be cloned.
+        """Returns itself as a default value function may not
+        be cloned.
 
         :return: a self-reference.
         :rtype: DefaultValueFunction
@@ -478,14 +495,16 @@ class DefaultValueFunction(ValueFunction):
         return self
 
     def process(self, context, inputs, output_index):
-        """Processes the default value function for the given context, the given inputs
-        and the given index of the output.
+        """Processes the default value function for the given
+        context, the given inputs and the given index of the
+        output.
 
         :param context: the context of the processing
         :type  context: qde.editor.domain.node.NodePartContext
         :param inputs: a list of inputs to process
         :type inputs: list
-        :param output_index: the index of the output which shall be used
+        :param output_index: the index of the output which shall
+                             be used
         :type output_index: int
 
         :return: the context
@@ -499,14 +518,14 @@ class DefaultValueFunction(ValueFunction):
 \caption{Definition of the default value function class, which is derived from
   the value function class.
   \newline{}\newline{}Editor $\rightarrow$ Default value function}
-\label{editor:lst:default-value-function}
+% \label{editor:lst:default-value-function}
 \end{figure}
 
-\newthought{The value function relies strongly on the conecpt of node parts},
+\newthought{The value function relies strongly on the concept of node parts},
 which is not defined yet. A part of a node is actually an instance of an atomic
 type (which is usually an input) within an instance of a node definition.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Node part domain model declarations
 @{
 class NodePart(object):
@@ -517,20 +536,23 @@ class NodePart(object):
     @<Node part domain model default value function declarations@>
 
     # Signals
-    @<Node part domain model signals@>
 
     @<Node part domain model constructor@>
-    @<Node part domain model methods@>
+
+    # Methods
+
+    # Slots
 @}
 \caption{The node part class.
   \newline{}\newline{}Editor $\rightarrow$ Node part}
-\label{editor:lst:node-part}
-\end{figure}
+% \label{editor:lst:node-part}
+\end{figure*}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node part domain model constructor
 @{
-def __init__(self, id_, default_function, type_=types.NodeType.GENERIC, script=None):
+  def __init__(self, id_, default_function,
+               type_=types.NodeType.GENERIC, script=None):
     """constructor.
 
     :param id_: the identifier of the node part.
@@ -550,13 +572,13 @@ def __init__(self, id_, default_function, type_=types.NodeType.GENERIC, script=N
     self.type_            = type_@}
 \caption{Constructor of the node part class.
   \newline{}\newline{}Editor $\rightarrow$ Node part}
-\label{editor:lst:node-part:constructor}
+% \label{editor:lst:node-part:constructor}
 \end{figure}
 
 \newthought{A part of a node has a function}, which gets called whenever a part
 of a node is being processed.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node part domain model function declarations
 @{
 class Function(object):
@@ -567,7 +589,9 @@ class Function(object):
 
         self.has_changed = True
         self.evaluation_index = 0
-        self.changed_state = types.StateChange.VALUE.value | types.StateChange.SUBTREE.value
+        self.changed_state = \
+            types.StateChange.VALUE.value | \
+            types.StateChange.SUBTREE.value
 
     def clone(self):
         """Clones the currently set function."""
@@ -579,8 +603,8 @@ class Function(object):
         raise NotImplementedError(message)
 
     def process(self, context, inputs, output_index):
-        """Processes the value function for the given context, the given
-        inputs."""
+        """Processes the value function for the given context,
+        the given inputs."""
 
         message = QtCore.QCoreApplication.translate(
             __class__.__name__,
@@ -590,15 +614,15 @@ class Function(object):
 @}
 \caption{Definition of the function class which is used in parts of nodes.
   \newline{}\newline{}Editor $\rightarrow$ Function}
-\label{editor:lst:function}
+% \label{editor:lst:function}
 \end{figure}
 
 \newthought{When a part of a node is being processed}, also its inputs are
 processed. Whenever an input (value) changes, the node part needs to handle the
 changes. There are three possible types of changes: nothing has changed, the
-value (of the function) has changed or the subtree (inputs) has changed.
+value (of the function) has changed or the sub tree (inputs) has changed.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node part state changed declarations
 @{
 class StateChange(enum.Enum):
@@ -610,7 +634,7 @@ class StateChange(enum.Enum):
 \caption{A class which holds the possible values of a state change of a node
   part.
   \newline{}\newline{}Editor $\rightarrow$ State change}
-\label{editor:lst:state-change}
+% \label{editor:lst:state-change}
 \end{figure}
 
 \newthought{Finally all nodes will be composed of atomic types.} When building
@@ -618,7 +642,7 @@ the node definition from the JSON input, the (atomic) part of the node
 definition is fetched from the node controller. Therefore it is necessary to
 provide parts for the atomic types before loading all the node definitions.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller load nodes method
 @{
 for atomic_type in parameter.AtomicTypes.atomic_types:
@@ -630,43 +654,45 @@ for atomic_type in parameter.AtomicTypes.atomic_types:
         )
     else:
         self.logger.warn((
-            "Already knowing node part for atomic type %s. This should not"
-            "happen"
+            "Already knowing node part for atomic type %s."
+            "This should not happen"
         ), atomic_type.type_)@}
 \caption{The node controller provides the atomic types which build the basis of
   the part of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$ Methods
   $\rightarrow$ Load nodes}
-\label{editor:lst:node-controller:methods:load-nodes:atomic-types}
+% \label{editor:lst:node-controller:methods:load-nodes:atomic-types}
 \end{figure}
 
 \newthought{Having the atomic types available as parts}, the node definitions
 themselves may be loaded. There is only one problem to that: there is nothing to
-hold the node defintions. Therefore the node definition domain model is
+hold the node definitions. Therefore the node definition domain model is
 introduced.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition domain model declarations
 @{
 class NodeDefinition(object):
     """Represents the definition of a node."""
 
     # Signals
-    @<Node definition domain model signals@>
 
     @<Node definition domain model constructor@>
-    @<Node definition domain model methods@>@}
+    @<Node definition domain model methods@>
+
+    # Slots
+@}
 \caption{Definition of the node definition class, which represents the definition
   of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node definition}
-\label{editor:lst:node-definition}
+% \label{editor:lst:node-definition}
 \end{figure}
 
 \newthought{The definition of a node} is quite similar to a node itself. As the
 definition of a node may be changed, the flag~\verb=was_changed= is added.
 Further a node definition holds all instances of itself, meaning nodes.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition domain model constructor
 @{
 def __init__(self, id_):
@@ -693,7 +719,7 @@ def __init__(self, id_):
 \caption{Constructor of the node definition class.
   \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
   Constructor}
-\label{editor:lst:node-definition:constructor}
+% \label{editor:lst:node-definition:constructor}
 \end{figure}
 
 \newthought{The node controller is now able} to instantiate nodes definitions
@@ -703,7 +729,7 @@ the data of the domain model, only one entry is necessary. The entry in the
 dictionary will therefore hold a tuple, containing the domain and the view
 model, identified by their common identifier.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller constructor
 @{
     self.node_definitions = {}
@@ -711,13 +737,13 @@ model, identified by their common identifier.
 \caption{The node controller holds a dictionary containing node definitions.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Constructor}
-\label{editor:lst:node-controller:constructor:node-definitions}
+% \label{editor:lst:node-controller:constructor:node-definitions}
 \end{figure}
 
-\newthought{The node controller scans} the~\verb=node= subdirectory, containing
+\newthought{The node controller scans} the~\verb=node= sub directory, containing
 the node definitions, for files ending in~\verb=node=.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller load nodes method
 @{
 
@@ -739,9 +765,11 @@ if os.path.exists(self.nodes_path):
                 "Found node definition %s, trying to load",
                 file_name
             )
-            node_definition = self.load_node_definition_from_file_name(file_name)
+            node_definition = self.\
+                load_node_definition_from_file_name(file_name)
             if node_definition is not None:
-                node_definition_view_model = node_gui_domain.NodeViewModel(
+                node_definition_view_model =\
+                node_gui_domain.NodeViewModel(
                     id_=node_definition.id_,
                     domain_object=node_definition
                 )
@@ -771,14 +799,14 @@ else:
   file system.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods $\rightarrow$ Load nodes}
-\label{editor:lst:node-controller:methods:load-nodes:laod}
+% \label{editor:lst:node-controller:methods:load-nodes:laod}
 \end{figure}
 
 \newthought{If a file containing a node definition is found}, its identifier is
 extracted from the file name. If the node definition is not known yet, it gets
 loaded and added to the list of known node definitions.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller methods
 @{
 def load_node_definition_from_file_name(self, file_name):
@@ -788,7 +816,8 @@ def load_node_definition_from_file_name(self, file_name):
     :param file_name: the file name to load.
     :type  file_name: str
 
-    :return: the loaded node definition and its identifier or None
+    :return: the loaded node definition and its identifier or
+             None
     :rtype:  qde.editor.domain.node.NodeDefinition or None
     """
 
@@ -799,13 +828,16 @@ def load_node_definition_from_file_name(self, file_name):
         ), file_name)
         return None
 
-    # Extract the definition identifier from the file name, which is
-    # "uuid4.node".
-    definition_id = os.path.splitext(os.path.basename(file_name))[0]
+    # Extract the definition identifier from the file name,
+    # which is "uuid4.node".
+    definition_id = os.path.splitext(
+        os.path.basename(file_name)
+    )[0]
 
     if definition_id in self.node_definitions:
         self.logger.warn(
-            "Should load node definition from file %s, but is already loaded",
+            ("Should load node definition from file %s,"
+            "but is already loaded"),
             file_name
         )
         return self.node_definitions[definition_id]
@@ -820,11 +852,11 @@ def load_node_definition_from_file_name(self, file_name):
                 definition_id, file_name
             )
             # TODO: Trigger (loading) callback
-            @<Node controller load node definition trigger callback@>
             return node_definition
     except json.json.decoder.JSONDecodeError as exc:
         self.logger.warn(
-            "There was an error loading the node definition %s: %s",
+            ("There was an error loading the node"
+             "definition %s: %s"),
             definition_id, exc
         )
         return None@}
@@ -832,15 +864,15 @@ def load_node_definition_from_file_name(self, file_name):
   file system using the provided file name.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods $\rightarrow$ Load node definition from file name}
-\label{editor:lst:node-controller:methods:load-node-definition-from-file-name}
+% \label{editor:lst:node-controller:methods:load-node-definition-from-file-name}
 \end{figure}
 
 \newthought{Whenever a new node definition gets loaded}, other components need
 to be informed about the fact, that a new node definition is available. However,
-as the signal emits a view model, the laoded node definition cannot be emitted
+as the signal emits a view model, the loaded node definition cannot be emitted
 directly. Instead a view model needs to be created, which will then be emitted.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller load node definition emit
 @{
 self.do_add_node_view_definition.emit(node_definition_view_model)
@@ -849,7 +881,7 @@ self.do_add_node_view_definition.emit(node_definition_view_model)
   corresponding signal containing the node view model for the loaded node definition.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods $\rightarrow$ Load node definitions}
-\label{editor:lst:node-controller:methods:load-node-definitions:do-add-node-view-definition}
+% \label{editor:lst:node-controller:methods:load-node-definitions:do-add-node-view-definition}
 \end{figure}
 
 \newthought{The loading of the node definition itself} is simply about parsing the various
@@ -857,7 +889,7 @@ sections and handling them correspondingly. To prevent the node controller from
 being bloated, the parsing is done in a separate module responsible for JSON
 specific tasks.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d JSON methods
 @{
 @@classmethod
@@ -865,8 +897,10 @@ def load_node_definition(cls, node_controller, json_file_handle):
     """Loads a node definition from given JSON input.
 
     :param node_controller: reference to the node controller
-    :type node_controller: qde.editor.application.node.NodeController
-    :param json_file_handle: an open file handle containing JSON data
+    :type node_controller: qde.editor.application.node.\
+                           NodeController
+    :param json_file_handle: an open file handle containing
+                             JSON data
     :type json_file_handle: file
 
     :return: a node definition
@@ -879,39 +913,12 @@ def load_node_definition(cls, node_controller, json_file_handle):
     id_         = uuid.UUID(o['id_'])
     description = str(o['description'])
 
-    inputs = []
-    for input in o['inputs']:
-        node_definition_input = cls.build_node_definition_input(
-            node_controller, input
-        )
-        inputs.append(node_definition_input)
-
-    outputs = []
-    for output in o['outputs']:
-        node_definition_output = cls.build_node_definition_output(
-            node_controller, output
-        )
-        outputs.append(node_definition_output)
-
-    node_definitions = {}
-    for node_def in o['nodes']:
-        definition_id, node_definition = cls.build_node_definition(node_def)
-        node_definitions[definition_id] = node_definition
-
-    connections = []
-    for conn in o['connections']:
-        connection = cls.build_node_definition_connection(conn)
-        connections.append(connection)
-
-    definitions = []
-    for d in o['definitions']:
-        definition = cls.build_node_definition_definition(d)
-        definitions.append(definition)
-
-    invocations = []
-    for i in o['invocations']:
-        invocation = cls.build_node_definition_invocation(i)
-        invocations.append(invocation)
+    @<Parse node definition inputs@>
+    @<Parse node definition outputs@>
+    @<Parse node definition children@>
+    @<Parse node definition connections@>
+    @<Parse node definition definitions@>
+    @<Parse node definition invocations@>
 
     node_definition             = node.NodeDefinition(id_)
     node_definition.name        = name
@@ -923,11 +930,8 @@ def load_node_definition(cls, node_controller, json_file_handle):
     node_definition.definitions = definitions
     node_definition.invocations = invocations
 
-    # TODO: Check if this part can be abve the def. instance
-    parts = []
-    for p in o['parts']:
-        part = cls.build_node_definition_part(node_controller, node_definition, p)
-        parts.append(part)
+    # TODO: Check if this part can be above the def. instance
+    @<Parse node definition parts@>
     node_definition.parts = parts
 
     # TODO: Do a consistency check
@@ -938,20 +942,126 @@ def load_node_definition(cls, node_controller, json_file_handle):
   file handle (pointing to a JSON file containing a node definition).
   \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
   Methods $\rightarrow$ Load node definition}
-\label{editor:lst:json:methods:load-node-definition}
+% \label{editor:lst:json:methods:load-node-definition}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition inputs
+@{
+inputs = []
+for input in o['inputs']:
+    node_definition_input = cls.build_node_definition_input(
+        node_controller, input
+    )
+    inputs.append(node_definition_input)@}
+\caption{The inputs of a node definition are parsed and then added to
+the list of known inputs.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-inputs}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition outputs
+@{
+outputs = []
+for output in o['outputs']:
+    node_definition_output = cls.build_node_definition_output(
+        node_controller, output
+    )
+    outputs.append(node_definition_output)@}
+\caption{The outputs of a node definition are parsed and then added to
+the list of known outputs.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-outputs}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition children
+@{
+node_definitions = {}
+for node_def in o['nodes']:
+    definition_id, node_definition = cls.build_node_definition(
+        node_def
+    )
+    node_definitions[definition_id] = node_definition@}
+\caption{The child nodes of a node definition are parsed and then added to
+the list of known child nodes.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-children}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition connections
+@{
+connections = []
+for conn in o['connections']:
+    connection = cls.build_node_definition_connection(conn)
+    connections.append(connection)@}
+\caption{The connections of a node definition are parsed and then added to
+the list of known connections.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-connections}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition definitions
+@{
+definitions = []
+for d in o['definitions']:
+    definition = cls.build_node_definition_definition(d)
+    definitions.append(definition)@}
+\caption{The definitions of a node definition are parsed and then added to
+the list of known definitions.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-definitions}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition invocations
+@{
+invocations = []
+for i in o['invocations']:
+    invocation = cls.build_node_definition_invocation(i)
+    invocations.append(invocation)@}
+\caption{The invocations of a node definition are parsed and then added to
+the list of known invocations.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-invocations}
+\end{figure}
+
+\begin{figure}[!htbp]
+@d Parse node definition parts
+@{
+parts = []
+for p in o['parts']:
+    part = cls.build_node_definition_part(
+        node_controller, node_definition, p
+    )
+    parts.append(part)@}
+\caption{The parts of a node definition are parsed and then added to
+the list of known parts.
+  \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
+  Methods $\rightarrow$ Load node definition}
+% \label{editor:lst:json:methods:load-node-definition:parse-parts}
 \end{figure}
 
 \newthought{Not all parts of node definitions are defined yet}: inputs, outputs,
 other node definitions, connections, definitions, invocations and parts.First
 the building of the node definition inputs is defined.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d JSON methods
 @{
 @@classmethod
 def build_node_definition_input(cls, node_controller, json_input):
-    """Builds and returns a node definition input from the given JSON input
-    data.
+    """Builds and returns a node definition input from the given
+    JSON input data.
 
     :param node_controller: a reference to the node controller
     :type  node_controller: qde.editor.application.node.NodeController
@@ -966,7 +1076,10 @@ def build_node_definition_input(cls, node_controller, json_input):
     name                 = str(json_input['name'])
     atomic_id            = uuid.UUID(json_input['atomic_id'])
     description          = str(json_input['description'])
-    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+    node_definition_part = node_controller.\
+        get_node_definition_part(
+                atomic_id
+    )
 
     default_value_str = ""
     default_value_entry = json_input['default_value']
@@ -999,7 +1112,7 @@ def build_node_definition_input(cls, node_controller, json_input):
   definition).
   \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
   Methods $\rightarrow$ Build node definition input}
-\label{editor:lst:json:methods:build-node-definition-input}
+% \label{editor:lst:json:methods:build-node-definition-input}
 \end{figure}
 
 \newthought{There are a few things missing}, which are used in the above code
@@ -1007,26 +1120,29 @@ fragment: the possibility to create values from given parameters, the actual
 node definition input as domain model and getting the node definition part
 identified by the given atomic identifier.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller methods
 @{
 def get_node_definition_part(self, id_):
-    """Returns the node definition part identified by the given identifier.
+    """Returns the node definition part identified by the given
+    identifier.
 
-    If no such part is available, a generic part with that identifier is being
-    created.
+    If no such part is available, a generic part with that
+    identifier is being created.
 
-    :param id_: the identifier of the part of the node definition to get.
+    :param id_: the identifier of the part of the node definition
+                to get.
     :type  id_: uuid.uuid4
 
-    :return: the node definition part identified by the given identifier.
+    :return: the node definition part identified by the given
+             identifier.
     :rtype: qde.editor.domain.node.NodeDefinitionPart
     """
 
     if str(id_) not in self.node_definition_parts:
         self.logger.warn((
-            "Part %s of the node definition was not found. Creating a"
-            "generic one."
+            "Part %s of the node definition was not found."
+            "Creating a generic one."
         ), id_)
 
         type_ = types.NodeType.GENERIC
@@ -1048,15 +1164,15 @@ def get_node_definition_part(self, id_):
   identifier, a new node definition part is created.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods $\rightarrow$ Get node definition part}
-\label{editor:lst:node-controller:methods:get-node-definition-part}
+% \label{editor:lst:node-controller:methods:get-node-definition-part}
 \end{figure}
 
 \newthought{The creation of values from given parameters} is done within the
 parameter module, as this is something very parameter specific. Therefore a
-static method is defined, which returns an instance of an atomic type, e.g. a
-float value or a scene. \todo{instance of atomic type, ok?}
+static method is defined, which returns an instance of an atomic type, e.g.\ a
+float value or a scene.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Parameter domain module methods
 @{
 def create_value(type_, value_string):
@@ -1097,15 +1213,15 @@ def create_value(type_, value_string):
   value instance based on the provided type of the value.
   \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
   Create value}
-\label{editor:lst:parameter:create-value}
+% \label{editor:lst:parameter:create-value}
 \end{figure}
 
 \newthought{For the specific value instances} a generic value interface is
 defined. This interface holds a reference to the atomic type of the value and
 defines what type the function of a value is.
 
-\begin{figure}
-@d Paramater domain model value generic interface
+\begin{figure}[!htbp]
+@d Parameter domain model value generic interface
 @{
 class ValueInterface(object):
     """Generic value interface."""
@@ -1130,13 +1246,13 @@ class ValueInterface(object):
 \caption{Interface as basis for the value specific instances.
   \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
   Value interface}
-\label{editor:lst:parameter:value-interface}
+% \label{editor:lst:parameter:value-interface}
 \end{figure}
 
 Then an interface for setting and getting values is defined.
 
-\begin{figure}
-@d Paramater domain model value interface
+\begin{figure}[!htbp]
+@d Parameter domain model value interface
 @{
 class Value(ValueInterface):
     """Value interface for setting and getting values."""
@@ -1154,16 +1270,16 @@ class Value(ValueInterface):
   instances.
   \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
   Value}
-\label{editor:lst:parameter:value}
+% \label{editor:lst:parameter:value}
 \end{figure}
 
 \newthought{Now the specific value types are implemented}, based either on the
 generic or the concrete value interface, depending on the type. Here just two
 implementations are given as an example. The other implementations can be found
-at~\todo{link to fragments}.
+at~\autoref{chap:code-fragments}~\enquote{\nameref{chap:code-fragments}}.
 
-\begin{figure}
-@d Paramater domain model float value
+\begin{figure}[!htbp]
+@d Parameter domain model float value
 @{
 class FloatValue(Value):
     """A class holding float values."""
@@ -1189,11 +1305,11 @@ class FloatValue(Value):
 \caption{Implementation of the float value type.
   \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
   FloatValue}
-\label{editor:lst:parameter:float-value}
+% \label{editor:lst:parameter:float-value}
 \end{figure}
 
-\begin{figure}
-@d Paramater domain model scene value
+\begin{figure}[!htbp]
+@d Parameter domain model scene value
 @{
 class SceneValue(ValueInterface):
     """A class holding scene values."""
@@ -1215,29 +1331,32 @@ class SceneValue(ValueInterface):
 \caption{Implementation of the scene value type.
   \newline{}\newline{}Editor $\rightarrow$ Parameter $\rightarrow$
   SceneValue}
-\label{editor:lst:parameter:scene-value}
+% \label{editor:lst:parameter:scene-value}
 \end{figure}
 
 \newthought{The definition of the input of a node definition} is still missing
 however.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition input domain model declarations
 @{
 class NodeDefinitionInput(object):
     """Represents an input of a definition of a node."""
 
     # Signals
-    @<Node definition input domain model signals@>
 
     @<Node definition input domain model constructor@>
-    @<Node definition input domain model methods@>@}
+
+    # Methods
+
+    # Slots
+@}
 \caption{Implementation of the input of the definition of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node definition input}
-\label{editor:lst:node-definition-input}
+% \label{editor:lst:node-definition-input}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition input domain model constructor
 @{
 def __init__(self, id_, name, node_definition_part, default_value):
@@ -1247,7 +1366,8 @@ def __init__(self, id_, name, node_definition_part, default_value):
     :type  id_: uuid.uuid4
     :param name: the name of the definition
     :type  name: str
-    :param node_definition_part: the atomic part of the node definition
+    :param node_definition_part: the atomic part of the
+                                 node definition
     :type node_definition_part: TODO
     :param default_value: the default value of the input
     :type default_value: qde.editor.domain.parameter.Value
@@ -1266,7 +1386,7 @@ def __init__(self, id_, name, node_definition_part, default_value):
 \caption{Constructor of the input of the definition of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
   Constructor}
-\label{editor:lst:node-definition-input:constructor}
+% \label{editor:lst:node-definition-input:constructor}
 \end{figure}
 
 \newthought{The code snippet defining the constructor of a node definition
@@ -1274,11 +1394,12 @@ input} uses a function called~\verb=create_default_value_function= of
 the~\verb=functions= module. This function creates a default value function
 based on the given default value.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain module methods
 @{
 def create_default_value_function(value):
-    """Creates a new default value function using the provided value.
+    """Creates a new default value function using the provided
+    value.
 
     :param value: the value which the function shall have.
     :type  value: qde.editor.domain.parameter.Value
@@ -1292,7 +1413,7 @@ def create_default_value_function(value):
   value.
   \newline{}\newline{}Editor $\rightarrow$ Node $\rightarrow$
   Methods $\rightarrow$ Create default value function}
-\label{editor:lst:node:create-default-value-function}
+% \label{editor:lst:node:create-default-value-function}
 \end{figure}
 
 \newthought{With this last implementation} all the parts needed for creating and
@@ -1300,13 +1421,13 @@ handling node definition inputs are defined, which leads to the next
 implementation. The outputs of a node definition. The outputs are in the same
 way implemented as the inputs of a node definition.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d JSON methods
 @{
 @@classmethod
 def build_node_definition_output(cls, node_controller, json_input):
-    """Builds and returns a node definition output from the given JSON input
-    data.
+    """Builds and returns a node definition output from the given
+    JSON input data.
 
     :param node_controller: a reference to the node controller
     :type  node_controller: qde.editor.application.node.NodeController
@@ -1320,7 +1441,9 @@ def build_node_definition_output(cls, node_controller, json_input):
     output_id             = uuid.UUID(json_input['id_'])
     name                 = str(json_input['name'])
     atomic_id            = uuid.UUID(json_input['atomic_id'])
-    node_definition_part = node_controller.get_node_definition_part(atomic_id)
+    node_definition_part = node_controller.get_node_definition_part(
+        atomic_id
+    )
 
     node_definition_output = node.NodeDefinitionOutput(
         output_id,
@@ -1339,29 +1462,31 @@ def build_node_definition_output(cls, node_controller, json_input):
   definition).
   \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
   Methods $\rightarrow$ Build node definition output}
-\label{editor:lst:json:methods:build-node-definition-output}
+% \label{editor:lst:json:methods:build-node-definition-output}
 \end{figure}
 
 \newthought{The domain model of the node definition output} is very similar to
 the input, has less attributes although.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition output domain model declarations
 @{
 class NodeDefinitionOutput(object):
     """Represents an output of a definition of a node."""
 
     # Signals
-    @<Node definition output domain model signals@>
 
     @<Node definition output domain model constructor@>
-    @<Node definition output domain model methods@>@}
+    @<Node definition output domain model methods@>
+
+    # Slots
+@}
 \caption{Implementation of the output of the definition of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node definition output}
-\label{editor:lst:node-definition-output}
+% \label{editor:lst:node-definition-output}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition output domain model constructor
 @{
 def __init__(self, id_, name, node_definition_part):
@@ -1371,8 +1496,10 @@ def __init__(self, id_, name, node_definition_part):
     :type  id_: uuid.uuid4
     :param name: the name of the definition
     :type  name: str
-    :param node_definition_part: the atomic part of the node definition
-    :type node_definition_part: qde.editor.domain.node.NodeDefinitionPart
+    :param node_definition_part: the atomic part of the node
+                                 definition
+    :type node_definition_part: qde.editor.domain.node.\
+                                NodeDefinitionPart
     """
 
     self.id_                  = id_
@@ -1381,35 +1508,38 @@ def __init__(self, id_, name, node_definition_part):
 \caption{Constructor of the output of the definition of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node definition input $\rightarrow$
   Constructor}
-\label{editor:lst:node-definition-input:constructor}
+% \label{editor:lst:node-definition-input:constructor}
 \end{figure}
 
-\newthought{A node definition may contain references} to other node defintions,
+\newthought{A node definition may contain references} to other node definitions,
 therefore it is necessary to parse them. The parsing is similar to that of the
 inputs and outputs.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d JSON methods
 @{
 @@classmethod
 def build_node_definition(cls, node_controller, json_input):
-    """Builds and returns a node definition from the given JSON input data.
+    """Builds and returns a node definition from the given JSON
+    input data.
 
     :param node_controller: a reference to the node controller
-    :type  node_controller: qde.editor.application.node.NodeController
+    :type  node_controller: qde.editor.application.node.\
+                            NodeController
     :param json_input: the input in JSON format
     :type  json_input: dict
 
-    :return: a dictionary containg the node definition at the index of the
-             definition identifier.
+    :return: a dictionary containing the node definition at the
+             index of the definition identifier.
     :rtype:  dict
     """
 
     definition_id   = uuid.UUID(json_input['id_'])
     atomic_id       = uuid.UUID(json_input['atomic_id'])
 
-    node_definition, node_view_model = node_controller.get_node_definition(
-        atomic_id
+    node_definition, node_view_model = node_controller.\
+        get_node_definition(
+                atomic_id
     )
 
     cls.logger.debug(
@@ -1423,26 +1553,29 @@ def build_node_definition(cls, node_controller, json_input):
   definition).
   \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
   Methods $\rightarrow$ Build node definition}
-\label{editor:lst:json:methods:build-node-definition}
+% \label{editor:lst:json:methods:build-node-definition}
 \end{figure}
 
 As can be seen in the above code fragment, the node definition is returned by
 the node controller. This is very similar to getting the node definition part
 from the node controller.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller methods
 @{
 def get_node_definition(self, id_):
-    """Returns the node definition identified by the given identifier.
+    """Returns the node definition identified by the given
+    identifier.
 
-    If no such definition is available, it will be tried to load the
-    definition. If this is not possible as well, None will be returned.
+    If no such definition is available, it will be tried to load
+    the definition. If this is not possible as well, None will
+    be returned.
 
     :param id_: the identifier of the node definition to get.
     :type  id_: uuid.uuid4
 
-    :return: the node definition identified by the given identifier or None.
+    :return: the node definition identified by the given
+             identifier or None.
     :rtype:  qde.editor.domain.node.NodeDefinition or None
     """
 
@@ -1456,20 +1589,22 @@ def get_node_definition(self, id_):
     elif self.root_node is not None and id_ == self.root_node.id_:
         return self.root_node
     else:
-        # The node definition was not found, try to load it from node
-        # definition files.
+        # The node definition was not found, try to load it
+        # from node definition files.
         file_name = os.path.join(
             self.nodes_path,
             id_,
             self.nodes_extension
         )
-        node_definition = self.load_node_definition_from_file_name(
-            file_name
+        node_definition = self.\
+            load_node_definition_from_file_name(
+                    file_name
         )
         if node_definition is not None:
-            node_definition_view_model = node_gui_domain.NodeViewModel(
-                id_=node_definition.id_,
-                domain_object=node_definition
+            node_definition_view_model = node_gui_domain.\
+                NodeViewModel(
+                        id_=node_definition.id_,
+                        domain_object=node_definition
             )
             self.node_definitions[node_definition.id_] = (
                 node_definition,
@@ -1484,18 +1619,20 @@ def get_node_definition(self, id_):
   the file system.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Methods $\rightarrow$ Get node definition}
-\label{editor:lst:node-controller:methods:get-node-definition}
+% \label{editor:lst:node-controller:methods:get-node-definition}
 \end{figure}
 
 \newthought{The node controller holds a reference to the root node} of the root
 scene of the system. This scene acts as an entry point when evaluating the scene
 graph.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node controller constructor
 @{
-    # TODO: Load from coonfiguration?
-    self.root_node = node_domain.NodeDefinition(NodeController.ROOT_NODE_ID)
+    # TODO: Load from configuration?
+    self.root_node = node_domain.NodeDefinition(
+        NodeController.ROOT_NODE_ID
+    )
     self.root_node.name = QtCore.QCoreApplication.translate(
         __class__.__name__,
         'Root'
@@ -1509,41 +1646,47 @@ graph.
         parameter.AtomicTypes.Generic
     )
     self.root_node.add_output(root_node_output)
-    self.logger.debug("Created root node %s", NodeController.ROOT_NODE_ID)@}
+    self.logger.debug(
+        "Created root node %s",
+        NodeController.ROOT_NODE_ID
+    )@}
 \caption{The root node of the system is manually created by the node controller
   and is also a node definition.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$
   Constructor}
-\label{editor:lst:node-controller:constructor:add-root-node}
+% \label{editor:lst:node-controller:constructor:add-root-node}
 \end{figure}
 
 \newthought{Currently there is no possibility to add outputs} to a node
 definition. Adding an output simply adds that output to the list of outputs the
 node definition has. Furthermore that output needs to added for each instance of
-that node definition as well. \todo{Add inputs as well?}
+that node definition as well.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition domain model methods
 @{
 def add_output(self, node_definition_output):
-    """Adds the given output to the beginning of the list of outputs and
-    also to all instances of this node definition.
+    """Adds the given output to the beginning of the list of
+outputs and also to all instances of this node definition.
 
     :param node_definition_output: the output to add.
-    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+    :type  node_definition_output: qde.editor.domain.node.\
+                           NodeDefinitionOutput
     """
 
     self.add_output_at(len(self.outputs), node_definition_output)
 
 def add_output_at(self, index, node_definition_output):
-    """Adds the given output to the list of outputs at the given index
-    position and also to all instances of this node definition.
+    """Adds the given output to the list of outputs at the given
+    index position and also to all instances of this node
+    definition.
 
-    :param index: the position in the list of outputs where the new output
-                  shall be added at.
+    :param index: the position in the list of outputs where the
+                  new output shall be added at.
     :type  index: int
     :param node_definition_output: the output to add.
-    :type  node_definition_output: qde.editor.domain.node.NodeDefinitionOutput
+    :type  node_definition_output: qde.editor.domain.node.\
+                                   NodeDefinitionOutput
 
     :raise: an index error when the given index is not valid.
     :raises: IndexError
@@ -1568,18 +1711,18 @@ def add_output_at(self, index, node_definition_output):
   outputs, the second adds the output at the given index.
   \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
   Methods}
-\label{editor:lst:node-definition:methods:add-output}
+% \label{editor:lst:node-definition:methods:add-output}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node definition domain model methods
 @{
 # TODO: Describe this properly
 @@property
 def type_(self):
-    """Return the type of the node, determined by its primary output.
-    If no primary output is given, it is assumed that the node is of
-    generic type."""
+    """Return the type of the node, determined by its primary
+    output. If no primary output is given, it is assumed that
+    the node is of generic type."""
 
     type_ = types.NodeType.GENERIC
 
@@ -1592,7 +1735,7 @@ def type_(self):
   is assumed.
   \newline{}\newline{}Editor $\rightarrow$ Node definition $\rightarrow$
   Methods}
-\label{editor:lst:node-definition:methods:type}
+% \label{editor:lst:node-definition:methods:type}
 \end{figure}
 
 Having the reading and parsing of inputs, outputs and other node definition
@@ -1601,18 +1744,18 @@ and parts still remains.
 
 \newthought{The reading and parsing} of connections, definitions and invocation
 is very straightforward and very similar to the one of the node definitions.
-Therefore it will not be shown in detail. Details are found at~\todo[inline]{Add
-reference to code fragments here}.
+Therefore it will not be shown in detail. Details are found at~\autoref{chap:code-fragments}~\enquote{\nameref{chap:code-fragments}}.
 
 \newthought{The last part when loading a node definition} is reading and parsing
 the code part of the node.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d JSON methods
 @{
 @@classmethod
 def build_node_definition_part(cls, node_controller, parent, json_input):
-    """Builds and returns a node definition part from the given JSON input data.
+    """Builds and returns a node definition part from the given JSON
+    input data.
 
     :param node_controller: a reference to the node controller
     :type  node_controller: qde.editor.application.node.NodeController
@@ -1642,7 +1785,8 @@ def build_node_definition_part(cls, node_controller, parent, json_input):
     node_definition_part.script = script
     node_definition_part.parent = parent
 
-    node_controller.node_definition_parts[part_id] = node_definition_part
+    node_controller.node_definition_parts[part_id] =\
+        node_definition_part
 
     cls.logger.debug(
         "Built part for node definition %s",
@@ -1655,29 +1799,29 @@ def build_node_definition_part(cls, node_controller, parent, json_input):
   node definition).
   \newline{}\newline{}Editor $\rightarrow$ JSON $\rightarrow$
   Methods $\rightarrow$ Build node definition part}
-\label{editor:lst:json:methods:build-node-definition-part}
-\end{figure}
+% \label{editor:lst:json:methods:build-node-definition-part}
+\end{figure*}
 
 \newthought{Finally the node controller needs to be instantiated} by the main
 application and the loading of the node definitions needs to be triggered. The
 loading may although not be triggered at the same place as the signals for
 reacting upon new node definitions need to be in place first.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Set up controllers for main application
 @{
 self.node_controller = node.NodeController()@}
 \caption{Instantiation of the node controller from within the main application.
   \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
   Constructor}
-\label{editor:lst:main-application:constructor:setup-node-controller}
+% \label{editor:lst:main-application:constructor:setup-node-controller}
 \end{figure}
 
 \newthought{Loading of node definitions} is done right before the main window is
 shown, as at that point all necessary connections between signals and slots are
 in place.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Load nodes
 @{
 self.node_controller.load_nodes()@}
@@ -1685,17 +1829,17 @@ self.node_controller.load_nodes()@}
   instantiating the node controller.
   \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
   Constructor}
-\label{editor:lst:main-application:constructor:load-nodes}
+% \label{editor:lst:main-application:constructor:load-nodes}
 \end{figure}
 
 \newthought{Now node definitions are being loaded and parsed.} Although there is
-no possiblity to select and instantiate the node definitons yet. To allow the
+no possibility to select and instantiate the node definitions yet. To allow the
 instantiation of nodes, a (user interface) component is necessary: A dialog for
 adding nodes to the currently active scene. It will access all the loaded nodes
 and provide an interface for selecting a node definition which then will be
 instantiated.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Add node dialog declarations
 @{
 @@common.with_logger
@@ -1703,7 +1847,6 @@ class AddNodeDialog(QtWidgets.QDialog):
     """Class for adding nodes to a scene view."""
 
     # Signals
-    @<Add node dialog signals@>
 
     @<Add node dialog column declaration@>
 
@@ -1736,7 +1879,7 @@ class AddNodeDialog(QtWidgets.QDialog):
 \caption{Definition of a dialog to add nodes to the currently active scene. The
   nodes are ordered in columns according to their type.
   \newline{}\newline{}Editor $\rightarrow$ Add node dialog}
-\label{editor:lst:add-node-dialog}
+% \label{editor:lst:add-node-dialog}
 \end{figure}
 
 \newthought{The key idea of the add node dialog} is to have multiple columns
@@ -1745,7 +1888,7 @@ type are then vertically listed per column. As these columns are tightly tied to
 the add node dialog, the declaration of the column class is part of the add node
 dialog.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Add node dialog column declaration
 @{
 class Column(object):
@@ -1762,16 +1905,14 @@ class Column(object):
 \caption{Class representing column within the dialog to create new node
   instances.
   \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Column}
-\label{editor:lst:add-node-dialog:column}
+% \label{editor:lst:add-node-dialog:column}
 \end{figure}
-
-\todo[inline]{Add position correction to add node dialog.}
 
 \newthought{The dialog for adding a node instance} from a node definition shall
 only be shown from within a scene, that is from within the scene view. Therefore
 the add node dialog is added to the scene view.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene view constructor
 @{
     self.add_node_dialog = node.AddNodeDialog(self.parent())
@@ -1779,14 +1920,14 @@ the add node dialog is added to the scene view.
 \caption{The dialog for adding new node instances is initialized by the scene
   view.
   \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Constructor}
-\label{editor:lst:scene-view:constructor:add-node-dialog}
+% \label{editor:lst:scene-view:constructor:add-node-dialog}
 \end{figure}
 
-\newthought{Whenever the scene view is focussed} and the tabulator key is being
-pressed, the dialog for adding a node shall be shown. For achieving this, the
-~\verb=event= method of the scene view needs to be overwritten.
+\newthought{Whenever the scene view is focused} and the tabulator key is being
+pressed, the dialog for adding a node shall be shown. For achieving this,
+the~\verb=event= method of the scene view needs to be overwritten.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Scene view methods
 @{
 def event(self, event):
@@ -1796,7 +1937,8 @@ def event(self, event):
     ):
         self.logger.debug("Tabulator was pressed")
 
-        # Sanity check: Open the dialog only if it is not opened already.
+        # Sanity check: Open the dialog only if it is not
+        # opened already.
         if not self.add_node_dialog.isVisible():
             current_scene = self.scene()
             assert current_scene is not None
@@ -1806,12 +1948,15 @@ def event(self, event):
                 insert_at.x() * node_gui_domain.NodeViewModel.WIDTH,
                 insert_at.y() * node_gui_domain.NodeViewModel.HEIGHT
             )
-            insert_position = self.mapToGlobal(self.mapFromScene(insert_position))
+            insert_position = self.mapToGlobal(self.mapFromScene(
+                insert_position
+            ))
             self.add_node_dialog.move(insert_position)
             add_dialog_result = self.add_node_dialog.exec()
 
-            # At this point we are sure, that this dialog instance was handled
-            # properly, so accepting the event might be sane here.
+            # At this point we are sure, that this dialog instance
+            # was handled properly, so accepting the event might
+            # be sane here.
             event.accept()
 
             if add_dialog_result == QtWidgets.QDialog.Accepted:
@@ -1822,12 +1967,12 @@ def event(self, event):
 
     return super(SceneView, self).event(event)
 @}
-\caption{The event method of the scene view is overwritten for being able to
-  show the dialog for adding new instances of nodes when the tabulator key is
-  pressed.
+\vspace*{-20mm}\caption{The event method of the scene view is
+    overwritten for being able to show the dialog for adding new
+    instances of nodes when the tabulator key is pressed.
   \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Methods}
-\label{editor:lst:scene-view:methods:event}
-\end{figure}
+% \label{editor:lst:scene-view:methods:event}
+\end{figure*}
 
 \newthought{Pressing the tabulator key} when the scene view is active, brings up
 the dialog to add a node, but the dialog is empty. This is due to the
@@ -1838,22 +1983,22 @@ new node definition and that no other component is listening.
 new node definition. The signal itself is emitting a view model of the read node
 definition.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Node controller signals
 @{
 do_add_node_view_definition = QtCore.pyqtSignal(node_gui_domain.NodeViewModel)@}
-\caption{The signal of the node controller that is emitted whenever a node
+\vspace*{-15mm}\caption{The signal of the node controller that is emitted whenever a node
   definition was read.
   \newline{}\newline{}Editor $\rightarrow$ Node controller $\rightarrow$ Signals}
-\label{editor:lst:node-controller:signals:do-add-node-view-definition}
-\end{figure}
+% \label{editor:lst:node-controller:signals:do-add-node-view-definition}
+\end{figure*}
 
 \newthought{Now other components may listen} and receive view models of newly
 added node definitions. In this specific case it is is the dialog for adding a
 node which needs to listen to the added signal. The listening is done by the
 slot~\verb=on_node_definition_added=.
 
-\begin{figure}
+\begin{figure*}[!htbp]
 @d Add node dialog slots
 @{
 @@QtCore.pyqtSlot(node_gui_domain.NodeViewModel)
@@ -1869,21 +2014,22 @@ def on_node_definition_added(self, node_view_model):
     node_name = node_view_model.domain_object.name
     type_name = node_view_model.domain_object.type_.name
     @<On node definition added implementation@>@}
-\caption{The slot of the dialog to add a new node that is called whenever a new
+\vspace*{-20mm}\caption{The slot of the dialog to add a new node that is called whenever a new
   node definition is added.
   \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
-\label{editor:lst:add-node-dialog:slots:on-node-definition-added}
-\end{figure}
+% \label{editor:lst:add-node-dialog:slots:on-node-definition-added}
+\end{figure*}
 
 \newthought{As the idea of the dialog} is to have one column per node type, the
 column needs to be fetched first, based on the type name of the given node
 definition. Then a sub frame is created which holds a representation of the node
-definition. This representation is rendered like an actual instance of a
-node.~\todo{it is not, its just a link atm.} Its behaviour is like a button,
-meaning it can be clicked. Clicking on a representation of a node definition
-adds an instance of the clicked node definition to the currently active scene at
-the cursor position where the dialog for adding a node was opened.
+definition. This representation is rendered like an actual instance of a node.
+Its behavior is like a button, meaning it can be clicked. Clicking on a
+representation of a node definition adds an instance of the clicked node
+definition to the currently active scene at the cursor position where the dialog
+for adding a node was opened.
 
+\begin{figure*}[!htbp]
 @d On node definition added implementation
 @{
 @<Check if the node definition is already known@>
@@ -1892,32 +2038,51 @@ the cursor position where the dialog for adding a node was opened.
 @<Create button for given node definition and add to sub frame@>
 @<Add sub frame to column@>
 @<Save the node definition to list of known nodes@>@}
+\vspace*{-20mm}\caption{Implementation of the slot of the dialog to add a new node that is
+  called whenever a new node definition is added.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
+% \label{editor:lst:add-node-dialog:slots:on-node-definition-added:impl}
+\end{figure*}
 
 \newthought{A node definition may already be present} although. If this is the
 case the process will be stopped.
 
+\begin{figure*}[!htbp]
 @d Check if the node definition is already known
 @{
 if node_view_model.id_ not in self.node_definitions:
 @}
+\vspace*{-20mm}\caption{It is checked that the given node definition is not already known.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
+% \label{editor:lst:add-node-dialog:slots:on-node-definition-added:impl:known}
+\end{figure*}
 
 \newthought{Getting or creating a column} is about calling the corresponding
 method, as the task is abstracted into a method to maintain readability.
 
+\begin{figure}[!htbp]
 @d Get or create column by type name
 @{
     column = self.get_or_create_column_by_name(type_name)@}
+\caption{The column which the node definition belongs to is depending on the
+  node definition's type. If a column for the type of the node definition
+  already exists, that column is used. Otherwise a new column is created for the
+  type.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
+% \label{editor:lst:add-node-dialog:slots:on-node-definition-added:impl:column}
+\end{figure}
 
 \newthought{The method to get a column},~\verb=get_or_create_column_by_name=,
 tries to get a column by the given name and if no column by that name exists, it
 creates a new column using the given name.
 
+\begin{figure}[!htbp]
 @d Add node dialog methods
 @{
 def get_or_create_column_by_name(self, column_name):
     """Gets the column for the given column name.
-    If there is no column for the given column name available, a new column
-    using the given column name is created.
+    If there is no column for the given column name available,
+    a new column using the given column name is created.
 
     :param column_name: the name of the column to get or create.
     :type  column_name: str
@@ -1930,18 +2095,28 @@ def get_or_create_column_by_name(self, column_name):
     @<Create new column object based on name@>
 
     return column@}
+\caption{The method for getting or creating a column by type name.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name}
+\end{figure}
 
 \newthought{Therefore, if a column by the given name already exists}, the
 reference to the found column is returned.
 
+\begin{figure}[!htbp]
 @d Get existing column object by name
 @{
 if column_name in self.columns:
     column = self.columns[column_name]@}
+\caption{If a column by the given name exists that column is returned.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:check-exists}
+\end{figure}
 
 \newthought{If no column by the given name exists}, a new column using the given
 name is created.
 
+\begin{figure}[!htbp]
 @d Create new column object based on name
 @{
 else:
@@ -1969,20 +2144,30 @@ else:
     column.label = column_name
     column.v_box_layout = row
     self.columns[column_name] = column@}
+\caption{When no column for a specific name exists the column is created.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:create}
+\end{figure}
 
 \newthought{For adding the representation} of the node definition to a column,
 the creation of a sub frame is necessary.
 
+\begin{figure}[!htbp]
 @d Create sub frame for given node definition
 @{
     sub_frame = QtWidgets.QFrame(column.frame)
     sub_frame_column = QtWidgets.QHBoxLayout(sub_frame)
     sub_frame_column.setContentsMargins(0, 0, 0, 0)
     sub_frame_column.setSpacing(0)@}
+\caption{A sub frame is created for each new column.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:create-subframe}
+\end{figure}
 
 \newthought{The node representation is then created} and added to the above
 created sub frame. At this moment the presentation is simply a label.
 
+\begin{figure}[!htbp]
 @d Create button for given node definition and add to sub frame
 @{
     button_label = gui_helper.ClickableLabel(node_name, sub_frame)
@@ -1991,11 +2176,15 @@ created sub frame. At this moment the presentation is simply a label.
         Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
     )
     sub_frame_column.addWidget(button_label)@}
+\caption{For the type of the given node definition a button is created and added
+  to the previously created sub frame.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:create-button}
+\end{figure}
 
 \newthought{On thing that stands out} in the above code fragment, is the
 clickable label class. This label is nothing other than normal label emitting a
-signal called ~\verb=clicked= when receiving a mouse press event. Details may be
-found at~\todo{add reference here}.
+signal called~\verb=clicked= when receiving a mouse press event.
 
 \newthought{For being able to react} whenever such a label is clicked, it is
 necessary to handle the~\verb=clicked= signal of the label. Up to now all
@@ -2003,6 +2192,7 @@ signals emitted the necessary objects. As the~\verb=clicked= signal is very
 generic, it does not emit an object. It is nevertheless necessary to emit the
 chosen node definition.
 
+\begin{figure}[!htbp]
 @d Create button for given node definition and add to sub frame
 @{
 
@@ -2013,20 +2203,33 @@ chosen node definition.
     button_label.do_add_node.connect(functools.partial(
         _add_node_button_clicked, node_view_model
     ))@}
+\caption{A callback function is created which gets triggered whenever a button
+  is clicked. The callback function stores the selected node definition (type)
+  and closes the dialog.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:callback}
+\end{figure}
 
 \newthought{Finally the created sub frame is added} to the found or created
 column.
 
+\begin{figure}[!htbp]
 @d Add sub frame to column
 @{
     column.v_box_layout.insertWidget(
         column.v_box_layout.count() - 1, sub_frame
     )
     column.sub_frames.append(sub_frame)@}
+\caption{The created sub frame is added to the layout of the column and appended
+  to the list of sub frames of the column.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
+% \label{editor:lst:add-node-dialog:methods:get-or-create-column-by-name:append-subframe}
+\end{figure}
 
 \newthought{If the node definition is not yet known}, it is saved to the list of
 known node definitions. Otherwise a warning is being shown.
 
+\begin{figure}[!htbp]
 @d Save the node definition to list of known nodes
 @{
     self.node_definitions[node_view_model.id_] = node_view_model
@@ -2034,15 +2237,31 @@ known node definitions. Otherwise a warning is being shown.
     # TODO: Handle shortcuts
 
 else:
-    self.logger.warn("Node definition %s is already known", node_view_model)
+    self.logger.warn(
+        "Node definition %s is already known",
+        node_view_model
+    )
 @}
+\caption{The node definition is saved to the list of known node definitions.
+  \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Slots}
+% \label{editor:lst:add-node-dialog:slots:on-node-definition-added:impl:append-definition}
+\end{figure}
 
 \newthought{The above defined slot} needs to be triggered as soon as a new node
 definition is being added. This is done within the main window, by connecting
-the slot with the ~\verb=do_add_node_view_definition= signal.
+the slot with the~\verb=do_add_node_view_definition= signal.
 
+\begin{figure}[!htbp]
 @d Connect main window components
 @{
 self.node_controller.do_add_node_view_definition.connect(
-    self.main_window.scene_view.add_node_dialog.on_node_definition_added
+    self.main_window.scene_view.add_node_dialog.\
+    on_node_definition_added
 )@}
+\caption{The main application connects the node controller's signal that a new node
+  definition was added with the corresponding slot of the dialog to add nodes.
+  \newline{}\newline{}Editor $\rightarrow$ Main application $\rightarrow$
+  Constructor}
+% \label{editor:lst:main-application:constructor:connect-add-node-definition}
+\end{figure}
+

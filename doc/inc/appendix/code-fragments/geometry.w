@@ -12,6 +12,14 @@ from PyQt5 import QtGui
 from qde.editor.foundation import type as types
 
 
+@<Geometrical object class@>
+@<Vertex class@>
+@<Geometry class@>
+@<Simple vertex class@>
+@}
+
+@d Geometrical object class
+@{
 class GeometricalObject(object):
     """Class providing a basis for any geometrical object, containing a
     teporary value and a tag, acting as counters."""
@@ -19,8 +27,10 @@ class GeometricalObject(object):
     def __init__(self):
         self.temp = 0
         self.tag  = 0
+@}
 
-
+@d Vertex class
+@{
 class Vertex(GeometricalObject):
     """Class providing an abstraction to vertices."""
 
@@ -29,8 +39,10 @@ class Vertex(GeometricalObject):
         self.normal   = None
         self.uv       = None
         self.color    = QtGui.QColor()
+@}
 
-
+@d Geometry class
+@{
 class Geometry(GeometricalObject):
     """Class providing an abstraction to geometrical objects."""
 
@@ -62,8 +74,10 @@ class Geometry(GeometricalObject):
     @@property
     def has_texture(self):
         return self.texture is not None
+@}
 
-
+@d Simple vertex class
+@{
 class SimpleVertex(GeometricalObject):
     """Class representing a simplified vertex, containing only its position and
     texture coordinates (UV)."""
