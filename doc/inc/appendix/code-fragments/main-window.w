@@ -21,7 +21,7 @@ from qde.editor.gui import scene as gui_scene
 @<Main window declarations@>
 @}
 
-@d Set up parameter view in main window
+@d Set up render view in main window
 @{
 self.render_view = gui_render.RenderView(self)
 self.render_view.setObjectName('render_view')

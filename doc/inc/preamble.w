@@ -47,12 +47,11 @@
 \usepackage{todonotes}
 \usepackage[
     backend=biber,
-    style=ieee,
-    sortlocale=de_DE,
-    natbib=true,
-    url=false, 
     doi=true,
-    eprint=false
+    eprint=false,
+    natbib=true,
+    style=ieee,
+    url=false
 ]{biblatex}
 \usepackage{bookmark}
 \usepackage{esvect}                          % Provides nicer vector display in math mode
@@ -109,6 +108,7 @@
 \newcommand{\subsubtitletext}{MTE7103 --- Master thesis}
 \author[Sven Osterwalder]{Sven Osterwalder}
 \publisher{Berne University of Applied Sciences}
+\title[\titletext{}~\subtitletext{}]{\titletext{}~\subtitletext{}}
 
 % Commands
 %----------------------------------------------------------------------------

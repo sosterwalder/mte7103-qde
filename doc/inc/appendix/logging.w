@@ -35,7 +35,7 @@ follows:
         default being~\verb=INFO=.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Main application methods
 @{
 def setup_logging(self,
@@ -59,7 +59,7 @@ def setup_logging(self,
   used.
   \newline{}\newline{}Editor $\rightarrow$ Main application
   $\rightarrow$ Methods}
-\label{logging:lst:main-application:methods:setup-logging}
+% \label{logging:lst:main-application:methods:setup-logging}
 \end{figure}
 
 \newthought{For not having only basic logging available}, a logging
@@ -70,7 +70,7 @@ handler, which logs errors to a file named~\verb=error.log=. The default level
 is set to debug and all handlers are used. This configuration allows to get an
 arbitrarily named logger which uses that configuration.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Set up internals for main application
 @{
 
@@ -78,13 +78,13 @@ self.setup_logging()@}
 \caption{Set up of the logging from within the main application class.
   \newline{}\newline{}Editor $\rightarrow$ Main application
   $\rightarrow$ Constructor}
-\label{logging:lst:main-application:constructor:setup-logging}
+% \label{logging:lst:main-application:constructor:setup-logging}
 \end{figure}
 
 \newthought{The consequence of providing} logging on a class basis, as stated
 before, is, that each class has to instantiate a logging instance. To prevent
 the repetition of the same code fragment over and over, Python's decorator
-pattern is used~\footnote{https://www.python.org/dev/peps/pep-0318/}.
+pattern is used~\footnote{\url{https://www.python.org/dev/peps/pep-0318/}}.
 
 \newthought{The decorator} will be available as a method
 named~\verb=with_logger=. The method has the following functionality.
@@ -108,38 +108,46 @@ return cls@}
 \newthought{The usage of the decorator}~\verb=with_logger= is shown in the
 example in the following listing.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d With logger example
 @{
 from qde.editor.foundation import common
 
 @@common.with_logger
 def SomeClass(object):
-    """This class provides literally nothing and is used only to demonstrate the
-    usage of the logging decorator."""
+    """This class provides literally nothing and is used only to
+    demonstrate the usage of the logging decorator."""
 
     def some_method():
-        """This method does literally nothing and is used only to demonstrate the
-        usage of the logging decorator."""
+        """This method does literally nothing and is used only to
+        demonstrate the usage of the logging decorator."""
 
         self.logger.debug(("I am some logging entry used for"
                            "demonstration purposes only."))
 
 @}
 \caption{An example of how to use the logging decorator in a class.}
-\label{logging:lst:logging-example}
+% \label{logging:lst:logging-example}
 \end{figure}
 
 \newthought{The logging facility may now be used} wherever it is useful to log
 something. Such a place is for example the adding and removal of scenes in the
 scene graph view.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Scene graph view log tree item added
 @{
 self.logger.debug("A new scene graph item was added.")
 @}
+\caption{The scene graph view logs a corresponding message whenever an item is
+  added from the scene graph. Note, that this logging only happens
+  in~\emph{debug} mode.
+  \newline{}\newline{}Editor $\rightarrow$ Scene graph view
+  $\rightarrow$ Methods}
+% \label{logging:lst:scene-graph-view:methods:log-adding}
+\end{figure}
 
+\begin{figure}[!htbp]
 @d Scene graph view log tree item removed
 @{
 self.logger.debug((
@@ -151,11 +159,11 @@ self.logger.debug((
 ))
 @}
 \caption{The scene graph view logs a corresponding message whenever an item is
-  added to or removed from the scene graph. Note, that this logging only happens
+  removed from the scene graph. Note, that this logging only happens
   in~\emph{debug} mode.
   \newline{}\newline{}Editor $\rightarrow$ Scene graph view
   $\rightarrow$ Methods}
-\label{logging:lst:scene-graph-view:methods:log-adding-removal}
+% \label{logging:lst:scene-graph-view:methods:log-removal}
 \end{figure}
 
 Whenever the \textit{a} or the \textit{delete} key is being pressed now, when

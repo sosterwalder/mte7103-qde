@@ -37,7 +37,7 @@ following sub components:
 \begin{description}
 \item[Scenes] A composition of nodes, connected by edges.
   \begin{description}
-    \item[Domain model] Holds the data of a scene, e.g. its nodes.
+    \item[Domain model] Holds the data of a scene, e.g.\ its nodes.
     \item[Controller]   Handles scene related actions, like when a node is added
                         to a scene, when the scene was changed or when a node
                         within a scene was selected.
@@ -59,7 +59,7 @@ question, it is simply a matter of how the implementation is being done and
 therefore a set of decisions.
 
 \newthought{The whole (rendering) system} shall not be bound to only one
-representation of nodes, e.g. triangle based meshes. Instead it shall let the
+representation of nodes, e.g.\ triangle based meshes. Instead it shall let the
 user decide, what representation is the most fitting for the goal he wants to
 achieve.
 
@@ -67,7 +67,7 @@ achieve.
 system: images, triangle based meshes and solid modeling through function
 modeling (using signed distance functions for modeling implicit surfaces).
 Whereas triangle based meshes may either be loaded from externally defined files
-(e.g. in the Filmbox (FBX), the Alembic (ABC) or the Object file format (OBJ))
+(e.g.\ in the Filmbox (FBX), the Alembic (ABC) or the Object file format (OBJ))
 or directly be generated using procedural mesh generation.
 
 \newthought{Nodes are always part of a graph}, hence the name node graph, and
@@ -81,7 +81,7 @@ shader code directly within a node (definition) and to simply evaluate this
 code, which adds a lot of (creative) freedom. The problem with this approach is
 though, that image and triangle based mesh nodes are not fully implementable by
 using shader code only. Instead they have specific requirements, which are only
-perform-able on the CPU (e.g. allocating buffer objects).
+perform-able on the CPU (e.g.\ allocating buffer objects).
 
 \newthought{When thinking of nodes used for solid modeling} however, it may
 appear, that they may be evaluated directly, without the need for
@@ -140,7 +140,7 @@ up or used from a given context.
 
 In addition to a definition, a node contains an invocation part, which is the
 call of its defining function (coming from the definition mentioned just
-before) while respecing the parameters.
+before) while respecting the parameters.
 
 \newthought{A node shall be able to have one or more parts.} A part typically
 contains the \enquote{body} of the node in terms of code and represents
@@ -158,7 +158,7 @@ output may be zero, what means that the part of the input or output is internal.
 
 Or, a bit more formal:
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Connections between nodes in EBNF notation
 @{
 input = internal input | external input
@@ -169,7 +169,7 @@ node reference = "uuid4"
 part reference = "uuid4"
 @}
 \caption{Connections between nodes in EBNF notation.}
-\label{node-graph:lst:node-connections-ebnf}
+% \label{node-graph:lst:node-connections-ebnf}
 \end{figure}
 
 % Reference to a node X + Reference to /output/ A of node X.
@@ -241,9 +241,9 @@ create instances of atomic types, there must be classes defining them.
 
 \newthought{For identification of the atomic types}, an enumerator is used.
 Python provides the~\verb=enum= module, which provides a convenient interface
-for using enumerations\footnote{https://docs.python.org/3/library/enum.html}.
+for using enumerations\footnote{\url{https://docs.python.org/3/library/enum.html}}.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node type declarations
 @{
 class NodeType(enum.Enum):
@@ -260,7 +260,7 @@ class NodeType(enum.Enum):
 @}
 \caption{Types of a node wrapped in a class, implemented as an enumerator.
   \newline{}\newline{}Editor $\rightarrow$ Types $\rightarrow$ Node type}
-\label{editor:lst:types:node-type}
+% \label{editor:lst:types:node-type}
 \end{figure}
 
 Now, having identifiers for the atomic types available, the atomic types
@@ -274,16 +274,18 @@ distinguish multiple parameters using the same atomic type, it is necessary that
 each instance of an atomic type has its own identifier in form of an instance
 identifier (instance ID).
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Parameter declarations
 @{
 class AtomicType(object):
-    """Represents an atomic type and is the basis for each node."""
+    """Represents an atomic type and is the basis for each
+    node."""
 
     def __init__(self, id_, type_):
         """Constructor.
 
-        :param id_: the globally unique identifier of the atomic type.
+        :param id_: the globally unique identifier of the
+                    atomic type.
         :type  id_: uuid.uuid4
         :param type_: the type of the atomic type, e.g. "float".
         :type  type_: types.NodeType
@@ -296,16 +298,17 @@ class AtomicType(object):
   that the type of an atomic type is defined by the before implemented node
   type.
   \newline{}\newline{}Editor $\rightarrow$ Parameters $\rightarrow$ Atomic type}
-\label{editor:lst:parameters:atomic-type}
+% \label{editor:lst:parameters:atomic-type}
 \end{figure}
 
 As the word atomic indicates, these types are atomic, meaning there only exists
-one explicit instance per type, which is therefore static. As can be seen in
-the code fragment below, the atomic types are parts of node definitions
-themselves. Only the creation of the generict atomic type is shown, the rest is
-omitted and can be found at~\todo{Add reference to code fragments.}
+one explicit instance per type, which is therefore static. As can be seen in the
+code fragment below, the atomic types are parts of node definitions themselves.
+Only the creation of the generic atomic type is shown, the rest is omitted and
+can be found
+at~\autoref{chap:code-fragments}~\enquote{\nameref{chap:code-fragments}}.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Parameter declarations
 @{
 class AtomicTypes(object):
@@ -313,13 +316,13 @@ class AtomicTypes(object):
 
     @@staticmethod
     def create_node_definition_part(id_, type_):
-        """Creates a node definition part based on the given identifier and
-        type.
+        """Creates a node definition part based on the given
+        identifier and type.
 
-        :param id_: the identifiert to use for the part.
+        :param id_: the identifier to use for the part.
         :type  id_: uuid.uuid4
         :param type_: the type of the part.
-        :tpye type_: qde.editor.domain.parameter.AtomicType
+        :type type_: qde.editor.domain.parameter.AtomicType
 
         :return: a node definition part.
         :rtype: qde.editor.domain.node.NodeDefinitionPart
@@ -345,30 +348,31 @@ class AtomicTypes(object):
 \caption{A class which creates and holds all atomic types of the editor. Note
   that at this point only an atomic type for generic nodes is being created.
   \newline{}\newline{}Editor $\rightarrow$ Parameters $\rightarrow$ Atomic types}
-\label{editor:lst:parameters:atomic-types}
+% \label{editor:lst:parameters:atomic-types}
 \end{figure}
 
 \newthought{Having the atomic types defined}, nodes may now be defined.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain model declarations
 @{
 class NodeModel(object):
     """Represents a node."""
 
     # Signals
-    @<Node domain model signals@>
 
     @<Node domain model constructor@>
 
     @<Node domain model methods@>
+
+    # Slots
 @}
 \caption{Definition of the node (domain) model.
   \newline{}\newline{}Editor $\rightarrow$ Node model}
-\label{editor:lst:node-domain-model}
+% \label{editor:lst:node-domain-model}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain model constructor
 @{
 def __init__(self, id_, name="New node"):
@@ -386,7 +390,7 @@ def __init__(self, id_, name="New node"):
     self.definition = None
     self.description = ""
     self.parent = None
-    self.inupts = []
+    self.inputs = []
     self.outputs = []
     self.parts = []
     self.nodes = []
@@ -394,7 +398,7 @@ def __init__(self, id_, name="New node"):
 @}
 \caption{Constructor of the node (domain) model.
   \newline{}\newline{}Editor $\rightarrow$ Node model $\rightarrow$ Constructor}
-\label{editor:lst:node-domain-model:constructor}
+% \label{editor:lst:node-domain-model:constructor}
 \end{figure}
 
 \newthought{While the details of a node are rather unclear} at the moment, it is
@@ -411,7 +415,7 @@ whereas~\verb=QGraphicsScene= manages~\verb=QGraphicsObject= components.
 It is therefore obvious to use the~\verb=QGraphicsObject= component
 for representing graph nodes through a view model.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model declarations
 @{
 class NodeViewModel(Qt.QGraphicsObject):
@@ -430,10 +434,10 @@ class NodeViewModel(Qt.QGraphicsObject):
 @}
 \caption{Definition of the node view model.
   \newline{}\newline{}Editor $\rightarrow$ Node view model}
-\label{editor:lst:node-view-model}
+% \label{editor:lst:node-view-model}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model constructor
 @{
 def __init__(self, id_, domain_object, parent=None):
@@ -459,14 +463,14 @@ def __init__(self, id_, domain_object, parent=None):
 \caption{Constructor of the node view model.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Constructor}
-\label{editor:lst:node-view-model:constructor}
+% \label{editor:lst:node-view-model:constructor}
 \end{figure}
 
 \newthought{To distinguish nodes}, the name and the type of a node is used. It
 makes sense to access both attributes directly via the domain model instead of
 duplicating them.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods
 @{
 @@property
@@ -479,7 +483,13 @@ def type_(self):
 
     return self.domain_object.type_
 @}
+\caption{The type attribute of the node view model as property.
+  \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
+  Methods}
+% \label{editor:lst:node-view-model:methods:type}
+\end{figure}
 
+\begin{figure}[!htbp]
 @d Node view model methods
 @{
 @@property
@@ -492,24 +502,24 @@ def name(self):
 
     return self.domain_object.name
 @}
-\caption{The type and name attributes of the node view model as properties.
+\caption{The name attribute of the node view model as property.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods}
-\label{editor:lst:node-view-model:methods:name}
+% \label{editor:lst:node-view-model:methods:name}
 \end{figure}
 
 \newthought{The domain model does not provide access} to its type at the moment
 however. The type is directly derived from the primary output of a node. If a
 node has no outputs at all, its type is assumed to be generic.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain model methods
 @{
 @@property
 def type_(self):
-    """Return the type of the node, determined by its primary output.
-    If no primary output is given, it is assumed that the node is of
-    generic type."""
+    """Return the type of the node, determined by its primary
+    output. If no primary output is given, it is assumed that
+    the node is of generic type."""
 
     type_ = types.NodeType.GENERIC
 
@@ -520,16 +530,16 @@ def type_(self):
 \caption{The type attributes of the node domain model as property.
   \newline{}\newline{}Editor $\rightarrow$ Node (domain) model $\rightarrow$
   Methods}
-\label{editor:lst:node-domain-model:methods:type}
+% \label{editor:lst:node-domain-model:methods:type}
 \end{figure}
 
 \newthought{Concerning the drawing of nodes} (or painting, as Qt calls it) ,
 each node type may be used multiple times. But instead of re-creating the same
 image representation over and over again, it makes sense to create it only once
-per node type. Qt provides~\verb=QPixmap+ and~\verb+QPixmapCache= for this use
+per node type. Qt provides~\verb=QPixmap= and~\verb=QPixmapCache= for this use
 case.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods
 @{
 def paint(self, painter, option, widget):
@@ -537,8 +547,8 @@ def paint(self, painter, option, widget):
 
     First a pixmap is loaded from cache if available, otherwise
     a new pixmap gets created. If the current node is selected a
-    rectangle gets additionally drawn on it. Finally the name, the type
-    as well as the subtype gets written on the node.
+    rectangle gets additionally drawn on it. Finally the name,
+    the type as well as the sub type gets written on the node.
     """
 
     @<Node view model methods paint@>
@@ -549,13 +559,13 @@ def paint(self, painter, option, widget):
   and selection, that pixmap is used.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods}
-\label{editor:lst:node-view-model:methods:paint}
+% \label{editor:lst:node-view-model:methods:paint}
 \end{figure}
 
 \newthought{Each node has a cache key assigned}, which is used to identify that
 node.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model constructor
 @{
     self.cache_key = None
@@ -563,18 +573,18 @@ node.
 \caption{The cache key is being initialized within a node's constructor.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Constructor}
-\label{editor:lst:node-view-model:constructor:cache-key}
+% \label{editor:lst:node-view-model:constructor:cache-key}
 \end{figure}
 
 The cache key is composed of the type of the node, its status and whether it is
 selected or not.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods
 @{
 def create_cache_key(self):
-    """Create an attribute based cache key for finding and creating
-    pixmaps."""
+    """Create an attribute based cache key for finding and
+    creating pixmaps."""
 
     return "{type_name}{status}{selected}".format(
         type_name=self.type_,
@@ -586,7 +596,7 @@ def create_cache_key(self):
   the state of selection of a node.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods}
-\label{editor:lst:node-view-model:methods:create-cache-key}
+% \label{editor:lst:node-view-model:methods:create-cache-key}
 \end{figure}
 
 As can be seen in the above code fragment, the status property of the node is
@@ -597,7 +607,7 @@ output eventual problems like not having required connections and so on.
 
 \newthought{This status is added} to the constructor of the domain model of a node.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node domain model constructor
 @{
     self.status = flag.NodeStatus.OK
@@ -605,14 +615,14 @@ output eventual problems like not having required connections and so on.
 \caption{The status of the node is being initialized within the node's constructor.
   \newline{}\newline{}Editor $\rightarrow$ Node domain model $\rightarrow$
   Constructor}
-\label{editor:lst:node-domain-model:constructor:status}
+% \label{editor:lst:node-domain-model:constructor:status}
 \end{figure}
 
 \newthought{Concerning the view model}, again the status of the domain model is
 used as otherwise different states between user interface and domain model would
 be possible in the worst case.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods
 @{
 @@property
@@ -629,13 +639,13 @@ def status(self):
   model's status.
   \newline{}\newline{}Editor $\rightarrow$ Node domain model $\rightarrow$
   Methods}
-\label{editor:lst:node-view-model:methods:status}
+% \label{editor:lst:node-view-model:methods:status}
 \end{figure}
 
 Therefore it can now be checked, whether a node has a cache key or not. If it
 has no cache key, a new cache key is created.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods paint
 @{
 if self.cache_key is None:
@@ -645,12 +655,12 @@ if self.cache_key is None:
   is found.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods $\rightarrow$ Paint}
-\label{editor:lst:node-view-model:methods:paint:create-cache-key}
+% \label{editor:lst:node-view-model:methods:paint:create-cache-key}
 \end{figure}
 
 The cache key itself is then used to find a corresponding pixmap.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods paint
 @{
 pixmap = QtGui.QPixmapCache.find(self.cache_key)
@@ -659,13 +669,13 @@ pixmap = QtGui.QPixmapCache.find(self.cache_key)
   for.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods $\rightarrow$ Paint}
-\label{editor:lst:node-view-model:methods:paint:find-pixmap}
+% \label{editor:lst:node-view-model:methods:paint:find-pixmap}
 \end{figure}
 
 If no pixmap with the given cache key exists, a new pixmap is being created and
 added to the cache using the cache key created before.
 
-\begin{figure}
+\begin{figure}[!htbp]
 @d Node view model methods paint
 @{
 if pixmap is None:
@@ -676,7 +686,7 @@ if pixmap is None:
   key and stored.
   \newline{}\newline{}Editor $\rightarrow$ Node view model $\rightarrow$
   Methods $\rightarrow$ Paint}
-\label{editor:lst:node-view-model:methods:paint:create-pixmap}
+% \label{editor:lst:node-view-model:methods:paint:create-pixmap}
 \end{figure}
 
 \newthought{For actually displaying the nodes}, another component is necessary:
