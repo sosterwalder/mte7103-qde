@@ -6,6 +6,7 @@
 """Module for parameter-specific aspects."""
 
 # System imports
+from PyQt5 import QtCore
 
 # Project imports
 from qde.editor.foundation import type as types

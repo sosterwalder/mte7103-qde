@@ -61,15 +61,15 @@ class ClickableLabel(QtWidgets.QLabel):
 
 @d Mouse press event of clickable label
 @{
-    def mousePressEvent(self, event):
-        """Event handler when a mouse button was pressed on this label. Emits a
-        signal called 'do_add_node'.
+def mousePressEvent(self, event):
+    """Event handler when a mouse button was pressed on this label. Emits a
+    signal called 'do_add_node'.
 
-        :param event: the event which occurred.
-        :type event: Qt.QMouseEvent
-        """
+    :param event: the event which occurred.
+    :type event: Qt.QMouseEvent
+    """
 
-        self.do_add_node.emit()
-        super(ClickableLabel, self).mousePressEvent(event)
+    self.do_add_node.emit()
+    super(ClickableLabel, self).mousePressEvent(event)
 @}
 

@@ -366,6 +366,40 @@ def on_scene_added(self, scene_domain_model):
             "Scene '%s' was added",
             scene_view_model
         )
+
+        # TODO: Add node view model for default output of scene
+        node_id = uuid.uuid4()
+        node_name = "Output"
+        node_domain_model = node_domain.NodeModel(node_id, node_name)
+        node_def_part = node_domain.NodeDefinitionPart(node_id)
+        node_def_part.type_ = types.NodeType.IMPLICIT
+        default_value = parameter_domain.create_value(
+            node_def_part.type_.name, ""
+        )
+        node_def_input = node_domain.NodeDefinitionInput(
+            node_id,
+            node_name,
+            node_def_part,
+            default_value
+        )
+
+        inputs = []
+        value_function = node_domain.create_value_function(default_value)
+        input = node_domain.NodePart(node_id, value_function, node_def_input)
+        inputs.append(input)
+        node_domain_model.inputs = inputs
+
+        node_view_model   = node_gui_domain.NodeViewModel(node_id, node_domain_model)
+        node_view_model.setPos(10, 50)
+        node_view_model.setFlag(Qt.QGraphicsObject.ItemIsMovable, False)
+        scene_view_model.addItem(node_view_model)
+
+        name = "Input (%s)" % node_def_part.type_.name
+        node_input_view_model = node_gui_domain.NodeInputViewModel(
+            name,
+            node_view_model
+        )
+
     else:
         self.logger.debug(
             "Scene '%s' already known",

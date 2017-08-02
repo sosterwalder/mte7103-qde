@@ -30,3 +30,7 @@ self.render_view.setMinimumSize(300, 300)@}
 @d Add render view to horizontal splitter in main window
 @{
 horizontal_splitter.addWidget(self.render_view)@}
+
+@d Connect components for main window
+@{
+@}

@@ -62,14 +62,17 @@ def __str__(self):
 """
 
 # System imports
+import uuid
 from PyQt5 import Qt
 from PyQt5 import QtCore
 
 # Project imports
 from qde.editor.foundation import common
+from qde.editor.foundation import type as types
 from qde.editor.domain     import node  as node_domain
-from qde.editor.gui_domain import node  as node_gui_domain
+from qde.editor.domain     import parameter as parameter_domain
 from qde.editor.domain     import scene as scene_domain
+from qde.editor.gui_domain import node  as node_gui_domain
 from qde.editor.gui_domain import scene as scene_gui_domain
 
 @<Scene graph controller declarations@>

@@ -431,6 +431,8 @@ class NodeViewModel(Qt.QGraphicsObject):
     @<Node view model constructor@>
 
     @<Node view model methods@>
+
+    @<Node view model slots@>
 @}
 \caption{Definition of the node view model.
   \newline{}\newline{}Editor $\rightarrow$ Node view model}

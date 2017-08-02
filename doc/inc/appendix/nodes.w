@@ -551,25 +551,28 @@ class NodePart(object):
 \begin{figure}[!htbp]
 @d Node part domain model constructor
 @{
-  def __init__(self, id_, default_function,
-               type_=types.NodeType.GENERIC, script=None):
-    """constructor.
+def __init__(self, id_, name, default_function,
+             type_=types.NodeType.GENERIC, script=None):
+  """constructor.
 
-    :param id_: the identifier of the node part.
-    :type  id_: uuid.uuid4
-    :param default_function: the default function of the part.
-    :type default_function: function
-    :param type_: the type of the node part.
-    :type type_: qde.editor.foundation.types.NodeType
-    :param script: the script of the part.
-    :type script: str
-    """
+  :param id_: the identifier of the node part.
+  :type  id_: uuid.uuid4
+  :param name: the name of the node part.
+  :type  name: str
+  :param default_function: the default function of the part.
+  :type default_function: function
+  :param type_: the type of the node part.
+  :type type_: qde.editor.foundation.types.NodeType
+  :param script: the script of the part.
+  :type script: str
+  """
 
-    self.id_              = id_
-    self.function_        = default_function
-    self.default_function = default_function
-    self.script           = script
-    self.type_            = type_@}
+  self.id_              = id_
+  self.name             = name
+  self.function_        = default_function
+  self.default_function = default_function
+  self.script           = script
+  self.type_            = type_@}
 \caption{Constructor of the node part class.
   \newline{}\newline{}Editor $\rightarrow$ Node part}
 % \label{editor:lst:node-part:constructor}
@@ -1206,7 +1209,7 @@ def create_value(type_, value_string):
         return ImplicitValue()
     else:
         message = QtCore.QCoreApplication.translate(
-            __module__.__name__, "Unknown type for value provided"
+            __name__, "Unknown type '%s' for value provided" % type_
         )
         raise Exception(message)@}
 \caption{Method of the parameter module, which creates an object of a specific
@@ -2175,7 +2178,8 @@ created sub frame. At this moment the presentation is simply a label.
     button_label.setSizePolicy(
         Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Preferred
     )
-    sub_frame_column.addWidget(button_label)@}
+    sub_frame_column.addWidget(button_label)
+@}
 \caption{For the type of the given node definition a button is created and added
   to the previously created sub frame.
   \newline{}\newline{}Editor $\rightarrow$ Add node dialog $\rightarrow$ Methods}
@@ -2195,7 +2199,6 @@ chosen node definition.
 \begin{figure}[!htbp]
 @d Create button for given node definition and add to sub frame
 @{
-
     def _add_node_button_clicked(node_view_model):
         self.chosen_node_definition = node_view_model
         self.accept()
