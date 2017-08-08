@@ -457,6 +457,9 @@ def __init__(self, id_, domain_object, parent=None):
     self.id_ = id_
     self.domain_object = domain_object
 
+    self.inputs  = {}
+    self.outputs = {}
+
     self.position = QtCore.QPoint(0, 0)
 
     self.width  = NodeViewModel.WIDTH

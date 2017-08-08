@@ -42,6 +42,8 @@ def __init__(self, parent=None):
     """
 
     super(SceneView, self).__init__(parent)
+
+    self.current_source = None
 @}
 \caption{Constructor of the scene view component.
   \newline{}\newline{}Editor $\rightarrow$ Scene view $\rightarrow$ Constructor}
@@ -209,11 +211,13 @@ class SceneViewModel(Qt.QGraphicsScene):
     HEIGHT = 15
 
     # Signals
+    @<Scene view model signals@>
 
     @<Scene view model constructor@>
     @<Scene view model methods@>
 
     # Slots
+    @<Scene view model slots@>
 @}
 \caption{Definition of the scene view model.
   \newline{}\newline{}Editor $\rightarrow$ Scene view model}
@@ -235,7 +239,9 @@ def __init__(self, domain_object, parent=None):
    super(SceneViewModel, self).__init__(parent)
 
    self.id_              = domain_object.id_
-   self.nodes            = []
+   self.nodes            = {}
+   self.temp_connection  = None
+   self.has_intersections = False
    self.insert_at        = QtCore.QPoint(0, 0)
    self.insert_at_colour = Qt.QColor(
       self.palette().highlight().color()
@@ -332,6 +338,8 @@ def __init__(self, parent):
     super(SceneController, self).__init__(parent)
 
     self.scenes = {}
+
+    # self.current_scene is of type qde.editor.gui_domain.scene.SceneViewModel
     self.current_scene = None
 @}
 \caption{Constructor of the scene controller. As can be seen, the scene
@@ -393,11 +401,20 @@ def on_scene_added(self, scene_domain_model):
         node_view_model.setPos(10, 50)
         node_view_model.setFlag(Qt.QGraphicsObject.ItemIsMovable, False)
         scene_view_model.addItem(node_view_model)
+        scene_view_model.nodes[node_view_model.id_] = node_view_model
 
         name = "Input (%s)" % node_def_part.type_.name
         node_input_view_model = node_gui_domain.NodeInputViewModel(
             name,
             node_view_model
+        )
+        node_view_model.inputs[node_input_view_model.id_] = node_input_view_model
+        node_view_model.do_end_connection.connect(
+            scene_view_model.on_end_connection
+        )
+        self.logger.debug(
+            "Registered for node %s (%s)",
+            node_view_model, type(node_view_model)
         )
 
     else:
@@ -505,7 +522,21 @@ def on_scene_changed(self, scene_view_model):
     # TODO: Document method
 
     self.setScene(scene_view_model)
+
     # TODO: self.scrollTo(scene_view_model.view_position)
+
+    # Register signals
+    scene_view_model.do_start_connection.connect(
+        self.on_start_connection
+    )
+    scene_view_model.do_update_connection.connect(
+        self.on_update_connection
+    )
+    scene_view_model.do_end_connection.connect(
+        self.on_end_connection
+    )
+
+
     self.scene().invalidate()
     self.logger.debug("Scene has changed: %s", scene_view_model)@}
 \caption{The slot of the scene view, which gets triggered whenever the scene
