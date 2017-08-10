@@ -479,11 +479,19 @@
                     <ul class="flexblock specs content-center">
                         <li>
                             <h2>
+                                <i class="fa fa-cubes">&nbsp;</i>
                                 Building blocks
                             </h2>
                         </li>
                         <li>
                             <h2>
+                                <i class="fa fa-file-code-o">&nbsp;</i>
+                                External files
+                            </h2>
+                        </li>
+                        <li>
+                            <h2>
+                                <i class="fa fa-dot-circle-o">&nbsp;</i>
                                 Atomic types
                             </h2>
                         </li>
@@ -648,6 +656,186 @@
                     </ul>
                 </div>
             </div>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Initialization</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+            <img src="static/images/rendering-process-init.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Fragment shader</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// FRAGMENT SHADER</span>
+<span style="color: #557799">#version 330</span>
+
+{{uniform_variables}}
+
+...
+
+{{object_definitions}}
+
+...
+
+<span style="color: #888888">// Defines the scene which will be drawn at given position.</span>
+<span style="color: #008800; font-weight: bold">float</span> scene(<span style="color: #008800; font-weight: bold">in</span> <span style="color: #008800; font-weight: bold">vec3</span> position)
+{
+    <span style="color: #008800; font-weight: bold">float</span> result <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.0</span>;
+    {{calls}}
+
+    <span style="color: #008800; font-weight: bold">return</span> result;
+}</pre>
+                </div>
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Vertex shader</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// VERTEX SHADER</span>
+
+<span style="color: #557799">#version 330</span>
+
+<span style="color: #888888">// in / attributes</span>
+<span style="color: #008800; font-weight: bold">attribute</span> <span style="color: #008800; font-weight: bold">vec4</span> a_position;
+
+<span style="color: #888888">// uniforms</span>
+<span style="color: #008800; font-weight: bold">uniform</span> <span style="color: #008800; font-weight: bold">mat4</span> u_mvpMatrix;
+
+<span style="color: #888888">// Main method of the shader.</span>
+<span style="color: #008800; font-weight: bold">void</span> main()
+{
+    <span style="color: #888888">// gl_Position contains the position of the current vertex.</span>
+    <span style="color: #888888">// a_position are the specified vertices, which is in this</span>
+    <span style="color: #888888">// case a simple rectangle filling the whole screen.</span>
+    gl_Position <span style="color: #333333">=</span> u_mvpMatrix <span style="color: #333333">*</span> a_position;
+}
+</pre>
+                </div>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Initialization</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+            <img src="static/images/rendering-process-init.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Initialization</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+            <img src="static/images/rendering-process-init-add-root-scene.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Initialization</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+            <img src="static/images/rendering-process-init-add-root-out.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Initialization</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+            <img src="static/images/rendering-process-init-load-nodes.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Add node</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <img src="static/images/rendering-process-new-node.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Connect node</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <img src="static/images/rendering-process-connect-node.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering: Connect node NOP</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <img src="static/images/rendering-process-connect-node-nop.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <div class="content-center">
+                    <h2>Program</h2>
+                    <h2>Components</h2>
+                    <h3>Rendering nodes</h3>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <p style="aligncenter content-center">
+                <img src="static/images/rendering-process-render-node.png" width="120px" style="margin: 0 auto; display: block;">
+            </p>
         </section>
         <section>
             <div class="aligncenter">
