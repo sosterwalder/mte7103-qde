@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" media="all" href="static/css/fonts.css">
     <link rel="stylesheet" type="text/css" media="all" href="static/css/base.css">
     <link rel="stylesheet" type="text/css" media="all" href="static/css/colors.css">
+    <link rel="stylesheet" type="text/css" media="all" href="static/css/mathjax.css">
+    <link rel="stylesheet" type="text/css" media="all" href="static/css/breadcrumb.css">
     <link rel="stylesheet" type="text/css" media="all" href="static/font-awesome/css/font-awesome.min.css">
   </head>
   <body>
@@ -40,7 +42,7 @@
                     </li>
                 </ul>
                 <p>&nbsp;</p>
-                <div class="grid content-center">
+                <div class="grid content-center vertical-align">
                     <div class="column">
                         <p><img src="static/images/bfh_logo.png" alt="Berne
                         University of Applied Sciences" style="border: 0;
@@ -53,7 +55,7 @@
                     </div>
                     <div class="column">
                         <p><img src="static/images/ccsa.png" alt="Creative Commons
-                        BY SA" style="border: 0; height: 32px;"></p>
+                        BY SA" style="border: 0; height: 48px;"></p>
                     </div>
                 </div>
             </div>
@@ -64,6 +66,7 @@
         <section>
             <div class="wrap">
                 <h2>Purpose</h2>
+                <hr>
                 <ul class="flexblock border aligncenter">
                     <li>
                         <i class="fa fa-cube fa-5x"></i>
@@ -85,761 +88,1451 @@
                     </li>
                 </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
-            <div class="aligncenter">
+            <div class="wrap">
                 <h2>Motivation</h2>
-                <ul class="bg-white flexblock reasons">
-                    <li><h2>Fascination rendering</h2></li>
-                    <li><h2>No such solution</h2></li>
-                </ul>
+                <hr>
             </div>
+            <div class="aligncenter">
+                <div class="bg-light shadow">
+                    <ul class="flexblock reasons">
+                        <li><h2>Fascination rendering</h2></li>
+                        <li><h2>No such solution</h2></li>
+                    </ul>
+                </div>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <span class="background" style="background-image:url(static/images/5faces_01.jpg)"></span>
+            <footer class="bg-white">
+                <small class="alignright">Source: https://directtovideo.wordpress.com/</small>
+            </footer>
         </section>
         <section>
-            <span class="background" style="background-image:url(static/images/maxresdefault.jpg)"></span>
-        </section>
-        <section>
-            <div class="aligncenter">
+            <div class="wrap">
                 <h2>Related works</h2>
-                <ul>
-                    <li class="text-intro">Sphere tracing basics</li>
-                    <li class="text-intro">Software architecture</li>
+                <hr>
+            </div>
+            <div class="aligncenter">
+                <div class="bg-light shadow">
+                    <ul class="flexblock reasons">
+                        <li>
+                            <h2>MTE7101</h2>
+                            <p>Rendering basics</p>
+                        </li>
+                        <li>
+                            <h2>MTE7102</h2>
+                            <p>Software architecture</p>
+                        </li>
+                    </ur>
+                </div>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section>
+            <div class="wrap">
+                <h2>Objectives</h2>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-window-maximize fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Editor</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Main application. Editing animations.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-sort-amount-asc fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Scene tree</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Manage scenes.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cubes fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Node graph</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Content of a scene.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cube fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Nodes</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Building blocks.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
                 </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Objectives</h2>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-window-maximize"></i>
-                                Editor
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-sort-amount-asc"></i>
-                                Scene tree
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-cubes"></i>
-                                Node graph
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-cube"></i>
-                                Nodes
-                            </h2>
-                        </li>
-                    </ul>
+                <h2>Administrative aspects</h2>
+                <hr>
+                <div class="card-30 bg-white">
+                    <div class="flex-content">
+                        <p class="text-intro">
+                        <i class="fa fa-calendar fa-lg">&nbsp;</i>
+                            Schedule
+                        </p>
+                    </div>
+                    <div class="flex-content">
+                        <p class="text-intro">
+                        <i class="fa fa-group fa-lg">&nbsp;</i>
+                            Meetings
+                        </p>
+                    </div>
+                    <div class="flex-content">
+                        <p class="text-intro">
+                        <i class="fa fa-warning fa-lg">&nbsp;</i>
+                            Risk management
+                        </p>
+                        <ul class="flexblock specs">
+                            <li>Change methodology</li>
+                            <li>Reduce features</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Administrative aspects</h2>
-                    <ul class="flexblock specs">
-                        <li>
-                            <h2>
-                                <i class="fa fa-calendar fa-lg">&nbsp;</i>
-                                Schedule
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-group fa-lg">&nbsp;</i>
-                                Meetings
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-warning fa-lg">&nbsp;</i>
-                                Risk management
-                            </h2>
-                        </li>
-                    </ul>
+                <h2>Fundamentals</h2>
+                <hr>
+                <div class="card-50 bg-white">
+                    <div class="flex-content">
+                        <p class="text-intro">
+                            <i class="fa fa-building-o fa-lg">&nbsp;</i>
+                            Software architecture
+                        </p>
+                        <ul class="flexblock specs">
+                            <li>Components</li>
+                            <li>Relaxed layered architecture</li>
+                            <li>Model-view separation</li>
+                        </ul>
+                    </div>
+                    <div class="flex-content">
+                        <p class="text-intro">
+                            <i class="fa-stack fa" style="margin-right: 5px;">
+                                <i class="fa fa-desktop fa-stack-2x"></i>
+                                <i class="fa fa-cubes fa-stack-1x" style="margin-top: -5px;"></i>
+                                &nbsp;
+                                &nbsp;
+                            </i>
+                            Rendering
+                        </p>
+                        <ul class="flexblock specs">
+                            <li>Illumination models</li>
+                            <li>Ray- and sphere tracing</li>
+                            <li>Phong shading</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </section>
-        <section>
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <ul class="flexblock specs">
-                        <li>
-                            <h2>
-                                <i class="fa fa-building-o fa-lg">&nbsp;</i>
-                                Software architecture
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa-stack fa">
-                                    <i class="fa fa-desktop fa-stack-2x"></i>
-                                    <i class="fa fa-cubes fa-stack-1x" style="margin-top: -5px;"></i>
-                                    &nbsp;
-                                </i>
-                                Rendering
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <h3>Software architecture</h3>
-                    <ul class="flexblock specs">
-                        <li>
-                            <h2>
-                                Components
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                Relaxed layered architecture
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                Model-view separation
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <h2>Software architecture</h2>
-                    <h3>Components</h3>
-                </div>
-            </div>
-            <p style="aligncenter content-center">
-                <img src="static/images/editor-components.png" width="55%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <h2>Rendering</h2>
-                    <h3>Ray tracing</h3>
-                </div>
+                <h2>Software architecture</h2>
+                <h3>Components</h3>
+                <hr>
+                <p style="aligncenter content-center">
+                    <img src="static/images/editor-components.png" width="50%" style="margin: 0 auto; display: block;">
+                </p>
+                <ul class="description">
+                    <li>
+                        <span class="text-label">1</span>
+                        Scene tree
+                    </li>
+                    <li>
+                        <span class="text-label">2</span>
+                        Node graph
+                    </li>
+                    <li>
+                        <span class="text-label">3</span>
+                        Parameters
+                    </li>
+                    <li>
+                        <span class="text-label">4</span>
+                        Render view
+                    </li>
+                    <li>
+                        <span class="text-label">4</span>
+                        Timeline
+                    </li>
+                </ul>
             </div>
-            <p style="aligncenter content-center">
-                <img src="static/images/ray-tracing-principle.png" width="55%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <h2>Rendering</h2>
-                    <h3>Sphere tracing</h3>
-                </div>
+                <h2>Rendering</h2>
+                <h3>Illumination models</h3>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-dot-circle-o fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Local</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Direct light reflected from surfaces.
+                                    <p>Indirect light through an ambient term.</p>
+                                    <p>E.g.: Phong illumination model.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-connectdevelop fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Global</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Light propagation in a scene.</p>
+                                    <p>Model interactions.</p>
+                                    <p>E.g.: Ray tracing, radiosity.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <p style="aligncenter content-center">
-                <img src="static/images/sphere-tracing-principle.png" width="55%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Implicit surfaces</h3>
+                <hr>
+                <p>
+                </p>
+                <ul class="flexblock activity">
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large f(\pmb{p}) = f(x, y, z) = 0$
+                            </p>
+                            <p class="summary">Implicit surface (zero contour)</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large x \in \overset{\circ}{\pmb{A}} \Leftrightarrow f(\pmb{x}) < 0 $
+                            </p>
+                            <p class="summary">
+                                <strong>In</strong> closed solid
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large x \in \partial{\pmb{A}} \Leftrightarrow f(\pmb{x}) = 0 $
+                            </p>
+                            <p class="summary">
+                                <strong>On</strong> closed solid
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large x \in \mathbb{R}^{3} - \pmb{A} \Leftrightarrow f(\pmb{x}) > 0 $
+                            </p>
+                            <p class="summary">
+                                <strong>Outside</strong> closed solid
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Geometrical implicit surfaces</h3>
+                <hr>
+                <p>
+                </p>
+                <ul class="flexblock activity">
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large \|\pmb{x}\| - 1 = 0$
+                            </p>
+                            <p class="summary">Unit sphere, geometrical</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large f(\pmb{x}) = \|\pmb{x}\| - 1$
+                            </p>
+                            <p class="summary">Implicit equation, common form</p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="text-context">
+                    $ \|\pmb{x}\|$: ${(x^{2} + y^{2} + z^{2})}^{1 \over 2} $ <br>
+                    (Euclidean metric)
+                </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Distance functions and fields</h3>
+                <hr>
+                <ul class="flexblock activity">
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large A = \{ x : f(x) \leq 0 \}$
+                            </p>
+                            <p class="summary">All points in A</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\large d(\pmb{x}, \pmb{A}) = \min_{\substack{\pmb{y} \in \pmb{A}}}(\|\pmb{x} - \pmb{y}\|) $
+                            </p>
+                            <p class="summary">Point to set distance</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;">&nbsp;</p>
+                            <p class="title" style="width: 15%;">
+                                $\Large |f(\pmb{x})| \leq d(\pmb{x}, f^{-1}(0)) $
+                            </p>
+                            <p class="summary">Signed distance bound</p>
+                        </div>
+                    </li>
+                </ul>
+                <p>&nbsp;</p>
+                <figure class="aligncenter">
+                    <img class="size-30" src="static/images/distance-field-example.png">
+                </figure>
+                <p class="text-context">
+                    $ \|\pmb{x}\|$: ${(x^{2} + y^{2} + z^{2})}^{1 \over 2} $ <br>
+                    (Euclidean metric)
+                </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Ray tracing</h3>
+                <hr>
+                <p class="text-subtitle">A. Appel, 1968; T. Whitted, 1979</p>
+            </div>
+            <p style="aligncenter content-center">
+                <img src="static/images/ray-tracing-principle.png" width="50%" style="margin: 0 auto; display: block;">
+            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Sphere tracing</h3>
+                <hr>
+                <p class="text-subtitle">J. C. Hart, 1994</p>
+            </div>
+            <p style="aligncenter content-center">
+                <img src="static/images/sphere-tracing-principle.png" width="35%" style="margin: 0 auto; display: block;">
+            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Rendering</h2>
+                <h3>Phong shading</h3>
+                <hr>
+                <p class="text-subtitle">Phong Bui-Thong, 1975</p>
+                <p>&nbsp;</p>
                 <div class="content-center">
-                    <h2>Fundamentals</h2>
-                    <h2>Rendering</h2>
-                    <h3>Phong shading</h3>
-                    <p>&nbsp;</p>
                     <p>
-                        $I(\overrightarrow{V}) = k_{a} \cdot L_{a} + k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\overrightarrow{S_{i}} \cdot \overrightarrow{N}) + k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\overrightarrow{R_{i}} \cdot \overrightarrow{V})}^{k_{e}}$
+                        $\Large
+                        I(\overrightarrow{V}) =
+                        k_{a} \cdot L_{a} +
+                        \displaystyle\sum_{i} \cdot \bigg(
+                            k_{d} L_{i} \cdot (
+                                \overrightarrow{S_{i}} \cdot \overrightarrow{N}
+                            ) +
+                            k_{s} L_{i} \cdot {(
+                                \overrightarrow{R_{i}} \cdot \overrightarrow{V}
+                            )}^{k_{e}}
+                        \bigg)
+                        $
                     </p>
                     <img src="static/images/Phong_components_version_4.png">
+                    <p><small>Source: https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png</small><p>
                 </div>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li class="active"><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Methodologies</h2>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-book fa-lg">&nbsp;</i>
-                                Literate programming
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-spinner fa-lg fa-spin">&nbsp;</i>
-                                Agile software development
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Methodologies</h2>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-book fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Literate programming</h3>
+                                    <p class="text-subtitle">Donald E. Knuth, 1984</p>
+                                    <p>&nbsp;</p>
+                                    <p>Programs as works of literature.</p>
+                                    <p>Focus on human beings.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-spinner fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Agile software development</h3>
+                                    <p class="text-subtitle">Agile manifesto authors (17), 2001</p>
+                                    <p>&nbsp;</p>
+                                    <p>Extreme programming, adapted version.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li class="active"><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Methodologie</h2>
-                    <h2>Literate programming</h2>
-                    <h3>Principle</h3>
-                </div>
-            </div>
+            <h2>Literate programming</h2>
+            <h3>Principle</h3>
+            <hr>
             <p style="aligncenter content-center">
                 <img src="static/images/literate-programming-principle.png" width="60%" style="margin: 0 auto; display: block;">
             </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li class="active"><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Methodologie</h2>
-                    <h2>Literate programming</h2>
-                    <h3>Example</h3>
-                </div>
+                <h2>Literate programming</h2>
+                <h3>Example</h3>
+                <hr>
+                <p>&nbsp;</p>
+                <ul class="flexblock">
+                    <li>
+                        <figure>
+                            <img src="static/images/literate-programming-example-source.png" class="size-80 aligncenter" style="padding-top: 45px;">
+                            <figcaption class="aligncenter">
+                                <h2>Nuweb source</h2>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li>
+                        <figure>
+                            <img src="static/images/literate-programming-example.png" class="aligncenter">
+                            <figcaption class="aligncenter">
+                                <h2>Documentation</h2>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li>
+                        <figure>
+                            <img src="static/images/literate-programming-example-result.png" class="size-80 aligncenter">
+                            <figcaption class="aligncenter">
+                                <h2>Source code</h2>
+                            </figcaption>
+                        </figure>
+                    </li>
             </div>
-            <p style="aligncenter content-center">
-                <img src="static/images/literate-programming-example.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li class="active"><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Implementation</h2>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-building-o fa-lg">&nbsp;</i>
-                                Software architecture
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-book fa-lg">&nbsp;</i>
-                                Literate programming
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-code fa-lg">&nbsp;</i>
-                                Program
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Implementation</h2>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-building-o fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Software architecture</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Three main components.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-book fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Literate program</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Challenges &amp; solutions.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-code fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Program</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Overview, components and rendering.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Software architecture</h2>
-                    <h3>Components</h3>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-calendar"></i>
-                                Software design pattern
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-align-justify fa-lg">&nbsp;</i>
-                                Layers
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-refresh fa-lg fa-spin">&nbsp;</i>
-                                Signals &amp; slots
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Software architecture</h2>
+                <h3>Components</h3>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-calendar-o fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Software design pattern</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Model | View | View-Model | Controllers.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-align-justify fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Layers</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Relaxed layered architecture.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-refresh fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Signals &amp; slots</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Generalized observer pattern.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Software architecture</h2>
-                    <h3>Software design pattern</h3>
-                </div>
+                <h2>Software architecture</h2>
+                <h3>Components</h3>
+                <h4>Software design pattern</h4>
+                <hr>
             </div>
             <p>&nbsp;</p>
             <p style="aligncenter content-center">
                 <img src="static/images/mvvmc.png" width="70%" style="margin: 0 auto; display: block;">
             </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Software architecture</h2>
-                    <h3>Layers</h3>
-                </div>
+                <h2>Software architecture</h2>
+                <h3>Components</h3>
+                <h4>Layers</h4>
+                <hr>
+                <ul class="flexblock activity">
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;"><img src="static/images/layers-gui.png"></p>
+                            <p class="title" style="width: 15%;">Views</p>
+                            <p class="summary">Scene tree view</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year"  style="width: 27%;"><img src="static/images/layers-gui-domain.png"></p>
+                            <p class="title" style="width: 15%;">View models</p>
+                            <p class="summary">Scenes, nodes</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year" style="width: 27%;"><img src="static/images/layers-application.png"></p>
+                            <p class="title" style="width: 15%;">Controller (workflow objects)</p>
+                            <p class="summary">Main application, node controller</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year" style="width: 27%;"><img src="static/images/layers-domain.png"></p>
+                            <p class="title" style="width: 15%;">Data models</p>
+                            <p class="summary">Scene model, node model</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year" style="width: 27%;"><img src="static/images/layers-technical.png"></p>
+                            <p class="title" style="width: 15%;">Technical infrastructure</p>
+                            <p class="summary">JSON parser, graphics, renderer</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p class="year" style="width: 27%;"><img src="static/images/layers-foundation.png"></p>
+                            <p class="title" style="width: 15%;">Basic elements, low level services</p>
+                            <p class="summary">Colors, constants, logging</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/layers.png" width="30%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Software architecture</h2>
-                    <h3>Signals &amp; slots</h3>
-                </div>
-            </div>
+                <h2>Software architecture</h2>
+                <h3>Components</h3>
+                <h4>Signals &amp; slots</h4>
+                <hr>
             <p>&nbsp;</p>
             <p style="aligncenter content-center">
                 <img src="static/images/signal-and-slot.png" width="70%" style="margin: 0 auto; display: block;">
             </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
-            <div class="aligncenter">
+            <div class="wrap">
                 <h2>Literate programming</h2>
-                <ul class="flexblock specs content-center">
+                <h3>Challenges &amp; solutions</h3>
+                <hr>
+                <ul class="flexblock clients">
                     <li>
-                        <h2>
-                            <i class="fa fa-lightbulb-o fa-lg">&nbsp;</i>
-                            Appendix
-                        </h2>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-question fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>A lot of content</h3>
+                                    <p>&nbsp;</p>
+                                    <p>
+                                        <i class="fa fa-arrow-right">&nbsp;</i>Move to appendix.
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </a>
                     </li>
                     <li>
-                        <h2>
-                            <i class="fa fa-lightbulb-o fa-lg">&nbsp;</i>
-                            Code fragments
-                        </h2>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-question fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Technical details</h3>
+                                    <p>&nbsp;</p>
+                                    <p>
+                                        <i class="fa fa-arrow-right">&nbsp;</i>Outsource to code framgents file.
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </a>
                     </li>
                 </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                </div>
+                <h2>Program</h2>
+                <h3>Overview</h3>
+                <hr>
+                <p style="aligncenter content-center">
+                    <img src="static/images/program.png" width="50%" style="margin: 0 auto; display: block;">
+                </p>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/program.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-window-maximize"></i>
-                                Editor
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-sort-amount-asc"></i>
-                                Scene tree
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-cubes"></i>
-                                Node graph
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-cube"></i>
-                                Nodes
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h3>Components</h3>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-window-maximize fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Editor</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Main application. Editing animations.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-sort-amount-asc fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Scene tree</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Manage scenes.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cubes fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Node graph</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Content of a scene.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cube fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Nodes</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Building blocks.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-cubes">&nbsp;</i>
-                                Building blocks
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-file-code-o">&nbsp;</i>
-                                External files
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-dot-circle-o">&nbsp;</i>
-                                Atomic types
-                            </h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h3>Components</h3>
+                <h4>Nodes</h4>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cube fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Building blocks</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Defining content, shader code.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-file-code-o fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>External files</h3>
+                                    <p>&nbsp;</p>
+                                    <p>In JSON format.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-dot-circle-o fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Atomic types</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Interpret values, ensure valid connections.</p>
+                                    <p>
+                                        Generic<br>
+                                        Float<br>
+                                        Text<br>
+                                        Scene<br>
+                                        Image<br>
+                                        Dynamic<br>
+                                        Mesh<br>
+                                        Implicit
+                                    </p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                    <ul class="flexblock steps">
-                        <li>
-                            <h2>ID</h2>
-                        </li>
-                        <li>
-                            <div class="process step-2"></div>
-                            <h2>Name</h2>
-                        </li>
-                        <li>
-                            <div class="process step-3"></div>
-                            <h2>Description</h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h2>Components</h2>
+                <h3>Nodes</h3>
+                <hr>
+                <ul class="flexblock steps">
+                    <li>
+                        <h2>01. ID</h2>
+                        <p>&nbsp;</p>
+                        <p>UUID, version 4</p>
+                    </li>
+                    <li>
+                        <div class="process step-2"></div>
+                        <h2>02. Name</h2>
+                        <p>&nbsp;</p>
+                        <p>Implicit sphere</p>
+                    </li>
+                    <li>
+                        <div class="process step-3"></div>
+                        <h2>03. Description</h2>
+                        <p>&nbsp;</p>
+                        <p>Renders an implicit sphere.</p>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
+                <h2>Program</h2>
+                <h2>Components</h2>
+                <h3>Nodes</h3>
+                <hr>
             </div>
             <p>&nbsp;</p>
             <p style="aligncenter content-center">
-                <img src="static/images/implicit-sphere-node.png" width="60%" style="margin: 0 auto; display: block;">
+                <img src="static/images/implicit-sphere-node.png" width="50%" style="margin: 0 auto; display: block;">
             </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                    <ul class="flexblock steps">
-                        <li>
-                            <h2>Inputs</h2>
-                        </li>
-                        <li>
-                            <div class="process step-2"></div>
-                            <h2>Outputs</h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h2>Components</h2>
+                <h3>Nodes</h3>
+                <hr>
+                <ul class="flexblock steps">
+                    <li>
+                        <h2>04. Inputs</h2>
+                        <p>&nbsp;</p>
+                        <p>Parameters given to the node.</p>
+                        <p>Either values or other nodes.</p>
+                        <img src="static/images/implicit-sphere-node-inputs.png" style="margin: 0 auto; display: block;">
+                    </li>
+                    <li>
+                        <div class="process step-2"></div>
+                        <h2>05. Outputs</h2>
+                        <p>&nbsp;</p>
+                        <p>Values delivered by the node.</p>
+                        <img src="static/images/implicit-sphere-node-outputs.png" style="margin: 0 auto; display: block;">
+                    </li>
+                </ul>
             </div>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/implicit-sphere-node-inputs.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/implicit-sphere-node-outputs.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                    <ul class="flexblock steps">
-                        <li>
-                            <h2>Definitions</h2>
-                        </li>
-                        <li>
-                            <div class="process step-2"></div>
-                            <h2>Invocations</h2>
-                        </li>
-                        <li>
-                            <div class="process step-3"></div>
-                            <h2>Parts</h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h3>Components</h3>
+                <h4>Nodes</h4>
+                <hr>
+                <ul class="flexblock steps">
+                    <li>
+                        <h2>06. Definitions</h2>
+                        <p>&nbsp;</p>
+                        <p>What the node defines.</p>
+                        <p>Currently only GLSL functions.</p>
+                        <img src="static/images/implicit-sphere-node-definitions.png" style="margin: 0 auto; display: block;">
+                    </li>
+                    <li>
+                        <div class="process step-2"></div>
+                        <h2>07. Invocations</h2>
+                        <p>&nbsp;</p>
+                        <p>Formats of a calls to definitions.</p>
+                        <img src="static/images/implicit-sphere-node-invocations.png" style="margin: 0 auto; display: block;">
+                    </li>
+                    <li>
+                        <div class="process step-3"></div>
+                        <h2>08. Parts</h2>
+                        <p>&nbsp;</p>
+                        <p>Processing of the node.</p>
+                        <p>Directly interpreted code.</p>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <header class="">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </header>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Components</h3>
+                <h4>Nodes</h4>
+                <hr>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/implicit-sphere-node-definitions.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/implicit-sphere-node-invocations.png" width="60%" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
             <p style="aligncenter content-center">
                 <img src="static/images/implicit-sphere-node-parts.png" width="60%" style="margin: 0 auto; display: block;">
             </p>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Nodes</h3>
-                    <ul class="flexblock steps">
-                        <li>
-                            <h2>Nodes</h2>
-                        </li>
-                        <li>
-                            <div class="process step-2"></div>
-                            <h2>Parameters</h2>
-                        </li>
-                    </ul>
-                </div>
+                <h2>Program</h2>
+                <h3>Components</h3>
+                <h4>Nodes</h4>
+                <hr>
+                <ul class="flexblock steps">
+                    <li>
+                        <h2>09. Nodes</h2>
+                        <p>&nbsp;</p>
+                        <p>Children of the node.</p>
+                    </li>
+                    <li>
+                        <div class="process step-2"></div>
+                        <h2>10. Parameters</h2>
+                        <p>&nbsp;</p>
+                        <p>A list of inputs and outputs as tuples.</p>
+                    </li>
+                </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Initialization</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Pipeline</h4>
+                <hr>
+                <p style="aligncenter content-center">
+                    <img src="static/images/shader-pipeline.png" width="20%" style="margin: 0 auto; display: block;">
+                </p>
+                <p class="text-context">
+                    Source: khronos.org
+                </p>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-            <img src="static/images/rendering-process-init.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Fragment shader</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Shaders in OpenGL</h4>
+                <hr>
+                <p style="aligncenter content-center">
+                    <img src="static/images/opengl-shader.png" width="60%" style="margin: 0 auto; display: block;">
+                </p>
+                <p class="text-context">
+                    Source: khronos.org
+                </p>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// FRAGMENT SHADER</span>
-<span style="color: #557799">#version 330</span>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Vertex shader</h4>
+                <hr>
+                <ul class="flexblock features">
+                    <li class="bg-light">
+                        <div>
+                            <h2>
+                                <span>•</span>
+                                4 vertices
+                            </h2>
+                        </div>
+                    </li>
+                    <li class="bg-light">
+                        <div>
+                            <h2>
+                                <span>―</span>
+                                6 indices
+                            </h2>
+                            Edges.
+                        </div>
+                    </li>
+                    <li class="bg-light">
+                        <div>
+                            <h2>
+                                <span>◩</span>
+                                2 triangles
+                            </h2>
+                            Screen.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Fragment shader</h4>
+                <hr>
+                <p style="aligncenter content-center">
+                    <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// FRAGMENT SHADER</span>
+    <span style="color: #557799">#version 330</span>
 
-{{uniform_variables}}
+    {{uniform_variables}}
 
-...
+    ...
 
-{{object_definitions}}
+    {{object_definitions}}
 
-...
+    ...
 
-<span style="color: #888888">// Defines the scene which will be drawn at given position.</span>
-<span style="color: #008800; font-weight: bold">float</span> scene(<span style="color: #008800; font-weight: bold">in</span> <span style="color: #008800; font-weight: bold">vec3</span> position)
-{
-    <span style="color: #008800; font-weight: bold">float</span> result <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.0</span>;
-    {{calls}}
+    <span style="color: #888888">// Defines the scene which will be drawn at given position.</span>
+    <span style="color: #008800; font-weight: bold">float</span> scene(<span style="color: #008800; font-weight: bold">in</span> <span style="color: #008800; font-weight: bold">vec3</span> position)
+    {
+        <span style="color: #008800; font-weight: bold">float</span> result <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.0</span>;
+        {{calls}}
 
-    <span style="color: #008800; font-weight: bold">return</span> result;
-}</pre>
-                </div>
-            </p>
+        <span style="color: #008800; font-weight: bold">return</span> result;
+    }</pre>
+                    </div>
+                </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Vertex shader</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Initialization</h4>
+                <hr>
+                <p>&nbsp;</p>
+                <figure>
+                    <img src="static/images/rendering-process-init.png" width="80%" style="margin: 0 auto; display: block;">
+                </figure>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// VERTEX SHADER</span>
-
-<span style="color: #557799">#version 330</span>
-
-<span style="color: #888888">// in / attributes</span>
-<span style="color: #008800; font-weight: bold">attribute</span> <span style="color: #008800; font-weight: bold">vec4</span> a_position;
-
-<span style="color: #888888">// uniforms</span>
-<span style="color: #008800; font-weight: bold">uniform</span> <span style="color: #008800; font-weight: bold">mat4</span> u_mvpMatrix;
-
-<span style="color: #888888">// Main method of the shader.</span>
-<span style="color: #008800; font-weight: bold">void</span> main()
-{
-    <span style="color: #888888">// gl_Position contains the position of the current vertex.</span>
-    <span style="color: #888888">// a_position are the specified vertices, which is in this</span>
-    <span style="color: #888888">// case a simple rectangle filling the whole screen.</span>
-    gl_Position <span style="color: #333333">=</span> u_mvpMatrix <span style="color: #333333">*</span> a_position;
-}
-</pre>
-                </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Initialization</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Add node</h4>
+                <hr>
+                <p>&nbsp;</p>
+                <figure>
+                    <img src="static/images/rendering-process-new-node.png" width="50%" style="margin: 0 auto; display: block;">
+                </figure>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-            <img src="static/images/rendering-process-init.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Initialization</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Connect node to non-root node</h4>
+                <hr>
+                <p>&nbsp;</p>
+                <figure>
+                    <img src="static/images/rendering-process-connect-node.png" width="70%" style="margin: 0 auto; display: block;">
+                </figure>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-            <img src="static/images/rendering-process-init-add-root-scene.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Initialization</h3>
-                </div>
+                <h2>Program</h2>
+                <h3>Rendering</h3>
+                <h4>Connect node to root node</h4>
+                <hr>
+                <p>&nbsp;</p>
+                <figure>
+                    <img src="static/images/rendering-process-connect-node-root.png" width="100%" style="margin: 0 auto; display: block;">
+                </figure>
             </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-            <img src="static/images/rendering-process-init-add-root-out.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Initialization</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-            <img src="static/images/rendering-process-init-load-nodes.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Add node</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/rendering-process-new-node.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Connect node</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/rendering-process-connect-node.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering: Connect node NOP</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/rendering-process-connect-node-nop.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
-        </section>
-        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
-            <div class="wrap">
-                <div class="content-center">
-                    <h2>Program</h2>
-                    <h2>Components</h2>
-                    <h3>Rendering nodes</h3>
-                </div>
-            </div>
-            <p>&nbsp;</p>
-            <p style="aligncenter content-center">
-                <img src="static/images/rendering-process-render-node.png" width="120px" style="margin: 0 auto; display: block;">
-            </p>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li class="active"><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
-            <div class="aligncenter">
+            <div class="wrap">
                 <h2>Conclusion</h2>
+                <hr>
                 <ul class="flexblock steps aligncenter">
                     <li>
                         <i class="fa fa-lightbulb-o fa-3x"></i>
@@ -862,33 +1555,189 @@
                     </li>
                 </ul>
             </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li class="active"><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
         <section>
             <div class="wrap">
-                <div class="content-center">
-                    <h2>Outlook</h2>
-                    <ul class="flexblock specs content-center">
-                        <li>
-                            <h2>
-                                <i class="fa fa-window-maximize"></i>
-                                Editor
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-sort-amount-asc"></i>
-                                Player
-                            </h2>
-                        </li>
-                        <li>
-                            <h2>
-                                <i class="fa fa-cubes"></i>
-                                Rendering
-                            </h2>
-                        </li>
-                    </ul>
+                <h2>Conclusion</h2>
+                <h3>Outlook</h3>
+                <hr>
+                <ul class="flexblock clients">
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cubes fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Editor</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Additional features (sequencer).</p>
+                                    <p>Additional nodes (post-processing).</p>
+                                    <p>Support for meshes.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-sort-amount-asc fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Player</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Play animations.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Client">
+                            <figure>
+                                <i class="fa fa-cubes fa-4x" style="display: block; padding: 2.4rem;">&nbsp;</i>
+                                <figcaption>
+                                    <h3>Rendering</h3>
+                                    <p>&nbsp;</p>
+                                    <p>Realistic materials.</p>
+                                    <p>Ambient occlusion.</p>
+                                    <p>FXAA.</p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li class="active"><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h1 class="text-landing">QDE.</h1>
+                <p class="text-landing">A system for composing real time computer graphics.</p>
+                <p class="text-subtitle">MTE7103 &dash; master thesis</p>
+                <p>&nbsp;</p>
+                <ul class="description">
+                    <li>
+                        <span class="text-label">Student:</span>
+                        Sven Osterwalder (ostes2@bfh.ch)
+                    </li>
+                    <li>
+                        <span class="text-label">Advisor:</span>
+                        Prof. Clauder Fuhrer (claude.fuhrer@bfh.ch)
+                    </li>
+                    <li>
+                        <span class="text-label">Expert:</span>
+                        Dr. Eric Dubuis (eric.dubuis@comet.ch)
+                    </li>
+                    <li>
+                        <span class="text-label">Date:</span>
+                        2017-08-15
+                    </li>
+                </ul>
+                <p>&nbsp;</p>
+                <div class="grid content-center vertical-align">
+                    <div class="column">
+                        <p><img src="static/images/bfh_logo.png" alt="Berne
+                        University of Applied Sciences" style="border: 0;
+                        height: 128px; box-shadow: none;"></p>
+                    </div>
+                    <div class="column">
+                        <p><img src="static/images/echtzeit_logo.png" alt="Logo
+                        of Verein Echtzeit" style="border: 0; width: 112px;
+                        box-shadow: none;"></p>
+                    </div>
+                    <div class="column">
+                        <p><img src="static/images/ccsa.png" alt="Creative Commons
+                        BY SA" style="border: 0; height: 48px;"></p>
+                    </div>
                 </div>
             </div>
+            <div class="slide-bottom">
+                <img class="aligncenter" style="width: 100%" src="static/images/bg.png">
+            </div>
+        </section>
+        <section>
+            <div class="wrap">
+                <h2>Methodologies</h2>
+                <h3>Software development</h3>
+                <hr>
+                <figure>
+                    <img src="static/images/waterfall.png" width="50%" style="margin: 0 auto; display: block;">
+                </figure>
+                <hr>
+                <figure>
+                    <img src="static/images/iterative-dev.png" width="50%" style="margin: 0 auto; display: block;">
+                </figure>
+                <hr>
+                <figure>
+                    <img src="static/images/xp.png" width="50%" style="margin: 0 auto; display: block;">
+                </figure>
+                <p class="text-context">
+                    Source: J. Shore and S. Warden, The Art of Agile Development.
+                </p>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Fundamentals</h2>
+                <h3>Software architecture</h3>
+                <h4>Editor domain model</h4>
+                <hr>
+                <figure>
+                    <img src="static/images/editor-domain-model-light.png" width="100%" style="margin: 0 auto; display: block;">
+                </figure>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
+        </section>
+        <section style="padding-left: 0; padding-right: 0; padding-top: 5rem;">
+            <div class="wrap">
+                <h2>Fundamentals</h2>
+                <h3>Software architecture</h3>
+                <h4>Editor class diagram</h4>
+                <hr>
+                <figure>
+                    <img src="static/images/editor-class-diagram-light.png" width="80%" style="margin: 0 auto; display: block;">
+                </figure>
+            </div>
+            <footer class="bg-white">
+                <ol class="breadcrumb-arrows aligncenter">
+                    <li class="active"><a href="#slide=2">Introduction</a></li>
+                    <li><a href="#slide=8">Fundamentals</a></li>
+                    <li><a href="#slide=17">Methodologies</a></li>
+                    <li><a href="#slide=20">Implementation</a></li>
+                    <li><a href="#slide=43">Conclusion</a></li>
+                </ul>
+            </footer>
         </section>
       </article>
     </main>
