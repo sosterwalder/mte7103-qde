@@ -24,7 +24,8 @@
 
 // Vertex shader of a sphere tracer.
 
-#version 110
+// #version 110
+#version 330
 
 // Global uniform two dimensional vector containing the currently set
 // resolution of the screen.
@@ -33,6 +34,9 @@ uniform vec2 u_globalResolution;
 // Global uniform floating point variable containing the current point
 // in time.
 uniform float u_globalTime;
+
+// Global output for the color.
+out vec4 fragColor;
 
 // Switch to turn the visualisation of the distance field on or off.
 #define SHOW_DISTANCE false
@@ -409,10 +413,10 @@ vec3 calcPostFx(vec3 color, vec2 screenPosition)
 
 // Casts a ray from given origin i given direction. Stops at given
 // maximal distance and after given amount of steps. Maintains given
-// precision.
-vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
+// precision (epsilon).
+vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float epsilon, in int steps)
 {
-    float latest          = precision * 2.0;
+    float latest          = epsilon * 2.0;
     float currentDistance = 0.0;
     float result          = -1.0;
     vec3  ray             = vec3(0);
@@ -420,7 +424,7 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
     vec3 combinedScenes   = vec3(-1.0);
 
     for(int i = 0; i < steps; i++) {
-        if (abs(latest) < precision || currentDistance > maxDistance) {
+        if (abs(latest) < epsilon || currentDistance > maxDistance) {
             continue;
         }
 
@@ -515,7 +519,9 @@ void main()
     vec3 color           = render(rayOrigin, rayDirection);
     color                = calcPostFx(color, screenPosition);
 
-    //gl_FragColor.rgb     = vec3(1.0, 0.0, 0.0);
-    gl_FragColor.rgb     = color;
-    gl_FragColor.a       = 1.0;
+    // gl_FragColor.rgb     = vec3(1.0, 0.0, 0.0);
+    // gl_FragColor.rgb     = color;
+    // gl_FragColor.a       = 1.0;
+    fragColor.rgb     = color;
+    fragColor.a       = 1.0;
 }

@@ -24,10 +24,11 @@
 
 // Vertex shader of a sphere tracer.
 
-#version 110
+// #version 110
+#version 330
 
 // in / attributes
-attribute vec4 a_position;
+in vec4 a_position;
 
 // uniforms
 uniform mat4 u_mvpMatrix;
